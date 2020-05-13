@@ -35,12 +35,12 @@ html {
     --main-background: #f6f9fc;
     --main-border-color: #e6ebf1;
     --main-border-color-high: #cfd7df;
-    --main-border-color-bold: #8898aa
+    --main-border-color-bold: #8898aa;
 
 
-    --main-font-colot-low: #aab7c4;
-    --main-font-colot-med: #6b7c93;
-    --main-font-colot-high: #32325d;
+    --main-font-color-low: #aab7c4;
+    --main-font-color-med: #6b7c93;
+    --main-font-color-high: #32325d;
     
     
     --main-green-low: #74e4a2;
@@ -104,15 +104,25 @@ body {
     border: 1px solid #e0e0e0;
 }
     .main-app-svg-path {
-        stroke: #bdbdbd;
-        stroke-width: 4px;
+        stroke: var(--main-border-color-bold);
+        stroke-width: 3px;
         fill: none;
         stroke-linejoin: round;
-        stroke-linecap: round;
+        stroke-linecap: butt;
+        stroke-dasharray: 5, 5; 
     }
-    .main-app-svg-path.linked    { stroke: var(--main-blue-bold); }
-    .main-app-svg-path.connected { stroke: #81C784; }
-    .main-app-svg-path.error     { stroke: #ef5350; }
+    .main-app-svg-path.linked    { 
+        stroke: var(--main-blue-bold); 
+        stroke-dasharray: none;
+        stroke-width: 2px;
+    }
+    .main-app-svg-path.connected { 
+        stroke: #81C784; 
+        stroke-dasharray: none;
+    }
+    .main-app-svg-path.error { 
+        stroke: #ff0000; 
+    }
 
 .app-cards {
     position: absolute;
@@ -122,11 +132,11 @@ body {
     /*width: 250px;*/
 
     /*box-shadow: 0 8px 16px 0 rgba(0,0,0,.1);*/
-    box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);
-    border-radius: 8px;
+    /*box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);*/
+    border-radius: 6px;
     background-color: #fff;
 
-    border: 1px solid var(--main-border-color);
+    border: 2px solid var(--main-blue-bold);
     opacity: 0.9;
 }
     .app-cards-header {
@@ -144,23 +154,23 @@ body {
         background-color: var(--main-background);
     }
         .app-cards-header-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            padding: 5px 0 5px 10px;
+            padding-left: 10px;
             line-height: 20px;
             overflow: hidden;
             text-overflow: ellipsis;
             
-            color: var(--main-font-colot-med);
+            color: var(--main-blue-bold);
             text-transform: uppercase;
         }
-        .app-cards-header-title.start {
+        /*.app-cards-header-title.start {
             background-image: url(../img/start.png);
             background-color: var(--main-background);
             background-position: 5px center;
             background-repeat: no-repeat;
             padding-left: 25px;
-        }
+        }*/
         .app-cards-header-close {
             cursor: pointer;
             border: 1px solid var(--main-border-color-high);
@@ -168,16 +178,6 @@ body {
         .app-cards-header-close:hover {
             border: 1px solid #ef857e;
         }
-    /*.app-cards-question {
-        resize: none;
-        border: 0;
-        width: 100%;
-        padding: 5px;
-        font-size: 12px;
-        margin: 0;
-        outline: none;
-        display: block;
-    }*/
     
     .app-cards-content {
         position: relative;
@@ -215,7 +215,7 @@ body {
                 border-radius: 50%;
                 width: 18px;
                 height: 18px;
-                margin: 6px 0px;
+                margin: 4px 0px;
                 cursor: pointer;
                 justify-self: center;
                 background-image: url(../img/trash.png);
@@ -232,7 +232,7 @@ body {
                 font-weight: 600;
                 font-size: 12px;
                 text-align: center;
-                color: var(--main-font-colot-med);
+                color: var(--main-font-color-med);
             }
             .app-cards-content-item-description {
                 font-weight: 600;
@@ -263,7 +263,7 @@ body {
 
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
-        padding: 6px 12px;
+        padding: 4px 12px;
         border-top: 1px solid #0000000a;
 
         display: flex;

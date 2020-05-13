@@ -103,6 +103,9 @@ export default function Card(ctx) {
         const rect = input.getBoundingClientRect();
         return { left: rect.left, top: rect.top }; 
     };
+    this.getPosition = function() {
+        return {left: position.left, top:position.top};
+    }
     this.removeField = function() {
 
     };

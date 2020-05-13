@@ -129,6 +129,7 @@ export default function Macro() {
                 break;
 
             case _DRAG_.HEADER:
+                console.log(currentDrag.getPosition());
                 break;
 
             case _DRAG_.OUTPUT:
@@ -164,8 +165,8 @@ export default function Macro() {
 
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
-        mainAppSVG.setAttribute('width',  '3000');
-        mainAppSVG.setAttribute('height', '3000');
+        mainAppSVG.setAttribute('width',  '3840');
+        mainAppSVG.setAttribute('height', '2160');
 
         document.body.appendChild(fragment);
 

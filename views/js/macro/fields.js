@@ -18,10 +18,19 @@ export default function Field(ctx) {
     _drag = function (evnt) { main.dragStart(evnt, context); },
     _remove = function () { output.removeEventListener('mousedown', _drag, true); },
     _render = function (endLeft, endTop) {
-        const hx1 = position.left + Math.abs(endLeft - position.left) * 0.4,
-              hx2 = endLeft - Math.abs(endTop - position.left) * 0.4;
+        //const hx1 = position.left + Math.abs(endLeft - position.left) * 0.05,
+        //      hx2 = endLeft - Math.abs(endTop - position.left) * 0.05;
 
-        output['_PATH_'].setAttribute('d', 'M' + position.left +' '+ position.top +' C '+ hx1 +' '+ position.top +' '+ hx2 +' '+ endTop +' '+ endLeft +' '+ endTop);
+        //output['_PATH_'].setAttribute('d', 'M' + position.left +' '+ position.top +' C '+ hx1 +' '+ position.top +' '+ hx2 +' '+ endTop +' '+ endLeft +' '+ endTop);
+        const OFFSET = 30;
+
+        const startX = position.left+11,
+              startY = position.top+8;
+
+        const endX = (endLeft+3) - OFFSET,
+              endY = endTop+8;
+
+        output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
     },
     _refresh = function() {
         if (context.hasConnection()) {

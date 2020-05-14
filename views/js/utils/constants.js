@@ -12,24 +12,17 @@ export const _MOV_ = {
     END   : 2
 }
 
-
-export const _CARD_ = {
-    ACTIVITY : 0,
-    FIELD    : 1,
-    VALUE    : 3
-}
-
 export const _COLORS_ = {
-    RED:    '#d50000',
-    PINK:   '#c51162',
+    RED:    '#ff0000',
+  //PINK:   '#ff4081',
     PURPLE: '#aa00ff',
     INDIGO: '#304ffe',
-    BLUE:   '#0091ea',
-    CYAN:   '#00b8d4',
+  //BLUE:   '#0091ea',
+  //CYAN:   '#00b8d4',
     TEAL:   '#009688',
-    GREEN:  '#00c853',
-    YELLOW: '#ffd600',
+    GREEN:  '#43a047',
+  //YELLOW: '#ffd600',
     ORANGE: '#ff6d00',
     BROWN:  '#795548',
-    GREY:   '#757575'
+    GREY:   '#9e9e9e'
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _CARD_, _COLORS_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -22,13 +22,13 @@ export default function Field(ctx) {
         //      hx2 = endLeft - Math.abs(endTop - position.left) * 0.05;
 
         //output['_PATH_'].setAttribute('d', 'M' + position.left +' '+ position.top +' C '+ hx1 +' '+ position.top +' '+ hx2 +' '+ endTop +' '+ endLeft +' '+ endTop);
-        const OFFSET = 30;
+        const OFFSET = 25;
 
-        const startX = position.left+11,
-              startY = position.top+8;
+        const startX = position.left+16,
+              startY = position.top+12;
 
-        const endX = (endLeft+3) - OFFSET,
-              endY = endTop+8;
+        const endX = (endLeft) - OFFSET,
+              endY = endTop+13;
 
         output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
     },
@@ -93,6 +93,15 @@ export default function Field(ctx) {
               endTop = (top - transform.top) / transform.scale;
 
         _render(endLeft, endTop);
+    };
+    this.setColor = function(color) {
+        if (context.hasConnection()) {
+            output.style.backgroundColor = color;
+            output['_CONNECTION_'].setColor(color);
+            output['_PATH_'].style.stroke = color;
+        }
+        //card.style.borderColor = color;
+        //title.style.color = color;
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////

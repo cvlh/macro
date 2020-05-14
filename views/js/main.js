@@ -1,43 +1,46 @@
 'use strict';
 
 import Macro from './macro/macro.js';
-
+import { _COLORS_ } from './utils/constants.js';
 
 let vp = new Macro();
 
-let activity = vp.newCard(10, 845);
-    activity.setHeader('ATIVIDADE');
+let root = vp.newCard(10, 845);
 
-let startField = activity.addField('INICIAR');
-let startCard = vp.newCard(326, 19);
-    startCard.addField('CONTROLE');
-    let cdeField = startCard.addField('CDE M2 V43');
-    let cdeCard = vp.newCard(747, 34);
-        cdeCard.addField('INICIAR');
-        cdeCard.addField('CANCELAR');
-    vp.connect(cdeField, cdeCard);
+let startField = root.addField('INICIAR');
 
-    let centroField = startCard.addField('CD CENTRO RESUL');
-    let centroCard = vp.newCard(740, 176);
-        centroCard.addField('COLETA DOMICILIAR');
-        centroCard.addField('COLETA DIVERSOS');
-        centroCard.addField('COLETA SELECTIVA');
-    vp.connect(centroField, centroCard);
+    let startCard = vp.newCard(340, 19);
+        startCard.addField('CONTROLE');
+        let cdeField = startCard.addField('CDE M2 V43');
+        let cdeCard = vp.newCard(741, 38);
+            cdeCard.addField('INICIAR');
+            cdeCard.addField('CANCELAR');
+        vp.connect(cdeField, cdeCard);
 
-    startCard.addField('CD UT');
-    startCard.addField('CD SETOR');
-    startCard.addField('KM INICIAL');
-vp.connect(startField, startCard);
+        let centroField = startCard.addField('CD CENTRO RESUL');
+        let centroCard = vp.newCard(740, 176);
+            centroCard.addField('COLETA DOMICILIAR');
+            centroCard.addField('COLETA DIVERSOS');
+            centroCard.addField('COLETA SELECTIVA');
+        vp.connect(centroField, centroCard);
 
-let driverField = activity.addField('MOTORISTA');
+        startCard.addField('CD UT');
+        startCard.addField('CD SETOR');
+        startCard.addField('KM INICIAL');
+    vp.connect(startField, startCard);
+    startField.setColor(_COLORS_.RED);
+
+let driverField = root.addField('MOTORISTA');
+
 let driverCard = vp.newCard(531, 437);
 driverCard.addField('CÓDIGO MOTORISTA');
 vp.connect(driverField, driverCard);
+driverField.setColor(_COLORS_.GREY);
 
-let inspectField = activity.addField('VISTORIA DIÁRIA');
+let inspectField = root.addField('VISTORIA DIÁRIA');
     let inspectCard = vp.newCard(1397, 86);
 
-        let fuelField = inspectCard.addField('COMBUSTIVEL');
+        let fuelField = inspectCard.addField('COMBUSTÍVEL');
         let fuelCard = vp.newCard(2380, 24);
             fuelCard.addField('COMPLETO');
             fuelCard.addField('MEIO TANQUE');
@@ -53,7 +56,7 @@ let inspectField = activity.addField('VISTORIA DIÁRIA');
             diferencialCard.addField('VAZAMENTO DE ÓLEO');
         vp.connect(diferencialField, diferencialCard); 
 
-        let gearboxField = inspectCard.addField('CAIXA DE CAMBIO');
+        let gearboxField = inspectCard.addField('CAIXA DE CÂMBIO');
         let gearboxCard = vp.newCard(2380, 417);
             gearboxCard.addField('OK');
             gearboxCard.addField('FAZENDO BARULHO');
@@ -68,7 +71,7 @@ let inspectField = activity.addField('VISTORIA DIÁRIA');
             engineCard.addField('NÍVEL BAIXO');
         vp.connect(engineField, engineCard);
 
-        let hydraulicField = inspectCard.addField('ÓLEO HIDRAULICO');
+        let hydraulicField = inspectCard.addField('ÓLEO HIDRÁULICO');
         let hydraulicCard = vp.newCard(2380, 779);
             hydraulicCard.addField('OK');
             hydraulicCard.addField('NÍVEL BAIXO');
@@ -94,51 +97,55 @@ let inspectField = activity.addField('VISTORIA DIÁRIA');
         vp.connect(waterField, waterCard);
 
     vp.connect(inspectField, inspectCard);
+    inspectField.setColor(_COLORS_.PURPLE);
 
+let workField = root.addField('EM TRABALHO');
+let rootCard = vp.newCard(1047, 619);
 
-let workField = activity.addField('EM TRABALHO');
-let activityCard = vp.newCard(1042, 650);
+    rootCard.addField('INÍCIO COLETA');
+    rootCard.addField('FIM COLETA');
+    rootCard.addField('TRÂNSITO PARA DESCARGA');
+    rootCard.addField('INÍCIO DESCARGA');
 
-    activityCard.addField('INÍCIO COLETA');
-    activityCard.addField('FIM COLETA');
-    activityCard.addField('TRÂNSITO PARA DESCARGA');
-    activityCard.addField('INÍCIO DESCARGA');
-
-let endDischargeField = activityCard.addField('FIM DESCARGA');
+let endDischargeField = rootCard.addField('FIM DESCARGA');
 let endDischargeCard = vp.newCard(1431, 880);
     endDischargeCard.addField('PESO');
     endDischargeCard.addField('TICKET');
     vp.connect(endDischargeField, endDischargeCard); 
 
-    activityCard.addField('TRÂNSITO LOCAL');
-    activityCard.addField('INÍCIO ABASTECIMENTO');
+    rootCard.addField('TRÂNSITO LOCAL');
+    rootCard.addField('INÍCIO ABASTECIMENTO');
 
-let endFuelField = activityCard.addField('FIM ABASTECIMENTO');
+let endFuelField = rootCard.addField('FIM ABASTECIMENTO');
     let endFuelCard = vp.newCard(1450, 1040);
     endFuelCard.addField('LITROS');
     vp.connect(endFuelField, endFuelCard); 
 
-    activityCard.addField('COND LOCAIS');
-    activityCard.addField('INÍCIO REFEIÇÃO');
-    activityCard.addField('FIM REFEIÇÃO');
-    activityCard.addField('CAFÉ');
-    activityCard.addField('A DISPOSIÇÃO');
-    activityCard.addField('PEDIDO DE SOS');
-    activityCard.addField('INÍCIO SOS');
-    activityCard.addField('FIM SOS');
-    activityCard.addField('FISCALIZAÇÃO');
-    activityCard.addField('OBSERVAÇÕES');
-    activityCard.addField('TROCA MOTORISTA');
-    activityCard.addField('SAIR TRABALHO');
-    activityCard.addField('VERIFICA COLETA');
-vp.connect(workField, activityCard); 
+    rootCard.addField('COND LOCAIS');
+    rootCard.addField('INÍCIO REFEIÇÃO');
+    rootCard.addField('FIM REFEIÇÃO');
+    rootCard.addField('CAFÉ');
+    rootCard.addField('A DISPOSIÇÃO');
+    rootCard.addField('PEDIDO DE SOS');
+    rootCard.addField('INÍCIO SOS');
+    rootCard.addField('FIM SOS');
+    rootCard.addField('FISCALIZAÇÃO');
+    rootCard.addField('OBSERVAÇÕES');
+    rootCard.addField('TROCA MOTORISTA');
+    rootCard.addField('SAIR TRABALHO');
+    rootCard.addField('VERIFICA COLETA');
+vp.connect(workField, rootCard); 
+workField.setColor(_COLORS_.INDIGO);
 
-let changeField = activity.addField('TROCA MOTORISTA');
+
+let changeField = root.addField('TROCA MOTORISTA');
     let changeCard = vp.newCard(1409, 1613);
     changeCard.addField('SENHA MOTORISTA');
     vp.connect(changeField, changeCard);
+changeField.setColor(_COLORS_.TEAL);
 
-let maintenanceField = activity.addField('EM MANUTENÇÃO');
+
+let maintenanceField = root.addField('EM MANUTENÇÃO');
     let maintenanceCard = vp.newCard(1406, 1849);
     maintenanceCard.addField('MANUTENÇÃO DENTRO DO TURNO');
     maintenanceCard.addField('TROCA DE PNEUS');
@@ -148,24 +155,26 @@ let maintenanceField = activity.addField('EM MANUTENÇÃO');
     maintenanceCard.addField('SAIR MANUTENÇÃO');
 
     vp.connect(maintenanceField, maintenanceCard);
+maintenanceField.setColor(_COLORS_.GREEN);
 
-let startworkField = activity.addField('PONTO ELETRÔNICO');
+
+let startworkField = root.addField('PONTO ELETRÔNICO');
 let startworkCard = vp.newCard(855, 1882);
 startworkCard.addField('ENTRADA TRABALHO');
 startworkCard.addField('SAÍDA INTERVALO');
 startworkCard.addField('RETORNO INTERVALO');
 startworkCard.addField('SAÍDA TRABALHO');
 startworkCard.addField('SAIR PONTO');
-
 vp.connect(startworkField, startworkCard);
+startworkField.setColor(_COLORS_.ORANGE);
 
-
-let endField = activity.addField('FINALIZAR CDE');
+let endField = root.addField('FINALIZAR CDE');
     let endCard = vp.newCard(332, 1974);
         endCard.addField('SIM');
         endCard.addField('NÃO');
 
     vp.connect(endField, endCard);
+    endField.setColor(_COLORS_.BROWN);
     /*let checklist = main.newCard();
     checklist.setHeader('VISTORIA DIÁRIA');
 

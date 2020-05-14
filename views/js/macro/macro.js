@@ -1,6 +1,6 @@
  'use strict';
 
-import { _DRAG_, _CARD_, _COLORS_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -25,10 +25,15 @@ export default function Macro() {
         mainApp.style.height = window.innerHeight + 'px';
     },
     _zoom = function(evnt) {
-        const rect = mainAppWrapper.getBoundingClientRect();
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
+        let scale = transform.scale * (1 + delta);
+        if (scale > 9 || scale < 0.1) {
+            return;
+        }
 
-        transform.scale = transform.scale * (1 + delta);;
+        const rect = mainAppWrapper.getBoundingClientRect();
+
+        transform.scale = transform.scale * (1 + delta);
         transform.left += (rect.left - evnt.clientX) * delta;
         transform.top +=  (rect.top - evnt.clientY) * delta;
 
@@ -55,6 +60,9 @@ export default function Macro() {
                 break;
         }
 
+        // if (left > window.innerWidth || top > window.innerHeight) return;
+        // if (left < 0 || top < 0) return;
+
         transform.left = left - position.offsetLeft,
         transform.top = top - position.offsetTop;
 
@@ -64,7 +72,9 @@ export default function Macro() {
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.newCard = function(left, top) {
-        let new_card = new Card(this);
+        const isRoot = (cardsArray.length ? false : true);
+
+        let new_card = new Card(context, isRoot);
         cardsArray.push(new_card); 
 
         mainAppWrapper.appendChild(new_card.getFragment());
@@ -169,10 +179,9 @@ export default function Macro() {
         mainAppSVG.setAttribute('height', '2160');
 
         document.body.appendChild(fragment);
-
-
         _resize();
 
+        // EVNTS
         window.addEventListener('resize', _resize, false);
         document.addEventListener('wheel', _zoom, true);
 
@@ -181,6 +190,6 @@ export default function Macro() {
                 evnt.stopImmediatePropagation();
                 context.dragStart(evnt, context)
             }
-        }, true);
+        }, true);        
     })();
 }

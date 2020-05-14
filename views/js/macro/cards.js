@@ -1,15 +1,15 @@
 'use strict';
 
-import { _DRAG_, _CARD_, _COLORS_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx) {
+export default function Card(ctx, root = false) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this;
+    const parent = ctx, context = this, isRoot = root;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, card, header, title, items, input,
@@ -25,6 +25,8 @@ export default function Card(ctx) {
     this.getDragType = function() { return _DRAG_.HEADER };
     this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
+        if (isRoot) return false;
+        
         if (input['_CONNECTION_'] !== null) {
             return true;
         }
@@ -83,10 +85,23 @@ export default function Card(ctx) {
 
         card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
     };
+    this.setColor = function(color) {       
+        const size = fieldsArray.length;
+        for (let counter=0; counter<size; counter++) {
+            fieldsArray[counter].setColor(color);
+        }
+
+        input.style.backgroundColor = color;
+        card.style.borderColor = color;
+        title.style.color = color;
+    };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.setHeader = function(text) { title.textContent = text; };
+    this.setHeader = function(text) { 
+        if (isRoot) return;
+        title.textContent = text;
+    };
     this.addField = function(text) {
         let new_field = new Field(this);
         fieldsArray.push(new_field); 
@@ -103,36 +118,41 @@ export default function Card(ctx) {
         const rect = input.getBoundingClientRect();
         return { left: rect.left, top: rect.top }; 
     };
-    this.getPosition = function() {
-        return {left: position.left, top:position.top};
-    }
-    this.removeField = function() {
-
-    };
+    this.getPosition = function() { return {left: position.left, top:position.top}; };
+    this.removeField = function() { };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         fragment = document.createDocumentFragment();
 
-        let content, bottom, add, close;
+        let bottom, add, close;
 
         card = addElement(fragment, 'div', 'app-cards');
+        if (isRoot) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');
         header.addEventListener('mousedown', (evnt) => parent.dragStart(evnt, context), true);
 
             title = addElement(header, 'div', 'app-cards-header-title');
+            if (isRoot) {
+                title.classList.add('root');
+                title.textContent = 'INÍCIO DA MACRO';
+            }
 
             close = addElement(header, 'div', 'app-cards-header-close');
             close.addEventListener('click', () => _remove());
 
-        content = addElement(card, 'div', 'app-cards-content');
+        if (isRoot) {
+            items = addElement(card, 'div', 'app-cards-content-items root');
+        } else {
+            let content = addElement(card, 'div', 'app-cards-content');
 
             input = addElement(content, 'div', 'app-cards-content-input');
             input['_CONNECTION_'] = null;
             input['_CONTEXT_'] = context;
 
             items = addElement(content, 'div', 'app-cards-content-items');
+        } 
 
         bottom = addElement(card, 'div', 'app-cards-bottom');
 

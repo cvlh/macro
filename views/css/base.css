@@ -92,7 +92,7 @@ body {
     left: 0;
 
     /*border: 3px solid #0000ff;*/
-
+    box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
     transform-origin: 0 0;
     background: url(../img/background.svg);
 
@@ -101,7 +101,8 @@ body {
 .main-app-svg {
     z-index: 0;
     pointer-events: none;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #bbb;
+    display: block;
 }
     .main-app-svg-path {
         stroke: var(--main-border-color-bold);
@@ -112,7 +113,7 @@ body {
         stroke-dasharray: 5, 5; 
     }
     .main-app-svg-path.linked    { 
-        stroke: var(--main-blue-bold); 
+        /*stroke: var(--main-blue-bold); */
         stroke-dasharray: none;
         stroke-width: 2px;
     }
@@ -136,15 +137,21 @@ body {
     border-radius: 6px;
     background-color: #fff;
 
-    border: 2px solid var(--main-blue-bold);
+    border-width: 2px;
+    border-style: solid;
+    /*border-color: var(--main-blue-bold);*/
+
     opacity: 0.9;
+}
+.app-cards.root {
+    border-color: black;
 }
     .app-cards-header {
         position: relative;
 
         cursor: grab;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
         border-bottom: 1px solid var(--main-border-color);
 
         display: grid;
@@ -161,16 +168,18 @@ body {
             overflow: hidden;
             text-overflow: ellipsis;
             
-            color: var(--main-blue-bold);
+            /*color: var(--main-blue-bold);*/
             text-transform: uppercase;
         }
-        /*.app-cards-header-title.start {
+        .app-cards-header-title.root {
             background-image: url(../img/start.png);
-            background-color: var(--main-background);
+            /*background-color: var(--main-background);*/
             background-position: 5px center;
             background-repeat: no-repeat;
             padding-left: 25px;
-        }*/
+            color: black;
+            text-align: center;
+        }
         .app-cards-header-close {
             cursor: pointer;
             border: 1px solid var(--main-border-color-high);
@@ -182,21 +191,22 @@ body {
     .app-cards-content {
         position: relative;
         display: grid;
-        grid-template-columns: 32px auto;
+        grid-template-columns: 18px auto;
         align-items: center;
         padding: 4px 0 4px 0;
         /* border-top: 1px dashed #f0f0f0; */
         margin: 0;
     }
         .app-cards-content-input {
-            border-radius: 50%;
+            /*border-radius: 50%;*/
             width: 18px;
-            height: 18px;
-            margin: 8px;
+            height: 28px;
+            /*margin: 7px;*/
             background-image: url(../img/arrow.png);
             background-color: #81C784;
             background-position: center center;
             background-repeat: no-repeat;
+            border-radius: 0 8px 8px 0;
         }
         .app-cards-content-input.linked { background-color: var(--main-blue-bold); }
         .app-cards-content-items {
@@ -204,11 +214,18 @@ body {
             flex-direction: column;
             /*border-left: 1px solid #f0f0f0;*/
         }
+            .app-cards-content-items.root {
+                padding: 4px 0 4px 0;
+            }
             .app-cards-content-item {
                 align-items: center;
                 display: grid;
-                grid-template-columns: 25px auto 30px 30px;
+                grid-template-columns: 25px auto 25px 20px;
+                grid-auto-rows: 31px;
                 font-size: 11px;
+                border-radius: 4px;
+                /*border: 1px solid transparent;*/
+                position: relative;
             }
             .app-cards-header-close,
             .app-cards-content-item-remove {
@@ -239,30 +256,34 @@ body {
                 border: 1px solid var(--main-border-color);
                 font-size: 11px;
                 border-radius: 4px;
-                height: 27px;
+                height: 24px;
                 padding: 2px 5px;
             }
             .app-cards-content-item-output {
-                border-radius: 50%;
-                width: 18px;
-                height: 18px;
-                margin: 6px 0px;
+                /*position: absolute;
+                right: -11px;
+
+                border-radius: 50%;*/
+                width: 17px;
+                height: 23px;
+                /*margin: 6px 0px;*/
                 cursor: pointer;
-                justify-self: center;
+                justify-self: right;
                 background-image: url(../img/arrow.png);
-                background-color: #bdbdbd;
+                background-color: var(--main-border-color-high);
                 background-position: center center;
                 background-repeat: no-repeat;
-                position: relative;
+
+                border-radius: 6px 0 0 6px;
             }
-                .app-cards-content-item-output.linked    { background-color: var(--main-blue-bold); }
+                .app-cards-content-item-output.linked    { /*background-color: var(--main-blue-bold);*/ }
                 .app-cards-content-item-output.connected { background-color: #81C784; }
                 .app-cards-content-item-output.error     { background-color: #ef5350; }
     .app-cards-bottom {
         position: relative;
 
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
         padding: 4px 12px;
         border-top: 1px solid #0000000a;
 
@@ -276,11 +297,11 @@ body {
     }
         .app-cards-bottom-add {
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 4px;
 
             padding: 2px 5px 2px 20px;
-    
-            font-size: 11px;
+            font-size: 10px;
+            
             font-weight: 600;
             margin: auto;
             background-image: url(../img/add.png);
@@ -288,6 +309,7 @@ body {
             background-position: 5px center;
             background-repeat: no-repeat;
 
+            text-transform: uppercase;
 
             border: 1px solid var(--main-border-color-high);
         }

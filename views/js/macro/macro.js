@@ -14,7 +14,7 @@ export default function Macro() {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp, mainAppWrapper, mainAppSVG,
-        currentDrag,
+        currentDrag = null,
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -96,6 +96,8 @@ export default function Macro() {
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
+        if (currentDrag !== null) return;
+
         currentDrag = ctx;
 
         switch (currentDrag.getDragType()) {
@@ -180,12 +182,17 @@ export default function Macro() {
 
         document.body.appendChild(fragment);
         _resize();
-
+        
         // EVNTS
         window.addEventListener('resize', _resize, false);
         document.addEventListener('wheel', _zoom, true);
 
         mainAppWrapper.addEventListener('mousedown', (evnt) => {
+            if (currentDrag !== null) {
+                if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
+                return;
+            }
+
             if (evnt.target.classList.contains('main-app-wrapper')) {
                 evnt.stopImmediatePropagation();
                 context.dragStart(evnt, context)

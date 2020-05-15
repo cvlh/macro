@@ -9,7 +9,7 @@ import Field from './fields.js';
 export default function Card(ctx, root = false) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this, isRoot = root;
+    const parent = ctx, context = this, rootCard = root;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, card, header, title, items, input,
@@ -25,7 +25,7 @@ export default function Card(ctx, root = false) {
     this.getDragType = function() { return _DRAG_.HEADER };
     this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
-        if (isRoot) return false;
+        if (rootCard) return false;
         
         if (input['_CONNECTION_'] !== null) {
             return true;
@@ -37,10 +37,11 @@ export default function Card(ctx, root = false) {
         input['_CONNECTION_'] = output;
     };
     this.clearConnection =  function() { 
-        input.classList.remove('linked');
+        //input.classList.remove('linked');
         input['_CONNECTION_'] = null; 
 
         context.setHeader('');
+        context.setColor(null);
     };
     this.redraw = function(transform) {
         let counter;
@@ -85,23 +86,32 @@ export default function Card(ctx, root = false) {
 
         card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
     };
-    this.setColor = function(color) {       
-        const size = fieldsArray.length;
-        for (let counter=0; counter<size; counter++) {
-            fieldsArray[counter].setColor(color);
+    this.setColor = function(color) {    
+        if (!rootCard) {   
+            const size = fieldsArray.length;
+            for (let counter=0; counter<size; counter++) {
+                fieldsArray[counter].setColor(color);
+            }
+            if (color == null) {
+                input.style.removeProperty('background-color');
+                card.style.removeProperty('border-color');
+                title.style.removeProperty('color');
+            } else {
+                input.style.backgroundColor = color;
+                card.style.borderColor = color;
+                title.style.color = color;
+            }
         }
-
-        input.style.backgroundColor = color;
-        card.style.borderColor = color;
-        title.style.color = color;
+    };
+    this.getColor = function() {
+        if (!rootCard && context.hasConnection()) {
+            return input['_CONNECTION_'].getColor();
+        }
+        return null;
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.setHeader = function(text) { 
-        if (isRoot) return;
-        title.textContent = text;
-    };
     this.addField = function(text) {
         let new_field = new Field(this);
         fieldsArray.push(new_field); 
@@ -114,12 +124,20 @@ export default function Card(ctx, root = false) {
         items.appendChild(new_field.getFragment());
         return new_field;
     };
-    this.getInputBounding = function() { 
-        const rect = input.getBoundingClientRect();
-        return { left: rect.left, top: rect.top }; 
-    };
-    this.getPosition = function() { return {left: position.left, top:position.top}; };
+    this.isRoot = function() { return rootCard; };
+    this.getPosition = function() { return { left: position.left, top:position.top }; };
     this.removeField = function() { };
+
+    // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
+    if (!rootCard) {
+        this.setHeader = function(text) {     
+            title.textContent = text;
+        };
+        this.getInputBounding = function() {     
+            const rect = input.getBoundingClientRect();
+            return { left: rect.left, top: rect.top }; 
+        };
+    }
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
@@ -128,13 +146,13 @@ export default function Card(ctx, root = false) {
         let bottom, add, close;
 
         card = addElement(fragment, 'div', 'app-cards');
-        if (isRoot) card.classList.add('root');
+        if (rootCard) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');
         header.addEventListener('mousedown', (evnt) => parent.dragStart(evnt, context), true);
 
             title = addElement(header, 'div', 'app-cards-header-title');
-            if (isRoot) {
+            if (rootCard) {
                 title.classList.add('root');
                 title.textContent = 'INÍCIO DA MACRO';
             }
@@ -142,7 +160,7 @@ export default function Card(ctx, root = false) {
             close = addElement(header, 'div', 'app-cards-header-close');
             close.addEventListener('click', () => _remove());
 
-        if (isRoot) {
+        if (rootCard) {
             items = addElement(card, 'div', 'app-cards-content-items root');
         } else {
             let content = addElement(card, 'div', 'app-cards-content');

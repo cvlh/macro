@@ -8,14 +8,17 @@ let vp = new Macro();
 let root = vp.newCard(10, 845);
 
 let startField = root.addField('INICIAR');
+    startField.setColor(_COLORS_.RED);
 
     let startCard = vp.newCard(340, 19);
         startCard.addField('CONTROLE');
         let cdeField = startCard.addField('CDE M2 V43');
-        let cdeCard = vp.newCard(741, 38);
+        let cdeCard = vp.newCard(741, 36);
             cdeCard.addField('INICIAR');
             cdeCard.addField('CANCELAR');
         vp.connect(cdeField, cdeCard);
+
+        cdeField.setColor(_COLORS_.ORANGE);
 
         let centroField = startCard.addField('CD CENTRO RESUL');
         let centroCard = vp.newCard(740, 176);
@@ -28,16 +31,20 @@ let startField = root.addField('INICIAR');
         startCard.addField('CD SETOR');
         startCard.addField('KM INICIAL');
     vp.connect(startField, startCard);
-    startField.setColor(_COLORS_.RED);
+
 
 let driverField = root.addField('MOTORISTA');
 
 let driverCard = vp.newCard(531, 437);
+    driverField.setColor(_COLORS_.BLACK);
+
 driverCard.addField('CÓDIGO MOTORISTA');
 vp.connect(driverField, driverCard);
-driverField.setColor(_COLORS_.GREY);
+
 
 let inspectField = root.addField('VISTORIA DIÁRIA');
+    inspectField.setColor(_COLORS_.PURPLE);
+
     let inspectCard = vp.newCard(1397, 86);
 
         let fuelField = inspectCard.addField('COMBUSTÍVEL');
@@ -97,7 +104,7 @@ let inspectField = root.addField('VISTORIA DIÁRIA');
         vp.connect(waterField, waterCard);
 
     vp.connect(inspectField, inspectCard);
-    inspectField.setColor(_COLORS_.PURPLE);
+
 
 let workField = root.addField('EM TRABALHO');
 let rootCard = vp.newCard(1047, 619);
@@ -169,7 +176,7 @@ vp.connect(startworkField, startworkCard);
 startworkField.setColor(_COLORS_.ORANGE);
 
 let endField = root.addField('FINALIZAR CDE');
-    let endCard = vp.newCard(332, 1974);
+    let endCard = vp.newCard(339, 1974);
         endCard.addField('SIM');
         endCard.addField('NÃO');
 

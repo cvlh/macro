@@ -105,24 +105,22 @@ body {
     display: block;
 }
     .main-app-svg-path {
-        stroke: var(--main-border-color-bold);
+        stroke: var(--main-border-color-high);
         stroke-width: 3px;
         fill: none;
         stroke-linejoin: round;
         stroke-linecap: butt;
-        stroke-dasharray: 5, 5; 
+        stroke-dasharray: 0.2%; 
     }
     .main-app-svg-path.linked    { 
-        /*stroke: var(--main-blue-bold); */
         stroke-dasharray: none;
         stroke-width: 2px;
     }
     .main-app-svg-path.connected { 
-        stroke: #81C784; 
         stroke-dasharray: none;
     }
     .main-app-svg-path.error { 
-        stroke: #ff0000; 
+        stroke-dasharray: 1; 
     }
 
 .app-cards {
@@ -139,7 +137,7 @@ body {
 
     border-width: 2px;
     border-style: solid;
-    /*border-color: var(--main-blue-bold);*/
+    border-color: var(--main-border-color-high);
 
     opacity: 0.9;
 }
@@ -203,12 +201,13 @@ body {
             height: 28px;
             /*margin: 7px;*/
             background-image: url(../img/arrow.png);
-            background-color: #81C784;
+            /*background-color: #81C784;*/
+            background-color: var(--main-border-color-high);
             background-position: center center;
             background-repeat: no-repeat;
             border-radius: 0 8px 8px 0;
         }
-        .app-cards-content-input.linked { background-color: var(--main-blue-bold); }
+        /*.app-cards-content-input.linked { background-color: var(--main-blue-bold); }*/
         .app-cards-content-items {
             display: flex;
             flex-direction: column;
@@ -276,9 +275,9 @@ body {
 
                 border-radius: 6px 0 0 6px;
             }
-                .app-cards-content-item-output.linked    { /*background-color: var(--main-blue-bold);*/ }
-                .app-cards-content-item-output.connected { background-color: #81C784; }
-                .app-cards-content-item-output.error     { background-color: #ef5350; }
+                /*.app-cards-content-item-output.linked    { background-color: var(--main-blue-bold); }*/
+                /*.app-cards-content-item-output.connected { background-color: #00FF00; }*/
+                .app-cards-content-item-output.error     { background-color: #ff0000; }
     .app-cards-bottom {
         position: relative;
 

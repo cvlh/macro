@@ -7,14 +7,35 @@ import { _I18N_ } from './../i18n/pt-br.js';
 export default function Field(ctx) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const main = ctx.getMain(), /*parent = ctx,*/ context = this;
+    const main = ctx.getMain(), parent = ctx, context = this, rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         item, index, description, output, remove,
         position = { top: 0, left: 0 },
+        props = { color: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _color = function(drag) {
+        const color = context.getColor();
+
+        if (color !== null) {
+            if (!drag) {
+                if (context.hasConnection()) {
+                    output.style.backgroundColor = color;
+                } else {
+                    output.style.removeProperty('background-color');
+                }
+            } else {
+                output.style.backgroundColor = color;
+            }
+
+            output['_PATH_'].style.stroke = color;
+        } else {
+            output.style.removeProperty('background-color');
+            output['_PATH_'].style.removeProperty('stroke');
+        }
+    },
     _drag = function (evnt) { main.dragStart(evnt, context); },
     _remove = function () { output.removeEventListener('mousedown', _drag, true); },
     _render = function (endLeft, endTop) {
@@ -56,9 +77,14 @@ export default function Field(ctx) {
 
         card.makeConnection(context);
         _refresh();
+
+        const color = context.getColor();
+        context.setColor(color);
+        //context.setColor(props.color);
     };
     this.clearConnection = function() {
         output.classList.remove('linked', 'error');
+
         output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         output['_PATH_'].setAttribute('d', '');
 
@@ -66,6 +92,7 @@ export default function Field(ctx) {
             output['_CONNECTION_'].clearConnection();
             output['_CONNECTION_'] = null;
         }
+        context.setColor(null);
     };
     this.redraw = function(transform) {
         if (context.hasConnection()) {
@@ -74,19 +101,15 @@ export default function Field(ctx) {
         }
     };
     this.setPosition = function(left, top, transform, mov) {
-        switch (mov) {
-            case _MOV_.START:
-                if (context.hasConnection()) {
-                    context.clearConnection();
-                }
+        if (mov === _MOV_.START) {
+            if (context.hasConnection()) context.clearConnection();
+            _color(true);
+        }
 
-            case _MOV_.END:
-                const rect = output.getBoundingClientRect();
-
-                position.left = (rect.left - transform.left) / transform.scale;
-                position.top = (rect.top - transform.top) / transform.scale;
-
-                break;
+        if (mov === _MOV_.START || mov === _MOV_.END) {
+            const rect = output.getBoundingClientRect();
+            position.left = (rect.left - transform.left) / transform.scale;
+            position.top = (rect.top - transform.top) / transform.scale;
         }
 
         const endLeft = (left - transform.left) / transform.scale,
@@ -94,14 +117,23 @@ export default function Field(ctx) {
 
         _render(endLeft, endTop);
     };
-    this.setColor = function(color) {
-        if (context.hasConnection()) {
-            output.style.backgroundColor = color;
-            output['_CONNECTION_'].setColor(color);
-            output['_PATH_'].style.stroke = color;
+    this.setColor = function(color) { 
+        if (rootField && color !== null) {
+            props.color = color;
         }
-        //card.style.borderColor = color;
-        //title.style.color = color;
+
+        _color(false);
+
+        if (context.hasConnection()) {
+            output['_CONNECTION_'].setColor(color);
+        }
+    };
+    this.getColor = function(ctx) {
+        if (rootField && props.color != null) {
+            return props.color;
+        } else {
+            return parent.getColor();
+        }
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
@@ -111,16 +143,17 @@ export default function Field(ctx) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
-                output.classList.add('error');
+                //output.classList.add('error');
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
-                output.classList.add('connected');
+                //output.classList.add('connected');
             }
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-            output.classList.remove('connected', 'error');
+            //output.classList.remove('connected', 'error');
         }
     };
+
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         fragment = document.createDocumentFragment();

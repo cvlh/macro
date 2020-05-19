@@ -112,7 +112,7 @@ body {
         stroke-linecap: butt;
         stroke-dasharray: 0.2%; 
     }
-    .main-app-svg-path.linked    { 
+    .main-app-svg-path.linked { 
         stroke-dasharray: none;
         stroke-width: 2px;
     }
@@ -120,8 +120,14 @@ body {
         stroke-dasharray: none;
     }
     .main-app-svg-path.error { 
-        stroke-dasharray: 1; 
+        stroke-dasharray: 2 15; 
     }
+.main-app-options {
+    width: 240px;
+    height: 100%;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e5e5;
+}
 
 .app-cards {
     position: absolute;
@@ -141,9 +147,9 @@ body {
 
     opacity: 0.9;
 }
-.app-cards.root {
+/*.app-cards.root {
     border-color: black;
-}
+}*/
     .app-cards-header {
         position: relative;
 
@@ -277,7 +283,7 @@ body {
             }
                 /*.app-cards-content-item-output.linked    { background-color: var(--main-blue-bold); }*/
                 /*.app-cards-content-item-output.connected { background-color: #00FF00; }*/
-                .app-cards-content-item-output.error     { background-color: #ff0000; }
+                /*.app-cards-content-item-output.error     { background-color: #ff0000; }*/
     .app-cards-bottom {
         position: relative;
 

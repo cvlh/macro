@@ -21,7 +21,7 @@ export default function Card(ctx, root = false) {
 
     };
 
-    // INTERFACE  //////////////////////////////////////////////////////////////
+    // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER };
     this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
@@ -109,8 +109,19 @@ export default function Card(ctx, root = false) {
         }
         return null;
     };
+    this.infiniteLoop = function(target) {
+        if (!rootCard) {
+            if (target.isSameNode(input)) {
+                return true;
+            }
+            if (context.hasConnection()) {
+                return input['_CONNECTION_'].infiniteLoop(target);
+            }
+        }
+        return false;
+    };
 
-    // PUBLIC  /////////////////////////////////////////////////////////////////
+    // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
     this.addField = function(text) {
         let new_field = new Field(this);

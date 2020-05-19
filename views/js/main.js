@@ -11,36 +11,33 @@ let startField = root.addField('INICIAR');
     startField.setColor(_COLORS_.RED);
 
     let startCard = vp.newCard(340, 19);
-        startCard.addField('CONTROLE');
-        let cdeField = startCard.addField('CDE M2 V43');
-        let cdeCard = vp.newCard(741, 36);
-            cdeCard.addField('INICIAR');
-            cdeCard.addField('CANCELAR');
-        vp.connect(cdeField, cdeCard);
+    startCard.addField('CONTROLE');
 
-        cdeField.setColor(_COLORS_.ORANGE);
+    let cdeField = startCard.addField('CDE M2 V43');
+    let cdeCard = vp.newCard(741, 36);
+    cdeCard.addField('INICIAR');
+    cdeCard.addField('CANCELAR');
+    vp.connect(cdeField, cdeCard);
 
-        let centroField = startCard.addField('CD CENTRO RESUL');
-        let centroCard = vp.newCard(740, 176);
-            centroCard.addField('COLETA DOMICILIAR');
-            centroCard.addField('COLETA DIVERSOS');
-            centroCard.addField('COLETA SELECTIVA');
-        vp.connect(centroField, centroCard);
+    let centroField = startCard.addField('CD CENTRO RESUL');
+    let centroCard = vp.newCard(740, 176);
+    centroCard.addField('COLETA DOMICILIAR');
+    centroCard.addField('COLETA DIVERSOS');
+    centroCard.addField('COLETA SELECTIVA');
+    vp.connect(centroField, centroCard);
 
-        startCard.addField('CD UT');
-        startCard.addField('CD SETOR');
-        startCard.addField('KM INICIAL');
-    vp.connect(startField, startCard);
+    startCard.addField('CD UT');
+    startCard.addField('CD SETOR');
+    startCard.addField('KM INICIAL');
 
+vp.connect(startField, startCard);
 
 let driverField = root.addField('MOTORISTA');
-
-let driverCard = vp.newCard(531, 437);
     driverField.setColor(_COLORS_.BLACK);
 
+let driverCard = vp.newCard(531, 437);
 driverCard.addField('CÓDIGO MOTORISTA');
 vp.connect(driverField, driverCard);
-
 
 let inspectField = root.addField('VISTORIA DIÁRIA');
     inspectField.setColor(_COLORS_.PURPLE);

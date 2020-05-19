@@ -59,7 +59,7 @@ export default function Field(ctx) {
         }
     };
 
-    // INTERFACE  //////////////////////////////////////////////////////////////
+    // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.OUTPUT };
     this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
@@ -80,7 +80,6 @@ export default function Field(ctx) {
 
         const color = context.getColor();
         context.setColor(color);
-        //context.setColor(props.color);
     };
     this.clearConnection = function() {
         output.classList.remove('linked', 'error');
@@ -128,29 +127,33 @@ export default function Field(ctx) {
             output['_CONNECTION_'].setColor(color);
         }
     };
-    this.getColor = function(ctx) {
+    this.getColor = function() {
         if (rootField && props.color != null) {
             return props.color;
         } else {
             return parent.getColor();
         }
     };
+    this.infiniteLoop = function(target) {
+        if (rootField) {
+            return false;
+        } else {
+            return parent.infiniteLoop(target);
+        }
+    };
 
-    // PUBLIC  /////////////////////////////////////////////////////////////////
+    // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
     this.setIndex = function(idx) { index.textContent = idx; };
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
-                //output.classList.add('error');
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
-                //output.classList.add('connected');
             }
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-            //output.classList.remove('connected', 'error');
         }
     };
 

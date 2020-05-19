@@ -1,3 +1,4 @@
+
  'use strict';
 
 import { _DRAG_, _MOV_ } from '../utils/constants.js';
@@ -13,11 +14,12 @@ export default function Macro() {
     const context = this;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let mainApp, mainAppWrapper, mainAppSVG,
+    let mainApp, mainAppWrapper, mainAppSVG, mainOptions,
         currentDrag = null,
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
+        size = { width: 3840, height: 2160 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _resize = function() {
@@ -94,6 +96,12 @@ export default function Macro() {
         fromOutput.makeConnection(toInput);
     };
 
+    this.serialize = function () {
+        let response = [];
+        
+        let window = [];
+    };
+
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
         if (currentDrag !== null) return;
@@ -145,17 +153,19 @@ export default function Macro() {
                 break;
 
             case _DRAG_.OUTPUT:
-                const target = evnt.target;
                 let use = false;
+                const target = evnt.target;
 
                 if (target.classList.contains('app-cards-content-input')) {
                     const targetCtx = target['_CONTEXT_'];
                     if (!currentDrag.hasConnection() && !targetCtx.hasConnection()) {
-                        context.connect(currentDrag, targetCtx);
-                        use = true;
+                        if (!currentDrag.infiniteLoop(target)) {
+                            context.connect(currentDrag, targetCtx);
+                            use = true;
+                        }
                     }
                 } 
-                
+
                 if (!use) currentDrag.clearConnection();
                 break;
 
@@ -177,8 +187,10 @@ export default function Macro() {
 
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
-        mainAppSVG.setAttribute('width',  '3840');
-        mainAppSVG.setAttribute('height', '2160');
+        mainAppSVG.setAttribute('width',  size.width);
+        mainAppSVG.setAttribute('height', size.height);
+
+        mainOptions = addElement(fragment, 'div', 'main-app-options');
 
         document.body.appendChild(fragment);
         _resize();

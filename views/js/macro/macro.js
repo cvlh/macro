@@ -16,6 +16,7 @@ export default function Macro() {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp, mainAppWrapper, mainAppSVG, mainOptions,
         currentDrag = null,
+        rootCard,
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -23,6 +24,10 @@ export default function Macro() {
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _resize = function() {
+        //const widthOptions = mainOptions.offsetWidth;
+
+        mainOptions.style.height = window.innerHeight + 'px';
+
         mainApp.style.width = window.innerWidth + 'px';
         mainApp.style.height = window.innerHeight + 'px';
     },
@@ -44,6 +49,11 @@ export default function Macro() {
         if (currentDrag != null) {
             currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.START);
         }
+
+        if (scale < 1) {
+            mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+        }
+        
     };
 
     // INTERFACE  //////////////////////////////////////////////////////////////
@@ -79,6 +89,8 @@ export default function Macro() {
         let new_card = new Card(context, isRoot);
         cardsArray.push(new_card); 
 
+        if (isRoot) rootCard = new_card;
+
         mainAppWrapper.appendChild(new_card.getFragment());
         new_card.setPosition(left, top, transform, _MOV_.END);
 
@@ -97,9 +109,19 @@ export default function Macro() {
     };
 
     this.serialize = function () {
-        let response = [];
-        
-        let window = [];
+        let response = {
+            status:  true,
+            name:    'Macro',
+            version: 1,
+            
+            position:   [ transform.left, transform.top, transform.scale ],
+            size:       [ size.width, size.height ],
+            visibility: [],
+
+            root: rootCard.serialize()
+        };
+
+        return response;
     };
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
@@ -175,12 +197,15 @@ export default function Macro() {
         document.removeEventListener('mouseup',   context.dragEnd, true);
 
         currentDrag = null;
+
+        console.log(context.serialize());
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         const fragment = document.createDocumentFragment();
 
+    
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
         
         mainAppWrapper = addElement(mainApp, 'div', 'main-app-wrapper');
@@ -190,14 +215,16 @@ export default function Macro() {
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
-        mainOptions = addElement(fragment, 'div', 'main-app-options');
+        mainOptions = addElement(mainApp, 'div', 'main-app-options');
 
         document.body.appendChild(fragment);
         _resize();
         
         // EVNTS
         window.addEventListener('resize', _resize, false);
-        document.addEventListener('wheel', _zoom, true);
+
+        //document.addEventListener('wheel', _zoom, true);
+        mainAppWrapper.addEventListener('wheel', _zoom, true);
 
         mainAppWrapper.addEventListener('mousedown', (evnt) => {
             if (currentDrag !== null) {

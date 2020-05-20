@@ -141,6 +141,24 @@ export default function Field(ctx) {
             return parent.infiniteLoop(target);
         }
     };
+    this.serialize = function () {
+        let response = {
+            //id: 0,
+            name: description.value,
+            type: 'text',
+            visibility: []
+        };
+        
+        if (rootField) {
+            response['color'] = props.color;
+        }
+
+        if (context.hasConnection()) {
+            response['card'] = output['_CONNECTION_'].serialize();
+        }
+
+        return response;
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };

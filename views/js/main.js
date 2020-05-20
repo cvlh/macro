@@ -194,6 +194,9 @@ let checklist = main.newCard();
 let checklist = main.newCard();
     checklist.setHeader('VISTORIA DIÁRIA');*/
 
+    //let serialize = vp.serialize();
+    //console.log(serialize);
+    //console.log(JSON.stringify(serialize));
 
 
 

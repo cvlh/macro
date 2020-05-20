@@ -120,6 +120,24 @@ export default function Card(ctx, root = false) {
         }
         return false;
     };
+    this.serialize = function () {
+        const sizeFields = fieldsArray.length;
+
+        let response = {
+            //id: 0,
+            //name: title.textContent,
+            position: [position.left, position.top],
+            visibility: []
+        };
+
+        if (sizeFields) response['fields'] = [];
+        
+        for (let counter=0; counter<sizeFields; counter++) {
+            response['fields'].push(fieldsArray[counter].serialize());
+        }
+
+        return response;
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };

@@ -1,4 +1,3 @@
-
  'use strict';
 
 import { _DRAG_, _MOV_ } from '../utils/constants.js';
@@ -6,6 +5,7 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
+import TreeView from '../macro/treeview.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro() {
@@ -14,19 +14,78 @@ export default function Macro() {
     const context = this;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let mainApp, mainAppWrapper, mainAppSVG, mainOptions,
+    let mainApp, mainAppWrapper, mainAppSVG, 
+        mainTreeView, mainTreeViewItems,
+
+        rootCard, treeView,
         currentDrag = null,
-        rootCard,
+        
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
         size = { width: 3840, height: 2160 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _pad = function(tab) {
+        let counter, result = '';
+        for (counter=0; counter<tab.length; counter++) {
+            result += tab[counter];
+            if (counter < tab.length-1 ) {
+                result += '.';
+            } else {
+                //result += ')';
+            }
+        }
+        return result;
+    },
+    _update = function(fields, fragment, props = { tab: [], color: null }) {
+        let counterFields, fieldRow, fieldOffset, fieldBorder, fieldDiv, fieldPath, field;
+        const rootFieldsSize = fields.length;
+
+        for (counterFields=0; counterFields<rootFieldsSize; counterFields++) {
+            field = fields[counterFields];
+
+            props.tab.push(counterFields+1);
+
+            if (field.hasOwnProperty('color')) props.color = field['color'];
+
+            fieldRow = addElement(fragment, 'div', 'main-app-treeview-row');
+            fieldRow.style.gridTemplateColumns = 'repeat(' +props.tab.length+ ', 12px) auto 15px 15px';
+
+            for (let counter=0; counter<props.tab.length; counter++) {
+                fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
+                fieldOffset.style.borderLeftColor = props.color;
+            }
+            //fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
+            //fieldOffset.style.gridColumnEnd = 'span ' + props.tab.length;
+
+            fieldDiv = addElement(fieldRow, 'div', 'main-app-treeview-item field');
+            fieldDiv.textContent = field.name;
+            //fieldDiv.textContent = field.name +' '+ _pad(props.tab);
+            //fieldDiv.style.borderLeftColor = props.color;
+            //fieldDiv.style.color = props.color;
+            //fieldDiv.style.paddingLeft = ((props.tab.length - 1) * 10) + 'px';
+            //fieldDiv.style.gridColumnStart = props.tab.length;
+            //fieldDiv.style.gridColumnEnd = 29;
+
+            fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
+            fieldPath.textContent = _pad(props.tab);
+
+            addElement(fieldRow, 'div', 'main-app-treeview-item');
+            addElement(fieldRow, 'div', 'main-app-treeview-item');
+
+            if (field.hasOwnProperty('card') && field['card'].hasOwnProperty('fields')) {
+                //fieldDiv.style.fontWeight = 600;
+                _update(field['card']['fields'], fragment, props);
+            }
+
+            props.tab.pop();
+        }
+    },
     _resize = function() {
         //const widthOptions = mainOptions.offsetWidth;
 
-        mainOptions.style.height = window.innerHeight + 'px';
+        mainTreeView.style.height = window.innerHeight + 'px';
 
         mainApp.style.width = window.innerWidth + 'px';
         mainApp.style.height = window.innerHeight + 'px';
@@ -109,6 +168,7 @@ export default function Macro() {
     };
 
     this.serialize = function () {
+
         let response = {
             status:  true,
             name:    'Macro',
@@ -116,10 +176,20 @@ export default function Macro() {
             
             position:   [ transform.left, transform.top, transform.scale ],
             size:       [ size.width, size.height ],
-            visibility: [],
+            visibility: [ ],
 
             root: rootCard.serialize()
         };
+
+        while (mainTreeViewItems.hasChildNodes()) {
+            mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
+        }
+
+        const fragment = document.createDocumentFragment();
+        if (response['root'].hasOwnProperty('fields')) {
+            _update(response['root']['fields'], fragment);
+        }
+        mainTreeViewItems.appendChild(fragment);
 
         return response;
     };
@@ -171,7 +241,7 @@ export default function Macro() {
                 break;
 
             case _DRAG_.HEADER:
-                console.log(currentDrag.getPosition());
+                //console.log(currentDrag.getPosition());
                 break;
 
             case _DRAG_.OUTPUT:
@@ -184,11 +254,16 @@ export default function Macro() {
                         if (!currentDrag.infiniteLoop(target)) {
                             context.connect(currentDrag, targetCtx);
                             use = true;
+
+                            console.log(context.serialize());
                         }
                     }
                 } 
 
-                if (!use) currentDrag.clearConnection();
+                if (!use) {
+                    currentDrag.clearConnection();
+                }
+                
                 break;
 
         }
@@ -198,14 +273,12 @@ export default function Macro() {
 
         currentDrag = null;
 
-        console.log(context.serialize());
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         const fragment = document.createDocumentFragment();
 
-    
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
         
         mainAppWrapper = addElement(mainApp, 'div', 'main-app-wrapper');
@@ -215,7 +288,8 @@ export default function Macro() {
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
-        mainOptions = addElement(mainApp, 'div', 'main-app-options');
+        mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
+        mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
 
         document.body.appendChild(fragment);
         _resize();
@@ -224,8 +298,7 @@ export default function Macro() {
         window.addEventListener('resize', _resize, false);
 
         //document.addEventListener('wheel', _zoom, true);
-        mainAppWrapper.addEventListener('wheel', _zoom, true);
-
+        mainAppWrapper.addEventListener('wheel', _zoom, {capture: true, passive: true});
         mainAppWrapper.addEventListener('mousedown', (evnt) => {
             if (currentDrag !== null) {
                 if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
@@ -236,6 +309,7 @@ export default function Macro() {
                 evnt.stopImmediatePropagation();
                 context.dragStart(evnt, context)
             }
-        }, true);        
+        }, true);
+
     })();
 }

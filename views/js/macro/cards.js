@@ -121,7 +121,6 @@ export default function Card(ctx, root = false) {
         return false;
     };
     this.serialize = function () {
-        const sizeFields = fieldsArray.length;
 
         let response = {
             //id: 0,
@@ -130,6 +129,7 @@ export default function Card(ctx, root = false) {
             visibility: []
         };
 
+        const sizeFields = fieldsArray.length;
         if (sizeFields) response['fields'] = [];
         
         for (let counter=0; counter<sizeFields; counter++) {
@@ -154,7 +154,7 @@ export default function Card(ctx, root = false) {
         return new_field;
     };
     this.isRoot = function() { return rootCard; };
-    this.getPosition = function() { return { left: position.left, top:position.top }; };
+    //this.getPosition = function() { return { left: position.left, top: position.top }; };
     this.removeField = function() { };
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
@@ -186,9 +186,10 @@ export default function Card(ctx, root = false) {
                 title.textContent = 'INÍCIO DA MACRO';
             }
 
-            close = addElement(header, 'div', 'app-cards-header-close');
-            close.addEventListener('click', () => _remove());
-
+            if (!rootCard) {
+                close = addElement(header, 'div', 'app-cards-header-close');
+                close.addEventListener('click', () => _remove());
+            }
         if (rootCard) {
             items = addElement(card, 'div', 'app-cards-content-items root');
         } else {

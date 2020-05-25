@@ -31,25 +31,26 @@ export default function Field(ctx) {
             }
 
             output['_PATH_'].style.stroke = color;
+            description.style.outlineColor = color;
+
         } else {
+            description.style.removeProperty('outline-color');
             output.style.removeProperty('background-color');
             output['_PATH_'].style.removeProperty('stroke');
         }
     },
     _drag = function (evnt) { main.dragStart(evnt, context); },
     _remove = function () { output.removeEventListener('mousedown', _drag, true); },
-    _render = function (endLeft, endTop) {
-        //const hx1 = position.left + Math.abs(endLeft - position.left) * 0.05,
-        //      hx2 = endLeft - Math.abs(endTop - position.left) * 0.05;
-
-        //output['_PATH_'].setAttribute('d', 'M' + position.left +' '+ position.top +' C '+ hx1 +' '+ position.top +' '+ hx2 +' '+ endTop +' '+ endLeft +' '+ endTop);
+    _render = function (endLeft, endTop, mov) {
         const OFFSET = 25;
 
         const startX = position.left+16,
               startY = position.top+12;
 
-        const endX = (endLeft) - OFFSET,
-              endY = endTop+13;
+        const endX = (endLeft) - OFFSET;
+
+        let endY = endTop;
+        if (mov === _MOV_.END) endY += 13;
 
         output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
     },
@@ -101,7 +102,10 @@ export default function Field(ctx) {
     };
     this.setPosition = function(left, top, transform, mov) {
         if (mov === _MOV_.START) {
-            if (context.hasConnection()) context.clearConnection();
+            if (context.hasConnection()) {
+                context.clearConnection();
+                console.log(main.serialize());
+            }
             _color(true);
         }
 
@@ -114,7 +118,7 @@ export default function Field(ctx) {
         const endLeft = (left - transform.left) / transform.scale,
               endTop = (top - transform.top) / transform.scale;
 
-        _render(endLeft, endTop);
+        _render(endLeft, endTop, mov);
     };
     this.setColor = function(color) { 
         if (rootField && color !== null) {
@@ -141,7 +145,7 @@ export default function Field(ctx) {
             return parent.infiniteLoop(target);
         }
     };
-    this.serialize = function () {
+    this.serialize = function (treeview) {
         let response = {
             //id: 0,
             name: description.value,
@@ -186,6 +190,7 @@ export default function Field(ctx) {
         description = addElement(item, 'input', 'app-cards-content-item-description');
         description.setAttribute('maxlength', '64');
         description.addEventListener('keyup', _refresh, true);
+
 
         remove = addElement(item, 'div', 'app-cards-content-item-remove');
         remove.addEventListener('click', _remove, {once: true, capture: true});

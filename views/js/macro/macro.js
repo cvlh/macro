@@ -39,7 +39,7 @@ export default function Macro() {
         return result;
     },
     _update = function(fields, fragment, props = { tab: [], color: null }) {
-        let counterFields, fieldRow, fieldOffset, fieldBorder, fieldDiv, fieldPath, field;
+        let counterFields, counterOffset, fieldRow, fieldOffset, fieldDiv, fieldPath, field, hasChild, isRoot, deepSize;
         const rootFieldsSize = fields.length;
 
         for (counterFields=0; counterFields<rootFieldsSize; counterFields++) {
@@ -47,35 +47,46 @@ export default function Macro() {
 
             props.tab.push(counterFields+1);
 
-            if (field.hasOwnProperty('color')) props.color = field['color'];
+            hasChild = isRoot = false;
+            if (field.hasOwnProperty('card') && field['card'].hasOwnProperty('fields')) hasChild = true;
+            if (field.hasOwnProperty('color')) {
+                props.color = field['color'];
+                isRoot = true;
+            }
+
+            deepSize = props.tab.length;
+            if (hasChild) deepSize++;
 
             fieldRow = addElement(fragment, 'div', 'main-app-treeview-row');
-            fieldRow.style.gridTemplateColumns = 'repeat(' +props.tab.length+ ', 12px) auto 15px 15px';
+            fieldRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
 
-            for (let counter=0; counter<props.tab.length; counter++) {
+                
+
+            for (counterOffset=0; counterOffset<props.tab.length; counterOffset++) {
                 fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
-                fieldOffset.style.borderLeftColor = props.color;
+                if (counterOffset > 0) fieldOffset.style.borderLeftColor = props.color;
             }
-            //fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
-            //fieldOffset.style.gridColumnEnd = 'span ' + props.tab.length;
+            if (hasChild) {
+                fieldOffset.classList.add('expand');
+                fieldOffset['_EXPAND_'] = addElement(fieldOffset, 'div', 'main-app-treeview-div-expand');
+                if (isRoot) {
+                    fieldOffset['_EXPAND_'].style.backgroundColor = props.color;
+                    fieldOffset['_EXPAND_'].style.backgroundImage = 'url(img/arrow.png)';
+                }
+            }
 
             fieldDiv = addElement(fieldRow, 'div', 'main-app-treeview-item field');
             fieldDiv.textContent = field.name;
-            //fieldDiv.textContent = field.name +' '+ _pad(props.tab);
-            //fieldDiv.style.borderLeftColor = props.color;
-            //fieldDiv.style.color = props.color;
-            //fieldDiv.style.paddingLeft = ((props.tab.length - 1) * 10) + 'px';
-            //fieldDiv.style.gridColumnStart = props.tab.length;
-            //fieldDiv.style.gridColumnEnd = 29;
+            if (isRoot) fieldDiv.style.fontWeight = '600';
 
             fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
+            fieldPath.style.color = props.color;
             fieldPath.textContent = _pad(props.tab);
 
             addElement(fieldRow, 'div', 'main-app-treeview-item');
             addElement(fieldRow, 'div', 'main-app-treeview-item');
 
-            if (field.hasOwnProperty('card') && field['card'].hasOwnProperty('fields')) {
-                //fieldDiv.style.fontWeight = 600;
+            if (hasChild) {
                 _update(field['card']['fields'], fragment, props);
             }
 

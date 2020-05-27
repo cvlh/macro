@@ -178,7 +178,7 @@ export default function Card(ctx, root = false) {
         if (rootCard) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');
-        header.addEventListener('mousedown', (evnt) => parent.dragStart(evnt, context), true);
+        header.addEventListener('mousedown', (evnt) => parent.dragStart(evnt, context), { capture: false });
 
             title = addElement(header, 'div', 'app-cards-header-title');
             if (rootCard) {
@@ -188,7 +188,7 @@ export default function Card(ctx, root = false) {
 
             if (!rootCard) {
                 close = addElement(header, 'div', 'app-cards-header-close');
-                close.addEventListener('click', () => _remove());
+                //close.addEventListener('click', () => _remove(), { capture: true });
             }
         if (rootCard) {
             items = addElement(card, 'div', 'app-cards-content-items root');
@@ -206,6 +206,6 @@ export default function Card(ctx, root = false) {
 
             add = addElement(bottom, 'div', 'app-cards-bottom-add');
             add.textContent = 'Atividade';
-            add.addEventListener('click', () => context.addField());
+            //add.addEventListener('click', () => context.addField(), { capture: true });
     })();
 }

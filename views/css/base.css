@@ -139,14 +139,18 @@ body {
     }
         .main-app-treeview-row {
             display: grid;
+            height: 22px;
 
-            grid-auto-rows: 22px;
+            /*grid-auto-rows: 22px;*/
+            overflow: hidden;
+            grid-template-rows: 22px;
             /*grid-template-columns: 10px auto 15px 15px;*/
         
             /*padding-left: 8px;
             padding-right: 8px;*/
             /*align-items: center;*/
             /*border: 1px solid transparent;*/
+            transition: .15s height linear;
         }
             .main-app-treeview-row:hover {
                 background-color: var(--main-background);
@@ -174,8 +178,25 @@ body {
             align-items: center;
             justify-content: center;
         }
+        .main-app-treeview-item.expand div {
+            pointer-events: none;
+            transform: rotate(0deg);
+
+            height: 14px;
+            width: 14px;
+
+            border-radius: 3px;
+
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(../img/collapse.png);
+
+            transition: .15s transform linear;
+        }
+
         .main-app-treeview-item.field {
             padding: 0 0 0 0px;
+            /*cursor: pointer;*/
         }
 
         .main-app-treeview-item-path {
@@ -194,12 +215,12 @@ body {
             font-style: italic;
             border: 1px solid #eee;
 
-            display: none;
+            /*display: none;*/
         }
-        .main-app-treeview-div-expand {
+        /*.main-app-treeview-div-expand {
+            pointer-events: none;
             transform: rotate(90deg);
-            /*height: 12px;
-            width: 12px;*/
+
             height: 14px;
             width: 14px;
 
@@ -208,7 +229,7 @@ body {
             background-position: center center;
             background-repeat: no-repeat;
             background-image: url(../img/collapse.png);
-        }
+        }*/
     /*.main-app-treeview-item.card {
         font-size: 12px;
         font-weight: 600;

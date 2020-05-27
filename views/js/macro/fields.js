@@ -40,7 +40,7 @@ export default function Field(ctx) {
         }
     },
     _drag = function (evnt) { main.dragStart(evnt, context); },
-    _remove = function () { output.removeEventListener('mousedown', _drag, true); },
+    _remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
         const OFFSET = 25;
 
@@ -189,15 +189,14 @@ export default function Field(ctx) {
 
         description = addElement(item, 'input', 'app-cards-content-item-description');
         description.setAttribute('maxlength', '64');
-        description.addEventListener('keyup', _refresh, true);
-
+        description.addEventListener('keyup', _refresh, { capture: false });
 
         remove = addElement(item, 'div', 'app-cards-content-item-remove');
-        remove.addEventListener('click', _remove, {once: true, capture: true});
+        remove.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'app-cards-content-item-output');
         output['_CONNECTION_'] = null;
         output['_PATH_'] = main.newSVGPath();
-        output.addEventListener('mousedown', _drag, true);
+        output.addEventListener('mousedown', _drag, { capture: false });
     })();
 }

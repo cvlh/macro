@@ -121,23 +121,18 @@ export default function Card(ctx, root = false) {
         return false;
     };
     this.serialize = function () {
-
-        let response = {
-            //id: 0,
-            //name: title.textContent,
-            position: [position.left, position.top],
-            visibility: []
-        };
+        let response = { ctx: context };
 
         const sizeFields = fieldsArray.length;
         if (sizeFields) response['fields'] = [];
-        
-        for (let counter=0; counter<sizeFields; counter++) {
-            response['fields'].push(fieldsArray[counter].serialize());
+
+        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+            response['fields'].push(fieldsArray[counterFields].serialize());
         }
 
         return response;
     };
+    this.isRoot = function() { return rootCard; };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
@@ -153,7 +148,6 @@ export default function Card(ctx, root = false) {
         items.appendChild(new_field.getFragment());
         return new_field;
     };
-    this.isRoot = function() { return rootCard; };
     //this.getPosition = function() { return { left: position.left, top: position.top }; };
     this.removeField = function() { };
 
@@ -206,6 +200,6 @@ export default function Card(ctx, root = false) {
 
             add = addElement(bottom, 'div', 'app-cards-bottom-add');
             add.textContent = 'Atividade';
-            //add.addEventListener('click', () => context.addField(), { capture: true });
+            //add.addEventListener('click', () => context.addField(), { capture: true });        
     })();
 }

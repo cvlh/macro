@@ -193,6 +193,12 @@ body {
 
             transition: .15s transform linear;
         }
+        .main-app-treeview-item.none {
+            grid-column-end: span 2;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(../img/none.png);
+        }
 
         .main-app-treeview-item.field {
             padding: 0 0 0 0px;
@@ -215,7 +221,7 @@ body {
             font-style: italic;
             border: 1px solid #eee;
 
-            /*display: none;*/
+            display: none;
         }
         /*.main-app-treeview-div-expand {
             pointer-events: none;

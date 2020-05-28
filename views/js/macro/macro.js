@@ -5,7 +5,7 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
-import TreeView from '../macro/treeview.js';
+import TreeView from './treeview.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro() {
@@ -32,31 +32,49 @@ export default function Macro() {
 
         const target = evnt.target,
               targetClass = evnt.target.classList,
-              type   = evnt.type;
+              type = evnt.type;
 
         if (targetClass.contains('main-app-treeview-item')) {
             if (targetClass.contains('expand')) {
-                let parentClass = evnt.target.parentElement.classList[0];
+                let elements, size, ids, divIndex, counter, child, 
+                    parentClass = evnt.target.parentElement.classList[0],
+                    color = target['_COLOR_'][0];
+
                 if (!parentClass) return;
 
-                let elementsArray = mainTreeViewItems.querySelectorAll('[class^="' +parentClass+ '."]');
+                elements = mainTreeViewItems.querySelectorAll('[class^="' +parentClass+ '."]');
+
+                size = elements.length;
+                if (!size) return;
+
                 switch (type) {
                     case 'click':
-
-                        target['_EXPAND_'].style.transform = 'none';
-                        for (var element of elementsArray) element.style.height = '0';
-
-                        target['_EXPAND_'].style.removeProperty('transform');
-                        for (var element of elementsArray) element.style.removeProperty('height');
-
+                        const expand = target.firstChild;
+                        const value = expand.style.getPropertyValue('transform');
+                        if (value) {
+                            expand.style.removeProperty('transform');
+                            for (counter=0; counter<size; counter++) {
+                                elements[counter].style.height = '0';
+                            }
+                        } else {
+                            expand.style.transform = 'rotate(90deg)';
+                            for (counter=0; counter<size; counter++) {
+                                elements[counter].style.removeProperty('height');
+                            }
+                        }
                         break;
 
                     case 'mouseenter':
-
-                        break;
+                        color = target['_COLOR_'][1];
 
                     case 'mouseleave':
+                        ids = parentClass.slice(css_prefix.length).split('.');
+                        divIndex = ids.length;
 
+                        for (counter=0; counter<size; counter++) {
+                            child = elements[counter].childNodes.item(divIndex);
+                            child.style.borderLeftColor = color;
+                        }
                         break;
                 }
             } else if (targetClass.contains('field')) {
@@ -73,46 +91,48 @@ export default function Macro() {
         return result;
     },
     _update = function(fields, fragment, props = { tab: [], color: null }) {
-        let counterFields, counterOffset, fieldRow, fieldOffset, fieldDiv, fieldPath, field, hasChild, isRoot, deepSize, deep;
-        const rootFieldsSize = fields.length;
+        let counterFields, counterOffset, fieldRow, fieldOffset, fieldDiv, fieldPath, field, hasChild, isRoot, deepSize, deep, lightColor;
 
+        const rootFieldsSize = fields.length;
         for (counterFields=0; counterFields<rootFieldsSize; counterFields++) {
             field = fields[counterFields];
 
             props.tab.push(counterFields+1);
-
             deep = _deep(props.tab);
 
-            hasChild = isRoot = false;
-            if (field.hasOwnProperty('card') && field['card'].hasOwnProperty('fields')) hasChild = true;
-            if (field.hasOwnProperty('color')) {
-                props.color = field['color'];
-                isRoot = true;
-            }
+            isRoot = field.ctx.isRoot();
+            if (isRoot) props.color = field.ctx.getColor();
+            lightColor = props.color + '30';
+
+            hasChild = false;
+            if (field.hasOwnProperty('conn') && field['conn'].hasOwnProperty('fields')) hasChild = true;
 
             deepSize = props.tab.length;
-            if (hasChild) deepSize++;
+            if (hasChild || isRoot) deepSize++;
 
             fieldRow = addElement(fragment, 'div', deep + ' main-app-treeview-row');
+            fieldRow['_FIELD_'] = field.ctx;
+
             fieldRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
 
             for (counterOffset=0; counterOffset<props.tab.length; counterOffset++) {
                 fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
-                if (counterOffset > 0) fieldOffset.style.borderLeftColor = props.color;
+                if (counterOffset > 0) fieldOffset.style.borderLeftColor = lightColor;
             }
-            if (hasChild) {
-                fieldOffset.classList.add('expand');
-                fieldOffset['_EXPAND_'] = addElement(fieldOffset, 'div');
-                /*if (isRoot) {
-                    fieldOffset['_EXPAND_'].style.backgroundColor = props.color;
-                    fieldOffset['_EXPAND_'].style.backgroundImage = 'url(img/arrow.png)';
-                }*/
+            if (hasChild || isRoot) {
+                if (hasChild) {
+                    fieldOffset.classList.add('expand');
+                    fieldOffset['_COLOR_'] = [ lightColor, props.color ];
+                } else {
+                    fieldOffset.classList.add('none');
+                }
+                addElement(fieldOffset, 'div');
             }
 
             fieldDiv = addElement(fieldRow, 'div', 'main-app-treeview-item field');
-            fieldDiv.textContent = field.name;
+            fieldDiv.textContent = field.ctx.getText();
             if (isRoot) fieldDiv.style.color = props.color;
-            if (hasChild) fieldDiv.style.fontWeight = '600';
+            if (hasChild || isRoot) fieldDiv.style.fontWeight = '600';
 
             fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
             fieldPath.style.color = props.color;
@@ -121,9 +141,7 @@ export default function Macro() {
             addElement(fieldRow, 'div', 'main-app-treeview-item');
             addElement(fieldRow, 'div', 'main-app-treeview-item');
 
-            if (hasChild) {
-                _update(field['card']['fields'], fragment, props);
-            }
+            if (hasChild) _update(field['conn']['fields'], fragment, props);
 
             props.tab.pop();
         }
@@ -242,7 +260,6 @@ export default function Macro() {
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
         evnt.stopPropagation();
-
         if (currentDrag !== null) return;
 
         currentDrag = ctx;
@@ -266,7 +283,6 @@ export default function Macro() {
     };
     this.drag = function(evnt) {
         evnt.stopPropagation();
-
         currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.MOV);
 
         switch (currentDrag.getDragType()) {
@@ -284,7 +300,6 @@ export default function Macro() {
     };
     this.dragEnd = function(evnt) {
         evnt.stopPropagation();
-
         currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.END);
 
         switch (currentDrag.getDragType()) {

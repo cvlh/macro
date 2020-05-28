@@ -12,6 +12,7 @@ export default function Field(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         item, index, description, output, remove,
+        expanded = true,
         position = { top: 0, left: 0 },
         props = { color: null },
 
@@ -39,7 +40,10 @@ export default function Field(ctx) {
             output['_PATH_'].style.removeProperty('stroke');
         }
     },
-    _drag = function (evnt) { main.dragStart(evnt, context); },
+    _drag = function (evnt) { 
+        evnt.preventDefault();
+        main.dragStart(evnt, context); 
+    },
     _remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
         const OFFSET = 25;
@@ -79,6 +83,8 @@ export default function Field(ctx) {
         card.makeConnection(context);
         _refresh();
 
+        expanded = true;
+
         const color = context.getColor();
         context.setColor(color);
     };
@@ -104,7 +110,7 @@ export default function Field(ctx) {
         if (mov === _MOV_.START) {
             if (context.hasConnection()) {
                 context.clearConnection();
-                console.log(main.serialize());
+                main.serialize();
             }
             _color(true);
         }
@@ -145,27 +151,21 @@ export default function Field(ctx) {
             return parent.infiniteLoop(target);
         }
     };
-    this.serialize = function (treeview) {
-        let response = {
-            //id: 0,
-            name: description.value,
-            type: 'text',
-            visibility: []
-        };
+    this.serialize = function () {
+        let response = { ctx: context };
+        if (context.hasConnection()) response['conn'] = output['_CONNECTION_'].serialize();
         
-        if (rootField) {
-            response['color'] = props.color;
-        }
-
-        if (context.hasConnection()) {
-            response['card'] = output['_CONNECTION_'].serialize();
-        }
-
         return response;
     };
+    this.isRoot = function() { return rootField; };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
+    this.getText = function(text) { return description.value; };
+
+    this.setExpand = function(expand) { expanded = expand; };
+    this.getExpand = function() { return expanded; };
+
     this.setIndex = function(idx) { index.textContent = idx; };
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
@@ -184,6 +184,7 @@ export default function Field(ctx) {
         fragment = document.createDocumentFragment();
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
+        item.setAttribute('draggable', true);
 
         index = addElement(item, 'div', 'app-cards-content-item-index');
 

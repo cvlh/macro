@@ -36,7 +36,7 @@ let driverField = root.addField('MOTORISTA');
     driverField.setColor(_COLORS_.BLACK);
 
 let driverCard = vp.newCard(531, 437);
-driverCard.addField('CÓDIGO MOTORISTA');
+//driverCard.addField('CÓDIGO MOTORISTA');
 vp.connect(driverField, driverCard);
 
 let inspectField = root.addField('VISTORIA DIÁRIA');

@@ -121,11 +121,13 @@ export default function Card(ctx, root = false) {
         return false;
     };
     this.serialize = function () {
-        let response = { ctx: context };
-
         const sizeFields = fieldsArray.length;
-        if (sizeFields) response['fields'] = [];
 
+        let response = { 
+            ctx: context,
+            fields: []
+        };
+        
         for (let counterFields=0; counterFields<sizeFields; counterFields++) {
             response['fields'].push(fieldsArray[counterFields].serialize());
         }

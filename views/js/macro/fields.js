@@ -49,12 +49,12 @@ export default function Field(ctx) {
         const OFFSET = 25;
 
         const startX = position.left+16,
-              startY = position.top+12;
+              startY = position.top+11;
 
         const endX = (endLeft) - OFFSET;
 
         let endY = endTop;
-        if (mov === _MOV_.END) endY += 13;
+        if (mov === _MOV_.END) endY += 14;
 
         output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
     },
@@ -83,7 +83,7 @@ export default function Field(ctx) {
         card.makeConnection(context);
         _refresh();
 
-        expanded = true;
+        //expanded = true;
 
         const color = context.getColor();
         context.setColor(color);

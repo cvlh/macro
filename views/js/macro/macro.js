@@ -27,53 +27,77 @@ export default function Macro() {
         size = { width: 3840, height: 2160 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _expand_collapse = function(expanded, fields) {
+        const sizeElements = fields.length;
+        let counter;
+        
+        for (counter=0; counter<sizeElements; counter++) {
+            if (fields[counter].ctx.hasConnection()) {
+                _expand_collapse(fields[counter].ctx.getExpand(), fields[counter].conn.fields);
+            } else {
+                if (expanded) {
+                    //fields[counter].style.removeProperty('height');
+                } else {
+                    //fields[counter].style.height = '0';
+                }
+            }
+        }
+    },
+    _set_border_line = function(elements, index, color) {
+        const sizeElements = elements.length;
+        let counter, child;
+
+        for (counter=0; counter<sizeElements; counter++) {
+            child = elements[counter].childNodes.item(index);
+            child.style.borderLeftColor = color;
+        }
+    },
     _receive_events = function (evnt) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              targetClass = evnt.target.classList,
-              type = evnt.type;
+              targetClass = target.classList,
+              parent = target.parentElement,
+              props = parent['_ADDLOG_'];
 
         if (targetClass.contains('main-app-treeview-item')) {
             if (targetClass.contains('expand')) {
-                let elements, size, ids, divIndex, counter, child, 
-                    parentClass = evnt.target.parentElement.classList[0],
-                    color = target['_COLOR_'][0];
 
-                if (!parentClass) return;
-
-                elements = mainTreeViewItems.querySelectorAll('[class^="' +parentClass+ '."]');
-
-                size = elements.length;
-                if (!size) return;
-
-                switch (type) {
+                const status = props.ctx.getExpand()
+                switch (evnt.type) {
                     case 'click':
+                        //if (props.ctx.hasConnection()) { }
+                        _expand_collapse(status, props.conn.fields);
+
                         const expand = target.firstChild;
-                        const value = expand.style.getPropertyValue('transform');
-                        if (value) {
+                        if (status) {
                             expand.style.removeProperty('transform');
-                            for (counter=0; counter<size; counter++) {
-                                elements[counter].style.height = '0';
-                            }
                         } else {
                             expand.style.transform = 'rotate(90deg)';
-                            for (counter=0; counter<size; counter++) {
-                                elements[counter].style.removeProperty('height');
-                            }
                         }
+
+                        props.ctx.setExpand(!status);
                         break;
 
                     case 'mouseenter':
-                        color = target['_COLOR_'][1];
+                        if (!status) return;
+
+                        const parentClass = parent.classList[0];
+                        if (!parentClass) return;
+                        const ids = parentClass.slice(css_prefix.length).split('.');
+
+                        props['elements'] = mainTreeViewItems.querySelectorAll('[class^="' +parentClass+ '."]');
+                        props['index'] = ids.length;
+
+                        _set_border_line(props['elements'], props['index'], props['color'][1]);
+                        break;
 
                     case 'mouseleave':
-                        ids = parentClass.slice(css_prefix.length).split('.');
-                        divIndex = ids.length;
+                        if (props.hasOwnProperty('elements')) {
+                            _set_border_line(props['elements'], props['index'], props['color'][0]);
 
-                        for (counter=0; counter<size; counter++) {
-                            child = elements[counter].childNodes.item(divIndex);
-                            child.style.borderLeftColor = color;
+                            delete props.elements;
+                            delete props.index;
                         }
                         break;
                 }
@@ -90,10 +114,13 @@ export default function Macro() {
         }
         return result;
     },
-    _update = function(fields, fragment, props = { tab: [], color: null }) {
-        let counterFields, counterOffset, fieldRow, fieldOffset, fieldDiv, fieldPath, field, hasChild, isRoot, deepSize, deep, lightColor;
+    _update = function(fields, fragment, props = { tab: [], expand: true, color: null }) {
+        let counterFields, counterOffset, 
+            fieldRow, fieldOffset, fieldDiv, fieldPath, field, 
+            hasChild, isRoot, isExpand, deepSize, deep, lightColor;
 
         const rootFieldsSize = fields.length;
+
         for (counterFields=0; counterFields<rootFieldsSize; counterFields++) {
             field = fields[counterFields];
 
@@ -105,34 +132,42 @@ export default function Macro() {
             lightColor = props.color + '30';
 
             hasChild = false;
-            if (field.hasOwnProperty('conn') && field['conn'].hasOwnProperty('fields')) hasChild = true;
+            if (field.ctx.hasConnection()) hasChild = true;
 
             deepSize = props.tab.length;
             if (hasChild || isRoot) deepSize++;
 
-            fieldRow = addElement(fragment, 'div', deep + ' main-app-treeview-row');
-            fieldRow['_FIELD_'] = field.ctx;
-
+            fieldRow = addElement(fragment, 'div', deep+ ' main-app-treeview-row');
             fieldRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
+            if (!props.expand) fieldRow.style.height = '0';
+
+            fieldRow['_ADDLOG_'] = { 
+                ctx: field.ctx, 
+                conn: field.conn, 
+                color: [ lightColor, props.color ]
+            };
+
+            isExpand = true;
+            if (hasChild && !field.ctx.getExpand() && props.expand) {
+                props.expand = false;
+                isExpand = false;
+            }
 
             for (counterOffset=0; counterOffset<props.tab.length; counterOffset++) {
                 fieldOffset = addElement(fieldRow, 'div', 'main-app-treeview-item');
                 if (counterOffset > 0) fieldOffset.style.borderLeftColor = lightColor;
             }
             if (hasChild || isRoot) {
-                if (hasChild) {
-                    fieldOffset.classList.add('expand');
-                    fieldOffset['_COLOR_'] = [ lightColor, props.color ];
-                } else {
-                    fieldOffset.classList.add('none');
-                }
-                addElement(fieldOffset, 'div');
+                fieldOffset.classList.add((hasChild ? 'expand' : 'none'));
+                fieldOffset = addElement(fieldOffset, 'div');
+                if (props.expand) fieldOffset.style.transform = 'rotate(90deg)';
             }
 
             fieldDiv = addElement(fieldRow, 'div', 'main-app-treeview-item field');
             fieldDiv.textContent = field.ctx.getText();
             if (isRoot) fieldDiv.style.color = props.color;
             if (hasChild || isRoot) fieldDiv.style.fontWeight = '600';
+            if (!hasChild && !isRoot) fieldDiv.style.fontSize = '10px';
 
             fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
             fieldPath.style.color = props.color;
@@ -143,6 +178,7 @@ export default function Macro() {
 
             if (hasChild) _update(field['conn']['fields'], fragment, props);
 
+            if (!isExpand) props.expand = true;
             props.tab.pop();
         }
     },

@@ -120,21 +120,42 @@ export default function Card(ctx, root = false) {
         }
         return false;
     };
-    this.serialize = function () {
+    this.serialize = function (fragment, properties = {tab: [], expand: true, color: null}) {
         const sizeFields = fieldsArray.length;
+        let counterFields;
 
         let response = { 
             ctx: context,
             fields: []
         };
         
-        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
-            response['fields'].push(fieldsArray[counterFields].serialize());
+        for (counterFields=0; counterFields<sizeFields; counterFields++) {
+            properties.tab.push(counterFields+1);
+
+            response['fields'].push(fieldsArray[counterFields].serialize(fragment, properties));
+
+            properties.tab.pop();
         }
 
         return response;
     };
-    this.isRoot = function() { return rootCard; };
+    this.setExpand = function(status) {
+        const sizeFields = fieldsArray.length;
+        let counterFields;
+
+        for (counterFields=0; counterFields<sizeFields; counterFields++) {
+            fieldsArray[counterFields].setExpand(status);
+        }
+    };
+    this.setBorderColor = function(light, index, color) {
+        const sizeFields = fieldsArray.length;
+        let counterFields;
+
+        for (counterFields=0; counterFields<sizeFields; counterFields++) {
+            fieldsArray[counterFields].setBorderColor(light, index, color);
+        }
+    }
+    //this.isRoot = function() { return rootCard; };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
@@ -150,8 +171,9 @@ export default function Card(ctx, root = false) {
         items.appendChild(new_field.getFragment());
         return new_field;
     };
-    //this.getPosition = function() { return { left: position.left, top: position.top }; };
+    this.isRoot = function() { return rootCard; };
     this.removeField = function() { };
+    //this.getPosition = function() { return { left: position.left, top: position.top }; };
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!rootCard) {

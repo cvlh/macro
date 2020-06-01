@@ -12,11 +12,20 @@ export default function Field(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         item, index, description, output, remove,
+        treeviewRow, treeviewDeep,
         expanded = true,
         position = { top: 0, left: 0 },
         props = { color: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _deep = function(tab) {
+        let counter, result = '';
+        for (counter=0; counter<tab.length; counter++) {
+            result += tab[counter];
+            if (counter < tab.length-1) result += '.';
+        }
+        return result;
+    },
     _color = function(drag) {
         const color = context.getColor();
 
@@ -151,19 +160,115 @@ export default function Field(ctx) {
             return parent.infiniteLoop(target);
         }
     };
-    this.serialize = function () {
+    this.serialize = function (fragment, properties) {
+        let counterOffset, 
+            fieldOffset, fieldDiv, fieldPath, 
+            hasChild, isExpand, deepSize, deep, lightColor;
+
         let response = { ctx: context };
-        if (context.hasConnection()) response['conn'] = output['_CONNECTION_'].serialize();
         
+        treeviewDeep = properties.tab.length;
+
+        if (rootField) properties.color = props.color;
+        lightColor = properties.color + '30';
+
+        hasChild = context.hasConnection();
+
+        deepSize = properties.tab.length;
+        if (hasChild || rootField) deepSize++;
+
+        //fragment.appendChild(treeviewRow);
+        //treeviewRow.classList = deep+ ' main-app-treeview-row';
+        treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
+        treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
+        if (!properties.expand) treeviewRow.style.height = '0';
+
+        treeviewRow['_ADDLOG_'] = { 
+            ctx: context, 
+            color: [ lightColor, properties.color ]
+        };
+
+        isExpand = true;
+        if (hasChild && !expanded && properties.expand) {
+            properties.expand = false;
+            isExpand = false;
+        }
+
+        for (counterOffset=0; counterOffset<properties.tab.length; counterOffset++) {
+            fieldOffset = addElement(treeviewRow, 'div', 'main-app-treeview-item');
+            if (counterOffset > 0) fieldOffset.style.borderLeftColor = lightColor;
+        }
+        if (hasChild || rootField) {
+            fieldOffset.classList.add((hasChild ? 'expand' : 'none'));
+            fieldOffset = addElement(fieldOffset, 'div');
+            if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
+        }
+
+        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field');
+        fieldDiv.textContent = description.value;
+        if (rootField) fieldDiv.style.color = properties.color;
+        if (hasChild || rootField) fieldDiv.style.fontWeight = '600';
+        if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
+
+        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
+        fieldPath.style.color = properties.color;
+        fieldPath.textContent = _deep(properties.tab);
+
+        addElement(treeviewRow, 'div', 'main-app-treeview-item');
+        addElement(treeviewRow, 'div', 'main-app-treeview-item');
+
+        if (hasChild) output['_CONNECTION_'].serialize(fragment, properties);
+
+        if (!isExpand) properties.expand = true;
+
         return response;
     };
-    this.isRoot = function() { return rootField; };
+    this.setExpand = function(status) {
+        const hasChild = context.hasConnection();
+
+        if (!status) {
+            treeviewRow.style.height = 0;
+            if (hasChild) {
+                output['_CONNECTION_'].setExpand(status);
+            }
+        } else {
+            treeviewRow.style.removeProperty('height');
+            if (hasChild) {
+                output['_CONNECTION_'].setExpand(context.getExpand());
+            }
+        }
+    };
+    this.setBorderColor = function(light, index = null, color = null) {
+        if (color === null && index === null) {
+            color = (light ? context.getColor() + '30' : context.getColor());
+            index = treeviewDeep;
+        } else {
+            const child = treeviewRow.childNodes.item(index);
+            child.style.borderLeftColor = color;
+        }
+
+        if (context.hasConnection()) {
+            output['_CONNECTION_'].setBorderColor(light, index, color);
+        }
+    }
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
-    this.getText = function(text) { return description.value; };
+    //this.getText = function(text) { return description.value; };
 
-    this.setExpand = function(expand) { expanded = expand; };
+    this.toggleExpand = function(icon) { 
+        expanded = !expanded;
+
+        if (expanded) {
+            icon.style.transform = 'rotate(90deg)';
+        } else {
+            icon.style.removeProperty('transform');
+        }
+
+        if (context.hasConnection()) {
+            output['_CONNECTION_'].setExpand(expanded);
+        }
+    };
     this.getExpand = function() { return expanded; };
 
     this.setIndex = function(idx) { index.textContent = idx; };
@@ -199,5 +304,8 @@ export default function Field(ctx) {
         output['_CONNECTION_'] = null;
         output['_PATH_'] = main.newSVGPath();
         output.addEventListener('mousedown', _drag, { capture: false });
+
+        // TREEVIEW
+        //treeviewRow = document.createElement('div');
     })();
 }

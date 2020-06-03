@@ -12,7 +12,7 @@ export default function Field(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         item, index, description, output, remove,
-        treeviewRow, treeviewDeep,
+        treeviewRow = null, treeviewDeep,
         expanded = true,
         position = { top: 0, left: 0 },
         props = { color: null },
@@ -68,8 +68,14 @@ export default function Field(ctx) {
         output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
     },
     _refresh = function() {
+        const value = description.value;
         if (context.hasConnection()) {
-            output['_CONNECTION_'].setHeader(description.value);
+            output['_CONNECTION_'].setHeader(value);
+        }
+
+        if (treeviewRow !== null) {
+            const path = treeviewRow.querySelector('.field');
+            path.textContent = value;
         }
     };
 
@@ -207,15 +213,17 @@ export default function Field(ctx) {
         fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field');
         fieldDiv.textContent = description.value;
         if (rootField) fieldDiv.style.color = properties.color;
-        if (hasChild || rootField) fieldDiv.style.fontWeight = '600';
+        if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
         fieldPath.style.color = properties.color;
         fieldPath.textContent = _deep(properties.tab);
 
+        addElement(treeviewRow, 'div', 'main-app-treeview-item' + (!hasChild ? ' textbox' : ''));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
-        addElement(treeviewRow, 'div', 'main-app-treeview-item');
+
+        addElement(treeviewRow, 'div');
 
         if (hasChild) output['_CONNECTION_'].serialize(fragment, properties);
 
@@ -228,14 +236,10 @@ export default function Field(ctx) {
 
         if (!status) {
             treeviewRow.style.height = 0;
-            if (hasChild) {
-                output['_CONNECTION_'].setExpand(status);
-            }
+            if (hasChild) output['_CONNECTION_'].setExpand(status);
         } else {
             treeviewRow.style.removeProperty('height');
-            if (hasChild) {
-                output['_CONNECTION_'].setExpand(context.getExpand());
-            }
+            if (hasChild) output['_CONNECTION_'].setExpand(context.getExpand());
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {

@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 import { _DRAG_, _MOV_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
@@ -17,7 +17,7 @@ export default function Macro() {
     let mainApp, mainAppWrapper, mainAppSVG, 
         mainTreeView, mainTreeViewItems,
 
-        rootCard, treeView,
+        rootCard, 
         currentDrag = null,
         
         cardsArray = [],
@@ -26,9 +26,12 @@ export default function Macro() {
         size = { width: 3840, height: 2160 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-
     _receive_events = function (evnt) {
         evnt.stopPropagation();
+
+        /*if (evnt.type === 'resize') {
+            console.log(evnt.type);
+        }*/
 
         const target = evnt.target,
               targetClass = target.classList,
@@ -122,7 +125,7 @@ export default function Macro() {
 
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
     }
-    this.getDragType = function() { return _DRAG_.AREA };
+    this.getDragType = function() { return _DRAG_.AREA; };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.newCard = function(left, top) {
@@ -281,7 +284,7 @@ export default function Macro() {
 
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
-
+        
         document.body.appendChild(fragment);
         _resize();
         
@@ -289,6 +292,7 @@ export default function Macro() {
         mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
+        //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
 
         window.addEventListener('resize', _resize, { capture: true });
 
@@ -304,5 +308,6 @@ export default function Macro() {
             }
         }, { capture: true });
 
+        //context.setPosition(240, 0, transform, _MOV_.END);
     })();
 }

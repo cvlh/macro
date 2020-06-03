@@ -22,7 +22,7 @@ export default function Card(ctx, root = false) {
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
-    this.getDragType = function() { return _DRAG_.HEADER };
+    this.getDragType = function() { return _DRAG_.HEADER; };
     this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
         if (rootCard) return false;
@@ -180,9 +180,13 @@ export default function Card(ctx, root = false) {
         this.setHeader = function(text) {     
             title.textContent = text;
         };
-        this.getInputBounding = function() {     
+        this.getInputBounding = function() {    
             const rect = input.getBoundingClientRect();
             return { left: rect.left, top: rect.top }; 
+            
+            /*const top = position.top + header.offsetHeight + input.offsetTop;
+            const left = position.left + input.offsetLeft;
+            return { left: left, top: top }; */
         };
     }
 

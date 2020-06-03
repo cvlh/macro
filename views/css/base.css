@@ -53,7 +53,6 @@ html {
     --main-blue-med: #17a2b8;
     --main-blue-bold: #007bff
 }
-
 body {
     overflow: hidden;
     
@@ -68,6 +67,15 @@ body {
     /*background: var(--main-background);*/
     background-color: #F5F5F5;
 }
+
+::-webkit-scrollbar { width: 8px;}
+::-webkit-scrollbar-track { background-color: #f0f0f0; }
+::-webkit-scrollbar-thumb { 
+    border-radius: 5px;
+    background-color: #cdcdcd;
+}
+::-webkit-scrollbar-thumb:hover { background-color: #a6a6a6; }
+::-webkit-scrollbar-thumb:active { background-color: #606060; }
 
 .main-app {
     position: relative;
@@ -129,10 +137,13 @@ body {
     border-right: 1px solid #e5e5e5;
 
     position: relative;
-    /*overflow-y: scroll;*/
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
     .main-app-treeview-items {
-        padding: 0;
+        padding: 0 0 0 0;
 
         display: flex;
         flex-direction: column;
@@ -212,31 +223,32 @@ body {
             background-repeat: no-repeat;
             background-image: url(../img/none.png);
         }
-
         .main-app-treeview-item.field {
             padding: 0 0 0 0px;
-            /*cursor: pointer;*/
         }
-
+        .main-app-treeview-item.textbox {
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(../img/field/image.svg);
+        }
         .main-app-treeview-item-path {
             position: absolute;
             right: 0;
             top: 4px;
 
             font-size: 11px;
-            line-height: 12px;
+            line-height: 14px;
 
-            background-color: var(--main-background);
-            border-radius: 3px;
-            padding: 0 3px 0 1px;
+            background-color: var(--main-border-color);;
+            border-radius: 2px;
+            padding: 0 2px 0 1px;
             
             font-weight: 300;
             font-style: italic;
-            border: 1px solid #eee;
+            /*border: 1px solid #eee;*/
 
             display: none;
         }
-
 .app-cards {
     position: absolute;
     top: 0;

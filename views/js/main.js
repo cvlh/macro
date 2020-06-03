@@ -102,7 +102,6 @@ let inspectField = root.addField('VISTORIA DIÁRIA');
 
     vp.connect(inspectField, inspectCard);
 
-
 let workField = root.addField('EM TRABALHO');
 let rootCard = vp.newCard(1047, 619);
 
@@ -197,6 +196,3 @@ let checklist = main.newCard();
     //let serialize = vp.serialize();
     //console.log(serialize);
     //console.log(JSON.stringify(serialize));
-
-
-

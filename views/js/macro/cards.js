@@ -154,7 +154,7 @@ export default function Card(ctx, root = false) {
         for (counterFields=0; counterFields<sizeFields; counterFields++) {
             fieldsArray[counterFields].setBorderColor(light, index, color);
         }
-    }
+    };
     //this.isRoot = function() { return rootCard; };
 
     // PUBLIC //////////////////////////////////////////////////////////////////

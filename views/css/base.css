@@ -65,7 +65,7 @@ body {
     -webkit-tap-highlight-color: #0000001a;
 
     /*background: var(--main-background);*/
-    background-color: #F5F5F5;
+    /*background-color: #F5F5F5;*/
 }
 
 ::-webkit-scrollbar { width: 8px;}
@@ -85,54 +85,74 @@ body {
     padding: 0;
     border: 0;
 
-    display: block; 
+    display: grid; 
+
+    grid-template-columns: 240px auto 240px;
     /*border: 3px solid #00ff00;*/
 }
+.main-app-builder {
+    background-color: #F5F5F5;
+    overflow: hidden;
 
-.main-app-wrapper {
-    margin: 0;
-    padding: 0;
-    border: 0;
-
-    /*position: absolute;*/
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    /*border: 3px solid #0000ff;*/
-    /*box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);*/
-    transform-origin: 0 0;
-    background: url(../img/background.svg);
-
-    /*transition: 0.2s ease;*/
+    z-index: 1;
 }
-.main-app-svg {
-    z-index: 0;
-    pointer-events: none;
-    border: 1px solid #e5e5e5;
-    display: block;
-}
-    .main-app-svg-path {
-        stroke: var(--main-border-color-high);
-        stroke-width: 3px;
-        fill: none;
-        stroke-linejoin: round;
-        stroke-linecap: butt;
-        stroke-dasharray: 0.2%; 
+    .main-app-wrapper {
+        margin: 0;
+        padding: 0;
+        border: 0;
+
+        /*position: absolute;*/
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        /*border: 3px solid #0000ff;*/
+        /*box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);*/
+        transform-origin: 0 0;
+        background: url(../img/background.svg);
+
+        /*transition: 0.2s ease;*/
     }
-    .main-app-svg-path.linked { 
-        stroke-dasharray: none;
-        stroke-width: 2px;
+    .main-app-svg {
+        z-index: 0;
+        pointer-events: none;
+        border: 1px solid #e5e5e5;
+        display: block;
     }
-    .main-app-svg-path.connected { 
-        stroke-dasharray: none;
-        stroke-width: 4px;
-    }
-    .main-app-svg-path.error { 
-        stroke-dasharray: 2 15; 
-    }
+        .main-app-svg-path {
+            stroke: var(--main-border-color-high);
+            stroke-width: 3px;
+            fill: none;
+            stroke-linejoin: round;
+            stroke-linecap: butt;
+            stroke-dasharray: 0.2%; 
+        }
+        .main-app-svg-path.linked { 
+            stroke-dasharray: none;
+            stroke-width: 2px;
+        }
+        .main-app-svg-path.connected { 
+            stroke-dasharray: none;
+            stroke-width: 4px;
+        }
+        .main-app-svg-path.error { 
+            stroke-dasharray: 2 15; 
+        }
+.main-app-properties {
+   /* width: 240px;*/
+    background-color: #ffffff;
+    border-left: 1px solid #e5e5e5;
+
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+
+    z-index: 3;
+} 
 .main-app-treeview {
-    width: 240px;
+    /*width: 240px;*/
     background-color: #ffffff;
     border-right: 1px solid #e5e5e5;
 
@@ -141,6 +161,8 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
+
+    z-index: 2;
 }
     .main-app-treeview-items {
         padding: 0 0 0 0;

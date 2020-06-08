@@ -14,8 +14,10 @@ export default function Macro() {
     const context = this;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let mainApp, mainAppWrapper, mainAppSVG, 
+    let mainApp,
+        mainBuilder, mainAppWrapper, mainAppSVG, 
         mainTreeView, mainTreeViewItems,
+        mainProperties,
 
         rootCard, 
         currentDrag = null,
@@ -40,7 +42,8 @@ export default function Macro() {
 
         if (targetClass.contains('main-app-treeview-item')) {
             if (targetClass.contains('expand')) {
-                const status = props.ctx.getExpand()
+                //const status = props.ctx.getExpand()
+                const status = props.ctx.getProps('expanded');
                 switch (evnt.type) {
                     case 'click':
                         const icon = target.firstChild;
@@ -66,6 +69,12 @@ export default function Macro() {
                         path.style.display = 'none';
                         break;
                 }
+            } else {
+                switch (evnt.type) {
+                    case 'click':
+                        console.log('teste');
+                        break
+                }
             }
         }
     },
@@ -73,9 +82,11 @@ export default function Macro() {
         //const widthOptions = mainOptions.offsetWidth;
 
         mainTreeView.style.height = window.innerHeight + 'px';
-
-        mainApp.style.width = window.innerWidth + 'px';
-        mainApp.style.height = window.innerHeight + 'px';
+        mainBuilder.style.height = window.innerHeight + 'px';
+        mainProperties.style.height = window.innerHeight + 'px';
+        
+        //mainApp.style.width = window.innerWidth + 'px';
+        //mainApp.style.height = window.innerHeight + 'px';
     },
     _zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
@@ -274,17 +285,20 @@ export default function Macro() {
         const fragment = document.createDocumentFragment();
 
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
-        
-        mainAppWrapper = addElement(mainApp, 'div', 'main-app-wrapper');
 
+        mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
+        mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
+        mainProperties = addElement(mainApp, 'div', 'main-app-properties');
+
+        mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
+        
+        mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
-        mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
-        mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
-        
+
         document.body.appendChild(fragment);
         _resize();
         

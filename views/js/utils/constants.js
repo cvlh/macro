@@ -22,3 +22,11 @@ export const _COLORS_ = {
     BROWN:  '#795548',
     BLACK:  '#000000'
 }
+
+export const _TYPES_ = {
+    TEXT:      0,
+    NUMBER:    1,
+    DATE:      2,
+    PHOTO:     3,
+    SIGNATURE: 4
+}

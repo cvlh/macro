@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -13,9 +13,22 @@ export default function Field(ctx) {
     let fragment, 
         item, index, description, output, remove,
         treeviewRow = null, treeviewDeep,
-        expanded = true,
+        //expanded = true,
         position = { top: 0, left: 0 },
-        props = { color: null },
+        props = {
+            id: '',
+            type: _TYPES_.TEXT,
+            color: _COLORS_.BLACK,
+            info: '',
+            help: '',
+            require: false,
+            expanded: true,
+            visibility: {
+                execution: 0,
+                flags: 0,
+                fields: []
+            }
+        },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _deep = function(tab) {
@@ -69,9 +82,7 @@ export default function Field(ctx) {
     },
     _refresh = function() {
         const value = description.value;
-        if (context.hasConnection()) {
-            output['_CONNECTION_'].setHeader(value);
-        }
+        if (context.hasConnection()) output['_CONNECTION_'].setHeader(value);
 
         if (treeviewRow !== null) {
             const path = treeviewRow.querySelector('.field');
@@ -171,7 +182,7 @@ export default function Field(ctx) {
             fieldOffset, fieldDiv, fieldPath, 
             hasChild, isExpand, deepSize, deep, lightColor;
 
-        let response = { ctx: context };
+        //let response = { ctx: context };
         
         treeviewDeep = properties.tab.length;
 
@@ -185,6 +196,8 @@ export default function Field(ctx) {
 
         //fragment.appendChild(treeviewRow);
         //treeviewRow.classList = deep+ ' main-app-treeview-row';
+        props.id = _deep(properties.tab);
+
         treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
         if (!properties.expand) treeviewRow.style.height = '0';
@@ -195,7 +208,7 @@ export default function Field(ctx) {
         };
 
         isExpand = true;
-        if (hasChild && !expanded && properties.expand) {
+        if (hasChild && !props.expanded && properties.expand) {
             properties.expand = false;
             isExpand = false;
         }
@@ -218,7 +231,7 @@ export default function Field(ctx) {
 
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
         fieldPath.style.color = properties.color;
-        fieldPath.textContent = _deep(properties.tab);
+        fieldPath.textContent = props.id; //_deep(properties.tab);
 
         addElement(treeviewRow, 'div', 'main-app-treeview-item' + (!hasChild ? ' textbox' : ''));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
@@ -229,7 +242,7 @@ export default function Field(ctx) {
 
         if (!isExpand) properties.expand = true;
 
-        return response;
+        return context;
     };
     this.setExpand = function(status) {
         const hasChild = context.hasConnection();
@@ -239,7 +252,7 @@ export default function Field(ctx) {
             if (hasChild) output['_CONNECTION_'].setExpand(status);
         } else {
             treeviewRow.style.removeProperty('height');
-            if (hasChild) output['_CONNECTION_'].setExpand(context.getExpand());
+            if (hasChild) output['_CONNECTION_'].setExpand(context.getProps('expanded'));
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {
@@ -254,26 +267,26 @@ export default function Field(ctx) {
         if (context.hasConnection()) {
             output['_CONNECTION_'].setBorderColor(light, index, color);
         }
-    }
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
     //this.getText = function(text) { return description.value; };
 
     this.toggleExpand = function(icon) { 
-        expanded = !expanded;
+        props.expanded = !props.expanded;
 
-        if (expanded) {
+        if (props.expanded) {
             icon.style.transform = 'rotate(90deg)';
         } else {
             icon.style.removeProperty('transform');
         }
 
         if (context.hasConnection()) {
-            output['_CONNECTION_'].setExpand(expanded);
+            output['_CONNECTION_'].setExpand(props.expanded);
         }
     };
-    this.getExpand = function() { return expanded; };
+    //this.getExpand = function() { return expanded; };
 
     this.setIndex = function(idx) { index.textContent = idx; };
     this.check = function(target) {
@@ -286,6 +299,21 @@ export default function Field(ctx) {
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         }
+    };
+
+
+    this.setProps = function () {
+
+    };
+    this.getProps = function (prop = null) {
+        if (prop === null) {
+            return props;
+        } else {
+            if (props.hasOwnProperty(prop)) {
+                return props[prop];
+            }
+        }
+        return null;
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

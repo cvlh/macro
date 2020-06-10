@@ -5,7 +5,7 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
-import TreeView from './treeview.js';
+import PropsView from './propsview.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro() {
@@ -15,8 +15,8 @@ export default function Macro() {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp,
-        mainBuilder, mainAppWrapper, mainAppSVG, 
         mainTreeView, mainTreeViewItems,
+        mainBuilder, mainAppWrapper, mainAppSVG, 
         mainProperties,
 
         rootCard, 
@@ -72,7 +72,10 @@ export default function Macro() {
             } else {
                 switch (evnt.type) {
                     case 'click':
-                        console.log('teste');
+                        const properties = props.ctx.getProps();
+
+                        mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
+
                         break
                 }
             }
@@ -322,6 +325,8 @@ export default function Macro() {
             }
         }, { capture: true });
 
+        let x = new PropsView(context);
+        mainProperties.appendChild(x.getFragment());
         //context.setPosition(240, 0, transform, _MOV_.END);
     })();
 }

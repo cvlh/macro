@@ -27,7 +27,8 @@
 }
 
 * { 
-    font-family: 'ADDLOG-FONT';
+    font-family: 'ADDLOG-FONT', sans-serif;
+    /*font-family: 'Inter', sans-serif;*/
     box-sizing: border-box;
 }
 
@@ -150,7 +151,65 @@ body {
     scrollbar-width: thin;
 
     z-index: 3;
-} 
+}
+    .main-app-properties-content {
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .main-app-properties-row {
+        display: grid;
+        grid-template-columns: repeat(28,8px);
+        grid-template-rows: 30px;
+        padding-left: 7px;
+        /*padding-right: 8px;*/
+        align-items: center;
+        font-size: 11px;
+        color: #333333;
+        overflow: hidden;
+    }
+        .main-app-properties-label {
+            font-weight: 600;
+            text-transform: capitalize;
+
+            align-self: center;
+
+            grid-column-start: 2;
+            grid-column-end: span 10;
+
+            overflow: hidden;
+        }
+        .main-app-properties-text {
+            font-weight: 400;
+            text-transform: capitalize;
+
+            align-self: center;
+
+            grid-column-start: 13;
+            grid-column-end: span 15;
+
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .main-app-properties-checkbox {
+            /*grid-column-start: 2;
+            grid-column-end: span 2;*/
+            margin: auto;
+            padding: 0;
+        }
+        .main-app-properties-checkbox-label {
+            font-weight: 300;
+            
+            /*grid-column-start: 5;
+            grid-column-end: span 23;*/
+
+            align-self: center;
+
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 .main-app-treeview {
     /*width: 240px;*/
     background-color: #ffffff;
@@ -163,6 +222,7 @@ body {
     scrollbar-width: thin;
 
     z-index: 2;
+    color: #333333;
 }
     .main-app-treeview-items {
         padding: 0 0 0 0;
@@ -170,7 +230,7 @@ body {
         display: flex;
         flex-direction: column;
     }
-        .main-app-treeview-empty-row {
+        /*.main-app-treeview-empty-row {
             display: grid;
             overflow: hidden;
             height: 16px;
@@ -182,7 +242,7 @@ body {
             font-weight: 400;
             text-transform: uppercase;
             color: var(--main-font-color-low);
-        }
+        }*/
         .main-app-treeview-row {
             display: grid;
             height: 22px;

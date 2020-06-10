@@ -13,7 +13,6 @@ export default function Field(ctx) {
     let fragment, 
         item, index, description, output, remove,
         treeviewRow = null, treeviewDeep,
-        //expanded = true,
         position = { top: 0, left: 0 },
         props = {
             id: '',

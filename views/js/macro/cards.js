@@ -36,7 +36,7 @@ export default function Card(ctx, root = false) {
         input.classList.add('linked');
         input['_CONNECTION_'] = output;
     };
-    this.clearConnection =  function() { 
+    this.clearConnection =  function() {
         //input.classList.remove('linked');
         input['_CONNECTION_'] = null; 
 
@@ -86,7 +86,7 @@ export default function Card(ctx, root = false) {
 
         card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
     };
-    this.setColor = function(color) {    
+    this.setColor = function(color) {
         if (!rootCard) {   
             const size = fieldsArray.length;
             for (let counter=0; counter<size; counter++) {

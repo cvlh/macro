@@ -52,7 +52,7 @@ html {
     --main-yellow-bold: #ffc107;
 
     --main-blue-med: #17a2b8;
-    --main-blue-bold: #007bff
+    --main-blue-bold: #007bff;
 }
 body {
     overflow: hidden;
@@ -88,7 +88,7 @@ body {
 
     display: grid; 
 
-    grid-template-columns: 240px auto 240px;
+    grid-template-columns: 240px auto 233px;
     /*border: 3px solid #00ff00;*/
 }
 .main-app-builder {
@@ -147,7 +147,7 @@ body {
     position: relative;
 
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     scrollbar-width: thin;
 
     z-index: 3;
@@ -155,18 +155,80 @@ body {
     .main-app-properties-content {
         padding: 8px 0;
         border-bottom: 1px solid #e5e5e5;
+        color: #333333;
     }
+    .main-app-properties-content.disabled,
+    .main-app-properties-content.disabled input {
+        background-color: #FAFAFA;
+        color: #9E9E9E;
+        pointer-events: none;
+    }
+
     .main-app-properties-row {
         display: grid;
-        grid-template-columns: repeat(28,8px);
-        grid-template-rows: 30px;
-        padding-left: 7px;
+        grid-template-columns: repeat(28, 8px);
+        grid-template-rows: 28px;
+        /*padding-left: 7px;*/
         /*padding-right: 8px;*/
         align-items: center;
-        font-size: 11px;
-        color: #333333;
         overflow: hidden;
+
+        font-size: 11px;
     }
+        .main-app-properties-row textarea {
+            grid-column-start: 2;
+            grid-column-end: span 26;
+
+            grid-row-start: 1;
+            grid-row-end: 3;
+
+            border: 1px solid var(--main-border-color);
+            border-radius: 4px;
+            padding: 2px 5px;
+
+            width: 208px;
+            height: 48px;
+            resize: none;
+            
+            scrollbar-width: thin;
+
+            font-size: 11px;
+            font-weight: 300;
+            color: #333333;
+        }
+        .main-app-properties-row input {
+            font-size: 11px;
+            font-weight: 300;
+            color: #333333;
+        }
+        .main-app-properties-row input[type=text] {
+            grid-column-start: 2;
+            grid-column-end: span 26;
+
+            border: 1px solid var(--main-border-color);
+            border-radius: 4px;
+            height: 24px;
+            padding: 2px 5px;
+        }
+        .main-app-properties-row input[type=checkbox], 
+        .main-app-properties-row input[type=radio] {
+            margin: auto;
+            padding: 0;
+        }
+        .main-app-properties-row input[type=checkbox] + label,
+        .main-app-properties-row input[type=radio] + label {
+            font-weight: 300;
+            align-self: center;
+
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .main-app-properties-row input[type=checkbox]:checked + label,
+        .main-app-properties-row input[type=radio]:checked + label {
+            font-weight: 600;
+        }
         .main-app-properties-label {
             font-weight: 600;
             text-transform: capitalize;
@@ -191,25 +253,31 @@ body {
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .main-app-properties-checkbox {
-            /*grid-column-start: 2;
-            grid-column-end: span 2;*/
-            margin: auto;
-            padding: 0;
-        }
-        .main-app-properties-checkbox-label {
-            font-weight: 300;
-            
-            /*grid-column-start: 5;
-            grid-column-end: span 23;*/
+        .main-app-properties-color {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            opacity: 0.3;
 
-            align-self: center;
+            border-width: 3px;
+            border-style: solid;
+            border-color: #ffffff;
 
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            margin: 0 1px;
+
+            background-position: center center;
+            background-repeat: no-repeat;
+
+            transition: .2s opacity, background-image, border-radius linear;
+
+            cursor: pointer;
         }
+        .main-app-properties-color:hover { opacity: 1; }
+        .main-app-properties-color.selected {
+            opacity: 1;
+            background-image: url(../img/check.png);
+        }
+
 .main-app-treeview {
     /*width: 240px;*/
     background-color: #ffffff;
@@ -525,6 +593,7 @@ body {
         .app-cards-bottom-add:hover {
             background-color: #C8E6C9;
         }
+
 /*// AUX CSS /////////////////////////////////////////////////////////////////*/
 .remove-focus-select {
     -moz-user-select: none;

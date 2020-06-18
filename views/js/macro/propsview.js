@@ -2,6 +2,7 @@
 
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
+import { _COLORS_ } from '../utils/constants.js';
 
 export default function PropsView(ctx) {
 
@@ -20,7 +21,7 @@ export default function PropsView(ctx) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let content, label, text;
+        let content, label, text, position;
 
         fragment = document.createDocumentFragment();
 
@@ -46,25 +47,63 @@ export default function PropsView(ctx) {
             label = addElement(rowcolor, 'div', 'main-app-properties-label');
             label.textContent = _I18N_['field_color'];
 
+            rowcolor = addElement(content, 'div', 'main-app-properties-row');
+            position = 3;
+            for (let color in _COLORS_) {
+                label = addElement(rowcolor, 'div', 'main-app-properties-color');
+                label.style.backgroundColor = _COLORS_[color];
+                label.style.gridColumn = position +' / span 2';
+                position += 3;
+
+                if (color === 'INDIGO') {
+                    label.classList.add('selected');
+                    label.style.borderColor = label.style.backgroundColor;
+                }
+            }
+
+            
+
+            /*label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '6 / 8';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '9 / 11';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '12 / 14';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '15 / 17';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '18 / 20';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '21 / 23';
+
+            label = addElement(rowcolor, 'div');
+            label.style.gridColumn= '24 / 26';*/
         //row = addElement(fragment, 'div', 'main-app-properties-row');
 
-        rowType = addElement(fragment, 'div', 'main-app-properties-row');
-        label = addElement(rowType, 'div', 'main-app-properties-label');
-        label.textContent = _I18N_['field_type'];
+        content = addElement(fragment, 'div', 'main-app-properties-content');
+
+            rowType = addElement(content, 'div', 'main-app-properties-row');
+            label = addElement(rowType, 'div', 'main-app-properties-label');
+            label.textContent = _I18N_['field_type'];
   
         //
-        rowRequire = addElement(fragment, 'div', 'main-app-properties-row');
-        label = addElement(rowRequire, 'input', 'main-app-properties-checkbox');
-        label.setAttribute('id', 'require_checkbox');
-        label.setAttribute('type', 'checkbox');
-        label.style.gridColumnStart = '2';
-        label.style.gridColumnEnd = 'span 2';
+            rowRequire = addElement(content, 'div', 'main-app-properties-row');
+            label = addElement(rowRequire, 'input');
+            label.setAttribute('id', 'require_checkbox');
+            label.setAttribute('type', 'checkbox');
+            label.style.gridColumnStart = '2';
+            label.style.gridColumnEnd = 'span 2';
 
-        text = addElement(rowRequire, 'label', 'main-app-properties-checkbox-label');
-        text.setAttribute('for', 'require_checkbox');
-        text.style.gridColumnStart = '5';
-        text.style.gridColumnEnd = 'span 23';
-        text.textContent = _I18N_['field_require'];
+            text = addElement(rowRequire, 'label', 'main-app-properties-checkbox-label');
+            text.setAttribute('for', 'require_checkbox');
+            text.style.gridColumnStart = '5';
+            text.style.gridColumnEnd = 'span 23';
+            text.textContent = _I18N_['field_require'];
 
         content = addElement(fragment, 'div', 'main-app-properties-content');
 
@@ -72,10 +111,20 @@ export default function PropsView(ctx) {
             label = addElement(rowInfo, 'div', 'main-app-properties-label');
             label.textContent = _I18N_['field_info'];
 
+            rowInfo = addElement(content, 'div', 'main-app-properties-row');
+            label = addElement(rowInfo, 'input');
+            label.setAttribute('type', 'text');
+
             rowHelp = addElement(content, 'div', 'main-app-properties-row');
             label = addElement(rowHelp, 'div', 'main-app-properties-label');
             label.textContent = _I18N_['field_help'];
-  
+
+            rowHelp = addElement(content, 'div', 'main-app-properties-row');
+            rowHelp.style.gridTemplateRows = '28px 28px';
+            label = addElement(rowHelp, 'textarea');
+            label.setAttribute('rows', '3');
+            label.setAttribute('maxlength', '128');
+
         //row = addElement(fragment, 'div', 'main-app-properties-row');
 
         content = addElement(fragment, 'div', 'main-app-properties-content');

@@ -53,10 +53,7 @@ export default function Field(ctx) {
             }
 
             output['_PATH_'].style.stroke = color;
-            description.style.outlineColor = color;
-
         } else {
-            description.style.removeProperty('outline-color');
             output.style.removeProperty('background-color');
             output['_PATH_'].style.removeProperty('stroke');
         }
@@ -87,6 +84,11 @@ export default function Field(ctx) {
             const path = treeviewRow.querySelector('.field');
             path.textContent = value;
         }
+    },
+    _setVisibility = function() {
+        this.style.backgroundColor = context.getColor();
+        this.style.color = '#ffffff';
+        this.style.opacity = '1';
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -267,7 +269,17 @@ export default function Field(ctx) {
             output['_CONNECTION_'].setBorderColor(light, index, color);
         }
     };
-
+    this.setVisibilityMode = function(status) {
+        if (status) {
+            item.classList.add('visibility');
+            description.setAttribute('disabled', true);
+            item.addEventListener('click', _setVisibility, { capture: false });
+        } else {
+            item.classList.remove('visibility');
+            description.removeAttribute('disabled');
+            item.removeEventListener('click', _setVisibility, { capture: false });
+        }
+    };
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
     //this.getText = function(text) { return description.value; };
@@ -320,11 +332,12 @@ export default function Field(ctx) {
         fragment = document.createDocumentFragment();
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
-        item.setAttribute('draggable', true);
+        //item.setAttribute('draggable', true);
 
         index = addElement(item, 'div', 'app-cards-content-item-index');
 
-        description = addElement(item, 'input', 'app-cards-content-item-description');
+        //description = addElement(item, 'input', 'app-cards-content-item-description');
+        description = addElement(item, 'input');
         description.setAttribute('maxlength', '64');
         description.addEventListener('keyup', _refresh, { capture: false });
 
@@ -336,7 +349,5 @@ export default function Field(ctx) {
         output['_PATH_'] = main.newSVGPath();
         output.addEventListener('mousedown', _drag, { capture: false });
 
-        // TREEVIEW
-        //treeviewRow = document.createElement('div');
     })();
 }

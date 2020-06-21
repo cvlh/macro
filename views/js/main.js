@@ -6,193 +6,220 @@ import { _COLORS_ } from './utils/constants.js';
 let vp = new Macro();
 
 let root = vp.newCard(10, 845);
+let rootCard, field, card;
 
 let startField = root.addField('INICIAR');
     startField.setColor(_COLORS_.RED);
 
-    let startCard = vp.newCard(340, 19);
-    startCard.addField('CONTROLE');
-
-    let cdeField = startCard.addField('CDE M2 V43');
-    let cdeCard = vp.newCard(741, 36);
-    cdeCard.addField('INICIAR');
-    cdeCard.addField('CANCELAR');
-    vp.connect(cdeField, cdeCard);
-
-    let centroField = startCard.addField('CD CENTRO RESUL');
-    let centroCard = vp.newCard(740, 176);
-    centroCard.addField('COLETA DOMICILIAR');
-    centroCard.addField('COLETA DIVERSOS');
-    centroCard.addField('COLETA SELECTIVA');
-    vp.connect(centroField, centroCard);
-
-    startCard.addField('CD UT');
-    startCard.addField('CD SETOR');
-    startCard.addField('KM INICIAL');
-
-vp.connect(startField, startCard);
+    rootCard = vp.newCard(340, 19, startField);
+    field = rootCard.addField('CONTROLE');
+    field = rootCard.addField('CDE M2 V43');
+        card = vp.newCard(741, 36, field);
+        card.addField('INICIAR');
+        card.addField('CANCELAR');
+        //vp.connect(field, card);
+    field = rootCard.addField('CD CENTRO RESUL');
+        card = vp.newCard(740, 176, field);
+        card.addField('COLETA DOMICILIAR');
+        card.addField('COLETA DIVERSOS');
+        card.addField('COLETA SELECTIVA');
+        //vp.connect(field, card);
+    field = rootCard.addField('CD UT');
+    field = rootCard.addField('CD SETOR');
+    field = rootCard.addField('KM INICIAL');
+//vp.connect(startField, rootCard);
 
 let driverField = root.addField('MOTORISTA');
     driverField.setColor(_COLORS_.BLACK);
-
-let driverCard = vp.newCard(531, 437);
-//driverCard.addField('CÓDIGO MOTORISTA');
-vp.connect(driverField, driverCard);
+    rootCard = vp.newCard(531, 437, driverField);
+    field = rootCard.addField('CÓDIGO MOTORISTA');
+//vp.connect(driverField, rootCard);
 
 let inspectField = root.addField('VISTORIA DIÁRIA');
     inspectField.setColor(_COLORS_.PURPLE);
-
-    let inspectCard = vp.newCard(1397, 86);
-
-        let fuelField = inspectCard.addField('COMBUSTÍVEL');
-        let fuelCard = vp.newCard(2380, 24);
-            fuelCard.addField('COMPLETO');
-            fuelCard.addField('MEIO TANQUE');
-            fuelCard.addField('1/4 de TANQUE');
-            fuelCard.addField('RESERVA');
-            fuelCard.addField('VAZIO');
-        vp.connect(fuelField, fuelCard); 
-
-        let diferencialField = inspectCard.addField('DIFERENCIAL');
-        let diferencialCard = vp.newCard(2380, 253);
-            diferencialCard.addField('OK');
-            diferencialCard.addField('FAZENDO BARULHO');
-            diferencialCard.addField('VAZAMENTO DE ÓLEO');
-        vp.connect(diferencialField, diferencialCard); 
-
-        let gearboxField = inspectCard.addField('CAIXA DE CÂMBIO');
-        let gearboxCard = vp.newCard(2380, 417);
-            gearboxCard.addField('OK');
-            gearboxCard.addField('FAZENDO BARULHO');
-            gearboxCard.addField('ESCAPANDO MARCHA');
-            gearboxCard.addField('NAO ENTRA MARCHA');
-            gearboxCard.addField('VAZAMENTO');
-        vp.connect(gearboxField, gearboxCard);
-
-        let engineField = inspectCard.addField('ÓLEO DO MOTOR');
-        let engineCard = vp.newCard(2380, 643);
-            engineCard.addField('OK');
-            engineCard.addField('NÍVEL BAIXO');
-        vp.connect(engineField, engineCard);
-
-        let hydraulicField = inspectCard.addField('ÓLEO HIDRÁULICO');
-        let hydraulicCard = vp.newCard(2380, 779);
-            hydraulicCard.addField('OK');
-            hydraulicCard.addField('NÍVEL BAIXO');
-        vp.connect(hydraulicField, hydraulicCard);
-
-        let greaseField = inspectCard.addField('GRAXA SAPATAS');
-        let greaseCard = vp.newCard(2380, 915);
-            greaseCard.addField('ENGRAXADO');
-            greaseCard.addField('RUIM');
-        vp.connect(greaseField, greaseCard);
-
-        let cameraField = inspectCard.addField('CAMERA DE RÉ');
-        let cameraCard = vp.newCard(2380, 1051);
-            cameraCard.addField('FUNCIONANDO');
-            cameraCard.addField('COM PROBLEMAS');
-        vp.connect(cameraField, cameraCard);
-
-        let waterField = inspectCard.addField('ÁGUA DO RADIADOR');
-        let waterCard = vp.newCard(2380, 1190);
-            waterCard.addField('OK');
-            waterCard.addField('NÍVEL BAIXO');
-            waterCard.addField('VAZAMENTO');
-        vp.connect(waterField, waterCard);
-
-    vp.connect(inspectField, inspectCard);
+    rootCard = vp.newCard(1304, 43, inspectField);
+        field = rootCard.addField('COMBUSTÍVEL');
+            card = vp.newCard(2197, 7, field);
+            card.addField('COMPLETO');
+            card.addField('MEIO TANQUE');
+            card.addField('1/4 de TANQUE');
+            card.addField('RESERVA');
+            card.addField('VAZIO');
+            //vp.connect(field, card); 
+        field = rootCard.addField('DIFERENCIAL');
+            card = vp.newCard(2197, 206, field);
+            card.addField('OK');
+            card.addField('FAZENDO BARULHO');
+            card.addField('VAZAMENTO DE ÓLEO');
+            //vp.connect(field, card); 
+        field = rootCard.addField('CAIXA DE CÂMBIO');
+            card = vp.newCard(2197, 344, field);
+            card.addField('OK');
+            card.addField('FAZENDO BARULHO');
+            card.addField('ESCAPANDO MARCHA');
+            card.addField('NAO ENTRA MARCHA');
+            card.addField('VAZAMENTO');
+            //vp.connect(field, card);
+        field = rootCard.addField('ÓLEO DO MOTOR');
+            card = vp.newCard(2197, 545, field);
+            card.addField('OK');
+            card.addField('NÍVEL BAIXO');
+            //vp.connect(field, card);
+        field = rootCard.addField('ÓLEO HIDRÁULICO');
+            card = vp.newCard(2197, 653, field);
+            card.addField('OK');
+            card.addField('NÍVEL BAIXO');
+            //vp.connect(field, card);
+        field = rootCard.addField('GRAXA SAPATAS');
+            card = vp.newCard(2197, 759, field);
+            card.addField('ENGRAXADO');
+            card.addField('RUIM');
+            //vp.connect(field, card);
+        field = rootCard.addField('CAMERA DE RÉ');
+            card = vp.newCard(2197, 866, field);
+            card.addField('FUNCIONANDO');
+            card.addField('COM PROBLEMAS');
+            //vp.connect(field, card);
+        field = rootCard.addField('ÁGUA DO RADIADOR');
+            card = vp.newCard(2197, 976, field);
+            card.addField('OK');
+            card.addField('NÍVEL BAIXO');
+            card.addField('VAZAMENTO');
+            //vp.connect(field, card);
+        field = rootCard.addField('FARÓIS E LANTERNAS');
+            card = vp.newCard(2197, 1114, field);
+            card.addField('FUNCIONANDO');
+            card.addField('COM PROBLEMAS');
+            //vp.connect(field, card);
+        field = rootCard.addField('PRESSÃO PNEU');
+            card = vp.newCard(2197, 1221, field);
+            card.addField('OK');
+            card.addField('IRREGULAR');
+            //vp.connect(field, card);
+        field = rootCard.addField('MOLAS');
+            card = vp.newCard(2197, 1332, field);
+            card.addField('OK');
+            card.addField('COM PROBLEMAS');
+            //vp.connect(field, card);
+        field = rootCard.addField('EXTINTOR');
+            card = vp.newCard(2197, 1441, field);
+            card.addField('OK');
+            card.addField('VENCIDO');
+            card.addField('VAZIO');
+            card.addField('SEM LACRE');
+            //vp.connect(field, card);
+        field = rootCard.addField('DOCUMENTOS DO VEÍCULO');
+            card = vp.newCard(2197, 1609, field);
+            card.addField('OK');
+            card.addField('VENCIDO');
+            card.addField('NÃO ENCONTRADO');
+            //vp.connect(field, card);
+        field = rootCard.addField('TEMPERATURA DO MOTOR');
+            card = vp.newCard(2197, 1750, field);
+            card.addField('OK');
+            card.addField('ESQUENTANDO');
+            //vp.connect(field, card);
+    //vp.connect(inspectField, rootCard);
 
 let workField = root.addField('EM TRABALHO');
-let rootCard = vp.newCard(1047, 619);
-
-    rootCard.addField('INÍCIO COLETA');
-    rootCard.addField('FIM COLETA');
-    rootCard.addField('TRÂNSITO PARA DESCARGA');
-    rootCard.addField('INÍCIO DESCARGA');
-
-let endDischargeField = rootCard.addField('FIM DESCARGA');
-let endDischargeCard = vp.newCard(1431, 880);
-    endDischargeCard.addField('PESO');
-    endDischargeCard.addField('TICKET');
-    vp.connect(endDischargeField, endDischargeCard); 
-
-    rootCard.addField('TRÂNSITO LOCAL');
-    rootCard.addField('INÍCIO ABASTECIMENTO');
-
-let endFuelField = rootCard.addField('FIM ABASTECIMENTO');
-    let endFuelCard = vp.newCard(1450, 1040);
-    endFuelCard.addField('LITROS');
-    vp.connect(endFuelField, endFuelCard); 
-
-    rootCard.addField('COND LOCAIS');
-    rootCard.addField('INÍCIO REFEIÇÃO');
-    rootCard.addField('FIM REFEIÇÃO');
-    rootCard.addField('CAFÉ');
-    rootCard.addField('A DISPOSIÇÃO');
-    rootCard.addField('PEDIDO DE SOS');
-    rootCard.addField('INÍCIO SOS');
-    rootCard.addField('FIM SOS');
-    rootCard.addField('FISCALIZAÇÃO');
-    rootCard.addField('OBSERVAÇÕES');
-    rootCard.addField('TROCA MOTORISTA');
-    rootCard.addField('SAIR TRABALHO');
-    rootCard.addField('VERIFICA COLETA');
-vp.connect(workField, rootCard); 
-workField.setColor(_COLORS_.INDIGO);
+    workField.setColor(_COLORS_.INDIGO);
+    
+    rootCard = vp.newCard(876, 620, workField);
+    field = rootCard.addField('INÍCIO COLETA');
+    field = rootCard.addField('FIM COLETA');
+    field = rootCard.addField('TRÂNSITO PARA DESCARGA');
+    field = rootCard.addField('INÍCIO DESCARGA');
+    field = rootCard.addField('FIM DESCARGA');
+        card = vp.newCard(1284, 618, field);
+        card.addField('NR TICKET');
+        card.addField('PESO KG');
+        //vp.connect(field, card); 
+    field = rootCard.addField('TRÂNSITO LOCAL');
+    field = rootCard.addField('INÍCIO ABASTECIMENTO');
+    field = rootCard.addField('FIM ABASTECIMENTO');
+        card = vp.newCard(1284, 740, field);
+        card.addField('QTDE LITROS');
+        //vp.connect(field, card); 
+    field = rootCard.addField('COND LOCAIS');
+    field = rootCard.addField('INÍCIO REFEIÇÃO');
+        card = vp.newCard(1284, 838, field);
+        card.addField('CÓDIGO PONTO MOTORISTA');
+        card.addField('CÓDIGO PONTO COLETOR 1');
+        card.addField('CÓDIGO PONTO COLETOR 2');
+        card.addField('CÓDIGO PONTO COLETOR 3');
+        card.addField('CÓDIGO PONTO COLETOR 4');
+        //vp.connect(field, card); 
+    field = rootCard.addField('FIM REFEIÇÃO');
+        card = vp.newCard(1284, 1046, field);
+        card.addField('CÓDIGO PONTO MOTORISTA');
+        card.addField('CÓDIGO PONTO COLETOR 1');
+        card.addField('CÓDIGO PONTO COLETOR 2');
+        card.addField('CÓDIGO PONTO COLETOR 3');
+        card.addField('CÓDIGO PONTO COLETOR 4');
+        //vp.connect(field, card); 
+    field = rootCard.addField('CAFÉ');
+    field = rootCard.addField('A DISPOSIÇÃO');
+    field = rootCard.addField('PEDIDO DE SOS');
+    field = rootCard.addField('INÍCIO SOS');
+    field = rootCard.addField('FIM SOS');
+    field = rootCard.addField('FISCALIZAÇÃO');
+        card = vp.newCard(1284, 1250, field);
+        card.addField('CÓDIGO FISCAL');
+        card.addField('OBSERVAÇÕES');
+        //vp.connect(field, card); 
+    field = rootCard.addField('OBSERVAÇÕES');
+    field = rootCard.addField('TROCA MOTORISTA');
+    field = rootCard.addField('SAIR TRABALHO');
+    field = rootCard.addField('VERIFICA COLETA');
+//vp.connect(workField, rootCard); 
 
 
 let changeField = root.addField('TROCA MOTORISTA');
-    let changeCard = vp.newCard(1409, 1613);
-    changeCard.addField('SENHA MOTORISTA');
-    vp.connect(changeField, changeCard);
-changeField.setColor(_COLORS_.TEAL);
-
+    changeField.setColor(_COLORS_.TEAL);
+    rootCard = vp.newCard(530, 1122, changeField);
+    field = rootCard.addField('SENHA MOTORISTA');
+//vp.connect(changeField, changeCard);
 
 let maintenanceField = root.addField('EM MANUTENÇÃO');
-    let maintenanceCard = vp.newCard(1406, 1849);
-    maintenanceCard.addField('MANUTENÇÃO DENTRO DO TURNO');
-    maintenanceCard.addField('TROCA DE PNEUS');
-    maintenanceCard.addField('LAVAGEM');
-    maintenanceCard.addField('MANUTENÇÃO FORA DO TURNO');
-    maintenanceCard.addField('TROCA DE ÓLEO');
-    maintenanceCard.addField('SAIR MANUTENÇÃO');
-
-    vp.connect(maintenanceField, maintenanceCard);
-maintenanceField.setColor(_COLORS_.GREEN);
-
+    maintenanceField.setColor(_COLORS_.GREEN);
+    rootCard = vp.newCard(523, 1274, maintenanceField);
+    field = rootCard.addField('MANUTENÇÃO DENTRO DO TURNO');
+    field = rootCard.addField('TROCA DE PNEUS');
+    field = rootCard.addField('LAVAGEM');
+    field = rootCard.addField('MANUTENÇÃO FORA DO TURNO');
+    field = rootCard.addField('TROCA DE ÓLEO');
+    field = rootCard.addField('SAIR MANUTENÇÃO');
+//vp.connect(maintenanceField, maintenanceCard);
 
 let startworkField = root.addField('PONTO ELETRÔNICO');
-let startworkCard = vp.newCard(855, 1882);
-startworkCard.addField('ENTRADA TRABALHO');
-startworkCard.addField('SAÍDA INTERVALO');
-startworkCard.addField('RETORNO INTERVALO');
-startworkCard.addField('SAÍDA TRABALHO');
-startworkCard.addField('SAIR PONTO');
-vp.connect(startworkField, startworkCard);
-startworkField.setColor(_COLORS_.ORANGE);
+    startworkField.setColor(_COLORS_.ORANGE);
+    rootCard = vp.newCard(522, 1593, startworkField);
+    field = rootCard.addField('ENTRADA TRABALHO');
+        card = vp.newCard(888, 1499, field);
+        card.addField('CÓDIGO COLABORADOR');
+    field = rootCard.addField('SAÍDA INTERVALO');
+        card = vp.newCard(888, 1578, field);
+        card.addField('CÓDIGO COLABORADOR');
+    field = rootCard.addField('RETORNO INTERVALO');
+        card = vp.newCard(888, 1654, field);
+        card.addField('CÓDIGO COLABORADOR');
+    field = rootCard.addField('SAÍDA TRABALHO');
+        card = vp.newCard(888, 1730, field);
+        card.addField('CÓDIGO COLABORADOR');
+    field = rootCard.addField('SAIR PONTO');
+        card = vp.newCard(888, 1806, field);
+        card.addField('CÓDIGO COLABORADOR');    
+//vp.connect(startworkField, startworkCard);
 
 let endField = root.addField('FINALIZAR CDE');
-    let endCard = vp.newCard(339, 1974);
-        endCard.addField('SIM');
-        endCard.addField('NÃO');
-
-    vp.connect(endField, endCard);
     endField.setColor(_COLORS_.BROWN);
-    /*let checklist = main.newCard();
-    checklist.setHeader('VISTORIA DIÁRIA');
+    rootCard = vp.newCard(357, 1918, endField);
+    field = rootCard.addField('SIM');
+        card = vp.newCard(720, 2008, field);
+        card.addField('ODÔMETRO FINAL');
+        card.addField('HORÍMETRO FINAL');
+    field = rootCard.addField('NÃO');
+//vp.connect(endField, endCard);
 
-let checklist = main.newCard();
-    checklist.setHeader('VISTORIA DIÁRIA');
-
-let checklist = main.newCard();
-    checklist.setHeader('VISTORIA DIÁRIA');
-
-let checklist = main.newCard();
-    checklist.setHeader('VISTORIA DIÁRIA');
-
-let checklist = main.newCard();
-    checklist.setHeader('VISTORIA DIÁRIA');*/
-
-    //let serialize = vp.serialize();
-    //console.log(serialize);
-    //console.log(JSON.stringify(serialize));
+//new Promise(vp.redraw)
+vp.redraw();

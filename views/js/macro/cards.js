@@ -6,15 +6,16 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, root = false) {
+export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this, rootCard = root;
+    const parent = ctx, context = this, 
+          rootCard = root;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, card, header, title, items, input,
         fieldsArray = [],
-        position = { top: 0, left: 0, offsetLeft: 0, offsetTop: 0 },
+        position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _remove = function () {
@@ -72,6 +73,7 @@ export default function Card(ctx, root = false) {
 
             case _MOV_.END:
                 header.style.cursor = 'grab';
+                //console.log(this.getPosition());
                 break;
         }
 
@@ -96,10 +98,12 @@ export default function Card(ctx, root = false) {
                 input.style.removeProperty('background-color');
                 card.style.removeProperty('border-color');
                 title.style.removeProperty('color');
+                items.style.removeProperty('outline-color');
             } else {
                 input.style.backgroundColor = color;
                 card.style.borderColor = color;
                 title.style.color = color;
+                items.style.outlineColor = color;
             }
         }
     };
@@ -155,6 +159,14 @@ export default function Card(ctx, root = false) {
             fieldsArray[counterFields].setBorderColor(light, index, color);
         }
     };
+    this.setVisibilityMode = function(status) {
+        const size = fieldsArray.length;
+
+        for (let counter=0; counter<size; counter++) {
+            fieldsArray[counter].setVisibilityMode(status);
+        }
+    }
+
     //this.isRoot = function() { return rootCard; };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -166,7 +178,7 @@ export default function Card(ctx, root = false) {
         if (text) new_field.setText(text);
         new_field.setIndex(fieldsArray.length);
 
-        //context.redraw();
+        //parent.update(context);
         
         items.appendChild(new_field.getFragment());
         return new_field;
@@ -224,10 +236,10 @@ export default function Card(ctx, root = false) {
             items = addElement(content, 'div', 'app-cards-content-items');
         } 
 
-        bottom = addElement(card, 'div', 'app-cards-bottom');
+        //bottom = addElement(card, 'div', 'app-cards-bottom');
 
-            add = addElement(bottom, 'div', 'app-cards-bottom-add');
-            add.textContent = 'Atividade';
+        //    add = addElement(bottom, 'div', 'app-cards-bottom-add');
+        //    add.textContent = 'Atividade';
             //add.addEventListener('click', () => context.addField(), { capture: true });        
     })();
 }

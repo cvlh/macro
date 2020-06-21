@@ -61,30 +61,6 @@ export default function PropsView(ctx) {
                 }
             }
 
-            
-
-            /*label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '6 / 8';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '9 / 11';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '12 / 14';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '15 / 17';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '18 / 20';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '21 / 23';
-
-            label = addElement(rowcolor, 'div');
-            label.style.gridColumn= '24 / 26';*/
-        //row = addElement(fragment, 'div', 'main-app-properties-row');
-
         content = addElement(fragment, 'div', 'main-app-properties-content');
 
             rowType = addElement(content, 'div', 'main-app-properties-row');
@@ -214,5 +190,14 @@ export default function PropsView(ctx) {
                 text.style.gridColumnEnd = 'span 11';
                 text.textContent = _I18N_['field_execute_after'];
 
+            const bntvisibility = addElement(fragment, 'input');
+            bntvisibility.setAttribute('type', 'button');
+            bntvisibility.setAttribute('value', 'Visibilidade');
+
+            let status = true;
+            bntvisibility.addEventListener('click', (evnt) => {
+                parent.setVisibilityMode(status);
+                status = !status;
+            }, { capture: false });
     })();
 }

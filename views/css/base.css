@@ -89,6 +89,7 @@ body {
     display: grid; 
 
     grid-template-columns: 240px auto 233px;
+    grid-template-rows: 100vh;
     /*border: 3px solid #00ff00;*/
 }
 .main-app-builder {
@@ -414,7 +415,6 @@ body {
     border-width: 2px;
     border-style: solid;
     border-color: var(--main-border-color-high);
-
     opacity: 0.9;
 }
     .app-cards-header {
@@ -485,7 +485,8 @@ body {
             display: flex;
             flex-direction: column;
             /*border-left: 1px solid #f0f0f0;*/
-        }
+            outline-color: var(--main-border-color-high);
+        }            
             .app-cards-content-items.root {
                 padding: 4px 0 4px 0;
             }
@@ -495,10 +496,22 @@ body {
                 grid-template-columns: 25px auto 25px 20px;
                 grid-auto-rows: 31px;
                 font-size: 11px;
-                border-radius: 4px;
-                /*border: 1px solid transparent;*/
+                /*border-radius: 4px;*/
                 position: relative;
+                color: #222222;
+                background-color: transparent;
+                outline-color: inherit;
             }
+                .app-cards-content-item.visibility {
+                    cursor: pointer;
+                    opacity: 0.5;
+                }
+                .app-cards-content-item.visibility input {
+                    background-color: transparent;
+                    border-color: transparent;
+                    pointer-events: none;
+                }
+
             .app-cards-header-close,
             .app-cards-content-item-remove {
                 border-radius: 50%;
@@ -521,31 +534,26 @@ body {
                 font-weight: 600;
                 font-size: 12px;
                 text-align: center;
-                color: var(--main-font-color-med);
             }
-            .app-cards-content-item-description {
+            .app-cards-content-item input {
                 font-weight: 600;
                 border: 1px solid var(--main-border-color);
                 font-size: 11px;
                 border-radius: 4px;
                 height: 24px;
                 padding: 2px 5px;
+                color: inherit;
             }
-                .app-cards-content-item-description:focus {
+                .app-cards-content-item input:focus {
                     outline-width: 2px;
                     outline-style: solid;
-                    outline-color: var(--main-border-color-high);
+                    outline-color: inherit;
 
                     border-color: transparent;
                 }
             .app-cards-content-item-output {
-                /*position: absolute;
-                right: -11px;
-
-                border-radius: 50%;*/
                 width: 17px;
                 height: 23px;
-                /*margin: 6px 0px;*/
                 cursor: pointer;
                 justify-self: right;
                 background-image: url(../img/arrow.png);

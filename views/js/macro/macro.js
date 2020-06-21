@@ -84,9 +84,9 @@ export default function Macro() {
     _resize = function() {
         //const widthOptions = mainOptions.offsetWidth;
 
-        mainTreeView.style.height = window.innerHeight + 'px';
+        /*mainTreeView.style.height = window.innerHeight + 'px';
         mainBuilder.style.height = window.innerHeight + 'px';
-        mainProperties.style.height = window.innerHeight + 'px';
+        mainProperties.style.height = window.innerHeight + 'px';*/
         
         //mainApp.style.width = window.innerWidth + 'px';
         //mainApp.style.height = window.innerHeight + 'px';
@@ -142,7 +142,7 @@ export default function Macro() {
     this.getDragType = function() { return _DRAG_.AREA; };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.newCard = function(left, top) {
+    this.newCard = function(left, top, connect = null) {
         const isRoot = (cardsArray.length ? false : true);
 
         let new_card = new Card(context, isRoot);
@@ -152,6 +152,8 @@ export default function Macro() {
 
         mainAppWrapper.appendChild(new_card.getFragment());
         new_card.setPosition(left, top, transform, _MOV_.END);
+
+        if (connect != null) connect.makeConnection(new_card);
 
         return new_card;
     };
@@ -166,7 +168,6 @@ export default function Macro() {
         fromOutput.setPosition(viewportInput.left, viewportInput.top, transform, _MOV_.END);
         fromOutput.makeConnection(toInput);
     };
-
     this.serialize = function () {
 
         while (mainTreeViewItems.hasChildNodes()) {
@@ -199,7 +200,20 @@ export default function Macro() {
 
         return response;
     };
+    this.redraw = function () {
+        const size = cardsArray.length;
 
+        for (let counter=0; counter<size; counter++) {
+            cardsArray[counter].redraw(transform);
+        }
+    };
+    this.setVisibilityMode = function(status) {
+        const size = cardsArray.length;
+
+        for (let counter=0; counter<size; counter++) {
+            cardsArray[counter].setVisibilityMode(status);
+        }
+    };
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
         evnt.stopPropagation();
@@ -303,7 +317,7 @@ export default function Macro() {
 
 
         document.body.appendChild(fragment);
-        _resize();
+        //_resize();
         
         // EVNTS
         mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
@@ -311,7 +325,7 @@ export default function Macro() {
         mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
         //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
 
-        window.addEventListener('resize', _resize, { capture: true });
+        //window.addEventListener('resize', _resize, { capture: true });
 
         mainAppWrapper.addEventListener('wheel', _zoom, { capture: false, passive: true });
         mainAppWrapper.addEventListener('mousedown', (evnt) => {

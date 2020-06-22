@@ -1,19 +1,22 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 export default function Field(ctx) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const main = ctx.getMain(), parent = ctx, context = this, rootField = ctx.isRoot();
+    const main = ctx.getMain(), parent = ctx, context = this, 
+          rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         item, index, description, output, remove,
         treeviewRow = null, treeviewDeep,
+        visibilityMode = false, visibilityReferenceCounter = 0,
         position = { top: 0, left: 0 },
+
         props = {
             id: '',
             type: _TYPES_.TEXT,
@@ -23,8 +26,7 @@ export default function Field(ctx) {
             require: false,
             expanded: true,
             visibility: {
-                execution: 0,
-                flags: 0,
+                flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
                 fields: []
             }
         },
@@ -38,8 +40,14 @@ export default function Field(ctx) {
         }
         return result;
     },
-    _color = function(drag) {
-        const color = context.getColor();
+    _color = function(drag, color = null) {
+       /* if (color == null) {
+            color = context.getColor();
+            console.log('get color ' + color);
+        }*/
+        //const color = context.getColor();
+        //console.log('_color ' +color+ ' ' +drag);
+        //if (drag) color = context.getColor();
 
         if (color !== null) {
             if (!drag) {
@@ -59,6 +67,8 @@ export default function Field(ctx) {
         }
     },
     _drag = function (evnt) { 
+        if (visibilityMode) return;
+
         evnt.preventDefault();
         main.dragStart(evnt, context); 
     },
@@ -85,6 +95,7 @@ export default function Field(ctx) {
             path.textContent = value;
         }
     },
+    _props = function() { main.openProperties(props); },
     _setVisibility = function() {
         description.style.backgroundColor = context.getColor();
         description.style.color = '#ffffff';
@@ -138,7 +149,8 @@ export default function Field(ctx) {
                 context.clearConnection();
                 main.serialize();
             }
-            _color(true);
+            const color = context.getColor();
+            _color(true, color);
         }
 
         if (mov === _MOV_.START || mov === _MOV_.END) {
@@ -153,18 +165,18 @@ export default function Field(ctx) {
         _render(endLeft, endTop, mov);
     };
     this.setColor = function(color) { 
-        if (rootField /*&& color !== null*/) {
+        if (rootField && color !== null) {
             props.color = color;
         }
 
-        _color(false);
+        _color(false, color);
 
         if (context.hasConnection()) {
             output['_CONNECTION_'].setColor(color);
         }
     };
     this.getColor = function() {
-        if (rootField && props.color != null) {
+        if (rootField /*&& props.color != null*/) {
             return props.color;
         } else {
             return parent.getColor();
@@ -223,15 +235,15 @@ export default function Field(ctx) {
             if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
         }
 
-        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field');
-        fieldDiv.textContent = description.value;
+        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', description.value);
+        //fieldDiv.textContent = description.value;
         if (rootField) fieldDiv.style.color = properties.color;
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
-        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path');
+        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props.id);
         fieldPath.style.color = properties.color;
-        fieldPath.textContent = props.id; //_deep(properties.tab);
+        //fieldPath.textContent = props.id; //_deep(properties.tab);
 
         addElement(treeviewRow, 'div', 'main-app-treeview-item' + (!hasChild ? ' textbox' : ''));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
@@ -269,6 +281,8 @@ export default function Field(ctx) {
         }
     };
     this.setVisibilityMode = function(status) {
+        visibilityMode = status;
+
         if (status) {
             item.classList.add('visibility');
             description.setAttribute('disabled', true);
@@ -279,6 +293,7 @@ export default function Field(ctx) {
             item.removeEventListener('click', _setVisibility, { capture: false });
         }
     };
+
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setText = function(text) { description.value = text; };
     //this.getText = function(text) { return description.value; };
@@ -339,6 +354,7 @@ export default function Field(ctx) {
         description = addElement(item, 'input');
         description.setAttribute('maxlength', '64');
         description.addEventListener('keyup', _refresh, { capture: false });
+        description.addEventListener('focus', _props, { capture: false });
 
         remove = addElement(item, 'div', 'app-cards-content-item-remove');
         remove.addEventListener('click', _remove, { once: true, capture: false });

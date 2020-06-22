@@ -17,7 +17,7 @@ export default function Macro() {
     let mainApp,
         mainTreeView, mainTreeViewItems,
         mainBuilder, mainAppWrapper, mainAppSVG, 
-        mainProperties,
+        mainProperties, properties,
 
         rootCard, 
         currentDrag = null,
@@ -81,16 +81,6 @@ export default function Macro() {
             }
         }
     },
-    /*_resize = function() {
-        //const widthOptions = mainOptions.offsetWidth;
-
-        mainTreeView.style.height = window.innerHeight + 'px';
-        mainBuilder.style.height = window.innerHeight + 'px';
-        mainProperties.style.height = window.innerHeight + 'px';
-        
-        //mainApp.style.width = window.innerWidth + 'px';
-        //mainApp.style.height = window.innerHeight + 'px';
-    },*/
     _zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
         let scale = transform.scale * (1 + delta);
@@ -206,6 +196,11 @@ export default function Macro() {
         for (let counter=0; counter<size; counter++) {
             cardsArray[counter].redraw(transform);
         }
+
+        context.serialize();
+    };
+    this.openProperties = function(props) {
+        if (props !== null) properties.open(props);
     };
     this.setVisibilityMode = function(status) {
         const size = cardsArray.length;
@@ -214,6 +209,7 @@ export default function Macro() {
             cardsArray[counter].setVisibilityMode(status);
         }
     };
+
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
@@ -340,8 +336,8 @@ export default function Macro() {
             }
         }, { capture: true });
 
-        let x = new PropsView(context);
-        mainProperties.appendChild(x.getFragment());
+        properties = new PropsView(context);
+        mainProperties.appendChild(properties.getFragment());
         //context.setPosition(240, 0, transform, _MOV_.END);
     })();
 }

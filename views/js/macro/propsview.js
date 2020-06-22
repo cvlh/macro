@@ -2,7 +2,7 @@
 
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
-import { _COLORS_ } from '../utils/constants.js';
+import { _COLORS_, _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
 
 export default function PropsView(ctx) {
 
@@ -11,184 +11,172 @@ export default function PropsView(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
-        rowId, rowText, rowcolor, rowType, rowRequire, rowInfo, rowHelp, 
-        rowVisibility, rowVisibilityNewExtra, rowVisibilitySaveRestore,
-        rowExecute, rowExecuteNowAfter;
+        properties = {
+            id:         { content: null, id: null, text: null }, 
+            color:      { content: null, color: null },
+            type:       { content: null, type: null, require: null, mask: null, size: null, default: null }, 
+            info:       { content: null, info: null, help: null }, 
+            visibility: { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
+            kanban:     { content: null, step: null }
+        };
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
+    this.open = function (props) {
+        for (let prop in props) {
+            switch(prop) {
+                case 'id':
+                    break;
+
+            }
+        }
+    };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let content, label, text, position;
+        let row, label, position;
 
         fragment = document.createDocumentFragment();
 
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        id['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
-            rowId = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowId, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_id'];
+            row = addElement(id['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_id']);
 
-            text = addElement(rowId, 'div', 'main-app-properties-text');
-            text.textContent = '3.10.1.2.3.5.6';
+            id['id'] = addElement(row, 'div', 'main-app-properties-text');
 
-            rowText = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowText, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_value'];
+            row = addElement(id['content'] , 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_value']);
 
-            text = addElement(rowText, 'div', 'main-app-properties-text');
-            text.textContent = 'CD CENTRO RESUL';
+            id['text'] = addElement(row, 'div', 'main-app-properties-text');
 
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        color['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
-            rowcolor = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowcolor, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_color'];
+            row = addElement(color['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
 
-            rowcolor = addElement(content, 'div', 'main-app-properties-row');
             position = 3;
-            for (let color in _COLORS_) {
-                label = addElement(rowcolor, 'div', 'main-app-properties-color');
-                label.style.backgroundColor = _COLORS_[color];
+            color['color'] = addElement(color['content'], 'div', 'main-app-properties-row');
+            for (let clr in _COLORS_) {
+                label = addElement(color['color'], 'div', 'main-app-properties-color');
+                label.style.backgroundColor = _COLORS_[clr];
                 label.style.gridColumn = position +' / span 2';
                 position += 3;
 
-                if (color === 'INDIGO') {
+                if (clr === 'INDIGO') {
                     label.classList.add('selected');
                     label.style.borderColor = label.style.backgroundColor;
                 }
             }
 
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        type['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
-            rowType = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowType, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_type'];
+            row = addElement(type['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_type']);
   
-        //
-            rowRequire = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowRequire, 'input');
-            label.setAttribute('id', 'require_checkbox');
-            label.setAttribute('type', 'checkbox');
-            label.style.gridColumnStart = '2';
-            label.style.gridColumnEnd = 'span 2';
+            row = addElement(type['content'], 'div', 'main-app-properties-row');
+                type['require'] = addElement(row, 'input');
+                type['require'].setAttribute('id', 'require_checkbox');
+                type['require'].setAttribute('type', 'checkbox');
+                type['require'].style.gridColumn = '2 / span 2';
 
-            text = addElement(rowRequire, 'label', 'main-app-properties-checkbox-label');
-            text.setAttribute('for', 'require_checkbox');
-            text.style.gridColumnStart = '5';
-            text.style.gridColumnEnd = 'span 23';
-            text.textContent = _I18N_['field_require'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_require']);
+                label.setAttribute('for', 'require_checkbox');
+                label.style.gridColumn = '5 / span 23';
 
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
-            rowInfo = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowInfo, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_info'];
+            row = addElement(info['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_info']);
 
-            rowInfo = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowInfo, 'input');
-            label.setAttribute('type', 'text');
+            row = addElement(info['content'], 'div', 'main-app-properties-row');
+                info['info'] = addElement(row, 'input');
+                info['info'].setAttribute('type', 'text');
 
-            rowHelp = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowHelp, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_help'];
+            row = addElement(info['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_help']);
 
-            rowHelp = addElement(content, 'div', 'main-app-properties-row');
-            rowHelp.style.gridTemplateRows = '28px 28px';
-            label = addElement(rowHelp, 'textarea');
-            label.setAttribute('rows', '3');
-            label.setAttribute('maxlength', '128');
+            row = addElement(info['content'], 'div', 'main-app-properties-row');
+            row.style.gridTemplateRows = '28px 28px';
+                info['help'] = addElement(row, 'textarea');
+                info['help'].setAttribute('rows', '3');
+                info['help'].setAttribute('maxlength', '128');
 
-        //row = addElement(fragment, 'div', 'main-app-properties-row');
-
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        visibility['content'] = addElement(fragment, 'div', 'main-app-properties-content');
         
-            rowVisibility = addElement(content, 'div', 'main-app-properties-row');
-                label = addElement(rowVisibility, 'div', 'main-app-properties-label');
-                label.textContent = _I18N_['field_visibility'];
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_visibility']);
 
-            rowVisibilityNewExtra = addElement(content, 'div', 'main-app-properties-row');
-                label = addElement(rowVisibilityNewExtra, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'new_checkbox');
-                label.setAttribute('type', 'checkbox');
-                label.style.gridColumnStart = '2';
-                label.style.gridColumnEnd = 'span 2';
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+                visibility['fresh'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['fresh'].setAttribute('id', 'fresh_checkbox');
+                visibility['fresh'].setAttribute('type', 'radio');
+                visibility['fresh'].setAttribute('name', 'visibility');
+                visibility['fresh'].setAttribute('value', _VISIBILITY_.FRESH);
+                visibility['fresh'].style.gridColumn = '2 / span 2';
 
-                text = addElement(rowVisibilityNewExtra, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'new_checkbox');
-                text.style.gridColumnStart = '5';
-                text.style.gridColumnEnd = 'span 8';
-                text.textContent = _I18N_['field_visibility_new'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_fresh']);
+                label.setAttribute('for', 'fresh_checkbox');
+                label.style.gridColumn = '5 / span 8';
 
-                label = addElement(rowVisibilityNewExtra, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'extra_checkbox');
-                label.setAttribute('type', 'checkbox');
-                label.style.gridColumnStart = '14';
-                label.style.gridColumnEnd = 'span 2';
+                visibility['extra'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['extra'].setAttribute('id', 'extra_checkbox');
+                visibility['extra'].setAttribute('type', 'radio');
+                visibility['extra'].setAttribute('name', 'visibility');
+                visibility['extra'].setAttribute('value', _VISIBILITY_.EXTRA);
+                visibility['extra'].style.gridColumn = '14 / span 2';
 
-                text = addElement(rowVisibilityNewExtra, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'extra_checkbox');
-                text.style.gridColumnStart = '17';
-                text.style.gridColumnEnd = 'span 11';
-                text.textContent = _I18N_['field_visibility_extra'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_extra']);
+                label.setAttribute('for', 'extra_checkbox');
+                label.style.gridColumn = '17 / span 11';
 
-            rowVisibilitySaveRestore = addElement(content, 'div', 'main-app-properties-row');
-                label = addElement(rowVisibilitySaveRestore, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'save_checkbox');
-                label.setAttribute('type', 'checkbox');
-                label.style.gridColumnStart = '2';
-                label.style.gridColumnEnd = 'span 2';
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+                visibility['save'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['save'].setAttribute('id', 'save_checkbox');
+                visibility['save'].setAttribute('type', 'checkbox');
+                visibility['save'].setAttribute('value', _VISIBILITY_.SAVE);
+                visibility['save'].style.gridColumn = '2 / span 2';
 
-                text = addElement(rowVisibilitySaveRestore, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'save_checkbox');
-                text.style.gridColumnStart = '5';
-                text.style.gridColumnEnd = 'span 8';
-                text.textContent = _I18N_['field_visibility_Save'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Save']);
+                label.setAttribute('for', 'save_checkbox');
+                label.style.gridColumn = '5 / span 8';
 
-                label = addElement(rowVisibilitySaveRestore, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'restore_checkbox');
-                label.setAttribute('type', 'checkbox');
-                label.style.gridColumnStart = '14';
-                label.style.gridColumnEnd = 'span 2';
+                visibility['restore'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['restore'].setAttribute('id', 'restore_checkbox');
+                visibility['restore'].setAttribute('type', 'checkbox');
+                visibility['restore'].setAttribute('value', _VISIBILITY_.RESTORE);
+                visibility['restore'].style.gridColumn = '14 / span 2';
         
-                text = addElement(rowVisibilitySaveRestore, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'restore_checkbox');
-                text.style.gridColumnStart = '17';
-                text.style.gridColumnEnd = 'span 11';
-                text.textContent = _I18N_['field_visibility_Restore'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Restore']);
+                label.setAttribute('for', 'restore_checkbox');
+                label.style.gridColumn = '17 / span 11';
 
-            rowExecute = addElement(content, 'div', 'main-app-properties-row');
-            label = addElement(rowExecute, 'div', 'main-app-properties-label');
-            label.textContent = _I18N_['field_execute'];
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_execute']);
 
-            rowExecuteNowAfter = addElement(content, 'div', 'main-app-properties-row');
-                label = addElement(rowExecuteNowAfter, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'execute_now_radio');
-                label.setAttribute('name', 'execute');
-                label.setAttribute('type', 'radio');
-                label.style.gridColumnStart = '2';
-                label.style.gridColumnEnd = 'span 2';
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+                visibility['instant'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['instant'].setAttribute('id', 'instant_radio');
+                visibility['instant'].setAttribute('type', 'radio');
+                visibility['instant'].setAttribute('name', 'execute');
+                visibility['instant'].setAttribute('value', _VISIBILITY_.INSTANT);
+                visibility['instant'].style.gridColumn = '2 / span 2';
 
-                text = addElement(rowExecuteNowAfter, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'execute_now_radio');
-                text.style.gridColumnStart = '5';
-                text.style.gridColumnEnd = 'span 8';
-                text.textContent = _I18N_['field_execute_now'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_instant']);
+                label.setAttribute('for', 'instant_radio');
+                label.style.gridColumn = '5 / span 8';
 
-                label = addElement(rowExecuteNowAfter, 'input', 'main-app-properties-checkbox');
-                label.setAttribute('id', 'execute_after_radio');
-                label.setAttribute('name', 'execute');
-                label.setAttribute('type', 'radio');
-                label.style.gridColumnStart = '14';
-                label.style.gridColumnEnd = 'span 2';
+                visibility['after'] = addElement(row, 'input', 'main-app-properties-checkbox');
+                visibility['after'].setAttribute('id', 'after_radio');
+                visibility['after'].setAttribute('type', 'radio');
+                visibility['after'].setAttribute('name', 'execute');
+                visibility['after'].setAttribute('value', _VISIBILITY_.AFTER);
+                visibility['after'].style.gridColumn = '14 / span 2';
         
-                text = addElement(rowExecuteNowAfter, 'label', 'main-app-properties-checkbox-label');
-                text.setAttribute('for', 'execute_after_radio');
-                text.style.gridColumnStart = '17';
-                text.style.gridColumnEnd = 'span 11';
-                text.textContent = _I18N_['field_execute_after'];
+                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_after']);
+                label.setAttribute('for', 'after_radio');
+                label.style.gridColumn = '17 / span 11';
 
             const bntvisibility = addElement(fragment, 'input');
             bntvisibility.setAttribute('type', 'button');

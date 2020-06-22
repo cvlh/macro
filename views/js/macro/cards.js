@@ -168,8 +168,6 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
         }
     }
 
-    //this.isRoot = function() { return rootCard; };
-
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
     this.addField = function(text) {

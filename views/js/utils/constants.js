@@ -30,3 +30,13 @@ export const _TYPES_ = {
     PHOTO:     3,
     SIGNATURE: 4
 }
+
+export const _VISIBILITY_ = {
+    FRESH:   1,
+    EXTRA:   2,
+    SAVE:    4,
+    RESTORE: 8,
+
+    INSTANT: 16,
+    AFTER:   32
+}

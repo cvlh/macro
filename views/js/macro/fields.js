@@ -18,7 +18,8 @@ export default function Field(ctx) {
         position = { top: 0, left: 0 },
 
         props = {
-            id: '',
+            prefix: { id: null, text: null },
+            //id: '',
             type: _TYPES_.TEXT,
             color: _COLORS_.BLACK,
             info: '',
@@ -92,8 +93,10 @@ export default function Field(ctx) {
 
         if (treeviewRow !== null) {
             const path = treeviewRow.querySelector('.field');
-            path.textContent = value;
+            if (path.firstChild instanceof Text) path.firstChild.textContent = value;
         }
+
+        props['prefix']['text'] = value;
     },
     _props = function() { main.openProperties(props); },
     _setVisibility = function() {
@@ -165,7 +168,7 @@ export default function Field(ctx) {
         _render(endLeft, endTop, mov);
     };
     this.setColor = function(color) { 
-        if (rootField /*&& color !== null*/) {
+        if (rootField && color !== null) {
             props.color = color;
         }
 
@@ -208,7 +211,7 @@ export default function Field(ctx) {
 
         //fragment.appendChild(treeviewRow);
         //treeviewRow.classList = deep+ ' main-app-treeview-row';
-        props.id = _deep(properties.tab);
+        props['prefix']['id'] = _deep(properties.tab);
 
         treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
@@ -241,9 +244,8 @@ export default function Field(ctx) {
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
-        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props.id);
+        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
         fieldPath.style.color = properties.color;
-        //fieldPath.textContent = props.id; //_deep(properties.tab);
 
         addElement(treeviewRow, 'div', 'main-app-treeview-item' + (!hasChild ? ' textbox' : ''));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
@@ -295,7 +297,10 @@ export default function Field(ctx) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
-    this.setText = function(text) { description.value = text; };
+    this.setText = function(text) { 
+        props['prefix']['text'] = text;
+        description.value = text; 
+    };
     //this.getText = function(text) { return description.value; };
 
     this.toggleExpand = function(icon) { 

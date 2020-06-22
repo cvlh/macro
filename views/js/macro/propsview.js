@@ -11,22 +11,31 @@ export default function PropsView(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
-        properties = {
-            id:         { content: null, id: null, text: null }, 
-            color:      { content: null, color: null },
-            type:       { content: null, type: null, require: null, mask: null, size: null, default: null }, 
-            info:       { content: null, info: null, help: null }, 
-            visibility: { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
-            kanban:     { content: null, step: null }
-        };
+        prefix = { content: null, id: null, text: null }, 
+        color = { content: null, color: null },
+        type = { content: null, type: null, require: null, mask: null, size: null, default: null }, 
+        info = { content: null, info: null, help: null }, 
+        visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
+        kanban = { content: null, step: null };
+
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
     this.open = function (props) {
+        prefix['content'].style.display = 'none';
+        color['content'].style.display = 'none';
+        type['content'].style.display = 'none';
+        info['content'].style.display = 'none';
+        visibility['content'].style.display = 'none';
+        //kanban['content'].style.display = 'none';
+
         for (let prop in props) {
             switch(prop) {
-                case 'id':
+                case 'prefix':
+                    prefix['content'].style.display = 'block';
+                    prefix['id'].textContent = props[prop]['id'];
+                    prefix['text'].textContent = props[prop]['text'];
                     break;
 
             }
@@ -39,17 +48,19 @@ export default function PropsView(ctx) {
 
         fragment = document.createDocumentFragment();
 
-        id['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+        prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
-            row = addElement(id['content'], 'div', 'main-app-properties-row');
+            row = addElement(prefix['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_id']);
+            prefix['id'] = addElement(row, 'div', 'main-app-properties-text');
+            prefix['id'].style.gridColumn = '13 / span 15';
 
-            id['id'] = addElement(row, 'div', 'main-app-properties-text');
-
-            row = addElement(id['content'] , 'div', 'main-app-properties-row');
+            row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_value']);
 
-            id['text'] = addElement(row, 'div', 'main-app-properties-text');
+            row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
+            prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
+            prefix['text'].style.gridColumn = '3 / span 24';
 
         color['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 

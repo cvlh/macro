@@ -233,26 +233,23 @@ body {
         .main-app-properties-label {
             font-weight: 600;
             text-transform: capitalize;
-
             align-self: center;
-
-            grid-column-start: 2;
-            grid-column-end: span 10;
-
+            grid-column: 2 / span 10;
             overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
         .main-app-properties-text {
             font-weight: 400;
             text-transform: capitalize;
 
-            align-self: center;
-
-            grid-column-start: 13;
-            grid-column-end: span 15;
+            align-self: center;            
 
             text-align: right;
             overflow: hidden;
             text-overflow: ellipsis;
+
+            max-height: 28px;
         }
         .main-app-properties-color {
             width: 22px;

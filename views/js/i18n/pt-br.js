@@ -21,7 +21,7 @@ export const _I18N_ = {
       field_visibility_Restore: 'Restaurar',
       field_execute: 'Executar', 
       field_execute_instant: 'Imediato', 
-      field_execute_after: 'Fim de função',
+      field_execute_after: 'Fim da atividade',
       0 : '',
       1 : '',
       2 : '',

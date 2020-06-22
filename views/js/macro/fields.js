@@ -165,7 +165,7 @@ export default function Field(ctx) {
         _render(endLeft, endTop, mov);
     };
     this.setColor = function(color) { 
-        if (rootField && color !== null) {
+        if (rootField /*&& color !== null*/) {
             props.color = color;
         }
 

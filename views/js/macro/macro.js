@@ -210,7 +210,6 @@ export default function Macro() {
         }
     };
 
-
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
         evnt.stopPropagation();

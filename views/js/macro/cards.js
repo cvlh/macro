@@ -163,6 +163,7 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
         const size = fieldsArray.length;
 
         for (let counter=0; counter<size; counter++) {
+            if (rootCard) fieldsArray[counter].setColor(null);
             fieldsArray[counter].setVisibilityMode(status);
         }
     }

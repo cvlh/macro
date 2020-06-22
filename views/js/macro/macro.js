@@ -81,16 +81,16 @@ export default function Macro() {
             }
         }
     },
-    _resize = function() {
+    /*_resize = function() {
         //const widthOptions = mainOptions.offsetWidth;
 
-        /*mainTreeView.style.height = window.innerHeight + 'px';
+        mainTreeView.style.height = window.innerHeight + 'px';
         mainBuilder.style.height = window.innerHeight + 'px';
-        mainProperties.style.height = window.innerHeight + 'px';*/
+        mainProperties.style.height = window.innerHeight + 'px';
         
         //mainApp.style.width = window.innerWidth + 'px';
         //mainApp.style.height = window.innerHeight + 'px';
-    },
+    },*/
     _zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
         let scale = transform.scale * (1 + delta);
@@ -214,6 +214,7 @@ export default function Macro() {
             cardsArray[counter].setVisibilityMode(status);
         }
     };
+
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
         evnt.stopPropagation();

@@ -86,9 +86,8 @@ export default function Field(ctx) {
         }
     },
     _setVisibility = function() {
-        this.style.backgroundColor = context.getColor();
-        this.style.color = '#ffffff';
-        this.style.opacity = '1';
+        description.style.backgroundColor = context.getColor();
+        description.style.color = '#ffffff';
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -154,7 +153,7 @@ export default function Field(ctx) {
         _render(endLeft, endTop, mov);
     };
     this.setColor = function(color) { 
-        if (rootField && color !== null) {
+        if (rootField /*&& color !== null*/) {
             props.color = color;
         }
 

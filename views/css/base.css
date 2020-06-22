@@ -504,7 +504,7 @@ body {
             }
                 .app-cards-content-item.visibility {
                     cursor: pointer;
-                    opacity: 0.5;
+                    color: #444444;
                 }
                 .app-cards-content-item.visibility input {
                     background-color: transparent;
@@ -534,6 +534,7 @@ body {
                 font-weight: 600;
                 font-size: 12px;
                 text-align: center;
+                color: #90A4AE;
             }
             .app-cards-content-item input {
                 font-weight: 600;

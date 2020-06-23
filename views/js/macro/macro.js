@@ -199,8 +199,8 @@ export default function Macro() {
 
         context.serialize();
     };
-    this.openProperties = function(props) {
-        if (props !== null) properties.open(props);
+    this.openProperties = function(object) {
+        properties.open(object);
     };
     this.setVisibilityMode = function(status) {
         const size = cardsArray.length;

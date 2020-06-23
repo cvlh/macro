@@ -98,7 +98,7 @@ export default function Field(ctx) {
 
         props['prefix']['text'] = value;
     },
-    _props = function() { main.openProperties(props); },
+    _props = function() { main.openProperties(context); },
     _setVisibility = function() {
         description.style.backgroundColor = context.getColor();
         description.style.color = '#ffffff';
@@ -297,6 +297,13 @@ export default function Field(ctx) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
+    this.setVisibilitySelected = function(status) { 
+        if (status) {
+            item.classList.add('selected');
+        } else {
+            item.classList.remove('selected');
+        }
+    };
     this.setText = function(text) { 
         props['prefix']['text'] = text;
         description.value = text; 
@@ -362,7 +369,7 @@ export default function Field(ctx) {
         description.addEventListener('focus', _props, { capture: false });
 
         remove = addElement(item, 'div', 'app-cards-content-item-remove');
-        remove.addEventListener('click', _remove, { once: true, capture: false });
+        //remove.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'app-cards-content-item-output');
         output['_CONNECTION_'] = null;

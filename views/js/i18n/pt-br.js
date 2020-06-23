@@ -15,6 +15,8 @@ export const _I18N_ = {
       field_help: 'Ajuda',
       field_require: 'Preenchimento obrigatório',
       field_visibility: 'Visibilidade',
+      field_no_visibility: 'Sem visibilidade',
+      field_visibility_add: 'Adicionar',
       field_visibility_fresh: 'Nova',
       field_visibility_extra: 'Complementar',
       field_visibility_Save: 'Salvar',

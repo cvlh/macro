@@ -11,25 +11,35 @@ export default function PropsView(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
+        currentObject = null,
         prefix = { content: null, id: null, text: null }, 
         color = { content: null, color: null },
         type = { content: null, type: null, require: null, mask: null, size: null, default: null }, 
         info = { content: null, info: null, help: null }, 
         visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
-        kanban = { content: null, step: null };
+        kanban = { content: null, step: null },
 
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _change = function(evnt) {
+        if (currentObject !== null) {
+console.dir(evnt);
+        }
+    };
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
-    this.open = function (props) {
-        prefix['content'].style.display = 'none';
+    this.open = function (object) {
+        /*prefix['content'].style.display = 'none';
         color['content'].style.display = 'none';
         type['content'].style.display = 'none';
         info['content'].style.display = 'none';
-        visibility['content'].style.display = 'none';
+        visibility['content'].style.display = 'none';*/
         //kanban['content'].style.display = 'none';
 
+        let props = object.getProps();
+        if (props == null) return;
+
+        currentObject = object;
         for (let prop in props) {
             switch(prop) {
                 case 'prefix':
@@ -38,6 +48,25 @@ export default function PropsView(ctx) {
                     prefix['text'].textContent = props[prop]['text'];
                     break;
 
+                case 'visibility':
+                    const flags = props[prop]['flags'];
+
+                    visibility['fresh'].checked = false;
+                    visibility['extra'].checked = false;
+                    visibility['save'].checked = false;
+                    visibility['restore'].checked = false
+                    visibility['instant'].checked = false
+                    visibility['after'].checked = false;
+
+                    if (flags & _VISIBILITY_.FRESH)   visibility['fresh'].checked = true;
+                    if (flags & _VISIBILITY_.EXTRA)   visibility['extra'].checked = true;
+                    if (flags & _VISIBILITY_.SAVE)    visibility['save'].checked = true;
+                    if (flags & _VISIBILITY_.RESTORE) visibility['restore'].checked = true;
+                    if (flags & _VISIBILITY_.INSTANT) visibility['instant'].checked = true;
+                    if (flags & _VISIBILITY_.AFTER)   visibility['after'].checked = true;
+                    
+                    visibility['content'].style.display = 'block';
+                    break;
             }
         }
     };
@@ -126,6 +155,7 @@ export default function PropsView(ctx) {
                 visibility['fresh'].setAttribute('name', 'visibility');
                 visibility['fresh'].setAttribute('value', _VISIBILITY_.FRESH);
                 visibility['fresh'].style.gridColumn = '2 / span 2';
+                visibility['fresh'].addEventListener('change', _change, { capture: false });
 
                 label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_fresh']);
                 label.setAttribute('for', 'fresh_checkbox');
@@ -137,6 +167,7 @@ export default function PropsView(ctx) {
                 visibility['extra'].setAttribute('name', 'visibility');
                 visibility['extra'].setAttribute('value', _VISIBILITY_.EXTRA);
                 visibility['extra'].style.gridColumn = '14 / span 2';
+                visibility['extra'].addEventListener('change', _change, { capture: false });
 
                 label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_extra']);
                 label.setAttribute('for', 'extra_checkbox');
@@ -189,12 +220,17 @@ export default function PropsView(ctx) {
                 label.setAttribute('for', 'after_radio');
                 label.style.gridColumn = '17 / span 11';
 
-            const bntvisibility = addElement(fragment, 'input');
+            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
+            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_no_visibility']);
+
+            const bntvisibility = addElement(row, 'input');
             bntvisibility.setAttribute('type', 'button');
-            bntvisibility.setAttribute('value', 'Visibilidade');
+            bntvisibility.setAttribute('value', _I18N_['field_visibility_add']);
+            bntvisibility.style.gridColumn = '13 / span 15';
 
             let status = true;
             bntvisibility.addEventListener('click', (evnt) => {
+                currentObject.setVisibilitySelected(true);
                 parent.setVisibilityMode(status);
                 status = !status;
             }, { capture: false });

@@ -11,7 +11,7 @@ export default function Field(ctx) {
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let fragment, 
+    let fragment,
         item, index, description, output, remove,
         treeviewRow = null, treeviewDeep,
         visibilityMode = false, visibilityReferenceCounter = 0,
@@ -233,9 +233,17 @@ export default function Field(ctx) {
             if (counterOffset > 0) fieldOffset.style.borderLeftColor = lightColor;
         }
         if (hasChild || rootField) {
-            fieldOffset.classList.add((hasChild ? 'expand' : 'none'));
-            fieldOffset = addElement(fieldOffset, 'div');
-            if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
+            if (hasChild) {
+                fieldOffset.classList.add('expand');
+                fieldOffset = addElement(fieldOffset, 'div', 'icon', '^');
+                if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
+            } else {
+                fieldOffset.classList.add('none');
+                fieldOffset = addElement(fieldOffset, 'div', 'icon', '_');
+            }
+            //fieldOffset.classList.add((hasChild ? 'expand' : 'none'));
+            //fieldOffset = addElement(fieldOffset, 'div', 'icon', (hasChild ? '^' : '_'));
+            //if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
         }
 
         fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', description.value);
@@ -281,6 +289,7 @@ export default function Field(ctx) {
         if (context.hasConnection()) {
             output['_CONNECTION_'].setBorderColor(light, index, color);
         }
+        //return color;
     };
     this.setVisibilityMode = function(status) {
         visibilityMode = status;
@@ -325,7 +334,7 @@ export default function Field(ctx) {
     };
     //this.getExpand = function() { return expanded; };
 
-    this.setIndex = function(idx) { index.textContent = idx; };
+    this.setIndex = function(idx) { index.textContent = idx; remove.textContent = idx % 6};
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
@@ -368,10 +377,10 @@ export default function Field(ctx) {
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _props, { capture: false });
 
-        remove = addElement(item, 'div', 'app-cards-content-item-remove');
+        remove = addElement(item, 'div', 'icon app-cards-content-item-remove');
         //remove.addEventListener('click', _remove, { once: true, capture: false });
         
-        output = addElement(item, 'div', 'app-cards-content-item-output');
+        output = addElement(item, 'div', 'icon app-cards-content-item-output', '^');
         output['_CONNECTION_'] = null;
         output['_PATH_'] = main.newSVGPath();
         output.addEventListener('mousedown', _drag, { capture: false });

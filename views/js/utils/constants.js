@@ -24,11 +24,13 @@ export const _COLORS_ = {
 }
 
 export const _TYPES_ = {
-    TEXT:      0,
-    NUMBER:    1,
-    DATE:      2,
-    PHOTO:     3,
-    SIGNATURE: 4
+    LIST:      0,
+    TEXT:      1,
+    NUMBER:    2,
+    DATE:      3,
+    PHOTO:     4,
+    SIGNATURE: 5,
+    SCAN:      6
 }
 
 export const _VISIBILITY_ = {

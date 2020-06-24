@@ -42,7 +42,7 @@ export default function Macro() {
 
         if (targetClass.contains('main-app-treeview-item')) {
             if (targetClass.contains('expand')) {
-                //const status = props.ctx.getExpand()
+ 
                 const status = props.ctx.getProps('expanded');
                 switch (evnt.type) {
                     case 'click':

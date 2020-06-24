@@ -3,32 +3,38 @@
     font-weight: 300;
     font-style: normal;
     font-display: fallback;
-    src: url('../font/light.woff2') format('woff2'),
-         url('../font/light.woff')  format('woff'),
-         url('../font/light.ttf')   format('truetype')
+    src: /*url('../font/light.woff2') format('woff2'),*/
+         url('../font/addlog-light.woff')  format('woff'),
+         url('../font/addlog-light.ttf')   format('truetype')
 }
 @font-face {
     font-family: 'ADDLOG-FONT';
     font-weight: 400;
     font-style: normal;
     font-display: fallback;
-    src: url('../font/regular.woff2') format('woff2'),
-         url('../font/regular.woff')  format('woff'),
-         url('../font/regular.ttf')   format('truetype')
+    src: /*url('../font/regular.woff2') format('woff2'),*/
+         url('../font/addlog-regular.woff')  format('woff'),
+         url('../font/addlog-regular.ttf')   format('truetype')
 }
 @font-face {
     font-family: 'ADDLOG-FONT';
     font-weight: 600;
     font-style: normal;
     font-display: fallback;
-    src: url('../font/semibold.woff2') format('woff2'),
-         url('../font/semibold.woff')  format('woff'),
-         url('../font/semibold.ttf')   format('truetype')
+    src: /*url('../font/semibold.woff2') format('woff2'),*/
+         url('../font/addlog-semibold.woff')  format('woff'),
+         url('../font/addlog-semibold.ttf')   format('truetype')
+}
+@font-face {
+    font-family: 'ADDLOG-ICON';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../font/addlog-icon.woff') format('woff'),
+         url('../font/addlog-icon.ttf') format('truetype');
 }
 
 * { 
     font-family: 'ADDLOG-FONT', sans-serif;
-    /*font-family: 'Inter', sans-serif;*/
     box-sizing: border-box;
 }
 
@@ -135,7 +141,7 @@ body {
         }
         .main-app-svg-path.connected { 
             stroke-dasharray: none;
-            stroke-width: 4px;
+            stroke-width: 5px;
         }
         .main-app-svg-path.error { 
             stroke-dasharray: 2 15; 
@@ -348,27 +354,22 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #B0BEC5;
         }
+            .main-app-treeview-item.expand:hover {
+                color: #607D8B;
+            }
         .main-app-treeview-item.expand div {
             pointer-events: none;
             transform: rotate(0deg);
-
-            height: 14px;
+            font-size: 10px;
+            line-height: 14px;
             width: 14px;
-
-            border-radius: 3px;
-
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-image: url(../img/collapse.png);
-
             transition: .15s transform linear;
         }
         .main-app-treeview-item.none {
             grid-column-end: span 2;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-image: url(../img/none.png);
+            color: #B0BEC5;
         }
         .main-app-treeview-item.field {
             padding: 0 0 0 0px;
@@ -376,7 +377,7 @@ body {
         .main-app-treeview-item.textbox {
             background-position: center center;
             background-repeat: no-repeat;
-            background-image: url(../img/field/image.svg);
+            background-image: url(../img/field/text.svg);
         }
         .main-app-treeview-item-path {
             position: absolute;
@@ -417,13 +418,15 @@ body {
     .app-cards-header {
         position: relative;
 
+        color: #cfd7df;
+
         cursor: grab;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         border-bottom: 1px solid var(--main-border-color);
 
         display: grid;
-        grid-template-columns: 250px 30px;
+        grid-template-columns: 250px 24px;
 
         align-items: center;
         background-color: var(--main-background);
@@ -450,12 +453,19 @@ body {
         }
         .app-cards-header-close {
             cursor: pointer;
-            border: 1px solid var(--main-border-color-high);
+
+            font-size: 10px;
+            line-height: 18px;
+            color: #78909C;
+
+            width: 18px;
+            margin: 4px 0px;
+            
+            justify-self: center;
         }
-        .app-cards-header-close:hover {
-            border: 1px solid #ef857e;
-        }
-    
+        .app-cards-header-close:hover  { color: #ef5350; }
+        .app-cards-header-close:active { color: #D32F2F; }
+
     .app-cards-content {
         position: relative;
         display: grid;
@@ -466,18 +476,26 @@ body {
         margin: 0;
     }
         .app-cards-content-input {
-            /*border-radius: 50%;*/
             width: 18px;
-            height: 28px;
+
+            background-color: var(--main-border-color-high);
+            border-radius: 0 8px 8px 0;
+
+            font-size: 11px;
+            line-height: 29px;
+            color: #ffffff;
+
+            /*border-radius: 50%;*/
+            
+            /*height: 28px;*/
             /*margin: 7px;*/
-            background-image: url(../img/arrow.png);
-            /*background-color: #81C784;*/
+            /*background-image: url(../img/arrow.png);
+            background-color: #81C784;
             background-color: var(--main-border-color-high);
             background-position: center center;
-            background-repeat: no-repeat;
-            border-radius: 0 8px 8px 0;
+            background-repeat: no-repeat;*/
+            
         }
-
         .app-cards-content-items {
             display: flex;
             flex-direction: column;
@@ -490,7 +508,7 @@ body {
             .app-cards-content-item {
                 align-items: center;
                 display: grid;
-                grid-template-columns: 25px auto 25px 20px;
+                grid-template-columns: 25px auto 26px 16px;
                 grid-auto-rows: 31px;
                 font-size: 11px;
                 /*border-radius: 4px;*/
@@ -512,38 +530,16 @@ body {
                     border-color: transparent;
                     pointer-events: none;
                 }
-
-            .app-cards-header-close,
-            .app-cards-content-item-remove {
-                width: 18px;
-                height: 18px;
-                margin: 4px 0px;
-                
-                justify-self: center;
-
-                background-position: center center;
-                background-repeat: no-repeat;
-            }
-                .app-cards-header-close {
-                    cursor: pointer;
-                    border-radius: 50%;
-                    background-color: var(--main-border-color);
-                    background-image: url(../img/trash.png);
-                }
-                    .app-cards-header-close:hover/*,
-                    .app-cards-content-item-remove:hover */{
-                        background-image: url(../img/trash-hover.png);
-                        background-color: #FCE4EC;
-                    }
                 .app-cards-content-item-remove {
-                    background-image: url(../img/field/number.png);
+                    font-size: 11px;
+                    color: #607D8B;
                 }
 
             .app-cards-content-item-index {
                 font-weight: 600;
                 font-size: 12px;
                 text-align: center;
-                color: #90A4AE;
+                color: #607D8B;
             }
             .app-cards-content-item input {
                 font-weight: 600;
@@ -562,16 +558,18 @@ body {
                     border-color: transparent;
                 }
             .app-cards-content-item-output {
-                width: 17px;
-                height: 23px;
-                cursor: pointer;
-                justify-self: right;
-                background-image: url(../img/arrow.png);
-                background-color: var(--main-border-color-high);
-                background-position: center center;
-                background-repeat: no-repeat;
+                font-size: 11px;
 
+                cursor: pointer;
+                /*justify-self: right;*/
+
+                background-color: var(--main-border-color-high);
                 border-radius: 6px 0 0 6px;
+
+                width: 16px;
+                
+                line-height: 23px;
+                color: #ffffff;
             }
 
     .app-cards-bottom {
@@ -619,4 +617,9 @@ body {
     -ms-user-select: none; 
     -o-user-select: none;
     user-select: none;
+}
+.icon {
+    font-family: 'ADDLOG-ICON' !important;
+    text-align: center;
+    
 }

@@ -18,8 +18,18 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _remove = function () {
+    _drag = function (evnt) { 
+        evnt.preventDefault();
 
+        const target = evnt.target,
+              targetClass = target.classList;
+
+        if (targetClass.contains('app-cards-header-close')) return;
+
+        parent.dragStart(evnt, context)
+    },
+    _remove = function (evnt) {
+        evnt.stopPropagation();
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -97,12 +107,14 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
             if (color == null) {
                 input.style.removeProperty('background-color');
                 card.style.removeProperty('border-color');
-                title.style.removeProperty('color');
+                header.style.removeProperty('color');
+                //title.style.removeProperty('color');
                 items.style.removeProperty('outline-color');
             } else {
                 input.style.backgroundColor = color;
                 card.style.borderColor = color;
-                title.style.color = color;
+                header.style.color = color;
+                //title.style.color = color;
                 items.style.outlineColor = color;
             }
         }
@@ -211,7 +223,7 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
         if (rootCard) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');
-        header.addEventListener('mousedown', (evnt) => parent.dragStart(evnt, context), { capture: false });
+        header.addEventListener('mousedown', _drag, { capture: false });
 
             title = addElement(header, 'div', 'app-cards-header-title');
             if (rootCard) {
@@ -220,15 +232,15 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
             }
 
             if (!rootCard) {
-                close = addElement(header, 'div', 'app-cards-header-close');
-                //close.addEventListener('click', () => _remove(), { capture: true });
+                close = addElement(header, 'div', 'app-cards-header-close icon', 'X');
+                close.addEventListener('click', _remove, { capture: false });
             }
         if (rootCard) {
             items = addElement(card, 'div', 'app-cards-content-items root');
         } else {
             let content = addElement(card, 'div', 'app-cards-content');
 
-            input = addElement(content, 'div', 'app-cards-content-input');
+            input = addElement(content, 'div', 'app-cards-content-input icon', '^');
             input['_CONNECTION_'] = null;
             input['_CONTEXT_'] = context;
 

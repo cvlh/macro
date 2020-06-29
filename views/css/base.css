@@ -3,8 +3,7 @@
     font-weight: 300;
     font-style: normal;
     font-display: fallback;
-    src: /*url('../font/light.woff2') format('woff2'),*/
-         url('../font/addlog-light.woff')  format('woff'),
+    src: url('../font/addlog-light.woff')  format('woff'),
          url('../font/addlog-light.ttf')   format('truetype')
 }
 @font-face {
@@ -12,8 +11,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: fallback;
-    src: /*url('../font/regular.woff2') format('woff2'),*/
-         url('../font/addlog-regular.woff')  format('woff'),
+    src: url('../font/addlog-regular.woff')  format('woff'),
          url('../font/addlog-regular.ttf')   format('truetype')
 }
 @font-face {
@@ -21,8 +19,7 @@
     font-weight: 600;
     font-style: normal;
     font-display: fallback;
-    src: /*url('../font/semibold.woff2') format('woff2'),*/
-         url('../font/addlog-semibold.woff')  format('woff'),
+    src: url('../font/addlog-semibold.woff')  format('woff'),
          url('../font/addlog-semibold.ttf')   format('truetype')
 }
 @font-face {
@@ -374,6 +371,12 @@ body {
         .main-app-treeview-item.field {
             padding: 0 0 0 0px;
         }
+        .main-app-treeview-item.field.empty {
+            color: #9E9E9E !important;
+            font-style: italic;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
         .main-app-treeview-item.textbox {
             background-position: center center;
             background-repeat: no-repeat;
@@ -404,7 +407,7 @@ body {
 
     /*width: 250px;*/
 
-    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, .1);
+    box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, .1);
     /*box-shadow: 0 8px 16px 0 rgba(0,0,0,.1);*/
     /*box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);*/
     border-radius: 6px;
@@ -426,7 +429,7 @@ body {
         border-bottom: 1px solid var(--main-border-color);
 
         display: grid;
-        grid-template-columns: 250px 24px;
+        grid-template-columns: 250px 18px 24px;
 
         align-items: center;
         background-color: var(--main-background);
@@ -451,20 +454,29 @@ body {
             color: black;
             text-align: center;
         }
-        .app-cards-header-close {
+        .app-cards-header-button {
             cursor: pointer;
 
-            font-size: 10px;
+            font-size: 8px;
+  
             line-height: 18px;
-            color: #78909C;
 
             width: 18px;
             margin: 4px 0px;
-            
+        
+            border-radius: 4px;
+        
             justify-self: center;
         }
-        .app-cards-header-close:hover  { color: #ef5350; }
-        .app-cards-header-close:active { color: #D32F2F; }
+        .app-cards-header-button:hover { background-color: var(--main-border-color); }
+        .app-cards-header-button:active { background-color: var(--main-border-color-high); }
+        
+        .app-cards-header-button.new { 
+            color: var(--main-green-bold); 
+            font-size: 10px;
+        }
+        .app-cards-header-button.close { color: #D32F2F; }
+
 
     .app-cards-content {
         position: relative;
@@ -570,6 +582,8 @@ body {
                 
                 line-height: 23px;
                 color: #ffffff;
+
+                display: none;
             }
 
     .app-cards-bottom {

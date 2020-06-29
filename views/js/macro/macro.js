@@ -190,11 +190,16 @@ export default function Macro() {
 
         return response;
     };
-    this.redraw = function () {
-        const size = cardsArray.length;
+    this.redraw = function (cardInput = null) {
+        if (cardInput === null) {
+            const size = cardsArray.length;
 
-        for (let counter=0; counter<size; counter++) {
-            cardsArray[counter].redraw(transform);
+            for (let counter=0; counter<size; counter++) {
+                cardsArray[counter].redraw(transform);
+            }
+        } else {
+            const viewport = cardInput.getBoundingClientRect();
+            cardInput['_CONNECTION_'].setPosition(viewport.left, viewport.top, transform, _MOV_.END);
         }
 
         context.serialize();
@@ -334,6 +339,11 @@ export default function Macro() {
                 context.dragStart(evnt, context)
             }
         }, { capture: true });
+
+        //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
+        //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);
+        //mainAppWrapper.addEventListener('touchcancel', (evnt) => console.log(evnt) , false);
+        //mainAppWrapper.addEventListener('touchend', (evnt) => console.log(evnt) , false);
 
         properties = new PropsView(context);
         mainProperties.appendChild(properties.getFragment());

@@ -12,7 +12,7 @@ export default function Field(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
-        item, index, description, output, remove,
+        item, index, description, output, type,
         treeviewRow = null, treeviewDeep,
         visibilityMode = false, visibilityReferenceCounter = 0,
         position = { top: 0, left: 0 },
@@ -73,7 +73,7 @@ export default function Field(ctx) {
         evnt.preventDefault();
         main.dragStart(evnt, context); 
     },
-    _remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
+    //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
         const OFFSET = 25;
 
@@ -93,7 +93,15 @@ export default function Field(ctx) {
 
         if (treeviewRow !== null) {
             const path = treeviewRow.querySelector('.field');
-            if (path.firstChild instanceof Text) path.firstChild.textContent = value;
+            if (path.firstChild instanceof Text) {
+                if (value !== '') {
+                    path.classList.remove('empty');
+                    path.firstChild.textContent = value;
+                } else {
+                    path.classList.add('empty');
+                    path.firstChild.textContent = _I18N_['field_empty'];
+                }
+            }
         }
 
         props['prefix']['text'] = value;
@@ -195,7 +203,7 @@ export default function Field(ctx) {
     this.serialize = function (fragment, properties) {
         let counterOffset, 
             fieldOffset, fieldDiv, fieldPath, 
-            hasChild, isExpand, deepSize, deep, lightColor;
+            hasChild, isExpand, deepSize, lightColor, text;
 
         //let response = { ctx: context };
         
@@ -246,7 +254,13 @@ export default function Field(ctx) {
             //if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
         }
 
-        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', description.value);
+        text = description.value;
+        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', text);
+        if (text === '') {
+            fieldDiv.textContent =  _I18N_['field_empty'];
+            fieldDiv.classList.add('empty');
+        }
+
         //fieldDiv.textContent = description.value;
         if (rootField) fieldDiv.style.color = properties.color;
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
@@ -317,8 +331,7 @@ export default function Field(ctx) {
         props['prefix']['text'] = text;
         description.value = text; 
     };
-    //this.getText = function(text) { return description.value; };
-
+    this.setFocus = function() { description.focus(); };
     this.toggleExpand = function(icon) { 
         props.expanded = !props.expanded;
 
@@ -332,9 +345,21 @@ export default function Field(ctx) {
             output['_CONNECTION_'].setExpand(props.expanded);
         }
     };
-    //this.getExpand = function() { return expanded; };
 
-    this.setIndex = function(idx) { index.textContent = idx; remove.textContent = idx % 6};
+    this.setType = function(fieldType) { 
+        if (fieldType !== _TYPES_.LIST) {
+            if (context.hasConnection) context.clearConnection();
+
+            output.style.display = 'none';
+            output.removeEventListener('mousedown', _drag, { capture: false });
+        } else {
+            output.style.display = 'block';
+            output.addEventListener('mousedown', _drag, { capture: false });
+        }
+        
+        type.textContent = fieldType;
+    };
+    this.setIndex = function(idx) { index.textContent = idx; };
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
@@ -346,7 +371,6 @@ export default function Field(ctx) {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         }
     };
-
 
     this.setProps = function () {
 
@@ -377,13 +401,13 @@ export default function Field(ctx) {
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _props, { capture: false });
 
-        remove = addElement(item, 'div', 'icon app-cards-content-item-remove');
-        //remove.addEventListener('click', _remove, { once: true, capture: false });
+        type = addElement(item, 'div', 'icon app-cards-content-item-remove');
+        //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', '^');
         output['_CONNECTION_'] = null;
         output['_PATH_'] = main.newSVGPath();
-        output.addEventListener('mousedown', _drag, { capture: false });
+        //output.addEventListener('mousedown', _drag, { capture: false });
 
     })();
 }

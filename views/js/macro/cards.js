@@ -24,9 +24,15 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
         const target = evnt.target,
               targetClass = target.classList;
 
-        if (targetClass.contains('app-cards-header-close')) return;
+        if (targetClass.contains('app-cards-header-button')) return;
 
         parent.dragStart(evnt, context)
+    },
+    _add = function() {
+        const field = context.addField('');
+        parent.redraw(input);
+
+        field.setFocus();
     },
     _remove = function (evnt) {
         evnt.stopPropagation();
@@ -182,14 +188,17 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.addField = function(text) {
+    this.addField = function(text, type) {
         let new_field = new Field(this);
         fieldsArray.push(new_field); 
 
         if (text) new_field.setText(text);
+        if (type !== undefined) {
+            new_field.setType(type);
+        } else {
+            new_field.setType(fieldsArray.length%7);
+        }
         new_field.setIndex(fieldsArray.length);
-
-        //parent.update(context);
         
         items.appendChild(new_field.getFragment());
         return new_field;
@@ -224,6 +233,7 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
         header = addElement(card, 'div', 'app-cards-header');
         header.addEventListener('mousedown', _drag, { capture: false });
+        if (rootCard) header.style.gridTemplateColumns = '250px 24px';
 
             title = addElement(header, 'div', 'app-cards-header-title');
             if (rootCard) {
@@ -231,8 +241,11 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
                 title.textContent = 'INÍCIO DA MACRO';
             }
 
+            add = addElement(header, 'div', 'app-cards-header-button new icon', '+');
+            add.addEventListener('click', _add, { capture: false });
+
             if (!rootCard) {
-                close = addElement(header, 'div', 'app-cards-header-close icon', 'X');
+                close = addElement(header, 'div', 'app-cards-header-button close icon', 'X');
                 close.addEventListener('click', _remove, { capture: false });
             }
         if (rootCard) {

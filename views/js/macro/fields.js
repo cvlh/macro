@@ -249,9 +249,6 @@ export default function Field(ctx) {
                 fieldOffset.classList.add('none');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', '_');
             }
-            //fieldOffset.classList.add((hasChild ? 'expand' : 'none'));
-            //fieldOffset = addElement(fieldOffset, 'div', 'icon', (hasChild ? '^' : '_'));
-            //if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
         }
 
         text = description.value;
@@ -269,7 +266,7 @@ export default function Field(ctx) {
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
         fieldPath.style.color = properties.color;
 
-        addElement(treeviewRow, 'div', 'main-app-treeview-item' + (!hasChild ? ' textbox' : ''));
+        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', context.getProps('type'));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
         addElement(treeviewRow, 'div');
@@ -347,7 +344,9 @@ export default function Field(ctx) {
     };
 
     this.setType = function(fieldType) { 
-        if (fieldType !== _TYPES_.LIST) {
+        const numFieldType = parseInt(fieldType);
+
+        if (numFieldType !== _TYPES_.LIST) {
             if (context.hasConnection) context.clearConnection();
 
             output.style.display = 'none';
@@ -357,6 +356,7 @@ export default function Field(ctx) {
             output.addEventListener('mousedown', _drag, { capture: false });
         }
         
+        props['type'] = numFieldType;
         type.textContent = fieldType;
     };
     this.setIndex = function(idx) { index.textContent = idx; };
@@ -372,9 +372,6 @@ export default function Field(ctx) {
         }
     };
 
-    this.setProps = function () {
-
-    };
     this.getProps = function (prop = null) {
         if (prop === null) {
             return props;

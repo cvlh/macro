@@ -14,13 +14,23 @@ export default function PropsView(ctx) {
         currentObject = null,
         prefix = { content: null, id: null, text: null }, 
         color = { content: null, color: null },
-        type = { content: null, type: null, require: null, mask: null, size: null, default: null }, 
+        type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
+        position = { content: null, up: null, down: null },
         info = { content: null, info: null, help: null }, 
         visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
         kanban = { content: null, step: null },
+        foreign = { content: null, key: null },
 
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _change_type = function(evnt) {
+        const value = evnt.target.value;
+
+        type['type_icon'].textContent = value;
+        if (currentObject !== null) {
+            currentObject.setType(value)
+        }
+    },
     _change = function(evnt) {
         if (currentObject !== null) {
 console.dir(evnt);
@@ -73,7 +83,7 @@ console.dir(evnt);
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let row, label, position;
+        let row, label, count;
 
         fragment = document.createDocumentFragment();
 
@@ -96,17 +106,20 @@ console.dir(evnt);
             row = addElement(color['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
 
-            position = 3;
+            count = 3;
             color['color'] = addElement(color['content'], 'div', 'main-app-properties-row');
-            for (let clr in _COLORS_) {
-                label = addElement(color['color'], 'div', 'main-app-properties-color');
-                label.style.backgroundColor = _COLORS_[clr];
-                label.style.gridColumn = position +' / span 2';
-                position += 3;
+            for (let color_idx in _COLORS_) {
+                if (_COLORS_.hasOwnProperty(color_idx)) {
+                    label = addElement(color['color'], 'div', 'main-app-properties-color');
+                    label.setAttribute('title', _I18N_['field_color_text'][color_idx]);
+                    label.style.backgroundColor = _COLORS_[color_idx];
+                    label.style.gridColumn = count +' / span 2';
+                    count += 3;
 
-                if (clr === 'INDIGO') {
-                    label.classList.add('selected');
-                    label.style.borderColor = label.style.backgroundColor;
+                    if (color_idx === 'BLUE') {
+                        label.classList.add('selected');
+                        label.style.borderColor = label.style.backgroundColor;
+                    }
                 }
             }
 
@@ -114,7 +127,23 @@ console.dir(evnt);
 
             row = addElement(type['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_type']);
-  
+            
+            type['type_icon'] = addElement(row, 'div', 'icon', '0');
+            type['type_icon'].style.gridColumn = '12 / span 2';
+            type['type_icon'].style.textAlign = 'left';
+            type['type_icon'].style.fontSize = '14px';
+            type['type_icon'].style.color = '#333';
+
+            type['type'] = addElement(row, 'select');
+            type['type'].style.gridColumn = '15 / span 13';
+            for (let type_idx in _I18N_['field_type_text']) {
+                if (_TYPES_.hasOwnProperty(type_idx)) {
+                    label = addElement(type['type'], 'option', null, _I18N_['field_type_text'][type_idx]);
+                    label.setAttribute('value', _TYPES_[type_idx]);
+                }
+            }
+            type['type'].addEventListener('change', _change_type, { capture: false });
+
             row = addElement(type['content'], 'div', 'main-app-properties-row');
                 type['require'] = addElement(row, 'input');
                 type['require'].setAttribute('id', 'require_checkbox');
@@ -133,6 +162,7 @@ console.dir(evnt);
             row = addElement(info['content'], 'div', 'main-app-properties-row');
                 info['info'] = addElement(row, 'input');
                 info['info'].setAttribute('type', 'text');
+                info['info'].style.gridColumn = '2 / span 26';
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_help']);
@@ -142,6 +172,29 @@ console.dir(evnt);
                 info['help'] = addElement(row, 'textarea');
                 info['help'].setAttribute('rows', '3');
                 info['help'].setAttribute('maxlength', '128');
+
+
+        position['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+
+            row = addElement(position['content'], 'div', 'main-app-properties-row');
+            label = addElement(row, 'div', 'main-app-properties-label', _I18N_['field_position']);
+            label.style.gridColumn = '2 / span 13';
+
+            position['up'] = addElement(row, 'input', 'icon');
+            position['up'].setAttribute('type', 'button');
+            position['up'].setAttribute('value', 'U');
+            position['up'].setAttribute('title', _I18N_['field_position_up']);
+            position['up'].style.gridColumn = '18 / span 3';
+
+            label = addElement(row, 'div', 'main-app-properties-label', '2');
+            label.style.textAlign = 'center';
+            label.style.gridColumn = '22 / span 2';
+
+            position['down'] = addElement(row, 'input', 'icon');
+            position['down'].setAttribute('type', 'button');
+            position['down'].setAttribute('value', 'D');
+            position['down'].setAttribute('title', _I18N_['field_position_down']);
+            position['down'].style.gridColumn = '25 / span 3';
 
         visibility['content'] = addElement(fragment, 'div', 'main-app-properties-content');
         
@@ -234,5 +287,16 @@ console.dir(evnt);
                 parent.setVisibilityMode(status);
                 status = !status;
             }, { capture: false });
+
+        foreign['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+        
+            row = addElement(foreign['content'], 'div', 'main-app-properties-row');
+            label = addElement(row, 'div', 'main-app-properties-label', _I18N_['field_foreign_key']);
+            label.style.gridColumn = '2 / span 13';
+
+            info['key'] = addElement(row, 'input');
+            info['key'].setAttribute('type', 'text');
+            info['key'].style.gridColumn = '16 / span 12';
+
     })();
 }

@@ -188,16 +188,16 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.addField = function(text, type) {
+    this.addField = function(text, type = null) {
         let new_field = new Field(this);
         fieldsArray.push(new_field); 
 
         if (text) new_field.setText(text);
-        if (type !== undefined) {
+        if (type !== null) {
             new_field.setType(type);
-        } else {
-            new_field.setType(fieldsArray.length%7);
-        }
+        } /*else {
+            new_field.setType(_TYPES_.ITEM);
+        }*/
         new_field.setIndex(fieldsArray.length);
         
         items.appendChild(new_field.getFragment());

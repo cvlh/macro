@@ -171,7 +171,7 @@ body {
     .main-app-properties-row {
         display: grid;
         grid-template-columns: repeat(28, 8px);
-        grid-template-rows: 28px;
+        grid-template-rows: 30px;
         /*padding-left: 7px;*/
         /*padding-right: 8px;*/
         align-items: center;
@@ -205,10 +205,8 @@ body {
             font-weight: 300;
             color: #333333;
         }
-        .main-app-properties-row input[type=text] {
-            grid-column-start: 2;
-            grid-column-end: span 26;
-
+        .main-app-properties-row input[type=text],
+        .main-app-properties-row input[type=button] {
             border: 1px solid var(--main-border-color);
             border-radius: 4px;
             height: 24px;
@@ -233,6 +231,19 @@ body {
         .main-app-properties-row input[type=radio]:checked + label {
             font-weight: 600;
         }
+        .main-app-properties-row input[type=button] {
+            background-color: #ffffff;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
+            .main-app-properties-row input[type=button]:hover { background-color: #f5f5f5; }
+            .main-app-properties-row input[type=button]:active { background-color: #e0e0e0; }
+            .main-app-properties-row input[type=button]:disabled { 
+                color: #999999;
+                background-color: #fafafafa; 
+                cursor: default;
+            }
         .main-app-properties-label {
             font-weight: 600;
             align-self: center;
@@ -333,8 +344,6 @@ body {
         .main-app-treeview-item {
             position: relative;
 
-            /*grid-column-end: span 28;*/
-            /*display: block;*/
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -353,9 +362,7 @@ body {
             justify-content: center;
             color: #B0BEC5;
         }
-            .main-app-treeview-item.expand:hover {
-                color: #607D8B;
-            }
+            .main-app-treeview-item.expand:hover { color: #607D8B; }
         .main-app-treeview-item.expand div {
             pointer-events: none;
             transform: rotate(0deg);
@@ -368,19 +375,16 @@ body {
             grid-column-end: span 2;
             color: #B0BEC5;
         }
-        .main-app-treeview-item.field {
-            padding: 0 0 0 0px;
-        }
+        .main-app-treeview-item.field { padding: 0; }
         .main-app-treeview-item.field.empty {
             color: #9E9E9E !important;
             font-style: italic;
             text-transform: uppercase;
             font-weight: 300;
         }
-        .main-app-treeview-item.textbox {
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-image: url(../img/field/text.svg);
+        .main-app-treeview-item.type {
+            font-size: 10px;
+            color: #607D8B;
         }
         .main-app-treeview-item-path {
             position: absolute;
@@ -400,6 +404,7 @@ body {
 
             display: none;
         }
+
 .app-cards {
     position: absolute;
     top: 0;
@@ -477,7 +482,6 @@ body {
         }
         .app-cards-header-button.close { color: #D32F2F; }
 
-
     .app-cards-content {
         position: relative;
         display: grid;
@@ -491,7 +495,7 @@ body {
             width: 18px;
 
             background-color: var(--main-border-color-high);
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 6px 6px 0;
 
             font-size: 11px;
             line-height: 29px;

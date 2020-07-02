@@ -1,10 +1,12 @@
 'use strict';
 
 import { addElement } from '../utils/functions.js';
-import { _I18N_ } from './../i18n/pt-br.js';
-import { _COLORS_, _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
+import { _I18N_ } from '../i18n/pt-br.js';
+import { _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
 
-export default function PropsView(ctx) {
+import Color from './properties/color.js';
+
+export default function Properties(ctx) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const parent = ctx, context = this;
@@ -12,15 +14,17 @@ export default function PropsView(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
         currentObject = null,
+
+        color,
+
         prefix = { content: null, id: null, text: null }, 
-        color = { content: null, color: null },
+        //color = { content: null, color: null },
         type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
         position = { content: null, up: null, down: null },
         info = { content: null, info: null, help: null }, 
         visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
         kanban = { content: null, step: null },
         foreign = { content: null, key: null },
-
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _change_type = function(evnt) {
@@ -33,9 +37,10 @@ export default function PropsView(ctx) {
     },
     _change = function(evnt) {
         if (currentObject !== null) {
-console.dir(evnt);
+            console.dir(evnt);
         }
     };
+
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
     this.open = function (object) {
@@ -49,9 +54,14 @@ console.dir(evnt);
         let props = object.getProps();
         if (props == null) return;
 
+        color.visible(false);
+
         currentObject = object;
         for (let prop in props) {
             switch(prop) {
+                case 'color':
+                    color.visible(true, props[prop]);
+                    break;
                 case 'prefix':
                     prefix['content'].style.display = 'block';
                     prefix['id'].textContent = props[prop]['id'];
@@ -101,7 +111,8 @@ console.dir(evnt);
             prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
             prefix['text'].style.gridColumn = '3 / span 24';
 
-        color['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+        color = new Color(fragment);
+        /*color['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(color['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
@@ -121,18 +132,14 @@ console.dir(evnt);
                         label.style.borderColor = label.style.backgroundColor;
                     }
                 }
-            }
+            }*/
 
         type['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(type['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_['field_type']);
             
-            type['type_icon'] = addElement(row, 'div', 'icon', '0');
-            type['type_icon'].style.gridColumn = '12 / span 2';
-            type['type_icon'].style.textAlign = 'left';
-            type['type_icon'].style.fontSize = '14px';
-            type['type_icon'].style.color = '#333';
+            type['type_icon'] = addElement(row, 'div', 'icon main-app-properties-type-color', '0');
 
             type['type'] = addElement(row, 'select');
             type['type'].style.gridColumn = '15 / span 13';

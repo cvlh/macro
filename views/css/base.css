@@ -26,6 +26,7 @@
     font-family: 'ADDLOG-ICON';
     font-weight: normal;
     font-style: normal;
+    font-display: fallback;
     src: url('../font/addlog-icon.woff') format('woff'),
          url('../font/addlog-icon.ttf') format('truetype');
 }
@@ -143,6 +144,7 @@ body {
         .main-app-svg-path.error { 
             stroke-dasharray: 2 15; 
         }
+
 .main-app-properties {
    /* width: 240px;*/
     background-color: #ffffff;
@@ -161,13 +163,12 @@ body {
         border-bottom: 1px solid #e5e5e5;
         color: #333333;
     }
-    .main-app-properties-content.disabled,
-    .main-app-properties-content.disabled input {
-        background-color: #FAFAFA;
-        color: #9E9E9E;
-        pointer-events: none;
-    }
-
+        .main-app-properties-content.disabled,
+        .main-app-properties-content.disabled input {
+            background-color: #FAFAFA;
+            color: #9E9E9E;
+            pointer-events: none;
+        }
     .main-app-properties-row {
         display: grid;
         grid-template-columns: repeat(28, 8px);
@@ -267,6 +268,11 @@ body {
         .main-app-properties-color {
             width: 22px;
             height: 22px;
+
+            line-height: 16px;
+            font-size: 10px;
+            color: #ffffff;
+
             border-radius: 50%;
             opacity: 0.3;
 
@@ -276,17 +282,17 @@ body {
 
             margin: 0 1px;
 
-            background-position: center center;
-            background-repeat: no-repeat;
-
-            transition: .2s opacity, background-image, border-radius linear;
+            transition: .3s opacity linear;
 
             cursor: pointer;
         }
-        .main-app-properties-color:hover { opacity: 1; }
-        .main-app-properties-color.selected {
-            opacity: 1;
-            background-image: url(../img/check.png);
+            .main-app-properties-color:hover { opacity: 1; }
+            .main-app-properties-color.selected { opacity: 1; }
+        .main-app-properties-type-color {
+            grid-column: 12 / span 2;
+            text-align: left;
+            font-size: 14px;
+            color: #333;
         }
 
 .main-app-treeview {

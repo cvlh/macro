@@ -21,7 +21,7 @@ export default function Field(ctx) {
             prefix: { id: null, text: null },
             //id: '',
             type: _TYPES_.TEXT,
-            color: _COLORS_.BLACK,
+            //color: _COLORS_.BLACK,
             info: '',
             help: '',
             require: false,

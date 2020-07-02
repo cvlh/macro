@@ -5,14 +5,14 @@ export const _I18N_ = {
     field_value: 'Texto',
     field_type: 'Tipo',
     field_type_text: {
-        LIST:     'Lista',
-        ITEM:     'Item',
-        TEXT:     'Texto',
-        NUMBER:   'Numérico',
-        DATE:     'Data',
-        PHOTO:    'Fotografia',
-        SIGNATURE:'Assinatura',
-        SCAN:     'Leitor'
+        LIST:      'Lista',
+        ITEM:      'Item',
+        TEXT:      'Texto',
+        NUMBER:    'Numérico',
+        DATE:      'Data',
+        PHOTO:     'Fotografia',
+        SIGNATURE: 'Assinatura',
+        SCAN:      'Leitor'
     },
     field_mask: 'Máscara',
     field_color: 'Cor',

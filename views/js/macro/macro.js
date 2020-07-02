@@ -5,7 +5,7 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
-import PropsView from './propsview.js';
+import Properties from './properties.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro() {
@@ -345,7 +345,7 @@ export default function Macro() {
         //mainAppWrapper.addEventListener('touchcancel', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchend', (evnt) => console.log(evnt) , false);
 
-        properties = new PropsView(context);
+        properties = new Properties(context);
         mainProperties.appendChild(properties.getFragment());
         //context.setPosition(240, 0, transform, _MOV_.END);
     })();

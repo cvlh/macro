@@ -7,9 +7,9 @@ export const _DRAG_ = {
 };
 
 export const _MOV_ = {
-    START : 0,
-    MOV   : 1,
-    END   : 2
+    START: 0,
+    MOV:   1,
+    END:   2
 };
 
 export const _COLORS_ = {
@@ -30,8 +30,7 @@ export const _TYPES_ = {
     DATE:      3,
     PHOTO:     4,
     SIGNATURE: 5,
-    SCAN:      6,
-    ITEM:      7
+    SCAN:      6
 };
 
 export const _VISIBILITY_ = {

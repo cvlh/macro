@@ -5,6 +5,7 @@ import { _I18N_ } from '../i18n/pt-br.js';
 import { _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
 
 import Color from './properties/color.js';
+import Type from './properties/type.js';
 
 export default function Properties(ctx) {
 
@@ -15,11 +16,12 @@ export default function Properties(ctx) {
     let fragment,
         currentObject = null,
 
-        color,
+        propertiesArray = [],
+        //color, type,
 
         prefix = { content: null, id: null, text: null }, 
         //color = { content: null, color: null },
-        type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
+        //type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
         position = { content: null, up: null, down: null },
         info = { content: null, info: null, help: null }, 
         visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
@@ -27,14 +29,14 @@ export default function Properties(ctx) {
         foreign = { content: null, key: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _change_type = function(evnt) {
+    /*_change_type = function(evnt) {
         const value = evnt.target.value;
 
         type['type_icon'].textContent = value;
         if (currentObject !== null) {
             currentObject.setType(value)
         }
-    },
+    },*/
     _change = function(evnt) {
         if (currentObject !== null) {
             console.dir(evnt);
@@ -44,24 +46,22 @@ export default function Properties(ctx) {
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
     this.open = function (object) {
-        /*prefix['content'].style.display = 'none';
-        color['content'].style.display = 'none';
-        type['content'].style.display = 'none';
-        info['content'].style.display = 'none';
-        visibility['content'].style.display = 'none';*/
-        //kanban['content'].style.display = 'none';
 
         let props = object.getProps();
         if (props == null) return;
 
-        color.visible(false);
-
         currentObject = object;
-        for (let prop in props) {
+
+        const size = propertiesArray.length;
+        for (var counter=0; counter<size; counter++) {
+            propertiesArray[counter].visible(object);
+        }
+
+        //color.visible(currentObject);
+        //type.visible(currentObject);
+
+        /*for (let prop in props) {
             switch(prop) {
-                case 'color':
-                    color.visible(true, props[prop]);
-                    break;
                 case 'prefix':
                     prefix['content'].style.display = 'block';
                     prefix['id'].textContent = props[prop]['id'];
@@ -88,7 +88,7 @@ export default function Properties(ctx) {
                     visibility['content'].style.display = 'block';
                     break;
             }
-        }
+        }*/
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
@@ -111,55 +111,13 @@ export default function Properties(ctx) {
             prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
             prefix['text'].style.gridColumn = '3 / span 24';
 
-        color = new Color(fragment);
-        /*color['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+        //color = new Color(fragment);
+        //type = new Type(fragment);
 
-            row = addElement(color['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
-
-            count = 3;
-            color['color'] = addElement(color['content'], 'div', 'main-app-properties-row');
-            for (let color_idx in _COLORS_) {
-                if (_COLORS_.hasOwnProperty(color_idx)) {
-                    label = addElement(color['color'], 'div', 'main-app-properties-color');
-                    label.setAttribute('title', _I18N_['field_color_text'][color_idx]);
-                    label.style.backgroundColor = _COLORS_[color_idx];
-                    label.style.gridColumn = count +' / span 2';
-                    count += 3;
-
-                    if (color_idx === 'BLUE') {
-                        label.classList.add('selected');
-                        label.style.borderColor = label.style.backgroundColor;
-                    }
-                }
-            }*/
-
-        type['content'] = addElement(fragment, 'div', 'main-app-properties-content');
-
-            row = addElement(type['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_type']);
-            
-            type['type_icon'] = addElement(row, 'div', 'icon main-app-properties-type-color', '0');
-
-            type['type'] = addElement(row, 'select');
-            type['type'].style.gridColumn = '15 / span 13';
-            for (let type_idx in _I18N_['field_type_text']) {
-                if (_TYPES_.hasOwnProperty(type_idx)) {
-                    label = addElement(type['type'], 'option', null, _I18N_['field_type_text'][type_idx]);
-                    label.setAttribute('value', _TYPES_[type_idx]);
-                }
-            }
-            type['type'].addEventListener('change', _change_type, { capture: false });
-
-            row = addElement(type['content'], 'div', 'main-app-properties-row');
-                type['require'] = addElement(row, 'input');
-                type['require'].setAttribute('id', 'require_checkbox');
-                type['require'].setAttribute('type', 'checkbox');
-                type['require'].style.gridColumn = '2 / span 2';
-
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_require']);
-                label.setAttribute('for', 'require_checkbox');
-                label.style.gridColumn = '5 / span 23';
+        propertiesArray.push(
+            new Color(fragment),
+            new Type(fragment)
+        );
 
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
@@ -286,7 +244,7 @@ export default function Properties(ctx) {
             const bntvisibility = addElement(row, 'input');
             bntvisibility.setAttribute('type', 'button');
             bntvisibility.setAttribute('value', _I18N_['field_visibility_add']);
-            bntvisibility.style.gridColumn = '13 / span 15';
+            bntvisibility.style.gridColumn = '16 / span 12';
 
             let status = true;
             bntvisibility.addEventListener('click', (evnt) => {

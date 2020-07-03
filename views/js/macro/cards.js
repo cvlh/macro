@@ -1,19 +1,19 @@
 'use strict';
 
-import { _DRAG_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _TYPES_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, /*left = 0, top = 0, */root = false) {
+export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const parent = ctx, context = this, 
           rootCard = root;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let fragment, card, header, title, items, input,
+    let card, header, title, items, input,
         fieldsArray = [],
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
@@ -40,7 +40,7 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
-    this.getFragment = function() { return fragment; };
+    //this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
         if (rootCard) return false;
         
@@ -188,19 +188,17 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.addField = function(text, type = null) {
-        let new_field = new Field(this);
+    this.addField = function(text = null, type = null) {
+        let new_field = new Field(this, items);
         fieldsArray.push(new_field); 
 
-        if (text) new_field.setText(text);
-        if (type !== null) {
-            new_field.setType(type);
-        } /*else {
-            new_field.setType(_TYPES_.ITEM);
-        }*/
+        if (text !== null) new_field.setText(text);
+        if (type === null) type = _TYPES_.LIST;
+
+        new_field.setType(type);
         new_field.setIndex(fieldsArray.length);
         
-        items.appendChild(new_field.getFragment());
+        //items.appendChild(new_field.getFragment());
         return new_field;
     };
     this.isRoot = function() { return rootCard; };
@@ -224,7 +222,7 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        fragment = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
 
         let bottom, add, close;
 
@@ -258,12 +256,14 @@ export default function Card(ctx, /*left = 0, top = 0, */root = false) {
             input['_CONTEXT_'] = context;
 
             items = addElement(content, 'div', 'app-cards-content-items');
-        } 
+        }
 
         //bottom = addElement(card, 'div', 'app-cards-bottom');
 
         //    add = addElement(bottom, 'div', 'app-cards-bottom-add');
         //    add.textContent = 'Atividade';
-            //add.addEventListener('click', () => context.addField(), { capture: true });        
+            //add.addEventListener('click', () => context.addField(), { capture: true });
+
+        append.appendChild(fragment);
     })();
 }

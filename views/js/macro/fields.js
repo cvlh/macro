@@ -4,27 +4,25 @@ import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_ } from '../utils/constan
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
-export default function Field(ctx) {
+export default function Field(ctx, append) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const main = ctx.getMain(), parent = ctx, context = this, 
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let fragment,
-        item, index, description, output, type,
+    let item, index, description, output, type,
         treeviewRow = null, treeviewDeep,
         visibilityMode = false, visibilityReferenceCounter = 0,
         position = { top: 0, left: 0 },
 
         props = {
             prefix: { id: null, text: null },
-            //id: '',
-            type: _TYPES_.TEXT,
-            //color: _COLORS_.BLACK,
+            type: { type: _TYPES_.LIST },
+
             info: '',
             help: '',
-            require: false,
+            //require: false,
             expanded: true,
             visibility: {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
@@ -42,14 +40,6 @@ export default function Field(ctx) {
         return result;
     },
     _color = function(drag, color = null) {
-       /* if (color == null) {
-            color = context.getColor();
-            console.log('get color ' + color);
-        }*/
-        //const color = context.getColor();
-        //console.log('_color ' +color+ ' ' +drag);
-        //if (drag) color = context.getColor();
-
         if (color !== null) {
             if (!drag) {
                 if (context.hasConnection()) {
@@ -106,7 +96,7 @@ export default function Field(ctx) {
 
         props['prefix']['text'] = value;
     },
-    _props = function() { main.openProperties(context); },
+    _showProperties = function() { main.showProperties(context); },
     _setVisibility = function() {
         description.style.backgroundColor = context.getColor();
         description.style.color = '#ffffff';
@@ -114,7 +104,6 @@ export default function Field(ctx) {
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.OUTPUT };
-    this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
         if (output['_CONNECTION_'] !== null) {
             return true;
@@ -178,6 +167,7 @@ export default function Field(ctx) {
     this.setColor = function(color) { 
         if (rootField && color !== null) {
             props.color = color;
+            description.style.outlineColor = color;
         }
 
         _color(false, color);
@@ -266,7 +256,7 @@ export default function Field(ctx) {
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
         fieldPath.style.color = properties.color;
 
-        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', context.getProps('type'));
+        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
         addElement(treeviewRow, 'div');
@@ -356,8 +346,10 @@ export default function Field(ctx) {
             output.addEventListener('mousedown', _drag, { capture: false });
         }
         
-        props['type'] = numFieldType;
+        props['type']['type'] = numFieldType;
         type.textContent = fieldType;
+
+        return props['type'];
     };
     this.setIndex = function(idx) { index.textContent = idx; };
     this.check = function(target) {
@@ -385,7 +377,7 @@ export default function Field(ctx) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        fragment = document.createDocumentFragment();
+        const fragment = document.createDocumentFragment();
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
         //item.setAttribute('draggable', true);
@@ -396,15 +388,18 @@ export default function Field(ctx) {
         description = addElement(item, 'input');
         description.setAttribute('maxlength', '64');
         description.addEventListener('keyup', _refresh, { capture: false });
-        description.addEventListener('focus', _props, { capture: false });
+        description.addEventListener('focus', _showProperties, { capture: false });
 
         type = addElement(item, 'div', 'icon app-cards-content-item-remove');
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', '^');
-        output['_CONNECTION_'] = null;
         output['_PATH_'] = main.newSVGPath();
+        output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });
 
+        append.appendChild(fragment);
+
+        if (rootField) context.setColor(_COLORS_.BLACK);
     })();
 }

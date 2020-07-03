@@ -135,15 +135,13 @@ export default function Macro() {
     this.newCard = function(left, top, connect = null) {
         const isRoot = (cardsArray.length ? false : true);
 
-        let new_card = new Card(context, isRoot);
+        let new_card = new Card(context, mainAppWrapper, isRoot);
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;
-
-        mainAppWrapper.appendChild(new_card.getFragment());
         new_card.setPosition(left, top, transform, _MOV_.END);
 
-        if (connect != null) connect.makeConnection(new_card);
+        if (connect !== null) connect.makeConnection(new_card);
 
         return new_card;
     };
@@ -204,7 +202,7 @@ export default function Macro() {
 
         context.serialize();
     };
-    this.openProperties = function(object) {
+    this.showProperties = function(object) {
         properties.open(object);
     };
     this.setVisibilityMode = function(status) {

@@ -5,11 +5,11 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _COLORS_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////
-export default function Color (fragment) {
+export default function Color (append) {
 
-    let content, colors = {},
+    let content, colors = {}, currentObject = null,
     
-    _set_color = function (target) {
+    _set = function (target) {        
         let selected = target.parentElement.querySelector('.selected');
         if (selected) {
             if (target.isSameNode(selected)) return;
@@ -25,30 +25,36 @@ export default function Color (fragment) {
     },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
-
+        
         const target = evnt.target,
               targetClass = target.classList;
 
         if (targetClass.contains('main-app-properties-color')) {
-            _set_color(target);
+            _set(target);
+            if (currentObject !== null) currentObject.setColor(target['_COLOR_']);
         }
     };
 
-    this.visible = function(status, color) {
-        if (status) {
-            if (colors.hasOwnProperty(color)) {
+    this.visible = function(object) {
+        const objectColor = object.getProps('color');
+
+        if (objectColor !== null) {
+            if (colors.hasOwnProperty(objectColor)) {
+                _set(colors[objectColor]);
+                currentObject = object;
                 content.style.display = 'block';
-                _set_color(colors[color]);
+                return;
             }
-        } else {
-            content.style.display = 'none';
         }
+
+        currentObject = null;
+        content.style.display = 'none';
     };
 
     (function() {
         let row, color, count = 3;
 
-        content = addElement(fragment, 'div', 'main-app-properties-content');
+        content = addElement(append, 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row');
               addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
@@ -61,6 +67,7 @@ export default function Color (fragment) {
                 color.setAttribute('title', _I18N_['field_color_text'][color_idx]);
                 color.style.backgroundColor = _COLORS_[color_idx];
                 color.style.gridColumn = count + ' / span 2';
+                color['_COLOR_'] = _COLORS_[color_idx];
 
                 count += 3;
 

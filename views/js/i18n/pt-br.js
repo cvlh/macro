@@ -14,7 +14,7 @@ export const _I18N_ = {
         SIGNATURE: 'Assinatura',
         SCAN:      'Leitor'
     },
-    field_require: 'Preenchimento obrigatório',
+    field_optional: 'Preenchimento opcional',
     field_size: 'Tamanho do campo',
     field_size_max: 'Máximo',
     field_size_min: 'Mínimo',
@@ -42,9 +42,9 @@ export const _I18N_ = {
     field_visibility_Save: 'Salvar',
     field_visibility_Restore: 'Restaurar',
 
-    field_execute: 'Executar', 
-    field_execute_instant: 'Imediato', 
-    field_execute_after: 'Fim da atividade',
+    field_execute: 'Execução', 
+    field_execute_instant: 'Imediatamente ao selecionar', 
+    field_execute_after: 'Quando finalizar atividade',
 
     field_empty: 'Sem texto',
 

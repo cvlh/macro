@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _TYPES_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _TYPES_, _ICON_CHAR_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -239,11 +239,11 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
                 title.textContent = 'INÍCIO DA MACRO';
             }
 
-            add = addElement(header, 'div', 'app-cards-header-button new icon', '+');
+            add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
             add.addEventListener('click', _add, { capture: false });
 
             if (!rootCard) {
-                close = addElement(header, 'div', 'app-cards-header-button close icon', 'X');
+                close = addElement(header, 'div', 'app-cards-header-button close icon', _ICON_CHAR_.CLOSE);
                 close.addEventListener('click', _remove, { capture: false });
             }
         if (rootCard) {
@@ -251,7 +251,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         } else {
             let content = addElement(card, 'div', 'app-cards-content');
 
-            input = addElement(content, 'div', 'app-cards-content-input icon', '^');
+            input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
             input['_CONNECTION_'] = null;
             input['_CONTEXT_'] = context;
 

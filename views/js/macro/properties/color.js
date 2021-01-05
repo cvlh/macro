@@ -2,26 +2,26 @@
 
 import { addElement } from '../../utils/functions.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
-import { _COLORS_ } from '../../utils/constants.js';
+import { _COLORS_, _ICON_CHAR_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////
 export default function Color (append) {
 
     let content, colors = {}, currentObject = null,
     
-    _set = function (target) {        
+    _set = function(target) {        
         let selected = target.parentElement.querySelector('.selected');
         if (selected) {
             if (target.isSameNode(selected)) return;
 
             selected.classList.remove('selected');
             selected.style.removeProperty('border-color');
-            selected.textContent = '';
+            selected.textContent = _ICON_CHAR_.NONE;
         }
         
         target.classList.add('selected');
         target.style.borderColor = target.style.backgroundColor;
-        target.textContent = 'C';
+        target.textContent = _ICON_CHAR_.CHECK;
     },
     _receive_events = function(evnt) {
         evnt.stopPropagation();

@@ -2,10 +2,11 @@
 
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from '../i18n/pt-br.js';
-import { _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
+import { _TYPES_, _VISIBILITY_, _ICON_CHAR_ } from '../utils/constants.js';
 
 import Color from './properties/color.js';
 import Type from './properties/type.js';
+import Visibility from './properties/visibility.js';
 
 export default function Properties(ctx) {
 
@@ -24,7 +25,7 @@ export default function Properties(ctx) {
         //type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
         position = { content: null, up: null, down: null },
         info = { content: null, info: null, help: null }, 
-        visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
+        //visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
         kanban = { content: null, step: null },
         foreign = { content: null, key: null },
 
@@ -45,7 +46,7 @@ export default function Properties(ctx) {
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
-    this.open = function (object) {
+    this.open = function(object) {
 
         let props = object.getProps();
         if (props == null) return;
@@ -116,7 +117,8 @@ export default function Properties(ctx) {
 
         propertiesArray.push(
             new Color(fragment),
-            new Type(fragment)
+            new Type(fragment),
+            new Visibility(fragment),
         );
 
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
@@ -147,7 +149,7 @@ export default function Properties(ctx) {
 
             position['up'] = addElement(row, 'input', 'icon');
             position['up'].setAttribute('type', 'button');
-            position['up'].setAttribute('value', 'U');
+            position['up'].setAttribute('value', _ICON_CHAR_.UP);
             position['up'].setAttribute('title', _I18N_['field_position_up']);
             position['up'].style.gridColumn = '18 / span 3';
 
@@ -157,101 +159,9 @@ export default function Properties(ctx) {
 
             position['down'] = addElement(row, 'input', 'icon');
             position['down'].setAttribute('type', 'button');
-            position['down'].setAttribute('value', 'D');
+            position['down'].setAttribute('value', _ICON_CHAR_.DOWN);
             position['down'].setAttribute('title', _I18N_['field_position_down']);
             position['down'].style.gridColumn = '25 / span 3';
-
-        visibility['content'] = addElement(fragment, 'div', 'main-app-properties-content');
-        
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_visibility']);
-
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-                visibility['fresh'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['fresh'].setAttribute('id', 'fresh_checkbox');
-                visibility['fresh'].setAttribute('type', 'radio');
-                visibility['fresh'].setAttribute('name', 'visibility');
-                visibility['fresh'].setAttribute('value', _VISIBILITY_.FRESH);
-                visibility['fresh'].style.gridColumn = '2 / span 2';
-                visibility['fresh'].addEventListener('change', _change, { capture: false });
-
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_fresh']);
-                label.setAttribute('for', 'fresh_checkbox');
-                label.style.gridColumn = '5 / span 8';
-
-                visibility['extra'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['extra'].setAttribute('id', 'extra_checkbox');
-                visibility['extra'].setAttribute('type', 'radio');
-                visibility['extra'].setAttribute('name', 'visibility');
-                visibility['extra'].setAttribute('value', _VISIBILITY_.EXTRA);
-                visibility['extra'].style.gridColumn = '14 / span 2';
-                visibility['extra'].addEventListener('change', _change, { capture: false });
-
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_extra']);
-                label.setAttribute('for', 'extra_checkbox');
-                label.style.gridColumn = '17 / span 11';
-
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-                visibility['save'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['save'].setAttribute('id', 'save_checkbox');
-                visibility['save'].setAttribute('type', 'checkbox');
-                visibility['save'].setAttribute('value', _VISIBILITY_.SAVE);
-                visibility['save'].style.gridColumn = '2 / span 2';
-
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Save']);
-                label.setAttribute('for', 'save_checkbox');
-                label.style.gridColumn = '5 / span 8';
-
-                visibility['restore'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['restore'].setAttribute('id', 'restore_checkbox');
-                visibility['restore'].setAttribute('type', 'checkbox');
-                visibility['restore'].setAttribute('value', _VISIBILITY_.RESTORE);
-                visibility['restore'].style.gridColumn = '14 / span 2';
-        
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Restore']);
-                label.setAttribute('for', 'restore_checkbox');
-                label.style.gridColumn = '17 / span 11';
-
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_execute']);
-
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-                visibility['instant'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['instant'].setAttribute('id', 'instant_radio');
-                visibility['instant'].setAttribute('type', 'radio');
-                visibility['instant'].setAttribute('name', 'execute');
-                visibility['instant'].setAttribute('value', _VISIBILITY_.INSTANT);
-                visibility['instant'].style.gridColumn = '2 / span 2';
-
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_instant']);
-                label.setAttribute('for', 'instant_radio');
-                label.style.gridColumn = '5 / span 8';
-
-                visibility['after'] = addElement(row, 'input', 'main-app-properties-checkbox');
-                visibility['after'].setAttribute('id', 'after_radio');
-                visibility['after'].setAttribute('type', 'radio');
-                visibility['after'].setAttribute('name', 'execute');
-                visibility['after'].setAttribute('value', _VISIBILITY_.AFTER);
-                visibility['after'].style.gridColumn = '14 / span 2';
-        
-                label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_after']);
-                label.setAttribute('for', 'after_radio');
-                label.style.gridColumn = '17 / span 11';
-
-            row = addElement(visibility['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_no_visibility']);
-
-            const bntvisibility = addElement(row, 'input');
-            bntvisibility.setAttribute('type', 'button');
-            bntvisibility.setAttribute('value', _I18N_['field_visibility_add']);
-            bntvisibility.style.gridColumn = '16 / span 12';
-
-            let status = true;
-            bntvisibility.addEventListener('click', (evnt) => {
-                currentObject.setVisibilitySelected(true);
-                parent.setVisibilityMode(status);
-                status = !status;
-            }, { capture: false });
 
         foreign['content'] = addElement(fragment, 'div', 'main-app-properties-content');
         

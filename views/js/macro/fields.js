@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -17,12 +17,11 @@ export default function Field(ctx, append) {
         position = { top: 0, left: 0 },
 
         props = {
-            prefix: { id: null, text: null },
+            prefix: { id: null },
             type: { type: _TYPES_.LIST },
 
             info: '',
             help: '',
-            //require: false,
             expanded: true,
             visibility: {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
@@ -94,7 +93,7 @@ export default function Field(ctx, append) {
             }
         }
 
-        props['prefix']['text'] = value;
+        //props['prefix']['text'] = value;
     },
     _showProperties = function() { main.showProperties(context); },
     _setVisibility = function() {
@@ -233,11 +232,11 @@ export default function Field(ctx, append) {
         if (hasChild || rootField) {
             if (hasChild) {
                 fieldOffset.classList.add('expand');
-                fieldOffset = addElement(fieldOffset, 'div', 'icon', '^');
+                fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.ARROW);
                 if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
             } else {
                 fieldOffset.classList.add('none');
-                fieldOffset = addElement(fieldOffset, 'div', 'icon', '_');
+                fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.EMPTY);
             }
         }
 
@@ -315,7 +314,7 @@ export default function Field(ctx, append) {
         }
     };
     this.setText = function(text) { 
-        props['prefix']['text'] = text;
+        //props['prefix']['text'] = text;
         description.value = text; 
     };
     this.setFocus = function() { description.focus(); };
@@ -356,11 +355,14 @@ export default function Field(ctx, append) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
+                //target.style.cursor = 'no-drop'; //'not-allowed';
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
+                //target.style.removeProperty('cursor');
             }
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+            //target.style.removeProperty('cursor');
         }
     };
 
@@ -393,7 +395,7 @@ export default function Field(ctx, append) {
         type = addElement(item, 'div', 'icon app-cards-content-item-remove');
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
-        output = addElement(item, 'div', 'icon app-cards-content-item-output', '^');
+        output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
         output['_PATH_'] = main.newSVGPath();
         output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });

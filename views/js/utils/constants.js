@@ -42,3 +42,19 @@ export const _VISIBILITY_ = {
     INSTANT: 16,
     AFTER:   32
 };
+
+export const _ICON_CHAR_ = {
+    NONE:      '',
+
+    HELP:      'H',
+    OUTPUT:    '^',
+    INPUT:     '^',
+    ARROW:     '^',
+    CLOSE:     'X',
+    START:     'S',
+    UP:        'U',
+    DOWN:      'D',
+    CHECK:     'C',
+    PLUS:      '+',
+    EMPTY:     '_'
+};

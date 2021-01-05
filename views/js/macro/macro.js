@@ -28,7 +28,7 @@ export default function Macro() {
         size = { width: 3840, height: 2160 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _receive_events = function (evnt) {
+    _receive_events = function(evnt) {
         evnt.stopPropagation();
 
         /*if (evnt.type === 'resize') {
@@ -151,12 +151,12 @@ export default function Macro() {
 
         return new_path;
     };
-    this.connect = function (fromOutput, toInput) {
+    this.connect = function(fromOutput, toInput) {
         const viewportInput = toInput.getInputBounding();
         fromOutput.setPosition(viewportInput.left, viewportInput.top, transform, _MOV_.END);
         fromOutput.makeConnection(toInput);
     };
-    this.serialize = function () {
+    this.serialize = function() {
 
         while (mainTreeViewItems.hasChildNodes()) {
             mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
@@ -188,7 +188,7 @@ export default function Macro() {
 
         return response;
     };
-    this.redraw = function (cardInput = null) {
+    this.redraw = function(cardInput = null) {
         if (cardInput === null) {
             const size = cardsArray.length;
 

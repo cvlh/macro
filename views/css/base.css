@@ -256,14 +256,15 @@ body {
                 cursor: default;
             }
         .main-app-properties-label {
-            font-weight: 600;
             align-self: center;
-            /*grid-column: 2 / span 13;*/
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-            .main-app-properties-label.header { grid-column: 2 / span 23; }
+            .main-app-properties-label.header { 
+                font-weight: 600;
+                grid-column: 2 / span 23; 
+            }
             .main-app-properties-label.row { grid-column: 2 / span 26; }
 
             .main-app-properties-label.help { 
@@ -655,11 +656,11 @@ body {
 }
 .icon {
     font-family: 'ADDLOG-ICON' !important;
-    text-align: center;
     font-weight: 100 !important;
+    text-transform: none !important;;
 
-    text-transform: none;
-
+    text-align: center;
+    
     padding: 0;
     margin: 0;
     border: 0;

@@ -106,16 +106,16 @@ export default function Type (append) {
 
         // TYPE SELECT
         rowType = addElement(content, 'div', 'main-app-properties-row');
-        label = addElement(rowType, 'div', 'main-app-properties-label', _I18N_['field_type']);
+        label = addElement(rowType, 'div', 'main-app-properties-label', _I18N_.field_type);
         label.style.gridColumn = '2 / span 10';
 
         icon = addElement(rowType, 'div', 'icon main-app-properties-type-icon', '0');
 
         type = addElement(rowType, 'select');
         type.style.gridColumn = '15 / span 13';
-        for (let type_idx in _I18N_['field_type_text']) {
+        for (let type_idx in _I18N_.field_type_text) {
             if (_TYPES_.hasOwnProperty(type_idx)) {
-                option = addElement(type, 'option', null, _I18N_['field_type_text'][type_idx]);
+                option = addElement(type, 'option', null, _I18N_.field_type_text[type_idx]);
                 option.setAttribute('value', _TYPES_[type_idx]);
             }
         }
@@ -123,11 +123,11 @@ export default function Type (append) {
 
         // SIZE
         rowSizeLabel = addElement(content, 'div', 'main-app-properties-row');
-        addElement(rowSizeLabel, 'div', 'main-app-properties-label', _I18N_['field_size']);
+        addElement(rowSizeLabel, 'div', 'main-app-properties-label', _I18N_.field_size);
 
         rowSize = addElement(content, 'div', 'main-app-properties-row');
 
-        label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_['field_size_min']);
+        label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_.field_size_min);
         label.style.gridColumn = '2 / span 7';
         label.style.fontWeight = '300';
 
@@ -136,7 +136,7 @@ export default function Type (append) {
         minimum.style.gridColumn = '9 / span 5';
         minimum.addEventListener('change', () => console.log('mudou minimum'), { capture: false });
 
-        label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_['field_size_max']);
+        label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_.field_size_max);
         label.style.gridColumn = '16 / span 7';
         label.style.fontWeight = '300';
         
@@ -147,7 +147,7 @@ export default function Type (append) {
 
         // MASK        
         rowMask = addElement(content, 'div', 'main-app-properties-row');
-        label = addElement(rowMask, 'div', 'main-app-properties-label', _I18N_['field_mask']);
+        label = addElement(rowMask, 'div', 'main-app-properties-label', _I18N_.field_mask);
         label.style.gridColumn = '2 / span 8';
 
         mask = addElement(rowMask, 'input');
@@ -164,7 +164,7 @@ export default function Type (append) {
         optional.style.gridColumn = '2 / span 2';
         optional.addEventListener('change', _optional, { capture: false });
 
-        label = addElement(rowOptional, 'label', 'main-app-properties-label', _I18N_['field_optional']);
+        label = addElement(rowOptional, 'label', 'main-app-properties-label', _I18N_.field_optional);
         label.setAttribute('for', 'require_checkbox');
         label.style.gridColumn = '5 / span 23';
     })();

@@ -224,7 +224,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
     (function() {
         const fragment = document.createDocumentFragment();
 
-        let bottom, add, close, icon;
+        let add, close, icon;
 
         card = addElement(fragment, 'div', 'app-cards');
         if (rootCard) card.classList.add('root');
@@ -235,16 +235,10 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         if (rootCard) {
             header.style.gridTemplateColumns = '24px 226px 24px';
             icon = addElement(header, 'div', 'icon app-cards-header-title root', _ICON_CHAR_.HOME);
-            title = addElement(header, 'div', 'app-cards-header-title root', _I18N_['root_header']);
+            title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
             title = addElement(header, 'div', 'app-cards-header-title');
         }
-
-        /*title = addElement(header, 'div', 'app-cards-header-title', (rootCard ? _I18N_['root_header'] : ''));
-        if (rootCard) {
-            title.classList.add('root');
-            title.textContent = 'INÍCIO DA MACRO';
-        }*/
 
         add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
         add.addEventListener('click', _add, { capture: false });
@@ -265,12 +259,6 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
             items = addElement(content, 'div', 'app-cards-content-items');
         }
-
-        //bottom = addElement(card, 'div', 'app-cards-bottom');
-
-        //    add = addElement(bottom, 'div', 'app-cards-bottom-add');
-        //    add.textContent = 'Atividade';
-            //add.addEventListener('click', () => context.addField(), { capture: true });
 
         append.appendChild(fragment);
     })();

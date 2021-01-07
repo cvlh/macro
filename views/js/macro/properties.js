@@ -101,12 +101,12 @@ export default function Properties(ctx) {
         prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(prefix['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_id']);
+            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_id);
             prefix['id'] = addElement(row, 'div', 'main-app-properties-text');
             prefix['id'].style.gridColumn = '13 / span 15';
 
             row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_value']);
+            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_value);
 
             row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
             prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
@@ -124,7 +124,7 @@ export default function Properties(ctx) {
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_info']);
+            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_info);
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
                 info['info'] = addElement(row, 'input');
@@ -132,7 +132,7 @@ export default function Properties(ctx) {
                 info['info'].style.gridColumn = '2 / span 26';
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_['field_help']);
+            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_help);
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
             row.style.gridTemplateRows = '28px 28px';
@@ -144,13 +144,13 @@ export default function Properties(ctx) {
         position['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(position['content'], 'div', 'main-app-properties-row');
-            label = addElement(row, 'div', 'main-app-properties-label', _I18N_['field_position']);
+            label = addElement(row, 'div', 'main-app-properties-label', _I18N_.field_position);
             label.style.gridColumn = '2 / span 13';
 
             position['up'] = addElement(row, 'input', 'icon');
             position['up'].setAttribute('type', 'button');
             position['up'].setAttribute('value', _ICON_CHAR_.UP);
-            position['up'].setAttribute('title', _I18N_['field_position_up']);
+            position['up'].setAttribute('title', _I18N_.field_position_up);
             position['up'].style.gridColumn = '18 / span 3';
 
             label = addElement(row, 'div', 'main-app-properties-label', '2');
@@ -160,13 +160,13 @@ export default function Properties(ctx) {
             position['down'] = addElement(row, 'input', 'icon');
             position['down'].setAttribute('type', 'button');
             position['down'].setAttribute('value', _ICON_CHAR_.DOWN);
-            position['down'].setAttribute('title', _I18N_['field_position_down']);
+            position['down'].setAttribute('title', _I18N_.field_position_down);
             position['down'].style.gridColumn = '25 / span 3';
 
         foreign['content'] = addElement(fragment, 'div', 'main-app-properties-content');
         
             row = addElement(foreign['content'], 'div', 'main-app-properties-row');
-            label = addElement(row, 'div', 'main-app-properties-label', _I18N_['field_foreign_key']);
+            label = addElement(row, 'div', 'main-app-properties-label', _I18N_.field_foreign_key);
             label.style.gridColumn = '2 / span 13';
 
             info['key'] = addElement(row, 'input');

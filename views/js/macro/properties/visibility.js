@@ -21,21 +21,21 @@ export default function Visibility (append) {
         content = addElement(append, 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row header');
-        addElement(row, 'div', 'main-app-properties-label header', _I18N_['field_visibility']);
+        addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_visibility);
         addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');
-        addElement(row, 'div', 'main-app-properties-label row', _I18N_['field_execute']);
+        addElement(row, 'div', 'main-app-properties-label row', _I18N_.field_execute);
 
         row = addElement(content, 'div', 'main-app-properties-row');
             const bntClear = addElement(row, 'input');
             bntClear.setAttribute('type', 'button');
-            bntClear.setAttribute('value', _I18N_['field_visibility_clear']);
+            bntClear.setAttribute('value', _I18N_.field_visibility_clear);
             bntClear.style.gridColumn = '2 / span 8';
 
             const bntAdd = addElement(row, 'input');
             bntAdd.setAttribute('type', 'button');
-            bntAdd.setAttribute('value', _I18N_['field_visibility_add']);
+            bntAdd.setAttribute('value', _I18N_.field_visibility_add);
             bntAdd.style.gridColumn = '11 / span 8';
 
             let status = true;
@@ -47,11 +47,11 @@ export default function Visibility (append) {
 
             const bntAux = addElement(row, 'input');
             bntAux.setAttribute('type', 'button');
-            bntAux.setAttribute('value', _I18N_['field_visibility_add']);
+            bntAux.setAttribute('value', _I18N_.field_visibility_add);
             bntAux.style.gridColumn = '20 / span 8';
 
-        row = addElement(content, 'div', 'main-app-properties-row header');
-        addElement(row, 'div', 'main-app-properties-label header', _I18N_['field_options']);
+        row = addElement(content, 'div', 'main-app-properties-row');
+        addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_options);
         addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');
@@ -64,7 +64,7 @@ export default function Visibility (append) {
             fresh.style.gridColumn = '2 / span 2';
             //fresh.addEventListener('change', _change, { capture: false });
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_fresh']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_fresh);
             label.setAttribute('for', 'fresh_checkbox');
             label.style.gridColumn = '4 / span 12';
 
@@ -76,7 +76,7 @@ export default function Visibility (append) {
             save.style.gridColumn = '17 / span 2';
             //save.addEventListener('change', _change, { capture: false });
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Save']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_Save);
             label.setAttribute('for', 'save_checkbox');
             label.style.gridColumn = '19 / span 9';
 
@@ -90,7 +90,7 @@ export default function Visibility (append) {
             extra.style.gridColumn = '2 / span 2';
             //extra.addEventListener('change', _change, { capture: false });
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_extra']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_extra);
             label.setAttribute('for', 'extra_checkbox');
             label.style.gridColumn = '4 / span 12';
 
@@ -100,13 +100,13 @@ export default function Visibility (append) {
             restore.setAttribute('value', _VISIBILITY_.RESTORE);
             restore.style.gridColumn = '17 / span 2';
             
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_visibility_Restore']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_Restore);
             label.setAttribute('for', 'restore_checkbox');
             label.style.gridColumn = '19 / span 9';
 
         //
-        row = addElement(content, 'div', 'main-app-properties-row header');
-        addElement(row, 'div', 'main-app-properties-label header', _I18N_['field_execute']);
+        row = addElement(content, 'div', 'main-app-properties-row');
+        addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_execute);
         addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');
@@ -118,7 +118,7 @@ export default function Visibility (append) {
             instant.setAttribute('value', _VISIBILITY_.INSTANT);
             instant.style.gridColumn = '2 / span 2';
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_instant']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_instant);
             label.setAttribute('for', 'instant_radio');
             label.style.gridColumn = '4 / span 24';
 
@@ -131,7 +131,7 @@ export default function Visibility (append) {
             after.setAttribute('value', _VISIBILITY_.AFTER);
             after.style.gridColumn = '2 / span 2';
             
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_['field_execute_after']);
+            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_after);
             label.setAttribute('for', 'after_radio');
             label.style.gridColumn = '4 / span 24';
 

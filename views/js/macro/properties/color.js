@@ -57,15 +57,14 @@ export default function Color (append) {
         content = addElement(append, 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label header', _I18N_['field_color_header']);
+              addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_color_header);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');
         for (let color_idx in _COLORS_) {
             if (_COLORS_.hasOwnProperty(color_idx)) {
-
                 color = addElement(row, 'div', 'icon main-app-properties-color');
-                color.setAttribute('title', _I18N_['field_color_text'][color_idx]);
+                color.setAttribute('title', _I18N_.field_color_text[color_idx]);
                 color.style.backgroundColor = _COLORS_[color_idx];
                 color.style.gridColumn = count + ' / span 2';
                 color['_COLOR_'] = _COLORS_[color_idx];

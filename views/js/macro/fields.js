@@ -88,7 +88,7 @@ export default function Field(ctx, append) {
                     path.firstChild.textContent = value;
                 } else {
                     path.classList.add('empty');
-                    path.firstChild.textContent = _I18N_['field_empty'];
+                    path.firstChild.textContent = _I18N_.field_empty;
                 }
             }
         }
@@ -243,7 +243,7 @@ export default function Field(ctx, append) {
         text = description.value;
         fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', text);
         if (text === '') {
-            fieldDiv.textContent =  _I18N_['field_empty'];
+            fieldDiv.textContent =  _I18N_.field_empty;
             fieldDiv.classList.add('empty');
         }
 

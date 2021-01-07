@@ -57,7 +57,8 @@ export default function Color (append) {
         content = addElement(append, 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label', _I18N_['field_color']);
+              addElement(row, 'div', 'main-app-properties-label header', _I18N_['field_color_header']);
+              addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');
         for (let color_idx in _COLORS_) {
@@ -74,6 +75,9 @@ export default function Color (append) {
                 colors[_COLORS_[color_idx]] = color;
             }
         }
+        
         row.addEventListener('click', _receive_events, { capture: false });
+
+        content.style.display = 'none';
     })();
 }

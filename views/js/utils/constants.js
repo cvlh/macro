@@ -56,5 +56,6 @@ export const _ICON_CHAR_ = {
     DOWN:      'D',
     CHECK:     'C',
     PLUS:      '+',
-    EMPTY:     '_'
+    EMPTY:     '_',
+    HOME:      'h'
 };

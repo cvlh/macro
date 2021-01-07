@@ -1,6 +1,8 @@
 'use strict';
 
 export const _I18N_ = {
+    root_header: 'INÍCIO DA MACRO',
+
     field_id: 'Identificação',
     field_value: 'Texto',
 
@@ -20,6 +22,7 @@ export const _I18N_ = {
     field_size_min: 'Mínimo',
     field_mask: 'Máscara',
     
+    field_color_header: 'Cor da Atividade',
     field_color: 'Cor',
     field_color_text: {
         RED:    'Vermelho',
@@ -34,9 +37,11 @@ export const _I18N_ = {
     field_info: 'Informações',
     field_help: 'Ajuda',
 
+    field_options: 'Opções',
     field_visibility: 'Visibilidade',
     field_no_visibility: 'Sem visibilidade',
     field_visibility_add: 'Adicionar',
+    field_visibility_clear: 'Limpar',
     field_visibility_fresh: 'Nova',
     field_visibility_extra: 'Complementar',
     field_visibility_Save: 'Salvar',

@@ -38,13 +38,14 @@
 
 html {
     --main-background: #f6f9fc;
+
     --main-border-color: #e6ebf1;
     --main-border-color-high: #cfd7df;
     --main-border-color-bold: #8898aa;
 
     --main-font-color-low: #aab7c4;
     --main-font-color-med: #6b7c93;
-    --main-font-color-high: #32325d;
+    --main-font-color-high: #37474f;
     
     --main-green-low: #74e4a2;
     --main-green-med: #3ecf8e;
@@ -52,6 +53,8 @@ html {
     --main-green-bold: #28a745;
     
     --main-yellow-bold: #ffc107;
+
+    --main-red-bold: #D32F2F;
 
     --main-blue-med: #17a2b8;
     --main-blue-bold: #007bff;
@@ -142,7 +145,6 @@ body {
         .main-app-svg-path.error {
             stroke-dasharray: 0.1%; 
             stroke-width: 1px;
-
         }
 
 .main-app-properties {
@@ -180,7 +182,7 @@ body {
 
         font-size: 11px;
     }
-        .main-app-properties-row.header { background-color: #f6f9fc; }
+        .main-app-properties-row.header { background-color: var(--main-background); }
         .main-app-properties-row textarea {
             grid-column-start: 2;
             grid-column-end: span 26;
@@ -207,8 +209,7 @@ body {
             font-weight: 300;
             color: #333333;
         }
-        .main-app-properties-row input[type=text],
-        .main-app-properties-row input[type=button] {
+        .main-app-properties-row input[type=text] {
             border: 1px solid var(--main-border-color);
             border-radius: 4px;
             height: 24px;
@@ -218,6 +219,7 @@ body {
         .main-app-properties-row input[type=radio] {
             margin: auto;
             padding: 0;
+            cursor: pointer;
         }
         .main-app-properties-row input[type=checkbox] + label,
         .main-app-properties-row input[type=radio] + label {
@@ -228,6 +230,8 @@ body {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+
+            cursor: pointer;
         }
         .main-app-properties-row input[type=checkbox]:checked + label,
         .main-app-properties-row input[type=radio]:checked + label {
@@ -238,6 +242,8 @@ body {
             cursor: pointer;
             outline: none;
             border: none;
+            border-radius: 4px;
+            height: 24px;
         }
             .main-app-properties-row input[type=button]:hover { 
                 background-color: #f5f5f5; 
@@ -258,14 +264,16 @@ body {
             text-overflow: ellipsis;
         }
             .main-app-properties-label.header { grid-column: 2 / span 23; }
+            .main-app-properties-label.row { grid-column: 2 / span 26; }
+
             .main-app-properties-label.help { 
                 grid-column: 26 / span 2; 
                 font-weight: 100;
                 color: var(--main-font-color-low);
                 cursor: pointer;
             }
-            .main-app-properties-label.help:hover { color: var(--main-font-color-med); }
-            /*.main-app-properties-label.help::after { content: 'h'; }*/
+                .main-app-properties-label.help:hover { color: var(--main-font-color-med); }
+                /*.main-app-properties-label.help::after { content: 'h'; }*/
 
         .main-app-properties-text {
             font-weight: 400;
@@ -283,25 +291,25 @@ body {
             width: 22px;
             height: 22px;
 
-            line-height: 16px;
-            font-size: 10px;
+            line-height: 23px;
             color: #ffffff;
 
             border-radius: 50%;
-            opacity: 0.3;
+            opacity: 0.4;
 
-            border-width: 3px;
-            border-style: solid;
-            border-color: #ffffff;
+            margin: 0 1px !important;
 
-            margin: 0 1px;
-
-            transition: .2s opacity linear;
+            transition: 0.2s opacity linear,
+                        0.2s border-radius linear;
 
             cursor: pointer;
         }
             .main-app-properties-color:hover { opacity: 1; }
-            .main-app-properties-color.selected { opacity: 1; }
+            .main-app-properties-color.selected { 
+                opacity: 1;
+                border-radius: 25%;
+             }
+
         .main-app-properties-type-icon {
             grid-column: 12 / span 2;
             text-align: left;
@@ -309,7 +317,7 @@ body {
             color: #333;
         }
         .main-app-properties-checkbox-label { padding-left: 8px; }
-        
+
 .main-app-treeview {
     /*width: 240px;*/
     background-color: #ffffff;
@@ -455,53 +463,41 @@ body {
         border-bottom: 1px solid var(--main-border-color);
 
         display: grid;
-        grid-template-columns: 250px 18px 24px;
+        grid-template-columns: 250px 25px 25px;
 
         align-items: center;
         background-color: var(--main-background);
+
+        min-height: 28px;
     }
         .app-cards-header-title {
             font-size: 11px;
             font-weight: 600;
-            padding-left: 10px;
-            line-height: 20px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            
-            /*color: var(--main-blue-bold);*/
+            padding: 0 10px;
+            line-height: 18px;
+            /*overflow: hidden;*/
+            /*text-overflow: ellipsis;*/
             text-transform: uppercase;
         }
         .app-cards-header-title.root {
-            background-image: url(../img/start.png);
-            /*background-color: var(--main-background);*/
-            background-position: 5px center;
-            background-repeat: no-repeat;
-            padding-left: 25px;
-            color: black;
+            color: var(--main-font-color-high);
             text-align: center;
         }
+
         .app-cards-header-button {
             cursor: pointer;
-
-            font-size: 8px;
-  
-            line-height: 18px;
-
-            width: 18px;
-            margin: 4px 0px;
-        
+            font-size: 11px;
+            line-height: 21px; 
+            width: 21px;
+            /*margin: 4px 0px;*/
             border-radius: 4px;
-        
             justify-self: center;
         }
-        .app-cards-header-button:hover { background-color: var(--main-border-color); }
+        .app-cards-header-button:hover  { background-color: var(--main-border-color); }
         .app-cards-header-button:active { background-color: var(--main-border-color-high); }
         
-        .app-cards-header-button.new {
-            color: var(--main-green-bold); 
-            font-size: 10px;
-        }
-        .app-cards-header-button.close { color: #D32F2F; }
+        .app-cards-header-button.new   { color: var(--main-green-bold); }
+        .app-cards-header-button.close { color: var(--main-red-bold); }
 
     .app-cards-content {
         position: relative;
@@ -660,5 +656,11 @@ body {
 .icon {
     font-family: 'ADDLOG-ICON' !important;
     text-align: center;
-    
+    font-weight: 100 !important;
+
+    text-transform: none;
+
+    padding: 0;
+    margin: 0;
+    border: 0;
 }

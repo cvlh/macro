@@ -43,16 +43,21 @@ export default function Field(ctx, append) {
             if (!drag) {
                 if (context.hasConnection()) {
                     output.style.backgroundColor = color;
+                    output.style.color = 'var(--main-background)';
                 } else {
                     output.style.removeProperty('background-color');
+                    output.style.removeProperty('color');
                 }
             } else {
                 output.style.backgroundColor = color;
+                output.style.color = 'var(--main-background)';
             }
 
             output['_PATH_'].style.stroke = color;
         } else {
             output.style.removeProperty('background-color');
+            output.style.removeProperty('color');
+
             output['_PATH_'].style.removeProperty('stroke');
         }
     },
@@ -66,7 +71,7 @@ export default function Field(ctx, append) {
     _render = function (endLeft, endTop, mov) {
         const OFFSET = 25;
 
-        const startX = position.left+16,
+        const startX = position.left+17,
               startY = position.top+11;
 
         const endX = (endLeft) - OFFSET;
@@ -111,7 +116,7 @@ export default function Field(ctx, append) {
     };
     this.makeConnection = function(card) {
         output.classList.remove('connected');
-        output.classList.add('linked');
+        //output.classList.add('linked');
 
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
         output['_CONNECTION_'] = card;
@@ -255,7 +260,8 @@ export default function Field(ctx, append) {
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
         fieldPath.style.color = properties.color;
 
-        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
+        //addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
+        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', props['type']['type']);
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
         addElement(treeviewRow, 'div');
@@ -338,15 +344,19 @@ export default function Field(ctx, append) {
         if (numFieldType !== _TYPES_.LIST) {
             if (context.hasConnection) context.clearConnection();
 
-            output.style.display = 'none';
+            output.classList.remove('app-cards-content-item-output');
+            output.textContent = fieldType;
+            //output.style.display = 'none';
             output.removeEventListener('mousedown', _drag, { capture: false });
         } else {
-            output.style.display = 'block';
+            output.classList.add('app-cards-content-item-output');
+            output.textContent = _ICON_CHAR_.OUTPUT;
+            //output.style.display = 'block';
             output.addEventListener('mousedown', _drag, { capture: false });
         }
         
         props['type']['type'] = numFieldType;
-        type.textContent = fieldType;
+        //type.textContent = fieldType;
 
         return props['type'];
     };
@@ -392,7 +402,7 @@ export default function Field(ctx, append) {
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });
 
-        type = addElement(item, 'div', 'icon app-cards-content-item-remove');
+        type = addElement(item, 'div', 'icon app-cards-content-item-type');
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);

@@ -50,7 +50,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         return false;
     };
     this.makeConnection = function(output) {
-        input.classList.add('linked');
+        //input.classList.add('linked');
         input['_CONNECTION_'] = output;
     };
     this.clearConnection =  function() {

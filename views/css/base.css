@@ -46,7 +46,8 @@ html {
     --main-font-color-low: #aab7c4;
     --main-font-color-med: #6b7c93;
     --main-font-color-high: #37474f;
-    
+    --main-font-color-bold: #263238;
+
     --main-green-low: #74e4a2;
     --main-green-med: #3ecf8e;
     --main-green-high: #24b47e;
@@ -542,13 +543,12 @@ body {
             .app-cards-content-item {
                 align-items: center;
                 display: grid;
-                grid-template-columns: 25px auto 26px 16px;
+                grid-template-columns: 25px auto 20px 20px;
                 grid-auto-rows: 31px;
                 font-size: 11px;
-                /*border-radius: 4px;*/
+                border-radius: 4px;
                 position: relative;
-                color: #222222;
-                background-color: transparent;
+                color: var(--main-font-color-bold);
                 outline-color: inherit;
             }
                 .app-cards-content-item.selected {
@@ -564,16 +564,11 @@ body {
                     border-color: transparent;
                     pointer-events: none;
                 }
-                .app-cards-content-item-remove {
-                    font-size: 11px;
-                    color: #607D8B;
-                }
-
             .app-cards-content-item-index {
                 font-weight: 600;
-                font-size: 12px;
                 text-align: center;
-                color: #607D8B;
+                /*font-size: 12px;*/
+                /*color: #607D8B;*/
             }
             .app-cards-content-item input {
                 font-weight: 600;
@@ -591,23 +586,21 @@ body {
 
                     border-color: transparent;
                 }
-            .app-cards-content-item-output {
-                font-size: 11px;
-
-                cursor: pointer;
-                /*justify-self: right;*/
-
-                background-color: var(--main-border-color-high);
-                border-radius: 6px 0 0 6px;
-
-                width: 16px;
-                
-                line-height: 23px;
-                color: #ffffff;
-
-                display: none;
+            .app-cards-content-item-type {
+                /*font-size: 11px;*/
             }
+            .app-cards-content-item-output {
+                cursor: pointer;
+                background-color: var(--main-border-color);
+                border-radius: 6px 0 0 6px;
+                width: 18px;
+                line-height: 22px;
+                justify-self: right;
 
+            }
+                .app-cards-content-item-output:hover {
+                    background-color: var(--main-border-color-high);
+                }
     .app-cards-bottom {
         position: relative;
 

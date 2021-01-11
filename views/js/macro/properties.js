@@ -1,6 +1,6 @@
 'use strict';
 
-import { addElement } from '../utils/functions.js';
+//import { addElement } from '../utils/functions.js';
 import { _I18N_ } from '../i18n/pt-br.js';
 import { _TYPES_, _VISIBILITY_, _ICON_CHAR_ } from '../utils/constants.js';
 
@@ -20,14 +20,14 @@ export default function Properties(ctx) {
         propertiesArray = [],
         //color, type,
 
-        prefix = { content: null, id: null, text: null }, 
+        //prefix = { content: null, id: null, text: null }, 
         //color = { content: null, color: null },
         //type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
-        position = { content: null, up: null, down: null },
-        info = { content: null, info: null, help: null }, 
+        //position = { content: null, up: null, down: null },
+        //info = { content: null, info: null, help: null }, 
         //visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
-        kanban = { content: null, step: null },
-        foreign = { content: null, key: null },
+        //kanban = { content: null, step: null },
+        //foreign = { content: null, key: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     /*_change_type = function(evnt) {
@@ -57,39 +57,6 @@ export default function Properties(ctx) {
         for (var counter=0; counter<size; counter++) {
             propertiesArray[counter].visible(object);
         }
-
-        //color.visible(currentObject);
-        //type.visible(currentObject);
-
-        /*for (let prop in props) {
-            switch(prop) {
-                case 'prefix':
-                    prefix['content'].style.display = 'block';
-                    prefix['id'].textContent = props[prop]['id'];
-                    prefix['text'].textContent = props[prop]['text'];
-                    break;
-
-                case 'visibility':
-                    const flags = props[prop]['flags'];
-
-                    visibility['fresh'].checked = false;
-                    visibility['extra'].checked = false;
-                    visibility['save'].checked = false;
-                    visibility['restore'].checked = false
-                    visibility['instant'].checked = false
-                    visibility['after'].checked = false;
-
-                    if (flags & _VISIBILITY_.FRESH)   visibility['fresh'].checked = true;
-                    if (flags & _VISIBILITY_.EXTRA)   visibility['extra'].checked = true;
-                    if (flags & _VISIBILITY_.SAVE)    visibility['save'].checked = true;
-                    if (flags & _VISIBILITY_.RESTORE) visibility['restore'].checked = true;
-                    if (flags & _VISIBILITY_.INSTANT) visibility['instant'].checked = true;
-                    if (flags & _VISIBILITY_.AFTER)   visibility['after'].checked = true;
-                    
-                    visibility['content'].style.display = 'block';
-                    break;
-            }
-        }*/
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
@@ -98,7 +65,7 @@ export default function Properties(ctx) {
 
         fragment = document.createDocumentFragment();
 
-        prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
+        /*prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(prefix['content'], 'div', 'main-app-properties-row');
             addElement(row, 'div', 'main-app-properties-label', _I18N_.field_id);
@@ -110,7 +77,7 @@ export default function Properties(ctx) {
 
             row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
             prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
-            prefix['text'].style.gridColumn = '3 / span 24';
+            prefix['text'].style.gridColumn = '3 / span 24';*/
 
         //color = new Color(fragment);
         //type = new Type(fragment);
@@ -118,9 +85,10 @@ export default function Properties(ctx) {
         propertiesArray.push(
             new Color(fragment),
             new Type(fragment),
-            new Visibility(fragment),
+            new Visibility(fragment)
         );
 
+        /*
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
             row = addElement(info['content'], 'div', 'main-app-properties-row');
@@ -139,7 +107,6 @@ export default function Properties(ctx) {
                 info['help'] = addElement(row, 'textarea');
                 info['help'].setAttribute('rows', '3');
                 info['help'].setAttribute('maxlength', '128');
-
 
         position['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
@@ -171,7 +138,7 @@ export default function Properties(ctx) {
 
             info['key'] = addElement(row, 'input');
             info['key'].setAttribute('type', 'text');
-            info['key'].style.gridColumn = '16 / span 12';
+            info['key'].style.gridColumn = '16 / span 12';*/
 
     })();
 }

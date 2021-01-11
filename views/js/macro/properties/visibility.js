@@ -9,10 +9,23 @@ export default function Visibility (append) {
     let content, 
         fresh, extra, save, restore, instant, after,
 
+        currentObject = null,
+
     _set = function(properties) {
     };
 
     this.visible = function(object) {
+        const objectType = object.getProps('visibility');
+
+        if (objectType !== null) {
+            _set(objectType);
+            currentObject = object;
+            content.style.display = 'block';
+            return;
+        }
+
+        content.style.display = 'none';
+        currentObject = null;
     };
 
     (function() {
@@ -41,7 +54,7 @@ export default function Visibility (append) {
             let status = true;
             bntAdd.addEventListener('click', (evnt) => {
                 currentObject.setVisibilitySelected(true);
-                parent.setVisibilityMode(status);
+                currentObject.setVisibilityMode(status);
                 status = !status;
             }, { capture: false });
 
@@ -135,5 +148,6 @@ export default function Visibility (append) {
             label.setAttribute('for', 'after_radio');
             label.style.gridColumn = '4 / span 24';
 
+        content.style.display = 'none';
     })();
 }

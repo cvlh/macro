@@ -164,7 +164,6 @@ body {
     .main-app-properties-content {
         padding: 8px 0;
         border-bottom: 1px solid #e5e5e5;
-        color: #333333;
     }
         .main-app-properties-content.disabled,
         .main-app-properties-content.disabled input {
@@ -176,12 +175,13 @@ body {
         display: grid;
         grid-template-columns: repeat(28, 8px);
         grid-template-rows: 30px;
-        /*padding-left: 7px;*/
-        /*padding-right: 8px;*/
+
         align-items: center;
         overflow: hidden;
 
         font-size: 11px;
+
+        color: var(--main-font-color-bold);
     }
         .main-app-properties-row.header { background-color: var(--main-background); }
         .main-app-properties-row textarea {
@@ -203,19 +203,21 @@ body {
 
             font-size: 11px;
             font-weight: 300;
-            color: #333333;
+            color: var(--main-font-color-bold);
         }
-        .main-app-properties-row input {
-            font-size: 11px;
-            font-weight: 300;
-            color: #333333;
-        }
+
+        .main-app-properties-row select { font-size: 12px; }
+        .main-app-properties-row input { font-size: 11px; }
+
+        .main-app-properties-row select,
         .main-app-properties-row input[type=text] {
             border: 1px solid var(--main-border-color);
             border-radius: 4px;
             height: 24px;
             padding: 2px 5px;
         }
+            .main-app-properties-row input[type=text].number { text-align: center; }
+
         .main-app-properties-row input[type=checkbox], 
         .main-app-properties-row input[type=radio] {
             margin: auto;
@@ -235,9 +237,7 @@ body {
             cursor: pointer;
         }
         .main-app-properties-row input[type=checkbox]:checked + label,
-        .main-app-properties-row input[type=radio]:checked + label {
-            font-weight: 600;
-        }
+        .main-app-properties-row input[type=radio]:checked + label { font-weight: 600; }
         .main-app-properties-row input[type=button] {
             background-color: #ffffff;
             cursor: pointer;
@@ -313,10 +313,10 @@ body {
              }
 
         .main-app-properties-type-icon {
-            grid-column: 12 / span 2;
-            text-align: left;
-            font-size: 14px;
-            color: #333;
+            grid-column: 3 / span 2;
+            text-align: center;
+            font-size: 13px;
+            color: var(--main-font-color-bold);
         }
         .main-app-properties-checkbox-label { padding-left: 8px; }
 
@@ -332,7 +332,7 @@ body {
     scrollbar-width: thin;
 
     z-index: 2;
-    color: #333333;
+    color:  var(--main-font-color-bold);
 }
     .main-app-treeview-items {
         padding: 0 0 0 0;
@@ -391,9 +391,11 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #B0BEC5;
+            /*color: #B0BEC5;*/
+            /*opacity: 0.5;*/
+            
         }
-            .main-app-treeview-item.expand:hover { color: #607D8B; }
+            .main-app-treeview-item.expand:hover { color: var(--main-font-color-med); }
         .main-app-treeview-item.expand div {
             pointer-events: none;
             transform: rotate(0deg);
@@ -413,10 +415,7 @@ body {
             text-transform: uppercase;
             font-weight: 300;
         }
-        .main-app-treeview-item.type {
-            font-size: 10px;
-            color: #607D8B;
-        }
+        .main-app-treeview-item.type { font-size: 10px; }
         .main-app-treeview-item-path {
             position: absolute;
             right: 0;

@@ -80,6 +80,11 @@ export default function Field(ctx, append) {
         if (mov === _MOV_.END) endY += 14;
 
         output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
+        
+        /*if (startX === (endX - OFFSET) || startY === endY) {
+            console.log(startX +' '+ endX);
+            console.log(startY +' '+ endY);
+        }*/
     },
     _refresh = function() {
         const value = description.value;
@@ -253,7 +258,8 @@ export default function Field(ctx, append) {
         }
 
         //fieldDiv.textContent = description.value;
-        if (rootField) fieldDiv.style.color = properties.color;
+        //if (rootField) fieldDiv.style.color = properties.color;
+        if (rootField) treeviewRow.style.color = properties.color;
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
@@ -261,7 +267,7 @@ export default function Field(ctx, append) {
         fieldPath.style.color = properties.color;
 
         //addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
-        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', props['type']['type']);
+        addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', (props['type']['type'] ? props['type']['type'] : _ICON_CHAR_.NONE));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
         addElement(treeviewRow, 'div');

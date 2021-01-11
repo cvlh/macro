@@ -17,7 +17,7 @@ export const _I18N_ = {
         SCAN:      'Leitor'
     },
     field_optional: 'Preenchimento opcional',
-    field_size: 'Tamanho do campo',
+    field_size: 'Tamanho',
     field_size_max: 'Máximo',
     field_size_min: 'Mínimo',
     field_mask: 'Máscara',
@@ -51,7 +51,7 @@ export const _I18N_ = {
     field_execute_instant: 'Imediatamente ao selecionar', 
     field_execute_after: 'Quando finalizar atividade',
 
-    field_empty: 'Sem texto',
+    field_empty: 'Sem informação',
 
     field_position: 'Posição do campo',
     field_position_up: 'Subir',

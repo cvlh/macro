@@ -21,7 +21,8 @@ export default function Macro() {
 
         rootCard, 
         currentDrag = null,
-        
+        visibilityMode = false,
+
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -205,11 +206,13 @@ export default function Macro() {
     this.showProperties = function(object) {
         properties.open(object);
     };
+    this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function(status) {
         const size = cardsArray.length;
-
+        
+        visibilityMode = status;
         for (let counter=0; counter<size; counter++) {
-            cardsArray[counter].setVisibilityMode(status);
+            cardsArray[counter].setVisibilityMode();
         }
     };
 

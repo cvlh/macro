@@ -164,6 +164,7 @@ body {
     .main-app-properties-content {
         padding: 8px 0;
         border-bottom: 1px solid #e5e5e5;
+        display: none;
     }
         .main-app-properties-content.disabled,
         .main-app-properties-content.disabled input {
@@ -309,7 +310,7 @@ body {
             .main-app-properties-color:hover { opacity: 1; }
             .main-app-properties-color.selected { 
                 opacity: 1;
-                border-radius: 25%;
+                border-radius: 20%;
              }
 
         .main-app-properties-type-icon {
@@ -545,20 +546,19 @@ body {
                 grid-template-columns: 25px auto 20px 20px;
                 grid-auto-rows: 31px;
                 font-size: 11px;
-                border-radius: 4px;
                 position: relative;
                 color: var(--main-font-color-bold);
                 outline-color: inherit;
             }
-                .app-cards-content-item.selected {
-                    border-radius: 15px 0 0 15px;
-                    background-color: #E8F5E9;
+                .app-cards-content-item.selected { background-color: var(--main-border-color); }
+                .app-cards-content-item.visibility { 
+                    cursor: pointer; 
+                    opacity: 0.6;
                 }
-                .app-cards-content-item.visibility {
-                    cursor: pointer;
-                    color: #444444;
-                }
-                .app-cards-content-item.visibility input {
+                    .app-cards-content-item.visibility:hover {
+                        background-color: var(--main-background);
+                    }
+                .app-cards-content-item.visibility input[type=text] {
                     background-color: transparent;
                     border-color: transparent;
                     pointer-events: none;

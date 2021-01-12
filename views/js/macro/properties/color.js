@@ -5,10 +5,15 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _COLORS_, _ICON_CHAR_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////
-export default function Color (append) {
-
-    let content, colors = {}, currentObject = null,
+export default function Color (ctx) {
     
+    // CONSTANTS ///////////////////////////////////////////////////////////////
+    const parent = ctx, context = this;
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
+    let content, colors = {},
+    
+    // PRIVATE /////////////////////////////////////////////////////////////////
     _set = function(target) {        
         let selected = target.parentElement.querySelector('.selected');
         if (selected) {
@@ -31,30 +36,29 @@ export default function Color (append) {
 
         if (targetClass.contains('main-app-properties-color')) {
             _set(target);
-            if (currentObject !== null) currentObject.setColor(target['_COLOR_']);
+            parent.getObject().setColor(target['_COLOR_']);
         }
     };
 
-    this.visible = function(object) {
-        const objectColor = object.getProps('color');
-
+    // PUBLIC //////////////////////////////////////////////////////////////////
+    this.visible = function() {
+        const objectColor = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
+        
         if (objectColor !== null) {
             if (colors.hasOwnProperty(objectColor)) {
                 _set(colors[objectColor]);
-                currentObject = object;
                 content.style.display = 'block';
                 return;
             }
         }
-
-        currentObject = null;
-        content.style.display = 'none';
+        content.style.removeProperty('display');
     };
 
+    // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         let row, color, count = 3;
 
-        content = addElement(append, 'div', 'main-app-properties-content');
+        content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row');
               addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_color_header);
@@ -76,7 +80,5 @@ export default function Color (append) {
         }
         
         row.addEventListener('click', _receive_events, { capture: false });
-
-        content.style.display = 'none';
     })();
 }

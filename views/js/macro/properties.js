@@ -45,7 +45,9 @@ export default function Properties(ctx) {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
+    this.getMain = function() { return parent; };
     this.getFragment = function() { return fragment; };
+    this.getObject = function() { return currentObject; };
     this.open = function(object) {
 
         let props = object.getProps();
@@ -61,9 +63,15 @@ export default function Properties(ctx) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let row, label, count;
+        //let row, label, count;
 
         fragment = document.createDocumentFragment();
+
+        propertiesArray.push(
+            new Color(context),
+            new Type(context),
+            new Visibility(context)
+        );
 
         /*prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
 
@@ -82,11 +90,7 @@ export default function Properties(ctx) {
         //color = new Color(fragment);
         //type = new Type(fragment);
 
-        propertiesArray.push(
-            new Color(fragment),
-            new Type(fragment),
-            new Visibility(fragment)
-        );
+
 
         /*
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');

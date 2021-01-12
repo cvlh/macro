@@ -14,6 +14,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
+        add, close,
         fieldsArray = [],
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
@@ -177,12 +178,21 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
             fieldsArray[counterFields].setBorderColor(light, index, color);
         }
     };
-    this.setVisibilityMode = function(status) {
+    this.setVisibilityMode = function() {
+        let counter;
         const size = fieldsArray.length;
 
-        for (let counter=0; counter<size; counter++) {
-            if (rootCard) fieldsArray[counter].setColor(null);
-            fieldsArray[counter].setVisibilityMode(status);
+        if (parent.getVisibilityMode()) {
+            add.style.display = 'none';
+            if (!rootCard) close.style.display = 'none';
+        } else {
+            add.style.removeProperty('display');
+            if (!rootCard) close.style.removeProperty('display');
+        }
+
+        for (counter=0; counter<size; counter++) {
+            //if (rootCard) fieldsArray[counter].setColor(null);
+            fieldsArray[counter].setVisibilityMode();
         }
     }
 
@@ -222,9 +232,8 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
+        let icon;
         const fragment = document.createDocumentFragment();
-
-        let add, close, icon;
 
         card = addElement(fragment, 'div', 'app-cards');
         if (rootCard) card.classList.add('root');

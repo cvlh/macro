@@ -13,20 +13,21 @@ export default function Field(ctx, append) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let item, index, description, output, type,
         treeviewRow = null, treeviewDeep,
-        visibilityMode = false, visibilityReferenceCounter = 0,
+        visibilityReferenceCounter = 0,
         position = { top: 0, left: 0 },
 
         props = {
             prefix: { id: null },
-            type: { type: _TYPES_.LIST },
+            //info: '',
+            //help: '',
 
-            info: '',
-            help: '',
-            expanded: true,
+            type: { type: _TYPES_.LIST },
             visibility: {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
                 fields: []
-            }
+            },
+
+            expanded: true
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -62,7 +63,7 @@ export default function Field(ctx, append) {
         }
     },
     _drag = function (evnt) { 
-        if (visibilityMode) return;
+        if (main.getVisibilityMode()) return;
 
         evnt.preventDefault();
         main.dragStart(evnt, context); 
@@ -107,8 +108,23 @@ export default function Field(ctx, append) {
     },
     _showProperties = function() { main.showProperties(context); },
     _setVisibility = function() {
-        description.style.backgroundColor = context.getColor();
-        description.style.color = '#ffffff';
+        if (main.getVisibilityMode()) {
+            const color = context.getColor();
+
+            description.style.backgroundColor = color;
+            description.style.color = '#ffffff';
+            description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
+
+            item.style.color = color;
+            item.style.opacity = '1';
+        } else {
+            description.style.removeProperty('background-color');
+            description.style.removeProperty('color');
+            description.style.removeProperty('box-shadow');
+
+            item.style.removeProperty('color');
+            item.style.removeProperty('opacity');
+        }
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -303,14 +319,15 @@ export default function Field(ctx, append) {
         }
         //return color;
     };
-    this.setVisibilityMode = function(status) {
-        visibilityMode = status;
-
-        if (status) {
+    this.setVisibilityMode = function() {
+        
+        if (main.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('disabled', true);
             item.addEventListener('click', _setVisibility, { capture: false });
         } else {
+            _setVisibility();
+
             item.classList.remove('visibility');
             description.removeAttribute('disabled');
             item.removeEventListener('click', _setVisibility, { capture: false });
@@ -319,6 +336,8 @@ export default function Field(ctx, append) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setVisibilitySelected = function(status) { 
+        main.setVisibilityMode(status);
+
         if (status) {
             item.classList.add('selected');
         } else {
@@ -404,6 +423,7 @@ export default function Field(ctx, append) {
 
         //description = addElement(item, 'input', 'app-cards-content-item-description');
         description = addElement(item, 'input');
+        description.setAttribute('type', 'text');
         description.setAttribute('maxlength', '64');
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });

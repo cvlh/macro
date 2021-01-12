@@ -4,34 +4,38 @@ import { addElement } from '../../utils/functions.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { _VISIBILITY_, _ICON_CHAR_ } from '../../utils/constants.js';
 
-export default function Visibility (append) {
+export default function Visibility (ctx) {
 
+    // CONSTANTS ///////////////////////////////////////////////////////////////
+    const main = ctx.getMain(), parent = ctx;
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
     let content, 
         fresh, extra, save, restore, instant, after,
 
-        currentObject = null,
-
+    // PRIVATE /////////////////////////////////////////////////////////////////
     _set = function(properties) {
     };
 
-    this.visible = function(object) {
-        const objectType = object.getProps('visibility');
+    // PUBLIC //////////////////////////////////////////////////////////////////
+    this.visible = function() {
+        const objectType = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
 
         if (objectType !== null) {
             _set(objectType);
-            currentObject = object;
+
             content.style.display = 'block';
             return;
         }
 
-        content.style.display = 'none';
-        currentObject = null;
+        content.style.removeProperty('display');
     };
 
+    // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         let row, label;
 
-        content = addElement(append, 'div', 'main-app-properties-content');
+        content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row header');
         addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_visibility);
@@ -53,8 +57,8 @@ export default function Visibility (append) {
 
             let status = true;
             bntAdd.addEventListener('click', (evnt) => {
-                currentObject.setVisibilitySelected(true);
-                currentObject.setVisibilityMode(status);
+                parent.getObject().setVisibilitySelected(status);
+                
                 status = !status;
             }, { capture: false });
 
@@ -148,6 +152,5 @@ export default function Visibility (append) {
             label.setAttribute('for', 'after_radio');
             label.style.gridColumn = '4 / span 24';
 
-        content.style.display = 'none';
     })();
 }

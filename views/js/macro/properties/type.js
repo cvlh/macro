@@ -5,8 +5,12 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _TYPES_, _ICON_CHAR_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////
-export default function Type (append) {
+export default function Type (ctx) {
 
+    // CONSTANTS ///////////////////////////////////////////////////////////////
+    const parent = ctx;
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
     let content, 
 
         rowTypeLabel, rowType, icon, type, 
@@ -14,8 +18,7 @@ export default function Type (append) {
         rowMaskLabel, rowMask, mask, 
         rowOptional, optional, 
     
-        currentObject = null,
-    
+    // PRIVATE /////////////////////////////////////////////////////////////////
     _clear = function() {
         //rowTypeLabel.style.display = 'none';
         //rowType.style.display = 'none';
@@ -70,42 +73,38 @@ export default function Type (append) {
         }
     },
     _type = function(evnt) {
-        const value = evnt.target.value;
-        //if (currentObject !== null) {
-        _set(currentObject.setType(value));
-        //}
+        const object = parent.getObject(),
+              value = evnt.target.value;
+
+        _set(object.setType(value));
     },
     _mask = function(evnt) {
-        //if (currentObject !== null) {
-        const objectType = currentObject.getProps('type');
+        const objectType = parent.getObject().getProps('type');
         objectType['mask'] = evnt.target.value;
-        //}
     },
     _optional = function(evnt) {
-        //if (currentObject !== null) {
-        const objectType = currentObject.getProps('type');
+        const objectType = parent.getObject().getProps('type');
         objectType['optional'] = evnt.target.checked;
-        //}
     };
 
-    this.visible = function(object) {
-        const objectType = object.getProps('type');
+    // PUBLIC //////////////////////////////////////////////////////////////////
+    this.visible = function() {
+        const objectType = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
 
         if (objectType !== null) {
             _set(objectType);
-            currentObject = object;
             content.style.display = 'block';
             return;
         }
 
-        content.style.display = 'none';
-        currentObject = null;
+        content.style.removeProperty('display');
     };
 
+    // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         let option, label;
         
-        content = addElement(append, 'div', 'main-app-properties-content');
+        content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
         // TYPE SELECT
         rowTypeLabel = addElement(content, 'div', 'main-app-properties-row header');
@@ -174,7 +173,5 @@ export default function Type (append) {
         label = addElement(rowOptional, 'label', 'main-app-properties-checkbox-label', _I18N_.field_optional);
         label.setAttribute('for', 'require_checkbox');
         label.style.gridColumn = '4 / span 24';
-
-        content.style.display = 'none';
     })();
 }

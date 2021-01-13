@@ -11,9 +11,9 @@ export default function Field(ctx, append) {
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let item, index, description, output, type,
+    let item, index, description, output, visibility,
         treeviewRow = null, treeviewDeep,
-        visibilityReferenceCounter = 0,
+        isSelectedForvisibility = false,
         position = { top: 0, left: 0 },
 
         props = {
@@ -117,6 +117,9 @@ export default function Field(ctx, append) {
 
             item.style.color = color;
             item.style.opacity = '1';
+
+            main.getSelectedObject().addToVisibility(context);
+            isSelectedForvisibility = true;
         } else {
             description.style.removeProperty('background-color');
             description.style.removeProperty('color');
@@ -124,6 +127,8 @@ export default function Field(ctx, append) {
 
             item.style.removeProperty('color');
             item.style.removeProperty('opacity');
+
+            isSelectedForvisibility = false;
         }
     };
 
@@ -335,10 +340,8 @@ export default function Field(ctx, append) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
-    this.setVisibilitySelected = function(status) { 
-        main.setVisibilityMode(status);
-
-        if (status) {
+    this.setSelected = function(selected) { 
+        if (selected) {
             item.classList.add('selected');
         } else {
             item.classList.remove('selected');
@@ -412,6 +415,21 @@ export default function Field(ctx, append) {
         return null;
     };
 
+    this.setVisibilitySelected = function() {
+    };
+
+    this.addToVisibility = function(field) {
+        props.visibility.fields.push(field);
+        if (props.visibility.fields.length) {
+            visibility.textContent = props.visibility.fields.length;
+        } else {
+            visibility.textContent = '';
+        } 
+    };
+    this.removeFromVisibility = function(field) {
+
+    };
+
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         const fragment = document.createDocumentFragment();
@@ -428,7 +446,10 @@ export default function Field(ctx, append) {
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });
 
-        type = addElement(item, 'div', 'icon app-cards-content-item-type');
+        visibility = addElement(item, 'div', 'app-cards-content-item-visibility');
+        
+        //addElement(visibility, 'div', 'icon', 'V');
+        //addElement(visibility, 'span');
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);

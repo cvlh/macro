@@ -4,7 +4,7 @@ import { addElement } from '../../utils/functions.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { _TYPES_, _ICON_CHAR_ } from '../../utils/constants.js';
 
-// FUNCTIONS ///////////////////////////////////////////////////////////////
+// FUNCTIONS ///////////////////////////////////////////////////////////////////
 export default function Type (ctx) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
@@ -73,23 +73,23 @@ export default function Type (ctx) {
         }
     },
     _type = function(evnt) {
-        const object = parent.getObject(),
+        const object = parent.getMain().getSelectedObject(),
               value = evnt.target.value;
 
         _set(object.setType(value));
     },
     _mask = function(evnt) {
-        const objectType = parent.getObject().getProps('type');
+        const objectType = parent.getMain().getSelectedObject().getProps('type');
         objectType['mask'] = evnt.target.value;
     },
     _optional = function(evnt) {
-        const objectType = parent.getObject().getProps('type');
+        const objectType = parent.getMain().getSelectedObject().getProps('type');
         objectType['optional'] = evnt.target.checked;
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectType = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
 
         if (objectType !== null) {
             _set(objectType);

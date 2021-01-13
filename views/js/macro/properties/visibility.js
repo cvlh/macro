@@ -7,7 +7,7 @@ import { _VISIBILITY_, _ICON_CHAR_ } from '../../utils/constants.js';
 export default function Visibility (ctx) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const main = ctx.getMain(), parent = ctx;
+    const parent = ctx;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let content, 
@@ -19,7 +19,7 @@ export default function Visibility (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectType = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
 
         if (objectType !== null) {
             _set(objectType);
@@ -57,8 +57,7 @@ export default function Visibility (ctx) {
 
             let status = true;
             bntAdd.addEventListener('click', (evnt) => {
-                parent.getObject().setVisibilitySelected(status);
-                
+                parent.getMain().setVisibilityMode(status);
                 status = !status;
             }, { capture: false });
 

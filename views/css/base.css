@@ -53,7 +53,7 @@ html {
     --main-green-high: #24b47e;
     --main-green-bold: #28a745;
     
-    --main-yellow-bold: #ffc107;
+    --main-yellow-med: #FDD835;
 
     --main-red-bold: #D32F2F;
 
@@ -544,13 +544,14 @@ body {
                 align-items: center;
                 display: grid;
                 grid-template-columns: 25px auto 20px 20px;
-                grid-auto-rows: 31px;
+                grid-auto-rows: 32px;
                 font-size: 11px;
                 position: relative;
                 color: var(--main-font-color-bold);
                 outline-color: inherit;
+                border-radius: 6px;
             }
-                .app-cards-content-item.selected { background-color: var(--main-border-color); }
+                .app-cards-content-item.selected { background-color: var(--main-yellow-med) !important; }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
                     opacity: 0.6;
@@ -566,9 +567,19 @@ body {
             .app-cards-content-item-index {
                 font-weight: 600;
                 text-align: center;
-                /*font-size: 12px;*/
-                /*color: #607D8B;*/
             }
+            .app-cards-content-item-visibility {
+                background-color: var(--main-font-color-high);
+                color: #fff;
+                border-radius: 20%;
+                text-align: center;
+                font-size: 9px;
+                font-weight: 600;
+                width: 16px;
+                line-height: 16px;
+                margin: 3px;
+            }
+
             .app-cards-content-item input {
                 font-weight: 600;
                 border: 1px solid var(--main-border-color);
@@ -585,9 +596,6 @@ body {
 
                     border-color: transparent;
                 }
-            .app-cards-content-item-type {
-                /*font-size: 11px;*/
-            }
             .app-cards-content-item-output {
                 cursor: pointer;
                 background-color: var(--main-border-color);

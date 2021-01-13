@@ -4,11 +4,11 @@ import { addElement } from '../../utils/functions.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { _COLORS_, _ICON_CHAR_ } from '../../utils/constants.js';
 
-// FUNCTIONS ///////////////////////////////////////////////////////////////
+// FUNCTIONS ///////////////////////////////////////////////////////////////////
 export default function Color (ctx) {
     
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this;
+    const parent = ctx;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let content, colors = {},
@@ -36,13 +36,13 @@ export default function Color (ctx) {
 
         if (targetClass.contains('main-app-properties-color')) {
             _set(target);
-            parent.getObject().setColor(target['_COLOR_']);
+            parent.getMain().getSelectedObject().setColor(target['_COLOR_']);
         }
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectColor = parent.getObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectColor = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
         
         if (objectColor !== null) {
             if (colors.hasOwnProperty(objectColor)) {

@@ -15,8 +15,6 @@ export default function Properties(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
-        currentObject = null,
-
         propertiesArray = [],
         //color, type,
 
@@ -45,15 +43,13 @@ export default function Properties(ctx) {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.getMain = function() { return parent; };
     this.getFragment = function() { return fragment; };
-    this.getObject = function() { return currentObject; };
-    this.open = function(object) {
+    this.getMain = function() { return parent; };
 
-        let props = object.getProps();
-        if (props == null) return;
+    this.refresh = function() {
+        let object = parent.getSelectedObject();
 
-        currentObject = object;
+        if (object.getProps() == null) return;
 
         const size = propertiesArray.length;
         for (var counter=0; counter<size; counter++) {
@@ -89,8 +85,6 @@ export default function Properties(ctx) {
 
         //color = new Color(fragment);
         //type = new Type(fragment);
-
-
 
         /*
         info['content'] = addElement(fragment, 'div', 'main-app-properties-content');

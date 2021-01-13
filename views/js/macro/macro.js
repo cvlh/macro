@@ -21,7 +21,8 @@ export default function Macro() {
 
         rootCard, 
         currentDrag = null,
-        visibilityMode = false,
+        currentSelectedObject = null, // Field
+        visibilityMode = false,       // Boolean
 
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
@@ -204,17 +205,33 @@ export default function Macro() {
         context.serialize();
     };
     this.showProperties = function(object) {
-        properties.open(object);
+        if (currentSelectedObject !== null) {
+            currentSelectedObject.setSelected(false);
+        }
+        currentSelectedObject = object;
+        currentSelectedObject.setSelected(true);
+
+        properties.refresh();
     };
     this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function(status) {
-        const size = cardsArray.length;
-        
+        const size = cardsArray.length,
+              visibility = currentSelectedObject.getProps('visibility');
+
         visibilityMode = status;
         for (let counter=0; counter<size; counter++) {
             cardsArray[counter].setVisibilityMode();
         }
+
+        if (visibility.fields.length) {
+            for (var counter=0; counter<visibility.fields.length; counter++) {
+                console.log(visibility.fields[counter]);
+            }
+        }
     };
+
+    //this.setSelectedObject = function (object) { currentSelectedObject = object; }
+    this.getSelectedObject = function () { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 

@@ -40,7 +40,7 @@ export const _I18N_ = {
     field_options: 'Opções',
     field_visibility: 'Visibilidade',
     field_no_visibility: 'Sem visibilidade',
-    field_visibility_add: 'Adicionar',
+    field_visibility_edit: 'Editar',
     field_visibility_clear: 'Limpar',
     field_visibility_fresh: 'Nova',
     field_visibility_extra: 'Complementar',

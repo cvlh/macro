@@ -213,20 +213,29 @@ export default function Macro() {
 
         properties.refresh();
     };
+
     this.getVisibilityMode = function() { return visibilityMode; };
-    this.setVisibilityMode = function(status) {
+    this.setVisibilityMode = function() {
         const size = cardsArray.length,
               visibility = currentSelectedObject.getProps('visibility');
 
-        visibilityMode = status;
+        visibilityMode = !visibilityMode;
+
+        if (visibility['fields'].length) {
+            for (var counter=0; counter<visibility['fields'].length; counter++) {
+                visibility['fields'][counter].setForVisibility();
+            }
+        }
+
         for (let counter=0; counter<size; counter++) {
             cardsArray[counter].setVisibilityMode();
         }
+    };
+    this.clearVisibility = function() {
+        const visibility = currentSelectedObject.getProps('visibility');
 
-        if (visibility.fields.length) {
-            for (var counter=0; counter<visibility.fields.length; counter++) {
-                console.log(visibility.fields[counter]);
-            }
+        while (visibility['fields'].length) {
+            currentSelectedObject.removeFromVisibility(visibility['fields'][0]);
         }
     };
 

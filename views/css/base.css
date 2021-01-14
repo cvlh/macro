@@ -47,6 +47,7 @@ html {
     --main-font-color-med: #6b7c93;
     --main-font-color-high: #37474f;
     --main-font-color-bold: #263238;
+    --main-font-color-black: #000000;
 
     --main-green-low: #74e4a2;
     --main-green-med: #3ecf8e;
@@ -240,21 +241,26 @@ body {
         .main-app-properties-row input[type=checkbox]:checked + label,
         .main-app-properties-row input[type=radio]:checked + label { font-weight: 600; }
         .main-app-properties-row input[type=button] {
-            background-color: #ffffff;
+            background-color: var(--main-background);
+            border: 1px solid var(--main-border-color);
+            
             cursor: pointer;
             outline: none;
-            border: none;
             border-radius: 4px;
             height: 24px;
         }
             .main-app-properties-row input[type=button]:hover { 
-                background-color: #f5f5f5; 
-                border: 1px solid #dddddd;
+                background-color: var(--main-border-color);
+                border: 1px solid var(--main-border-color-high);
             }
-            .main-app-properties-row input[type=button]:active { background-color: #e0e0e0; }
+            .main-app-properties-row input[type=button]:active { 
+                background-color: var(--main-border-color-high);
+                border: 1px solid var(--main-border-color-bold);
+            }
             .main-app-properties-row input[type=button]:disabled { 
-                color: #999999;
-                background-color: #fafafafa; 
+                color: var(--main-border-color-high);
+                background-color: var(--main-background);
+                border: 1px solid var(--main-border-color);
                 cursor: default;
             }
         .main-app-properties-label {
@@ -547,14 +553,14 @@ body {
                 grid-auto-rows: 32px;
                 font-size: 11px;
                 position: relative;
-                color: var(--main-font-color-bold);
+                color: var(--main-font-color-black);
                 outline-color: inherit;
-                border-radius: 6px;
+                border-radius: 4px;
             }
                 .app-cards-content-item.selected { background-color: var(--main-yellow-med) !important; }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
-                    opacity: 0.6;
+                    opacity: 0.8;
                 }
                     .app-cards-content-item.visibility:hover {
                         background-color: var(--main-background);

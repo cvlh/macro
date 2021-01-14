@@ -49,22 +49,18 @@ export default function Visibility (ctx) {
             bntClear.setAttribute('type', 'button');
             bntClear.setAttribute('value', _I18N_.field_visibility_clear);
             bntClear.style.gridColumn = '2 / span 8';
+            bntClear.addEventListener('click', parent.getMain().clearVisibility, { capture: false });
 
             const bntAdd = addElement(row, 'input');
             bntAdd.setAttribute('type', 'button');
-            bntAdd.setAttribute('value', _I18N_.field_visibility_add);
+            bntAdd.setAttribute('value', _I18N_.field_visibility_edit);
             bntAdd.style.gridColumn = '11 / span 8';
+            bntAdd.addEventListener('click', parent.getMain().setVisibilityMode, { capture: false });
 
-            let status = true;
-            bntAdd.addEventListener('click', (evnt) => {
-                parent.getMain().setVisibilityMode(status);
-                status = !status;
-            }, { capture: false });
-
-            const bntAux = addElement(row, 'input');
+            /*const bntAux = addElement(row, 'input');
             bntAux.setAttribute('type', 'button');
             bntAux.setAttribute('value', _I18N_.field_visibility_add);
-            bntAux.style.gridColumn = '20 / span 8';
+            bntAux.style.gridColumn = '20 / span 8';*/
 
         row = addElement(content, 'div', 'main-app-properties-row');
         addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_options);

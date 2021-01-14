@@ -16,16 +16,6 @@ export default function Properties(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment,
         propertiesArray = [],
-        //color, type,
-
-        //prefix = { content: null, id: null, text: null }, 
-        //color = { content: null, color: null },
-        //type = { content: null, type_icon: null, type: null, require: null, mask: null, size: null, default: null }, 
-        //position = { content: null, up: null, down: null },
-        //info = { content: null, info: null, help: null }, 
-        //visibility = { content: null, fresh: null, extra: null, save: null, restore: null, instant: null, after: null },
-        //kanban = { content: null, step: null },
-        //foreign = { content: null, key: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     /*_change_type = function(evnt) {

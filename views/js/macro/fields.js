@@ -17,7 +17,8 @@ export default function Field(ctx, append) {
         position = { top: 0, left: 0 },
 
         props = {
-            prefix: { id: null },
+            id: null,
+            //prefix: { id: null },
             //info: '',
             //help: '',
 
@@ -107,28 +108,43 @@ export default function Field(ctx, append) {
         //props['prefix']['text'] = value;
     },
     _showProperties = function() { main.showProperties(context); },
-    _setVisibility = function() {
-        if (main.getVisibilityMode()) {
-            const color = context.getColor();
 
-            description.style.backgroundColor = color;
-            description.style.color = '#ffffff';
-            description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
+    _toggleVisibility = function() {
+        const object = main.getSelectedObject();
 
-            item.style.color = color;
-            item.style.opacity = '1';
-
-            main.getSelectedObject().addToVisibility(context);
-            isSelectedForvisibility = true;
+        if (!isSelectedForvisibility) {
+            object.addToVisibility(context);
         } else {
-            description.style.removeProperty('background-color');
-            description.style.removeProperty('color');
-            description.style.removeProperty('box-shadow');
+            object.removeFromVisibility(context);
+        }
+    },
+    _setForVisibility = function() {
+        const color = context.getColor();
 
-            item.style.removeProperty('color');
-            item.style.removeProperty('opacity');
+        description.style.backgroundColor = color;
+        description.style.color = '#ffffff';
+        description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
 
-            isSelectedForvisibility = false;
+        item.style.color = color;
+        item.style.opacity = '1';
+
+        isSelectedForvisibility = true;
+    },
+    _unsetForVisibility = function() {
+        description.style.removeProperty('background-color');
+        description.style.removeProperty('color');
+        description.style.removeProperty('box-shadow');
+
+        item.style.removeProperty('color');
+        item.style.removeProperty('opacity');
+
+        isSelectedForvisibility = false;
+    },
+    _updateVisibilityCounter = function() {
+        if (props['visibility']['fields'].length) {
+            visibility.textContent = props['visibility']['fields'].length;
+        } else {
+            visibility.textContent = '';
         }
     };
 
@@ -239,7 +255,8 @@ export default function Field(ctx, append) {
 
         //fragment.appendChild(treeviewRow);
         //treeviewRow.classList = deep+ ' main-app-treeview-row';
-        props['prefix']['id'] = _deep(properties.tab);
+        //props['prefix']['id'] = _deep(properties.tab);
+        props['id'] = _deep(properties.tab);
 
         treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
@@ -284,7 +301,8 @@ export default function Field(ctx, append) {
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
-        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
+        //fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
+        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['id']);
         fieldPath.style.color = properties.color;
 
         //addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
@@ -325,17 +343,16 @@ export default function Field(ctx, append) {
         //return color;
     };
     this.setVisibilityMode = function() {
-        
         if (main.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('disabled', true);
-            item.addEventListener('click', _setVisibility, { capture: false });
-        } else {
-            _setVisibility();
-
+            item.addEventListener('click', _toggleVisibility, { capture: false });
+        } else {            
             item.classList.remove('visibility');
             description.removeAttribute('disabled');
-            item.removeEventListener('click', _setVisibility, { capture: false });
+            item.removeEventListener('click', _toggleVisibility, { capture: false });
+
+            _unsetForVisibility();
         }
     };
 
@@ -415,19 +432,28 @@ export default function Field(ctx, append) {
         return null;
     };
 
-    this.setVisibilitySelected = function() {
-    };
-
+    this.setForVisibility = function() { _setForVisibility(); };
+    this.unsetForVisibility = function() { _unsetForVisibility(); };
     this.addToVisibility = function(field) {
-        props.visibility.fields.push(field);
-        if (props.visibility.fields.length) {
-            visibility.textContent = props.visibility.fields.length;
-        } else {
-            visibility.textContent = '';
-        } 
+        props['visibility']['fields'].push(field);
+        field.setForVisibility();
+        _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
+        const removeId = field.getProps('id');
+        var counter, currentId;
 
+        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
+            currentId = props['visibility']['fields'][counter].getProps('id');
+            if (removeId === currentId) {
+                props['visibility']['fields'].splice(counter, 1); 
+                field.unsetForVisibility();
+                _updateVisibilityCounter();
+                return;
+            }
+        }
+
+        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

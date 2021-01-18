@@ -282,8 +282,6 @@ body {
                 cursor: pointer;
             }
                 .main-app-properties-label.help:hover { color: var(--main-font-color-med); }
-                /*.main-app-properties-label.help::after { content: 'h'; }*/
-
         .main-app-properties-text {
             font-weight: 400;
             text-transform: capitalize;
@@ -347,19 +345,6 @@ body {
         display: flex;
         flex-direction: column;
     }
-        /*.main-app-treeview-empty-row {
-            display: grid;
-            overflow: hidden;
-            height: 16px;
-
-            grid-template-rows: 16px;
-            text-align: center;
-            font-size: 10px;
-            font-style: italic;
-            font-weight: 400;
-            text-transform: uppercase;
-            color: var(--main-font-color-low);
-        }*/
         .main-app-treeview-row {
             display: grid;
             height: 22px;
@@ -543,9 +528,7 @@ body {
             /*border-left: 1px solid #f0f0f0;*/
             outline-color: var(--main-border-color-high);
         }            
-            .app-cards-content-items.root {
-                padding: 4px 0 4px 0;
-            }
+            .app-cards-content-items.root { padding: 4px 0 4px 0; }
             .app-cards-content-item {
                 align-items: center;
                 display: grid;
@@ -557,14 +540,12 @@ body {
                 outline-color: inherit;
                 border-radius: 4px;
             }
-                .app-cards-content-item.selected { background-color: var(--main-yellow-med) !important; }
+                .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
-                    opacity: 0.8;
+                    opacity: 0.75;
                 }
-                    .app-cards-content-item.visibility:hover {
-                        background-color: var(--main-background);
-                    }
+                    .app-cards-content-item.visibility:hover { background-color: var(--main-background); }
                 .app-cards-content-item.visibility input[type=text] {
                     background-color: transparent;
                     border-color: transparent;
@@ -575,7 +556,7 @@ body {
                 text-align: center;
             }
             .app-cards-content-item-visibility {
-                background-color: var(--main-font-color-high);
+                background-color: var(--main-red-bold);
                 color: #fff;
                 border-radius: 20%;
                 text-align: center;
@@ -611,9 +592,7 @@ body {
                 justify-self: right;
 
             }
-                .app-cards-content-item-output:hover {
-                    background-color: var(--main-border-color-high);
-                }
+                .app-cards-content-item-output:hover { background-color: var(--main-border-color-high); }
     .app-cards-bottom {
         position: relative;
 
@@ -630,27 +609,6 @@ body {
 
         background-color: var(--main-background);
     }
-        /*.app-cards-bottom-add {
-            cursor: pointer;
-            border-radius: 4px;
-
-            padding: 2px 5px 2px 20px;
-            font-size: 10px;
-            
-            font-weight: 600;
-            margin: auto;
-            background-image: url(../img/add.png);
-            background-color: var(--main-background);
-            background-position: 5px center;
-            background-repeat: no-repeat;
-
-            text-transform: uppercase;
-
-            border: 1px solid var(--main-border-color-high);
-        }
-        .app-cards-bottom-add:hover {
-            background-color: #C8E6C9;
-        }*/
 
 /*// AUX CSS /////////////////////////////////////////////////////////////////*/
 .remove-focus-select {

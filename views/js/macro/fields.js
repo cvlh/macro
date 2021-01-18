@@ -109,6 +109,19 @@ export default function Field(ctx, append) {
     },
     _showProperties = function() { main.showProperties(context); },
 
+    _previewVisibility = function(evnt) {
+        if (main.getVisibilityMode()) return;
+
+        if (props['visibility']['fields'].length) {
+            for (var counter=0; counter<props['visibility']['fields'].length; counter++) {
+                if (evnt.type === 'mouseover') {
+                    props['visibility']['fields'][counter].setForVisibility();
+                } else {
+                    props['visibility']['fields'][counter].unsetForVisibility();
+                }
+            }
+        }
+    },
     _toggleVisibility = function() {
         const object = main.getSelectedObject();
 
@@ -121,6 +134,10 @@ export default function Field(ctx, append) {
     _setForVisibility = function() {
         const color = context.getColor();
 
+        treeviewRow.style.outline = 'none';
+        treeviewRow.style.backgroundColor = color;
+        treeviewRow.style.color = '#ffffff';
+
         description.style.backgroundColor = color;
         description.style.color = '#ffffff';
         description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
@@ -131,6 +148,10 @@ export default function Field(ctx, append) {
         isSelectedForvisibility = true;
     },
     _unsetForVisibility = function() {
+        treeviewRow.style.removeProperty('outline');
+        treeviewRow.style.removeProperty('background-color');
+        treeviewRow.style.removeProperty('color');
+
         description.style.removeProperty('background-color');
         description.style.removeProperty('color');
         description.style.removeProperty('box-shadow');
@@ -473,7 +494,9 @@ export default function Field(ctx, append) {
         description.addEventListener('focus', _showProperties, { capture: false });
 
         visibility = addElement(item, 'div', 'app-cards-content-item-visibility');
-        
+        visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseout', _previewVisibility, { capture: false });
+
         //addElement(visibility, 'div', 'icon', 'V');
         //addElement(visibility, 'span');
         //type.addEventListener('click', _remove, { once: true, capture: false });

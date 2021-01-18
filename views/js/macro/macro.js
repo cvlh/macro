@@ -239,7 +239,6 @@ export default function Macro() {
         }
     };
 
-    //this.setSelectedObject = function (object) { currentSelectedObject = object; }
     this.getSelectedObject = function () { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////

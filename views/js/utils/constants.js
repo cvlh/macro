@@ -34,6 +34,8 @@ export const _TYPES_ = {
 };
 
 export const _VISIBILITY_ = {
+    NONE:    0,
+
     FRESH:   1,
     EXTRA:   2,
     SAVE:    4,

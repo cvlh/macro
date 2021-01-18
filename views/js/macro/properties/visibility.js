@@ -14,16 +14,34 @@ export default function Visibility (ctx) {
         fresh, extra, save, restore, instant, after,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _set = function(properties) {
+    _get_flags = function() {
+        const objectType = parent.getMain().getSelectedObject().getProps('visibility');
+        
+        objectType['flags'] = (fresh.checked   ? fresh.value   : _VISIBILITY_.NONE) | 
+                              (extra.checked   ? extra.value   : _VISIBILITY_.NONE) | 
+                              (save.checked    ? save.value    : _VISIBILITY_.NONE) | 
+                              (restore.checked ? restore.value : _VISIBILITY_.NONE) | 
+                              (instant.checked ? instant.value : _VISIBILITY_.NONE) | 
+                              (after.checked   ? after.value   : _VISIBILITY_.NONE); 
+    },
+    _set_flags = function() {
+        const objectType = parent.getMain().getSelectedObject().getProps('visibility');
+
+        if (objectType['flags'] & fresh.value)   fresh.checked   = true; else fresh.checked   = false;
+        if (objectType['flags'] & extra.value)   extra.checked   = true; else extra.checked   = false;
+        if (objectType['flags'] & save.value)    save.checked    = true; else save.checked    = false;
+        if (objectType['flags'] & restore.value) restore.checked = true; else restore.checked = false;
+        if (objectType['flags'] & instant.value) instant.checked = true; else instant.checked = false;
+        if (objectType['flags'] & after.value)   after.checked   = true; else after.checked   = false;
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        //const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = parent.getMain().getSelectedObject().getProps('visibility');
 
         if (objectType !== null) {
-            _set(objectType);
-
+            if (objectType['flags'] !== null) _set_flags();
             content.style.display = 'block';
             return;
         }
@@ -74,7 +92,7 @@ export default function Visibility (ctx) {
             fresh.setAttribute('name', 'visibility');
             fresh.setAttribute('value', _VISIBILITY_.FRESH);
             fresh.style.gridColumn = '2 / span 2';
-            //fresh.addEventListener('change', _change, { capture: false });
+            fresh.addEventListener('change', _get_flags, { capture: false });
 
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_fresh);
             label.setAttribute('for', 'fresh_checkbox');
@@ -86,7 +104,7 @@ export default function Visibility (ctx) {
             save.setAttribute('type', 'checkbox');
             save.setAttribute('value', _VISIBILITY_.SAVE);
             save.style.gridColumn = '17 / span 2';
-            //save.addEventListener('change', _change, { capture: false });
+            save.addEventListener('change', _get_flags, { capture: false });
 
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_Save);
             label.setAttribute('for', 'save_checkbox');
@@ -100,7 +118,7 @@ export default function Visibility (ctx) {
             extra.setAttribute('name', 'visibility');
             extra.setAttribute('value', _VISIBILITY_.EXTRA);
             extra.style.gridColumn = '2 / span 2';
-            //extra.addEventListener('change', _change, { capture: false });
+            extra.addEventListener('change', _get_flags, { capture: false });
 
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_extra);
             label.setAttribute('for', 'extra_checkbox');
@@ -111,7 +129,8 @@ export default function Visibility (ctx) {
             restore.setAttribute('type', 'checkbox');
             restore.setAttribute('value', _VISIBILITY_.RESTORE);
             restore.style.gridColumn = '17 / span 2';
-            
+            restore.addEventListener('change', _get_flags, { capture: false });
+
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_visibility_Restore);
             label.setAttribute('for', 'restore_checkbox');
             label.style.gridColumn = '19 / span 9';
@@ -129,6 +148,7 @@ export default function Visibility (ctx) {
             instant.setAttribute('name', 'execute');
             instant.setAttribute('value', _VISIBILITY_.INSTANT);
             instant.style.gridColumn = '2 / span 2';
+            instant.addEventListener('change', _get_flags, { capture: false });
 
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_instant);
             label.setAttribute('for', 'instant_radio');
@@ -142,7 +162,8 @@ export default function Visibility (ctx) {
             after.setAttribute('name', 'execute');
             after.setAttribute('value', _VISIBILITY_.AFTER);
             after.style.gridColumn = '2 / span 2';
-            
+            after.addEventListener('change', _get_flags, { capture: false });
+
             label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_after);
             label.setAttribute('for', 'after_radio');
             label.style.gridColumn = '4 / span 24';

@@ -89,7 +89,8 @@ export default function Type (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        //const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = parent.getMain().getSelectedObject().getProps('type');
 
         if (objectType !== null) {
             _set(objectType);

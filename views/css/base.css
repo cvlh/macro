@@ -102,9 +102,40 @@ body {
 .main-app-builder {
     background-color: #F5F5F5;
     overflow: hidden;
-
+    position: relative;
     z-index: 1;
 }
+    .main-app-builder-bottom-bar {
+        position: absolute;
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        bottom: 5px;
+        right: 5px;
+
+        background-color: var(--main-background);
+        border: 2px solid var(--main-border-color-high);
+        display: grid;
+
+        grid-template-rows: 24px 24px 24px 2px 24px ;
+        grid-auto-columns: 24px;
+
+        border-radius: 5px;
+
+        color: var(--main-font-color-med);
+    }
+        .main-app-builder-bottom-bar-divider { background-color: var(--main-border-color-high); }
+        .main-app-builder-bottom-bar-button {
+            font-size: 16px;
+            line-height: 24px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+            .main-app-builder-bottom-bar-button:hover { 
+                background-color: var(--main-border-color);
+                color: var(--main-font-color-high); 
+            }
+            .main-app-builder-bottom-bar-button:active { color: var(--main-font-color-black); }
     .main-app-wrapper {
         margin: 0;
         padding: 0;
@@ -125,7 +156,7 @@ body {
     .main-app-svg {
         z-index: 0;
         pointer-events: none;
-        border: 1px solid #e5e5e5;
+        border: 1px solid var(--main-border-color-high);
         display: block;
     }
         .main-app-svg-path {
@@ -148,7 +179,6 @@ body {
             stroke-dasharray: 0.1%; 
             stroke-width: 1px;
         }
-
 .main-app-properties {
    /* width: 240px;*/
     background-color: #ffffff;
@@ -324,7 +354,6 @@ body {
             color: var(--main-font-color-bold);
         }
         .main-app-properties-checkbox-label { padding-left: 8px; }
-
 .main-app-treeview {
     /*width: 240px;*/
     background-color: #ffffff;
@@ -426,7 +455,6 @@ body {
 
             display: none;
         }
-
 .app-cards {
     position: absolute;
     top: 0;
@@ -491,7 +519,6 @@ body {
         
         .app-cards-header-button.new   { color: var(--main-green-bold); }
         .app-cards-header-button.close { color: var(--main-red-bold); }
-
     .app-cards-content {
         position: relative;
         display: grid;
@@ -509,18 +536,7 @@ body {
 
             font-size: 11px;
             line-height: 29px;
-            color: #ffffff;
-
-            /*border-radius: 50%;*/
-            
-            /*height: 28px;*/
-            /*margin: 7px;*/
-            /*background-image: url(../img/arrow.png);
-            background-color: #81C784;
-            background-color: var(--main-border-color-high);
-            background-position: center center;
-            background-repeat: no-repeat;*/
-            
+            color: #ffffff;            
         }
         .app-cards-content-items {
             display: flex;
@@ -566,7 +582,6 @@ body {
                 line-height: 16px;
                 margin: 3px;
             }
-
             .app-cards-content-item input {
                 font-weight: 600;
                 border: 1px solid var(--main-border-color);
@@ -590,7 +605,6 @@ body {
                 width: 18px;
                 line-height: 22px;
                 justify-self: right;
-
             }
                 .app-cards-content-item-output:hover { background-color: var(--main-border-color-high); }
     .app-cards-bottom {

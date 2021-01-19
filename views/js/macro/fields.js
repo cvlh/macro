@@ -139,6 +139,7 @@ export default function Field(ctx, append) {
         treeviewRow.style.color = '#ffffff';
 
         description.style.backgroundColor = color;
+        description.style.borderColor = color;
         description.style.color = '#ffffff';
         description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
 
@@ -150,9 +151,14 @@ export default function Field(ctx, append) {
     _unsetForVisibility = function() {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
-        treeviewRow.style.removeProperty('color');
+        if (!rootField) {
+            treeviewRow.style.removeProperty('color');
+        } else {
+            treeviewRow.style.color = context.getColor();
+        }
 
         description.style.removeProperty('background-color');
+        description.style.removeProperty('border-color');
         description.style.removeProperty('color');
         description.style.removeProperty('box-shadow');
 

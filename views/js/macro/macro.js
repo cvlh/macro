@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _ICON_CHAR_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -85,7 +85,8 @@ export default function Macro() {
     },
     _zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
-        let scale = transform.scale * (1 + delta);
+
+        const scale = transform.scale * (1 + delta);
         if (scale > 9 || scale < 0.1) {
             return;
         }
@@ -342,6 +343,90 @@ export default function Macro() {
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
+        var aux = addElement(mainBuilder, 'div', 'main-app-builder-bottom-bar');
+
+        var bntZoomIn = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_IN);
+        bntZoomIn.addEventListener('click', function () {
+            let scale = transform.scale + 0.05;
+            if (scale > 9) scale = 9;
+
+            transform.scale = scale;
+            transform.left *= scale;
+            transform.top *= scale;
+            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        });
+
+        var bntZoomOut = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_OUT);
+        bntZoomOut.addEventListener('click', function () {
+            let scale = transform.scale - 0.05;
+            if (scale < 0.1) scale = 0.1;
+
+            transform.scale = scale;
+            transform.left *= scale;
+            transform.top *= scale;
+            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        });
+
+        var bntZoom = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM);
+        bntZoom.addEventListener('click', function () {
+            transform.scale = 1;
+            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        });
+
+        addElement(aux, 'div', 'main-app-builder-bottom-bar-divider');
+        var bntFit = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.FIT);
+        bntFit.addEventListener('click', function () {
+            const builderRect = mainBuilder.getBoundingClientRect(),
+                  wrapperRect = mainAppWrapper.getBoundingClientRect();
+            
+            const builderLeftCenter = builderRect['width'] / 2,
+                  builderTopCenter = builderRect['height'] / 2;
+
+            const wrapperLeftCenter = (wrapperRect['width'] / transform.scale) / 2,
+                  wrapperTopCenter = (wrapperRect['height'] / transform.scale) / 2;
+
+            const widthFactor = wrapperRect['width'] / builderRect['width'],
+                  heightFactor = wrapperRect['height'] / builderRect['height'];
+
+            /*let builderCenterDiv = addElement(mainBuilder, 'div');
+            builderCenterDiv.style.position = 'absolute';
+            builderCenterDiv.style.width = '10px';
+            builderCenterDiv.style.height = '1px';
+            builderCenterDiv.style.backgroundColor = 'black';
+            builderCenterDiv.style.left = builderLeftCenter + 'px';
+            builderCenterDiv.style.top = builderTopCenter + 'px';
+            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
+
+            builderCenterDiv = addElement(mainBuilder, 'div');
+            builderCenterDiv.style.position = 'absolute';
+            builderCenterDiv.style.width = '1px';
+            builderCenterDiv.style.height = '10px';
+            builderCenterDiv.style.backgroundColor = 'black';
+            builderCenterDiv.style.left = builderLeftCenter + 'px';
+            builderCenterDiv.style.top = builderTopCenter + 'px';
+            builderCenterDiv.style.transform = 'translate(-50%, -50%)';*/
+
+            /*const wrapperCenterDiv = addElement(mainAppWrapper, 'div');
+            wrapperCenterDiv.style.position = 'absolute';
+            wrapperCenterDiv.style.width = '10px';
+            wrapperCenterDiv.style.height = '10px';
+            wrapperCenterDiv.style.borderRadius = '50%';
+            wrapperCenterDiv.style.backgroundColor = 'red';
+            wrapperCenterDiv.style.left = wrapperLeftCenter + 'px';
+            wrapperCenterDiv.style.top = wrapperTopCenter + 'px';
+            wrapperCenterDiv.style.transform = 'translate(-50%, -50%)';*/
+
+            let scale = transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
+            if (scale > 9) scale = 9; else if (scale < 0.1) scale = 0.1;
+
+            transform.scale = scale;
+            transform.left = builderRect['left'] + builderLeftCenter - (wrapperLeftCenter * transform.scale);
+            transform.top = builderRect['top'] + builderTopCenter - (wrapperTopCenter * transform.scale);
+
+            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+
+            if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+        }, { capture: true });
 
         document.body.appendChild(fragment);
         //_resize();

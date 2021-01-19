@@ -59,5 +59,9 @@ export const _ICON_CHAR_ = {
     CHECK:     'C',
     PLUS:      '+',
     EMPTY:     '_',
-    HOME:      'h'
+    HOME:      'h',
+    FIT:       'F',
+    ZOOM_IN:   'i',
+    ZOOM_OUT:  'o',
+    ZOOM:      'z'
 };

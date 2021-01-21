@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _ICON_CHAR_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _ZOOM_, _ICON_CHAR_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -83,17 +83,80 @@ export default function Macro() {
             }
         }
     },
-    _zoom = function(evnt) {
+    _pan = function() {
+        const builderRect = mainBuilder.getBoundingClientRect();
+
+        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
+              builderTopCenter = builderRect.top + (builderRect.height / 2);
+
+        const DELTA = 1 - transform.scale;
+
+        const builderLeftCenterScale = builderLeftCenter * DELTA,
+              builderTopCenterScale = builderTopCenter * DELTA;
+        
+        transform.left = (transform.left-builderLeftCenterScale) / transform.scale;
+        transform.top = (transform.top-builderTopCenterScale) / transform.scale;
+        transform.scale = 1;
+
+        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+    },
+    _fit = function() {
+        const builderRect = mainBuilder.getBoundingClientRect(),
+              wrapperRect = mainAppWrapper.getBoundingClientRect();
+  
+        const builderLeftCenter = builderRect.width / 2,
+              builderTopCenter = builderRect.height / 2;
+
+        const wrapperLeftCenter = (wrapperRect.width / transform.scale) / 2,
+              wrapperTopCenter = (wrapperRect.height / transform.scale) / 2;
+
+        const widthFactor = wrapperRect.width / builderRect.width,
+              heightFactor = wrapperRect.height / builderRect.height;
+
+        let scale = transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
+
+        if (scale > _ZOOM_.MAX) {
+            scale = _ZOOM_.MAX; 
+        } else if (scale < _ZOOM_.MIN) {
+            scale = _ZOOM_.MIN;
+        }
+
+        transform.scale = scale;
+        transform.left = builderRect.left + builderLeftCenter - (wrapperLeftCenter * transform.scale);
+        transform.top = builderRect.top + builderTopCenter - (wrapperTopCenter * transform.scale);
+
+        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+    },
+    _zoom = function() {
+        const builderRect = mainBuilder.getBoundingClientRect(),
+              wrapperRect = mainAppWrapper.getBoundingClientRect();
+
+        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
+              builderTopCenter = builderRect.top + (builderRect.height / 2);
+
+        const DELTA = this['DELTA'];
+
+        let scale = transform.scale * (1 + DELTA);
+        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
+        
+        transform.scale = scale;
+        transform.left += (wrapperRect.left - builderLeftCenter) * DELTA;
+        transform.top +=  (wrapperRect.top - builderTopCenter) * DELTA;
+        
+        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        
+        //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+    },
+    _wheel_zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
 
         const scale = transform.scale * (1 + delta);
-        if (scale > 9 || scale < 0.1) {
-            return;
-        }
-
+        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
+        
         const rect = mainAppWrapper.getBoundingClientRect();
 
-        transform.scale = transform.scale * (1 + delta);
+        transform.scale = scale;
         transform.left += (rect.left - evnt.clientX) * delta;
         transform.top +=  (rect.top - evnt.clientY) * delta;
 
@@ -102,10 +165,7 @@ export default function Macro() {
         if (currentDrag != null) {
             currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.START);
         }
-
-        if (scale < 1) {
-            mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
-        }
+        //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     };
 
     // INTERFACE  //////////////////////////////////////////////////////////////
@@ -346,87 +406,19 @@ export default function Macro() {
         var aux = addElement(mainBuilder, 'div', 'main-app-builder-bottom-bar');
 
         var bntZoomIn = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_IN);
-        bntZoomIn.addEventListener('click', function () {
-            let scale = transform.scale + 0.05;
-            if (scale > 9) scale = 9;
-
-            transform.scale = scale;
-            transform.left *= scale;
-            transform.top *= scale;
-            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-        });
+        bntZoomIn['DELTA'] = 0.1;
+        bntZoomIn.addEventListener('click', _zoom, { capture: true });
 
         var bntZoomOut = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_OUT);
-        bntZoomOut.addEventListener('click', function () {
-            let scale = transform.scale - 0.05;
-            if (scale < 0.1) scale = 0.1;
-
-            transform.scale = scale;
-            transform.left *= scale;
-            transform.top *= scale;
-            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-        });
+        bntZoomOut['DELTA'] = -0.1;
+        bntZoomOut.addEventListener('click', _zoom, { capture: true });
 
         var bntZoom = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM);
-        bntZoom.addEventListener('click', function () {
-            transform.scale = 1;
-            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-        });
+        bntZoom.addEventListener('click', _pan, { capture: true });
 
         addElement(aux, 'div', 'main-app-builder-bottom-bar-divider');
         var bntFit = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.FIT);
-        bntFit.addEventListener('click', function () {
-            const builderRect = mainBuilder.getBoundingClientRect(),
-                  wrapperRect = mainAppWrapper.getBoundingClientRect();
-            
-            const builderLeftCenter = builderRect['width'] / 2,
-                  builderTopCenter = builderRect['height'] / 2;
-
-            const wrapperLeftCenter = (wrapperRect['width'] / transform.scale) / 2,
-                  wrapperTopCenter = (wrapperRect['height'] / transform.scale) / 2;
-
-            const widthFactor = wrapperRect['width'] / builderRect['width'],
-                  heightFactor = wrapperRect['height'] / builderRect['height'];
-
-            /*let builderCenterDiv = addElement(mainBuilder, 'div');
-            builderCenterDiv.style.position = 'absolute';
-            builderCenterDiv.style.width = '10px';
-            builderCenterDiv.style.height = '1px';
-            builderCenterDiv.style.backgroundColor = 'black';
-            builderCenterDiv.style.left = builderLeftCenter + 'px';
-            builderCenterDiv.style.top = builderTopCenter + 'px';
-            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
-
-            builderCenterDiv = addElement(mainBuilder, 'div');
-            builderCenterDiv.style.position = 'absolute';
-            builderCenterDiv.style.width = '1px';
-            builderCenterDiv.style.height = '10px';
-            builderCenterDiv.style.backgroundColor = 'black';
-            builderCenterDiv.style.left = builderLeftCenter + 'px';
-            builderCenterDiv.style.top = builderTopCenter + 'px';
-            builderCenterDiv.style.transform = 'translate(-50%, -50%)';*/
-
-            /*const wrapperCenterDiv = addElement(mainAppWrapper, 'div');
-            wrapperCenterDiv.style.position = 'absolute';
-            wrapperCenterDiv.style.width = '10px';
-            wrapperCenterDiv.style.height = '10px';
-            wrapperCenterDiv.style.borderRadius = '50%';
-            wrapperCenterDiv.style.backgroundColor = 'red';
-            wrapperCenterDiv.style.left = wrapperLeftCenter + 'px';
-            wrapperCenterDiv.style.top = wrapperTopCenter + 'px';
-            wrapperCenterDiv.style.transform = 'translate(-50%, -50%)';*/
-
-            let scale = transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
-            if (scale > 9) scale = 9; else if (scale < 0.1) scale = 0.1;
-
-            transform.scale = scale;
-            transform.left = builderRect['left'] + builderLeftCenter - (wrapperLeftCenter * transform.scale);
-            transform.top = builderRect['top'] + builderTopCenter - (wrapperTopCenter * transform.scale);
-
-            mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-
-            if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
-        }, { capture: true });
+        bntFit.addEventListener('click', _fit, { capture: true });
 
         document.body.appendChild(fragment);
         //_resize();
@@ -435,12 +427,12 @@ export default function Macro() {
         mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
-        //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
 
+        //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
         //window.addEventListener('resize', _resize, { capture: true });
 
-        mainAppWrapper.addEventListener('wheel', _zoom, { capture: false, passive: true });
-        mainAppWrapper.addEventListener('mousedown', (evnt) => {
+        mainAppWrapper.addEventListener('wheel', _wheel_zoom, { capture: false, passive: true });
+        mainAppWrapper.addEventListener('mousedown', function (evnt) {
             if (currentDrag !== null) {
                 if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
                 return;
@@ -459,5 +451,30 @@ export default function Macro() {
         properties = new Properties(context);
         mainProperties.appendChild(properties.getFragment());
         //context.setPosition(240, 0, transform, _MOV_.END);
+
+        const builderRect = mainBuilder.getBoundingClientRect();
+  
+        const builderLeftCenter = builderRect.width / 2,
+              builderTopCenter = builderRect.height / 2;
+
+        let builderCenterDiv = addElement(mainBuilder, 'div');
+            builderCenterDiv.style.position = 'absolute';
+            builderCenterDiv.style.width = '10px';
+            builderCenterDiv.style.height = '1px';
+            builderCenterDiv.style.backgroundColor = 'red';
+            builderCenterDiv.style.left = builderLeftCenter + 'px';
+            builderCenterDiv.style.top = builderTopCenter + 'px';
+            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
+            builderCenterDiv.style.pointerEvents = 'none';
+
+            builderCenterDiv = addElement(mainBuilder, 'div');
+            builderCenterDiv.style.position = 'absolute';
+            builderCenterDiv.style.width = '1px';
+            builderCenterDiv.style.height = '10px';
+            builderCenterDiv.style.backgroundColor = 'red';
+            builderCenterDiv.style.left = builderLeftCenter + 'px';
+            builderCenterDiv.style.top = builderTopCenter + 'px';
+            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
+            builderCenterDiv.style.pointerEvents = 'none';
     })();
 }

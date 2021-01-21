@@ -12,6 +12,11 @@ export const _MOV_ = {
     END:   2
 };
 
+export const _ZOOM_ = {
+    MAX: 7,
+    MIN: 0.1
+};
+
 export const _COLORS_ = {
     RED:    '#ff0000',
     PURPLE: '#aa00ff',

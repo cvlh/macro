@@ -123,6 +123,7 @@ body {
         border-radius: 5px;
 
         color: var(--main-font-color-med);
+        z-index: 2;
     }
         .main-app-builder-bottom-bar-divider { background-color: var(--main-border-color-high); }
         .main-app-builder-bottom-bar-button {

@@ -371,7 +371,7 @@ body {
 }
 .main-app-treeview-col-resize {
     background-color: #f0f0f0;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid #e0e0e0;
     border-left: 1px solid #f0f0f0;
     cursor: col-resize;
     z-index: 4;

@@ -82,8 +82,8 @@ body {
     border-radius: 5px;
     background-color: #cdcdcd;
 }
-::-webkit-scrollbar-thumb:hover { background-color: #a6a6a6; }
-::-webkit-scrollbar-thumb:active { background-color: #606060; }
+::-webkit-scrollbar-thumb:hover { background-color: #a0a0a0; }
+::-webkit-scrollbar-thumb:active { background-color: #909090; }
 
 .main-app {
     position: relative;
@@ -95,7 +95,7 @@ body {
 
     display: grid; 
 
-    grid-template-columns: 240px auto 233px;
+    grid-template-columns: 240px 5px auto 233px;
     grid-template-rows: 100vh;
     /*border: 3px solid #00ff00;*/
 }
@@ -113,14 +113,14 @@ body {
         bottom: 5px;
         right: 5px;
 
-        background-color: var(--main-background);
-        border: 2px solid var(--main-border-color-high);
+        background-color: #ffffff;
+        border: 1px solid var(--main-border-color-high);
         display: grid;
 
-        grid-template-rows: 24px 24px 24px 2px 24px ;
+        grid-template-rows: 24px 24px 24px 1px 24px ;
         grid-auto-columns: 24px;
 
-        border-radius: 5px;
+        border-radius: 4px;
 
         color: var(--main-font-color-med);
         z-index: 2;
@@ -358,7 +358,7 @@ body {
 .main-app-treeview {
     /*width: 240px;*/
     background-color: #ffffff;
-    border-right: 1px solid #e5e5e5;
+    /*border-right: 1px solid #e5e5e5;*/
 
     position: relative;
 
@@ -367,8 +367,20 @@ body {
     scrollbar-width: thin;
 
     z-index: 2;
-    color:  var(--main-font-color-bold);
+    color: var(--main-font-color-bold);
 }
+.main-app-treeview-col-resize {
+    background-color: #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+    cursor: col-resize;
+    z-index: 4;
+}
+    .main-app-treeview-col-resize:hover {
+        background-color: #e0e0e0;
+        border-right-color: #e0e0e0;
+        border-left-color: #e0e0e0;
+    }
     .main-app-treeview-items {
         padding: 0 0 0 0;
 

@@ -27,7 +27,7 @@ export default function Macro() {
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
-        size = { width: 3840, height: 2160 },
+        size = { width: 4096, height: 3072 },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _receive_events = function(evnt) {
@@ -392,6 +392,9 @@ export default function Macro() {
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
 
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
+        
+        var colSize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
+
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
         mainProperties = addElement(mainApp, 'div', 'main-app-properties');
 

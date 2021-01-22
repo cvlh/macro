@@ -108,7 +108,6 @@ export default function Field(ctx, append) {
         //props['prefix']['text'] = value;
     },
     _showProperties = function() { main.showProperties(context); },
-
     _previewVisibility = function(evnt) {
         if (main.getVisibilityMode()) return;
 
@@ -132,7 +131,7 @@ export default function Field(ctx, append) {
         }
     },
     _setForVisibility = function() {
-        const color = context.getColor();
+        const color = context.getColor() + 'CC';
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
@@ -266,14 +265,14 @@ export default function Field(ctx, append) {
     this.serialize = function (fragment, properties) {
         let counterOffset, 
             fieldOffset, fieldDiv, fieldPath, 
-            hasChild, isExpand, deepSize, lightColor, text;
+            hasChild, isExpand, deepSize, text/*, lightColor*/;
 
         //let response = { ctx: context };
         
         treeviewDeep = properties.tab.length;
 
         if (rootField) properties.color = props.color;
-        lightColor = properties.color + '30';
+        //lightColor = properties.color + '40';
 
         hasChild = context.hasConnection();
 
@@ -288,11 +287,13 @@ export default function Field(ctx, append) {
         treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
         if (!properties.expand) treeviewRow.style.height = '0';
-
-        treeviewRow['_ADDLOG_'] = { 
+        
+        treeviewRow['field_ctx'] = context;
+        /*treeviewRow['_ADDLOG_'] = { 
             ctx: context, 
             color: [ lightColor, properties.color ]
-        };
+        };*/
+        
 
         isExpand = true;
         if (hasChild && !props.expanded && properties.expand) {
@@ -302,7 +303,7 @@ export default function Field(ctx, append) {
 
         for (counterOffset=0; counterOffset<properties.tab.length; counterOffset++) {
             fieldOffset = addElement(treeviewRow, 'div', 'main-app-treeview-item');
-            if (counterOffset > 0) fieldOffset.style.borderLeftColor = lightColor;
+            if (counterOffset > 0) fieldOffset.style.borderLeftColor = properties.color + '40';
         }
         if (hasChild || rootField) {
             if (hasChild) {
@@ -324,8 +325,13 @@ export default function Field(ctx, append) {
 
         //fieldDiv.textContent = description.value;
         //if (rootField) fieldDiv.style.color = properties.color;
+
         if (rootField) treeviewRow.style.color = properties.color;
         if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
+        /*if ( hasChild ||  rootField) {
+            fieldDiv.style.fontWeight = '600';
+            treeviewRow.style.color = properties.color;
+        }*/
         if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
 
         //fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
@@ -357,7 +363,8 @@ export default function Field(ctx, append) {
     };
     this.setBorderColor = function(light, index = null, color = null) {
         if (color === null && index === null) {
-            color = (light ? context.getColor() + '30' : context.getColor());
+            color = (light ? context.getColor() + '40' : context.getColor());
+            //if (isSelectedForvisibility && !light) color = 'white';
             index = treeviewDeep;
         } else {
             const child = treeviewRow.childNodes.item(index);
@@ -458,7 +465,9 @@ export default function Field(ctx, append) {
         }
         return null;
     };
+    this.getRect = function () { return item.getBoundingClientRect(); };
 
+    this.toggleVisibility = function() { _toggleVisibility(); };
     this.setForVisibility = function() { _setForVisibility(); };
     this.unsetForVisibility = function() { _unsetForVisibility(); };
     this.addToVisibility = function(field) {

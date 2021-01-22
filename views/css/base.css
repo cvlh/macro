@@ -429,7 +429,7 @@ body {
             /*opacity: 0.5;*/
             
         }
-            .main-app-treeview-item.expand:hover { color: var(--main-font-color-med); }
+            /*.main-app-treeview-item.expand:hover { color: var(--main-font-color-med); }*/
         .main-app-treeview-item.expand div {
             pointer-events: none;
             transform: rotate(0deg);
@@ -567,7 +567,8 @@ body {
                 position: relative;
                 color: var(--main-font-color-black);
                 outline-color: inherit;
-                border-radius: 4px;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.visibility { 

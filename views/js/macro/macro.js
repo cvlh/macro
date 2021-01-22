@@ -40,24 +40,24 @@ export default function Macro() {
         const target = evnt.target,
               targetClass = target.classList,
               parent = target.parentElement,
-              props = parent['_ADDLOG_'];
+              field = parent['field_ctx'];
 
         if (targetClass.contains('main-app-treeview-item')) {
             if (targetClass.contains('expand')) {
  
-                const status = props.ctx.getProps('expanded');
+                const status = field.getProps('expanded');
                 switch (evnt.type) {
                     case 'click':
                         const icon = target.firstChild;
-                        props.ctx.toggleExpand(icon);
+                        field.toggleExpand(icon);
                         break;
 
                     case 'mouseenter':
-                        if (status) props.ctx.setBorderColor(false);
+                        if (status) field.setBorderColor(false);
                         break;
 
                     case 'mouseleave':
-                        if (status) props.ctx.setBorderColor(true);
+                        if (status) field.setBorderColor(true);
                         break;
                 }
             } else if (targetClass.contains('field')) {
@@ -70,17 +70,25 @@ export default function Macro() {
                     case 'mouseleave':
                         path.style.display = 'none';
                         break;
+
+                    case 'click':
+                        if (visibilityMode) {
+                            field.toggleVisibility();
+                        } else {
+                            const rect = field.getRect();
+                            _center(rect);
+                            field.setFocus();
+                        }
+                        break;
                 }
-            } else {
+            } /*else {
                 switch (evnt.type) {
                     case 'click':
-                        const properties = props.ctx.getProps();
-
-                        mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
-
-                        break
+                        //const properties = field.getProps();
+                        //mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
+                        break;
                 }
-            }
+            }*/
         }
     },
     _pan = function() {
@@ -97,6 +105,24 @@ export default function Macro() {
         transform.left = (transform.left-builderLeftCenterScale) / transform.scale;
         transform.top = (transform.top-builderTopCenterScale) / transform.scale;
         transform.scale = 1;
+
+        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+    },
+    _center = function(rect) {
+        const builderRect = mainBuilder.getBoundingClientRect();
+
+        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
+              builderTopCenter = builderRect.top + (builderRect.height / 2);
+
+        const rectLeftCenter = rect.left + (rect.width / 2),
+              rectTopCenter = rect.top + (rect.height / 2);
+
+        const left = (transform.left - rectLeftCenter) + builderLeftCenter,
+              top  = (transform.top - rectTopCenter) + builderTopCenter;
+        
+        transform.left = left;
+        transform.top = top;
+        //transform.scale = 1;
 
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
     },
@@ -392,7 +418,7 @@ export default function Macro() {
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
 
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
-        
+
         var colSize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
 
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');

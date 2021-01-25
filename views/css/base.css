@@ -56,7 +56,7 @@ html {
     
     --main-yellow-med: #FDD835;
 
-    --main-red-bold: #D32F2F;
+    --main-red-bold: #F44336;
 
     --main-blue-med: #17a2b8;
     --main-blue-bold: #007bff;
@@ -76,7 +76,7 @@ body {
     /*background-color: #F5F5F5;*/
 }
 
-::-webkit-scrollbar { width: 8px;}
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background-color: #f0f0f0; }
 ::-webkit-scrollbar-thumb { 
     border-radius: 5px;
@@ -238,10 +238,8 @@ body {
             font-weight: 300;
             color: var(--main-font-color-bold);
         }
-
         .main-app-properties-row select { font-size: 12px; }
         .main-app-properties-row input { font-size: 11px; }
-
         .main-app-properties-row select,
         .main-app-properties-row input[type=text] {
             border: 1px solid var(--main-border-color);
@@ -250,7 +248,6 @@ body {
             padding: 2px 5px;
         }
             .main-app-properties-row input[type=text].number { text-align: center; }
-
         .main-app-properties-row input[type=checkbox], 
         .main-app-properties-row input[type=radio] {
             margin: auto;
@@ -347,7 +344,6 @@ body {
                 opacity: 1;
                 border-radius: 20%;
              }
-
         .main-app-properties-type-icon {
             grid-column: 3 / span 2;
             text-align: center;
@@ -517,7 +513,6 @@ body {
             color: var(--main-font-color-high);
             text-align: center;
         }
-
         .app-cards-header-button {
             cursor: pointer;
             font-size: 11px;
@@ -637,7 +632,6 @@ body {
 
         background-color: var(--main-background);
     }
-
 /*// AUX CSS /////////////////////////////////////////////////////////////////*/
 .remove-focus-select {
     -moz-user-select: none;

@@ -91,6 +91,19 @@ export default function Macro() {
             }*/
         }
     },
+    _control_events = function(evnt) {
+        evnt.stopPropagation();
+
+        const target = evnt.target,
+              targetClass = target.classList;
+
+        if (evnt.type === 'click') {
+            if (targetClass.contains('zoom-in'))        _zoom(0.1);
+            else if (targetClass.contains('zoom-out'))  _zoom(-0.1);
+            else if (targetClass.contains('zoom-reset')) _pan();
+            else if (targetClass.contains('zoom-fit'))   _fit();
+        }
+    },
     _pan = function() {
         const builderRect = mainBuilder.getBoundingClientRect();
 
@@ -105,24 +118,6 @@ export default function Macro() {
         transform.left = (transform.left-builderLeftCenterScale) / transform.scale;
         transform.top = (transform.top-builderTopCenterScale) / transform.scale;
         transform.scale = 1;
-
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-    },
-    _center = function(rect) {
-        const builderRect = mainBuilder.getBoundingClientRect();
-
-        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
-              builderTopCenter = builderRect.top + (builderRect.height / 2);
-
-        const rectLeftCenter = rect.left + (rect.width / 2),
-              rectTopCenter = rect.top + (rect.height / 2);
-
-        const left = (transform.left - rectLeftCenter) + builderLeftCenter,
-              top  = (transform.top - rectTopCenter) + builderTopCenter;
-        
-        transform.left = left;
-        transform.top = top;
-        //transform.scale = 1;
 
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
     },
@@ -154,14 +149,14 @@ export default function Macro() {
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     },
-    _zoom = function() {
+    _zoom = function(zoom) {
         const builderRect = mainBuilder.getBoundingClientRect(),
               wrapperRect = mainAppWrapper.getBoundingClientRect();
 
         const builderLeftCenter = builderRect.left + (builderRect.width / 2),
               builderTopCenter = builderRect.top + (builderRect.height / 2);
 
-        const DELTA = this['DELTA'];
+        const DELTA = zoom;
 
         let scale = transform.scale * (1 + DELTA);
         if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
@@ -173,6 +168,24 @@ export default function Macro() {
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
         
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+    },
+    _center = function(rect) {
+        const builderRect = mainBuilder.getBoundingClientRect();
+
+        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
+              builderTopCenter = builderRect.top + (builderRect.height / 2);
+
+        const rectLeftCenter = rect.left + (rect.width / 2),
+              rectTopCenter = rect.top + (rect.height / 2);
+
+        const left = (transform.left - rectLeftCenter) + builderLeftCenter,
+              top  = (transform.top - rectTopCenter) + builderTopCenter;
+        
+        transform.left = left;
+        transform.top = top;
+        //transform.scale = 1;
+
+        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
     },
     _wheel_zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
@@ -418,8 +431,7 @@ export default function Macro() {
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
 
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
-
-        var colSize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
+        const colResize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
 
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
         mainProperties = addElement(mainApp, 'div', 'main-app-properties');
@@ -427,36 +439,29 @@ export default function Macro() {
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
         
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
+        mainAppWrapper.setAttribute('tabindex',  0);
+
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
-        var aux = addElement(mainBuilder, 'div', 'main-app-builder-bottom-bar');
-
-        var bntZoomIn = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_IN);
-        bntZoomIn['DELTA'] = 0.1;
-        bntZoomIn.addEventListener('click', _zoom, { capture: true });
-
-        var bntZoomOut = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM_OUT);
-        bntZoomOut['DELTA'] = -0.1;
-        bntZoomOut.addEventListener('click', _zoom, { capture: true });
-
-        var bntZoom = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.ZOOM);
-        bntZoom.addEventListener('click', _pan, { capture: true });
-
-        addElement(aux, 'div', 'main-app-builder-bottom-bar-divider');
-        var bntFit = addElement(aux, 'div', 'icon main-app-builder-bottom-bar-button', _ICON_CHAR_.FIT);
-        bntFit.addEventListener('click', _fit, { capture: true });
+        const bottomBar = addElement(mainBuilder, 'div', 'main-app-builder-bottom-bar');
+        bottomBar['buttons'] = [];
+        bottomBar['buttons']['in'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-in', _ICON_CHAR_.ZOOM_IN);
+        bottomBar['buttons']['out'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-out', _ICON_CHAR_.ZOOM_OUT);
+        bottomBar['buttons']['reset'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-reset', _ICON_CHAR_.ZOOM);
+        addElement(bottomBar, 'div', 'main-app-builder-bottom-bar-divider');
+        bottomBar['buttons']['fit'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-fit', _ICON_CHAR_.FIT);
 
         document.body.appendChild(fragment);
-        //_resize();
         
         // EVNTS
         mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
 
+        bottomBar.addEventListener('click', _control_events, { capture: true });
         //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
         //window.addEventListener('resize', _resize, { capture: true });
 

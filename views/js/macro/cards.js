@@ -114,15 +114,18 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
             if (color == null) {
                 input.style.removeProperty('background-color');
                 card.style.removeProperty('border-color');
+                card.style.removeProperty('outline-color');
                 header.style.removeProperty('color');
                 //title.style.removeProperty('color');
-                items.style.removeProperty('outline-color');
+                //items.style.removeProperty('outline-color');
+
             } else {
                 input.style.backgroundColor = color;
                 card.style.borderColor = color;
                 header.style.color = color;
                 //title.style.color = color;
-                items.style.outlineColor = color;
+                //items.style.outlineColor = color;
+                card.style.outlineColor = color;
             }
         }
     };
@@ -236,6 +239,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         const fragment = document.createDocumentFragment();
 
         card = addElement(fragment, 'div', 'app-cards');
+        //card.setAttribute('tabindex',  0);
         if (rootCard) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');

@@ -122,7 +122,7 @@ body {
 
         border-radius: 4px;
 
-        color: var(--main-font-color-med);
+        color: var(--main-font-color-high);
         z-index: 2;
     }
         .main-app-builder-bottom-bar-divider { background-color: var(--main-border-color-high); }
@@ -152,12 +152,20 @@ body {
         transform-origin: 0 0;
         background: url(../img/background.svg);
 
+        /*border: 2px solid var(--main-border-color-high);*/
+
         /*transition: 0.2s ease;*/
     }
+        .main-app-wrapper:focus {
+             outline-style: dashed;
+             outline-width: 2px;
+             outline-offset: 1px;
+             outline-color: inherit;
+        }
     .main-app-svg {
         z-index: 0;
         pointer-events: none;
-        border: 1px solid var(--main-border-color-high);
+        /*border: 1px solid var(--main-border-color-high);*/
         display: block;
     }
         .main-app-svg-path {
@@ -462,6 +470,7 @@ body {
             font-style: italic;
             /*border: 1px solid #eee;*/
 
+            pointer-events: none;
             display: none;
         }
 .app-cards {
@@ -481,7 +490,16 @@ body {
     border-style: solid;
     border-color: var(--main-border-color-high);
     opacity: 0.9;
+
+    outline-color: var(--main-border-color-high);
 }
+    /*.app-cards:focus {
+        outline-style: dashed;
+        outline-width: 2px;
+        outline-offset: 1px;
+
+        border-color: transparent !important;
+     }*/
     .app-cards-header {
         position: relative;
 
@@ -533,8 +551,8 @@ body {
         grid-template-columns: 18px auto;
         align-items: center;
         padding: 4px 0 4px 0;
-        /* border-top: 1px dashed #f0f0f0; */
         margin: 0;
+        outline-color: inherit;
     }
         .app-cards-content-input {
             width: 18px;
@@ -549,8 +567,7 @@ body {
         .app-cards-content-items {
             display: flex;
             flex-direction: column;
-            /*border-left: 1px solid #f0f0f0;*/
-            outline-color: var(--main-border-color-high);
+            outline-color: inherit;
         }            
             .app-cards-content-items.root { padding: 4px 0 4px 0; }
             .app-cards-content-item {
@@ -564,11 +581,13 @@ body {
                 outline-color: inherit;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
+
+                transition: .15s background-color linear;
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
-                    opacity: 0.75;
+                    opacity: 0.85;
                 }
                     .app-cards-content-item.visibility:hover { background-color: var(--main-background); }
                 .app-cards-content-item.visibility input[type=text] {
@@ -602,7 +621,7 @@ body {
             }
                 .app-cards-content-item input:focus {
                     outline-width: 2px;
-                    outline-style: solid;
+                    outline-style: dashed;
                     outline-color: inherit;
 
                     border-color: transparent;

@@ -1,0 +1,1949 @@
+{
+	"status": true,
+	"name": "Macro",
+	"version": 1,
+	"transform": [ 289.65, 184.125, 0.195557 ],
+	"size": [ 4096, 3072 ],
+	"visibility": [],
+	"root": {
+		"position": [ 10, 845 ],
+		"fields": [
+			{
+				"id": "1",
+				"type": { "type": 0 },
+				"text": "INICIAR",
+				"visibility": {
+					"flags": 17,
+					"fields": ["1.1", "1.2", "1.3", "1.4", "1.5", "1.6" ]
+				},
+				"expanded": true,
+				"color": "#ff0000",
+				"output": {
+					"position": [ 340, 19 ],
+					"fields": [
+						{
+							"id": "1.1",
+							"type": {
+								"type": 1
+							},
+							"text": "CONTROLE",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "1.2",
+							"type": {
+								"type": 0
+							},
+							"text": "CDE M2 V43",
+							"visibility": {
+								"flags": 18,
+								"fields": [
+									"1.2.1",
+									"1.2.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									741,
+									36
+								],
+								"fields": [
+									{
+										"id": "1.2.1",
+										"type": {
+											"type": 0
+										},
+										"text": "INICIAR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "1.2.2",
+										"type": {
+											"type": 0
+										},
+										"text": "CANCELAR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "1.3",
+							"type": {
+								"type": 0
+							},
+							"text": "CD CENTRO RESUL",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"1.3.1",
+									"1.3.2",
+									"1.3.3"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									740,
+									176
+								],
+								"fields": [
+									{
+										"id": "1.3.1",
+										"type": {
+											"type": 0
+										},
+										"text": "COLETA DOMICILIAR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "1.3.2",
+										"type": {
+											"type": 0
+										},
+										"text": "COLETA DIVERSOS",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "1.3.3",
+										"type": {
+											"type": 0
+										},
+										"text": "COLETA SELECTIVA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "1.4",
+							"type": {
+								"type": 2
+							},
+							"text": "CÓDIGO UT",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "1.5",
+							"type": {
+								"type": 2
+							},
+							"text": "CÓDIGO SETOR",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "1.6",
+							"type": {
+								"type": 2
+							},
+							"text": "KM INICIAL",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			},
+			{
+				"id": "2",
+				"type": {
+					"type": 0
+				},
+				"text": "MOTORISTA",
+				"visibility": {
+					"flags": 17,
+					"fields": [
+						"2",
+						"2.1"
+					]
+				},
+				"expanded": true,
+				"color": "#000000",
+				"output": {
+					"position": [
+						531,
+						437
+					],
+					"fields": [
+						{
+							"id": "2.1",
+							"type": {
+								"type": 2
+							},
+							"text": "CÓDIGO MOTORISTA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			},
+			{
+				"id": "3",
+				"type": {
+					"type": 0
+				},
+				"text": "VISTORIA DIÁRIA",
+				"visibility": {
+					"flags": 17,
+					"fields": [
+						"3",
+						"3.1",
+						"3.2",
+						"3.3",
+						"3.4",
+						"3.5",
+						"3.6",
+						"3.7",
+						"3.8",
+						"3.9",
+						"3.10",
+						"3.11",
+						"3.12",
+						"3.13",
+						"3.14"
+					]
+				},
+				"expanded": false,
+				"color": "#aa00ff",
+				"output": {
+					"position": [
+						1304,
+						43
+					],
+					"fields": [
+						{
+							"id": "3.1",
+							"type": {
+								"type": 0
+							},
+							"text": "COMBUSTÍVEL",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.1",
+									"3.1.1",
+									"3.1.2",
+									"3.1.3",
+									"3.1.4",
+									"3.1.5"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									7
+								],
+								"fields": [
+									{
+										"id": "3.1.1",
+										"type": {
+											"type": 0
+										},
+										"text": "COMPLETO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.1.2",
+										"type": {
+											"type": 0
+										},
+										"text": "MEIO TANQUE",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.1.3",
+										"type": {
+											"type": 0
+										},
+										"text": "1/4 de TANQUE",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.1.4",
+										"type": {
+											"type": 0
+										},
+										"text": "RESERVA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.1.5",
+										"type": {
+											"type": 0
+										},
+										"text": "VAZIO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.2",
+							"type": {
+								"type": 0
+							},
+							"text": "DIFERENCIAL",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.2",
+									"3.2.1",
+									"3.2.2",
+									"3.2.3"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									206
+								],
+								"fields": [
+									{
+										"id": "3.2.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.2.2",
+										"type": {
+											"type": 0
+										},
+										"text": "FAZENDO BARULHO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.2.3",
+										"type": {
+											"type": 0
+										},
+										"text": "VAZAMENTO DE ÓLEO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.3",
+							"type": {
+								"type": 0
+							},
+							"text": "CAIXA DE CÂMBIO",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.3",
+									"3.3.1",
+									"3.3.2",
+									"3.3.3",
+									"3.3.4",
+									"3.3.5"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									344
+								],
+								"fields": [
+									{
+										"id": "3.3.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.3.2",
+										"type": {
+											"type": 0
+										},
+										"text": "FAZENDO BARULHO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.3.3",
+										"type": {
+											"type": 0
+										},
+										"text": "ESCAPANDO MARCHA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.3.4",
+										"type": {
+											"type": 0
+										},
+										"text": "NAO ENTRA MARCHA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.3.5",
+										"type": {
+											"type": 0
+										},
+										"text": "VAZAMENTO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.4",
+							"type": {
+								"type": 0
+							},
+							"text": "ÓLEO DO MOTOR",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.4",
+									"3.4.1",
+									"3.4.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									545
+								],
+								"fields": [
+									{
+										"id": "3.4.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.4.2",
+										"type": {
+											"type": 0
+										},
+										"text": "NÍVEL BAIXO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.5",
+							"type": {
+								"type": 0
+							},
+							"text": "ÓLEO HIDRÁULICO",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.5.1",
+									"3.5.2",
+									"3.5"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									653
+								],
+								"fields": [
+									{
+										"id": "3.5.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.5.2",
+										"type": {
+											"type": 0
+										},
+										"text": "NÍVEL BAIXO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.6",
+							"type": {
+								"type": 0
+							},
+							"text": "GRAXA SAPATAS",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.6",
+									"3.6.1",
+									"3.6.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									759
+								],
+								"fields": [
+									{
+										"id": "3.6.1",
+										"type": {
+											"type": 0
+										},
+										"text": "ENGRAXADO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.6.2",
+										"type": {
+											"type": 0
+										},
+										"text": "RUIM",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.7",
+							"type": {
+								"type": 0
+							},
+							"text": "CAMERA DE RÉ",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.7",
+									"3.7.1",
+									"3.7.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									866
+								],
+								"fields": [
+									{
+										"id": "3.7.1",
+										"type": {
+											"type": 0
+										},
+										"text": "FUNCIONANDO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.7.2",
+										"type": {
+											"type": 0
+										},
+										"text": "COM PROBLEMAS",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.8",
+							"type": {
+								"type": 0
+							},
+							"text": "ÁGUA DO RADIADOR",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.8",
+									"3.8.1",
+									"3.8.2",
+									"3.8.3"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									976
+								],
+								"fields": [
+									{
+										"id": "3.8.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.8.2",
+										"type": {
+											"type": 0
+										},
+										"text": "NÍVEL BAIXO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.8.3",
+										"type": {
+											"type": 0
+										},
+										"text": "VAZAMENTO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.9",
+							"type": {
+								"type": 0
+							},
+							"text": "FARÓIS E LANTERNAS",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.9",
+									"3.9.1",
+									"3.9.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1114
+								],
+								"fields": [
+									{
+										"id": "3.9.1",
+										"type": {
+											"type": 0
+										},
+										"text": "FUNCIONANDO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.9.2",
+										"type": {
+											"type": 0
+										},
+										"text": "COM PROBLEMAS",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.10",
+							"type": {
+								"type": 0
+							},
+							"text": "PRESSÃO PNEU",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.10",
+									"3.10.1",
+									"3.10.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1221
+								],
+								"fields": [
+									{
+										"id": "3.10.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.10.2",
+										"type": {
+											"type": 0
+										},
+										"text": "IRREGULAR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.11",
+							"type": {
+								"type": 0
+							},
+							"text": "MOLAS",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.11",
+									"3.11.1",
+									"3.11.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1332
+								],
+								"fields": [
+									{
+										"id": "3.11.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.11.2",
+										"type": {
+											"type": 0
+										},
+										"text": "COM PROBLEMAS",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.12",
+							"type": {
+								"type": 0
+							},
+							"text": "EXTINTOR",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.12",
+									"3.12.1",
+									"3.12.2",
+									"3.12.3",
+									"3.12.4"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1441
+								],
+								"fields": [
+									{
+										"id": "3.12.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.12.2",
+										"type": {
+											"type": 0
+										},
+										"text": "VENCIDO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.12.3",
+										"type": {
+											"type": 0
+										},
+										"text": "VAZIO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.12.4",
+										"type": {
+											"type": 0
+										},
+										"text": "SEM LACRE",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.13",
+							"type": {
+								"type": 0
+							},
+							"text": "DOCUMENTOS DO VEÍCULO",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.13",
+									"3.13.1",
+									"3.13.3",
+									"3.13.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1609
+								],
+								"fields": [
+									{
+										"id": "3.13.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.13.2",
+										"type": {
+											"type": 0
+										},
+										"text": "VENCIDO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.13.3",
+										"type": {
+											"type": 0
+										},
+										"text": "NÃO ENCONTRADO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "3.14",
+							"type": {
+								"type": 0
+							},
+							"text": "TEMPERATURA DO MOTOR",
+							"visibility": {
+								"flags": 17,
+								"fields": [
+									"3.14",
+									"3.14.1",
+									"3.14.2"
+								]
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									2197,
+									1750
+								],
+								"fields": [
+									{
+										"id": "3.14.1",
+										"type": {
+											"type": 0
+										},
+										"text": "OK",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "3.14.2",
+										"type": {
+											"type": 0
+										},
+										"text": "ESQUENTANDO",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"id": "4",
+				"type": {
+					"type": 0
+				},
+				"text": "EM TRABALHO",
+				"visibility": {
+					"flags": 17,
+					"fields": []
+				},
+				"expanded": true,
+				"color": "#304ffe",
+				"output": {
+					"position": [
+						876,
+						620
+					],
+					"fields": [
+						{
+							"id": "4.1",
+							"type": {
+								"type": 0
+							},
+							"text": "INÍCIO COLETA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.2",
+							"type": {
+								"type": 0
+							},
+							"text": "FIM COLETA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.3",
+							"type": {
+								"type": 0
+							},
+							"text": "TRÂNSITO PARA DESCARGA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.4",
+							"type": {
+								"type": 0
+							},
+							"text": "INÍCIO DESCARGA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.5",
+							"type": {
+								"type": 0
+							},
+							"text": "FIM DESCARGA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									1284,
+									618
+								],
+								"fields": [
+									{
+										"id": "4.5.1",
+										"type": {
+											"type": 2
+										},
+										"text": "NR TICKET",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.5.2",
+										"type": {
+											"type": 2
+										},
+										"text": "PESO KG",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "4.6",
+							"type": {
+								"type": 0
+							},
+							"text": "TRÂNSITO LOCAL",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.7",
+							"type": {
+								"type": 0
+							},
+							"text": "INÍCIO ABASTECIMENTO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.8",
+							"type": {
+								"type": 0
+							},
+							"text": "FIM ABASTECIMENTO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									1284,
+									740
+								],
+								"fields": [
+									{
+										"id": "4.8.1",
+										"type": {
+											"type": 2
+										},
+										"text": "QTDE LITROS",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "4.9",
+							"type": {
+								"type": 0
+							},
+							"text": "COND LOCAIS",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.10",
+							"type": {
+								"type": 0
+							},
+							"text": "INÍCIO REFEIÇÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									1284,
+									838
+								],
+								"fields": [
+									{
+										"id": "4.10.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO MOTORISTA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.10.2",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 1",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.10.3",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 2",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.10.4",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 3",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.10.5",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 4",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "4.11",
+							"type": {
+								"type": 0
+							},
+							"text": "FIM REFEIÇÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									1284,
+									1046
+								],
+								"fields": [
+									{
+										"id": "4.11.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO MOTORISTA",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.11.2",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 1",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.11.3",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 2",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.11.4",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 3",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.11.5",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO PONTO COLETOR 4",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "4.12",
+							"type": {
+								"type": 0
+							},
+							"text": "CAFÉ",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.13",
+							"type": {
+								"type": 0
+							},
+							"text": "A DISPOSIÇÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.14",
+							"type": {
+								"type": 0
+							},
+							"text": "PEDIDO DE SOS",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.15",
+							"type": {
+								"type": 0
+							},
+							"text": "INÍCIO SOS",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.16",
+							"type": {
+								"type": 0
+							},
+							"text": "FIM SOS",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.17",
+							"type": {
+								"type": 0
+							},
+							"text": "FISCALIZAÇÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									1284,
+									1250
+								],
+								"fields": [
+									{
+										"id": "4.17.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO FISCAL",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "4.17.2",
+										"type": {
+											"type": 1
+										},
+										"text": "OBSERVAÇÕES",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "4.18",
+							"type": {
+								"type": 1
+							},
+							"text": "OBSERVAÇÕES",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.19",
+							"type": {
+								"type": 0
+							},
+							"text": "TROCA MOTORISTA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.20",
+							"type": {
+								"type": 0
+							},
+							"text": "SAIR TRABALHO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "4.21",
+							"type": {
+								"type": 0
+							},
+							"text": "VERIFICA COLETA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			},
+			{
+				"id": "5",
+				"type": {
+					"type": 0
+				},
+				"text": "TROCA MOTORISTA",
+				"visibility": {
+					"flags": 17,
+					"fields": []
+				},
+				"expanded": true,
+				"color": "#008080",
+				"output": {
+					"position": [
+						530,
+						1122
+					],
+					"fields": [
+						{
+							"id": "5.1",
+							"type": {
+								"type": 1
+							},
+							"text": "SENHA MOTORISTA",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			},
+			{
+				"id": "6",
+				"type": {
+					"type": 0
+				},
+				"text": "EM MANUTENÇÃO",
+				"visibility": {
+					"flags": 17,
+					"fields": []
+				},
+				"expanded": true,
+				"color": "#43a047",
+				"output": {
+					"position": [
+						523,
+						1274
+					],
+					"fields": [
+						{
+							"id": "6.1",
+							"type": {
+								"type": 0
+							},
+							"text": "MANUTENÇÃO DENTRO DO TURNO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "6.2",
+							"type": {
+								"type": 0
+							},
+							"text": "TROCA DE PNEUS",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "6.3",
+							"type": {
+								"type": 0
+							},
+							"text": "LAVAGEM",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "6.4",
+							"type": {
+								"type": 0
+							},
+							"text": "MANUTENÇÃO FORA DO TURNO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "6.5",
+							"type": {
+								"type": 0
+							},
+							"text": "TROCA DE ÓLEO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						},
+						{
+							"id": "6.6",
+							"type": {
+								"type": 0
+							},
+							"text": "SAIR MANUTENÇÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			},
+			{
+				"id": "7",
+				"type": {
+					"type": 0
+				},
+				"text": "PONTO ELETRÔNICO",
+				"visibility": {
+					"flags": 17,
+					"fields": []
+				},
+				"expanded": true,
+				"color": "#ff6d00",
+				"output": {
+					"position": [
+						522,
+						1593
+					],
+					"fields": [
+						{
+							"id": "7.1",
+							"type": {
+								"type": 0
+							},
+							"text": "ENTRADA TRABALHO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									888,
+									1499
+								],
+								"fields": [
+									{
+										"id": "7.1.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO COLABORADOR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "7.2",
+							"type": {
+								"type": 0
+							},
+							"text": "SAÍDA INTERVALO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									888,
+									1578
+								],
+								"fields": [
+									{
+										"id": "7.2.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO COLABORADOR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "7.3",
+							"type": {
+								"type": 0
+							},
+							"text": "RETORNO INTERVALO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									888,
+									1654
+								],
+								"fields": [
+									{
+										"id": "7.3.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO COLABORADOR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "7.4",
+							"type": {
+								"type": 0
+							},
+							"text": "SAÍDA TRABALHO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									888,
+									1730
+								],
+								"fields": [
+									{
+										"id": "7.4.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO COLABORADOR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "7.5",
+							"type": {
+								"type": 0
+							},
+							"text": "SAIR PONTO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									888,
+									1806
+								],
+								"fields": [
+									{
+										"id": "7.5.1",
+										"type": {
+											"type": 2
+										},
+										"text": "CÓDIGO COLABORADOR",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"id": "8",
+				"type": {
+					"type": 0
+				},
+				"text": "FINALIZAR CDE",
+				"visibility": {
+					"flags": 17,
+					"fields": []
+				},
+				"expanded": true,
+				"color": "#795548",
+				"output": {
+					"position": [
+						357,
+						1918
+					],
+					"fields": [
+						{
+							"id": "8.1",
+							"type": {
+								"type": 0
+							},
+							"text": "SIM",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true,
+							"output": {
+								"position": [
+									720,
+									2008
+								],
+								"fields": [
+									{
+										"id": "8.1.1",
+										"type": {
+											"type": 2
+										},
+										"text": "ODÔMETRO FINAL",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									},
+									{
+										"id": "8.1.2",
+										"type": {
+											"type": 2
+										},
+										"text": "HORÍMETRO FINAL",
+										"visibility": {
+											"flags": 17,
+											"fields": []
+										},
+										"expanded": true
+									}
+								]
+							}
+						},
+						{
+							"id": "8.2",
+							"type": {
+								"type": 0
+							},
+							"text": "NÃO",
+							"visibility": {
+								"flags": 17,
+								"fields": []
+							},
+							"expanded": true
+						}
+					]
+				}
+			}
+		]
+	}
+}

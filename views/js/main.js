@@ -3,8 +3,49 @@
 import Macro from './macro/macro.js';
 import { _COLORS_, _TYPES_ } from './utils/constants.js';
 
-let vp = new Macro();
+fetch('macro.json')
+    .then(function(response) {
+        if(response.ok) {
+            response.json().then(data => { _build(data); });
+        } else {
+            console.log('Network response was not ok.');
+        }
+    }).catch(function(error) {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+    }
+);
 
+function _build (data) {
+    var macro = new Macro({'transform': data.transform, 'size': data.size});
+    var allFields = [];
+
+    _card(macro, data.root, allFields);
+    macro.redraw();
+
+    for (var counter=0; counter<allFields.length; counter++) {
+        console.log(allFields[counter].getProps('id'));
+    }
+}
+function _card (macro, props, allFields, output = null) {
+    var card = macro.newCard(props.position[0], props.position[1], output);
+    if (props.fields.length) _field(card, props.fields, allFields);
+}
+
+function _field (card, fields, allFields) {
+    var counter, field;
+
+    for (counter=0; counter<fields.length; counter++) {
+        field = card.addField(fields[counter].text, fields[counter].type.type);
+        if (fields[counter].hasOwnProperty('color')) field.setColor(fields[counter].color);
+        if (fields[counter].hasOwnProperty('output')) _card(card.getMain(), fields[counter].output, allFields, field);
+
+        allFields.push(field);
+    }
+}
+
+
+/*
+let vp = new Macro({});
 let root = vp.newCard(10, 845);
 let rootCard, field, card;
 
@@ -222,4 +263,4 @@ let endField = root.addField('FINALIZAR CDE', _TYPES_.LIST);
 //vp.connect(endField, endCard);
 
 //new Promise(vp.redraw)
-vp.redraw();
+vp.redraw();*/

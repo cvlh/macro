@@ -8,7 +8,7 @@ import Card from './cards.js';
 import Properties from './properties.js';
 
 ////////////////////////////////////////////////////////////////////////////////
-export default function Macro() {
+export default function Macro(props) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const context = this;
@@ -241,7 +241,7 @@ export default function Macro() {
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;
-        new_card.setPosition(left, top, transform, _MOV_.END);
+        new_card.setPosition(left, top, transform, _MOV_.NEW);
 
         if (connect !== null) connect.makeConnection(new_card);
 
@@ -271,7 +271,7 @@ export default function Macro() {
             name:    'Macro',
             version: 1,
             
-            position:   [ transform.left, transform.top, transform.scale ],
+            transform:  [ transform.left, transform.top, transform.scale ],
             size:       [ size.width, size.height ],
             visibility: [ ],
 
@@ -405,7 +405,8 @@ export default function Macro() {
                             context.connect(currentDrag, targetCtx);
                             use = true;
 
-                            console.log(context.serialize());
+                            var x = context.serialize();
+                            console.log(JSON.stringify(x));
                         }
                     }
                 } 
@@ -426,6 +427,7 @@ export default function Macro() {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
+
         const fragment = document.createDocumentFragment();
 
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
@@ -440,6 +442,11 @@ export default function Macro() {
         
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
+
+        if (props.hasOwnProperty('size')) {
+            size.width = props.size[0];
+            size.height = props.size[1];
+        }
 
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
@@ -484,7 +491,12 @@ export default function Macro() {
 
         properties = new Properties(context);
         mainProperties.appendChild(properties.getFragment());
-        //context.setPosition(240, 0, transform, _MOV_.END);
+
+        if (props.hasOwnProperty('transform')) {
+            transform.scale = props.transform[2];
+            context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
+        }
+        
 
         const builderRect = mainBuilder.getBoundingClientRect();
   
@@ -510,5 +522,5 @@ export default function Macro() {
             builderCenterDiv.style.top = builderTopCenter + 'px';
             builderCenterDiv.style.transform = 'translate(-50%, -50%)';
             builderCenterDiv.style.pointerEvents = 'none';
-    })();
+    })(props);
 }

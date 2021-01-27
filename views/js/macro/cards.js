@@ -54,7 +54,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         //input.classList.add('linked');
         input['_CONNECTION_'] = output;
     };
-    this.clearConnection =  function() {
+    this.clearConnection = function() {
         //input.classList.remove('linked');
         input['_CONNECTION_'] = null; 
 
@@ -75,6 +75,10 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
     };
     this.setPosition = function(left, top, transform, mov) {
         switch (mov) {
+            case _MOV_.NEW:
+                card.style.transform = 'translate(' +left+ 'px, ' +top+ 'px)';
+                return;
+                
             case _MOV_.START:
                 const rect = card.getBoundingClientRect();
 
@@ -151,7 +155,9 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         let counterFields;
 
         let response = { 
-            ctx: context,
+            position: [ position.left, position.top ],
+
+            //ctx: context,
             fields: []
         };
         

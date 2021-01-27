@@ -265,13 +265,34 @@ export default function Field(ctx, append) {
     this.serialize = function (fragment, properties) {
         let counterOffset, 
             fieldOffset, fieldDiv, fieldPath, 
-            hasChild, isExpand, deepSize, text/*, lightColor*/;
+            hasChild, isExpand, deepSize, text, 
+            counterVisibility, visibilityFields/*, lightColor*/;
 
         //let response = { ctx: context };
-        
+        visibilityFields = [];
+        for (counterVisibility=0; counterVisibility<props.visibility.fields.length; counterVisibility++) {
+            visibilityFields.push(props.visibility.fields[counterVisibility].getProps('id'));
+        }
+        let response = { 
+            id: props.id,
+            type: props.type,
+            text: description.value,
+
+            visibility: {
+                flags: props.visibility.flags,
+                fields: visibilityFields
+            },
+
+            expanded: props.expanded
+        };
+
+        if (rootField) {
+            response.color = props.color;
+            properties.color = props.color;
+        }
+
         treeviewDeep = properties.tab.length;
 
-        if (rootField) properties.color = props.color;
         //lightColor = properties.color + '40';
 
         hasChild = context.hasConnection();
@@ -327,7 +348,7 @@ export default function Field(ctx, append) {
         //if (rootField) fieldDiv.style.color = properties.color;
 
         if (rootField) treeviewRow.style.color = properties.color;
-        if ( hasChild ||  rootField) fieldDiv.style.fontWeight = '600';
+        if (hasChild || rootField) fieldDiv.style.fontWeight = '600';
         /*if ( hasChild ||  rootField) {
             fieldDiv.style.fontWeight = '600';
             treeviewRow.style.color = properties.color;
@@ -344,11 +365,11 @@ export default function Field(ctx, append) {
 
         addElement(treeviewRow, 'div');
 
-        if (hasChild) output['_CONNECTION_'].serialize(fragment, properties);
+        if (hasChild) response['output'] = output['_CONNECTION_'].serialize(fragment, properties);
 
         if (!isExpand) properties.expand = true;
 
-        return context;
+        return response;
     };
     this.setExpand = function(status) {
         const hasChild = context.hasConnection();

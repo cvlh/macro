@@ -9,7 +9,8 @@ export const _DRAG_ = {
 export const _MOV_ = {
     START: 0,
     MOV:   1,
-    END:   2
+    END:   2,
+    NEW:   3
 };
 
 export const _ZOOM_ = {

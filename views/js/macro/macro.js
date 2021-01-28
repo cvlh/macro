@@ -232,32 +232,6 @@ export default function Macro(props) {
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
     }
     this.getDragType = function() { return _DRAG_.AREA; };
-
-    // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.newCard = function(left, top, connect = null) {
-        const isRoot = (cardsArray.length ? false : true);
-
-        let new_card = new Card(context, mainAppWrapper, isRoot);
-        cardsArray.push(new_card); 
-
-        if (isRoot) rootCard = new_card;
-        new_card.setPosition(left, top, transform, _MOV_.NEW);
-
-        if (connect !== null) connect.makeConnection(new_card);
-
-        return new_card;
-    };
-    this.newSVGPath = function() {
-        let new_path = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        new_path.setAttribute('class', 'main-app-svg-path');
-
-        return new_path;
-    };
-    this.connect = function(fromOutput, toInput) {
-        const viewportInput = toInput.getInputBounding();
-        fromOutput.setPosition(viewportInput.left, viewportInput.top, transform, _MOV_.END);
-        fromOutput.makeConnection(toInput);
-    };
     this.serialize = function() {
 
         while (mainTreeViewItems.hasChildNodes()) {
@@ -290,6 +264,35 @@ export default function Macro(props) {
 
         return response;
     };
+    this.initVisibility = function(fields) { rootCard.initVisibility(fields); };
+
+    // PUBLIC  /////////////////////////////////////////////////////////////////
+    this.createCard = function(position, connect = null) {
+        const isRoot = (cardsArray.length ? false : true),
+              left = position[0], top = position[1];
+
+        let new_card = new Card(context, mainAppWrapper, isRoot);
+        cardsArray.push(new_card); 
+
+        if (isRoot) rootCard = new_card;
+        new_card.setPosition(left, top, transform, _MOV_.NEW);
+
+        if (connect !== null) connect.makeConnection(new_card);
+
+        return new_card;
+    };
+    this.newSVGPath = function() {
+        let new_path = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+        new_path.setAttribute('class', 'main-app-svg-path');
+
+        return new_path;
+    };
+    this.connect = function(fromOutput, toInput) {
+        const viewportInput = toInput.getInputBounding();
+        fromOutput.setPosition(viewportInput.left, viewportInput.top, transform, _MOV_.END);
+        fromOutput.makeConnection(toInput);
+    };
+
     this.redraw = function(cardInput = null) {
         if (cardInput === null) {
             const size = cardsArray.length;

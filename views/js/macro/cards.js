@@ -30,7 +30,7 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
         parent.dragStart(evnt, context)
     },
     _add = function() {
-        const field = context.addField('');
+        const field = context.addField({});
         parent.redraw(input);
 
         field.setFocus();
@@ -76,7 +76,9 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
     this.setPosition = function(left, top, transform, mov) {
         switch (mov) {
             case _MOV_.NEW:
-                card.style.transform = 'translate(' +left+ 'px, ' +top+ 'px)';
+                position.left = left;
+                position.top  = top;
+                card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
                 return;
                 
             case _MOV_.START:
@@ -156,20 +158,23 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
         let response = { 
             position: [ position.left, position.top ],
-
-            //ctx: context,
             fields: []
         };
         
         for (counterFields=0; counterFields<sizeFields; counterFields++) {
             properties.tab.push(counterFields+1);
-
             response['fields'].push(fieldsArray[counterFields].serialize(fragment, properties));
-
             properties.tab.pop();
         }
 
         return response;
+    };
+    this.initVisibility = function(fields) {
+        const sizeFields = fieldsArray.length;
+        
+        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+            fieldsArray[counterFields].initVisibility(fields);
+        }
     };
     this.setExpand = function(status) {
         const sizeFields = fieldsArray.length;
@@ -207,17 +212,10 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.addField = function(text = null, type = null) {
-        let new_field = new Field(this, items);
+    this.addField = function(properties) {
+        let new_field = new Field(this, items, properties);
         fieldsArray.push(new_field); 
 
-        if (text !== null) new_field.setText(text);
-        if (type === null) type = _TYPES_.LIST;
-
-        new_field.setType(type);
-        new_field.setIndex(fieldsArray.length);
-        
-        //items.appendChild(new_field.getFragment());
         return new_field;
     };
     this.isRoot = function() { return rootCard; };

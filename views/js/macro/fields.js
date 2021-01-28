@@ -4,7 +4,7 @@ import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_ } from '../
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
-export default function Field(ctx, append) {
+export default function Field(ctx, append, properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const main = ctx.getMain(), parent = ctx, context = this, 
@@ -21,7 +21,7 @@ export default function Field(ctx, append) {
             //prefix: { id: null },
             //info: '',
             //help: '',
-
+            text: '',
             type: { type: _TYPES_.LIST },
             visibility: {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
@@ -266,31 +266,18 @@ export default function Field(ctx, append) {
         let counterOffset, 
             fieldOffset, fieldDiv, fieldPath, 
             hasChild, isExpand, deepSize, text, 
-            counterVisibility, visibilityFields/*, lightColor*/;
+            counterVisibility, visibilityFields,
+            response = {  };
 
-        //let response = { ctx: context };
-        visibilityFields = [];
-        for (counterVisibility=0; counterVisibility<props.visibility.fields.length; counterVisibility++) {
-            visibilityFields.push(props.visibility.fields[counterVisibility].getProps('id'));
+        visibilityFields = { 'visibility' : { 'fields': [] }};
+        for (counterVisibility=0; counterVisibility<props['visibility']['fields'].length; counterVisibility++) {
+            //if (typeof props['visibility']['fields'][counterVisibility] === Field) {
+                visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
+            //}
         }
-        let response = { 
-            id: props.id,
-            type: props.type,
-            text: description.value,
+        response['properties'] = { ...props, ...visibilityFields };
 
-            visibility: {
-                flags: props.visibility.flags,
-                fields: visibilityFields
-            },
-
-            expanded: props.expanded
-        };
-
-        if (rootField) {
-            response.color = props.color;
-            properties.color = props.color;
-        }
-
+        if (rootField) properties.color = props.color;
         treeviewDeep = properties.tab.length;
 
         //lightColor = properties.color + '40';
@@ -371,6 +358,17 @@ export default function Field(ctx, append) {
 
         return response;
     };
+    this.initVisibility = function(fields) {
+        const sizeVisibility = props['visibility']['fields'].length;
+
+        for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
+            if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
+                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
+            }
+        }
+        _updateVisibilityCounter();
+        if (context.hasConnection()) output['_CONNECTION_'].initVisibility(fields);
+    }
     this.setExpand = function(status) {
         const hasChild = context.hasConnection();
 
@@ -415,14 +413,13 @@ export default function Field(ctx, append) {
     this.setSelected = function(selected) { 
         if (selected) {
             item.classList.add('selected');
+            output['_PATH_'].style.strokeWidth = '7px';
         } else {
             item.classList.remove('selected');
+            output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
-    this.setText = function(text) { 
-        //props['prefix']['text'] = text;
-        description.value = text; 
-    };
+
     this.setFocus = function() { description.focus(); };
     this.toggleExpand = function(icon) { 
         props.expanded = !props.expanded;
@@ -438,7 +435,7 @@ export default function Field(ctx, append) {
         }
     };
 
-    this.setType = function(fieldType) { 
+    this.setType = function(fieldType = props.type.type) { 
         const numFieldType = parseInt(fieldType);
 
         if (numFieldType !== _TYPES_.LIST) {
@@ -460,7 +457,7 @@ export default function Field(ctx, append) {
 
         return props['type'];
     };
-    this.setIndex = function(idx) { index.textContent = idx; };
+
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
@@ -544,6 +541,11 @@ export default function Field(ctx, append) {
 
         append.appendChild(fragment);
 
-        if (rootField) context.setColor(_COLORS_.BLACK);
+        if (properties !== null) props = {...props, ...properties};
+        description.value = props.text;
+        index.textContent = props.id;
+        context.setType();
+
+        if (rootField) context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
     })();
 }

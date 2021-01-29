@@ -1,5 +1,23 @@
 'use strict';
 
+import { _ORDER_ } from '../utils/constants.js';
+
+Array.prototype.swap = function (position, order) {
+    var aux = this[position];
+    switch (order) {
+        case _ORDER_.UP:
+            this[position] = this[position-1];
+            this[position-1] = aux;
+            break;
+
+        case _ORDER_.DOWN:
+            this[position] = this[position+1];
+            this[position+1] = aux;
+            break;
+    }
+    return this;
+}
+
 export function addElement (parent, type, className = null, content = null) {
     let new_element;
 

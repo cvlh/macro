@@ -71,3 +71,10 @@ export const _ICON_CHAR_ = {
     ZOOM_OUT:  'o',
     ZOOM:      'z'
 };
+
+export const _ORDER_ = {
+    NONE : 0,
+    
+    UP   : 1,
+    DOWN : 2
+};

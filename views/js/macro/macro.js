@@ -293,16 +293,14 @@ export default function Macro(props) {
         fromOutput.makeConnection(toInput);
     };
 
-    this.redraw = function(cardInput = null) {
-        if (cardInput === null) {
+    this.redraw = function(element = null) {
+        if (element === null) {
             const size = cardsArray.length;
-
             for (let counter=0; counter<size; counter++) {
                 cardsArray[counter].redraw(transform);
             }
         } else {
-            const viewport = cardInput.getBoundingClientRect();
-            cardInput['_CONNECTION_'].setPosition(viewport.left, viewport.top, transform, _MOV_.END);
+            element.redraw(transform);
         }
 
         context.serialize();

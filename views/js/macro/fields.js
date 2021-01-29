@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_, _ORDER_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -23,6 +23,7 @@ export default function Field(ctx, append, properties) {
             //help: '',
             text: '',
             type: { type: _TYPES_.LIST },
+            order: 0,
             visibility: {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
                 fields: []
@@ -410,10 +411,25 @@ export default function Field(ctx, append, properties) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
+    this.setOrder = function(order) {
+        props.order = order;
+        index.textContent = order;
+    };
+    this.swap = function() {
+        let sibling = item.previousElementSibling,
+        parentNode = item.parentNode;
+
+        if (sibling !== null) { 
+            parentNode.insertBefore(item, sibling);
+
+            parent.swap(props.order-1, _ORDER_.UP);
+            main.redraw(parent);
+        }
+    }
     this.setSelected = function(selected) { 
         if (selected) {
             item.classList.add('selected');
-            output['_PATH_'].style.strokeWidth = '7px';
+            output['_PATH_'].style.strokeWidth = '6px';
         } else {
             item.classList.remove('selected');
             output['_PATH_'].style.removeProperty('stroke-width');
@@ -514,15 +530,18 @@ export default function Field(ctx, append, properties) {
     (function() {
         const fragment = document.createDocumentFragment();
 
+        if (properties !== null) props = {...props, ...properties};
+
         item = addElement(fragment, 'div', 'app-cards-content-item');
         //item.setAttribute('draggable', true);
 
-        index = addElement(item, 'div', 'app-cards-content-item-index');
+        index = addElement(item, 'div', 'app-cards-content-item-index', props.order);
 
         //description = addElement(item, 'input', 'app-cards-content-item-description');
         description = addElement(item, 'input');
         description.setAttribute('type', 'text');
         description.setAttribute('maxlength', '64');
+        description.setAttribute('value', props.text);
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });
 
@@ -540,10 +559,9 @@ export default function Field(ctx, append, properties) {
         //output.addEventListener('mousedown', _drag, { capture: false });
 
         append.appendChild(fragment);
-
-        if (properties !== null) props = {...props, ...properties};
-        description.value = props.text;
-        index.textContent = props.id;
+        
+        //description.value = props.text;
+        //index.textContent = props.id;
         context.setType();
 
         if (rootField) context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));

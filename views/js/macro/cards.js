@@ -6,10 +6,11 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
+export default function Card(ctx, append, root = false) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this, 
+    const parent = ctx, 
+          context = this, 
           rootCard = root;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
@@ -31,17 +32,23 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
     },
     _add = function() {
         const field = context.addField({});
-        parent.redraw(input);
 
+        parent.redraw(context);
         field.setFocus();
     },
     _remove = function (evnt) {
         evnt.stopPropagation();
+    },
+    _order = function() {
+        const sizeFields = fieldsArray.length;
+        
+        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+            fieldsArray[counterFields].setOrder(counterFields+1);
+        }
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
-    //this.getFragment = function() { return fragment; };
     this.hasConnection = function() { 
         if (rootCard) return false;
         
@@ -208,7 +215,11 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
             //if (rootCard) fieldsArray[counter].setColor(null);
             fieldsArray[counter].setVisibilityMode();
         }
-    }
+    };
+    this.swap = function(position, order) { 
+        fieldsArray.swap(position, order); 
+        _order();
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
@@ -220,7 +231,6 @@ export default function Card(ctx, append, /*left = 0, top = 0, */root = false) {
     };
     this.isRoot = function() { return rootCard; };
     this.removeField = function() { };
-    //this.getPosition = function() { return { left: position.left, top: position.top }; };
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!rootCard) {

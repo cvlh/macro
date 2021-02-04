@@ -23,7 +23,7 @@ function _build (data) {
 
     create_card(macro, data['root'], allFields);
     macro.initVisibility(allFields);  
-    macro.redraw();
+    
 }
 function create_card (macro, props, allFields, output = null) {
     let card = macro.createCard(props['position'], output);

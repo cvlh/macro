@@ -72,7 +72,8 @@ export default function Field(ctx, append, properties) {
     },
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
-        const OFFSET = 25;
+        //const OFFSET = 25;
+        const OFFSET = ((endLeft - position.left) / 2) - 17/2;
 
         const startX = position.left+17,
               startY = position.top+11;
@@ -82,7 +83,7 @@ export default function Field(ctx, append, properties) {
         let endY = endTop;
         if (mov === _MOV_.END) endY += 14;
 
-        output['_PATH_'].setAttribute('d', 'M' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
+        output['_PATH_'].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
         
         /*if (startX === (endX - OFFSET) || startY === endY) {
             console.log(startX +' '+ endX);

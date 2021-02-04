@@ -164,10 +164,15 @@ body {
         }
     .main-app-svg {
         z-index: 0;
+        display: block;
         pointer-events: none;
         /*border: 1px solid var(--main-border-color-high);*/
-        display: block;
     }
+        .main-app-svg path { pointer-events: stroke; }
+        /*.main-app-svg path:hover {
+            cursor: col-resize;
+            stroke-width: 6px;
+        }*/
         .main-app-svg-path {
             stroke: var(--main-border-color-high);
             stroke-width: 3px;
@@ -180,7 +185,7 @@ body {
         }
         .main-app-svg-path.linked { 
             stroke-dasharray: none;
-            stroke-width: 2px;
+            stroke-width: 3px;
         }
         .main-app-svg-path.connected { 
             stroke-dasharray: none;

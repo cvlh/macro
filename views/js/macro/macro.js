@@ -264,7 +264,10 @@ export default function Macro(props) {
 
         return response;
     };
-    this.initVisibility = function(fields) { rootCard.initVisibility(fields); };
+    this.initVisibility = function(fields) { 
+        rootCard.initVisibility(fields);
+        context.redraw();
+     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.createCard = function(position, connect = null) {
@@ -482,8 +485,38 @@ export default function Macro(props) {
 
             if (evnt.target.classList.contains('main-app-wrapper')) {
                 context.dragStart(evnt, context)
+            } else if (evnt.target.classList.contains('main-app-svg-path')) {
+                console.log(evnt);
             }
-        }, { capture: true });
+            //}
+        }, { capture: false });
+
+        mainAppSVG.addEventListener('pointermove', function (evnt) {
+            if (evnt.target.classList.contains('main-app-svg-path')) {
+                const element = evnt.target, 
+                      d = element.getAttribute('d');
+
+                let coords = d.split(' ');
+                
+                const p0x = (parseFloat(coords[6]) - 5.0), p0y = parseFloat(coords[2]);
+                const p1x = (parseFloat(coords[6]) + 5.0), p1y = parseFloat(coords[7]);
+
+                //console.log(evnt.layerX +' '+ evnt.layerY );
+
+                if (evnt.offsetX >= p0x && evnt.offsetX <= p1x) {
+                    //console.log('ENTROU X M:' +evnt.offsetX+ ' P0:' +p0x+ ' P1:' +p1x);
+
+                    if (evnt.offsetY >= p0y && evnt.offsetY <= p1y) {
+                        //console.log('ENTROU Y');
+                        element.style.cursor = 'col-resize';
+                        return;
+                    }
+                } 
+
+                element.style.removeProperty('cursor');
+                return;
+            }
+        });
 
         //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);

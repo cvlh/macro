@@ -226,7 +226,8 @@ export default function Card(ctx, append, root = false) {
     this.addField = function(properties) {
         let new_field = new Field(this, items, properties);
         fieldsArray.push(new_field); 
-
+        _order();
+        
         return new_field;
     };
     this.isRoot = function() { return rootCard; };

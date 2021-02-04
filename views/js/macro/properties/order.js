@@ -51,8 +51,8 @@ export default function Order (ctx) {
         up.setAttribute('title', _I18N_.field_position_up);
         up.style.gridColumn = '8 / span 4';
         up.addEventListener('click', function() {
-            const object = parent.getMain().getSelectedObject();
-            object.swap();
+            //const object = parent.getMain().getSelectedObject();
+            parent.getMain().getSelectedObject().swap();
         }, { capture: false });
 
         index = addElement(row, 'div', 'main-app-properties-label');

@@ -3,7 +3,8 @@
 export const _DRAG_ = {
     HEADER : 0,
     OUTPUT : 1,
-    AREA   : 2
+    AREA   : 2,
+    LINE   : 3
 };
 
 export const _MOV_ = {

@@ -168,7 +168,10 @@ body {
         pointer-events: none;
         /*border: 1px solid var(--main-border-color-high);*/
     }
-        .main-app-svg path { pointer-events: stroke; }
+        .main-app-svg line.moveable { 
+            pointer-events: stroke; 
+            cursor: col-resize;
+        }
         /*.main-app-svg path:hover {
             cursor: col-resize;
             stroke-width: 6px;
@@ -178,7 +181,7 @@ body {
             stroke-width: 3px;
             fill: none;
             stroke-linejoin: round;
-            stroke-linecap: butt;
+            stroke-linecap: round;
             stroke-dasharray: 0.2%; 
 
             transition: .15s stroke-width linear;

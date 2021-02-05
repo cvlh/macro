@@ -284,11 +284,24 @@ export default function Macro(props) {
 
         return new_card;
     };
-    this.newSVGPath = function() {
-        let new_path = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        new_path.setAttribute('class', 'main-app-svg-path');
+    this.newSVG = function(field) {
+        let svg_g = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+        svg_g.setAttribute('class', 'main-app-svg-path');
 
-        return new_path;
+        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        
+        const moveableLine = svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        moveableLine.setAttribute('class', 'moveable');
+        moveableLine['_FIELD_'] = field;
+
+        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        
+        //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+        //let new_path = new_group.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+        //new_path.setAttribute('class', 'main-app-svg-path');
+
+        //return new_path;
+        return svg_g;
     };
     this.connect = function(fromOutput, toInput) {
         const viewportInput = toInput.getInputBounding();
@@ -362,11 +375,14 @@ export default function Macro(props) {
 
             case _DRAG_.OUTPUT:
                 break;
+
+            case _DRAG_.LINE:
+                break;
         }
 
         currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.START);
 
-        document.addEventListener('mousemove', context.drag, { capture: true });
+        document.addEventListener('mousemove', context.drag,    { capture: true });
         document.addEventListener('mouseup',   context.dragEnd, { capture: true });
     };
     this.drag = function(evnt) {
@@ -421,6 +437,9 @@ export default function Macro(props) {
                 
                 break;
 
+            case _DRAG_.LINE:
+                currentDrag.setDragType(_DRAG_.OUTPUT);
+                break;
         }
 
         document.removeEventListener('mousemove', context.drag, { capture: true });
@@ -484,39 +503,15 @@ export default function Macro(props) {
             }
 
             if (evnt.target.classList.contains('main-app-wrapper')) {
-                context.dragStart(evnt, context)
-            } else if (evnt.target.classList.contains('main-app-svg-path')) {
-                console.log(evnt);
+                context.dragStart(evnt, context);
+            } else if (evnt.target.classList.contains('moveable')) {
+                const field = evnt.target['_FIELD_'];
+                field.setDragType(_DRAG_.LINE);
+
+                context.dragStart(evnt, field);
             }
             //}
         }, { capture: false });
-
-        mainAppSVG.addEventListener('pointermove', function (evnt) {
-            if (evnt.target.classList.contains('main-app-svg-path')) {
-                const element = evnt.target, 
-                      d = element.getAttribute('d');
-
-                let coords = d.split(' ');
-                
-                const p0x = (parseFloat(coords[6]) - 5.0), p0y = parseFloat(coords[2]);
-                const p1x = (parseFloat(coords[6]) + 5.0), p1y = parseFloat(coords[7]);
-
-                //console.log(evnt.layerX +' '+ evnt.layerY );
-
-                if (evnt.offsetX >= p0x && evnt.offsetX <= p1x) {
-                    //console.log('ENTROU X M:' +evnt.offsetX+ ' P0:' +p0x+ ' P1:' +p1x);
-
-                    if (evnt.offsetY >= p0y && evnt.offsetY <= p1y) {
-                        //console.log('ENTROU Y');
-                        element.style.cursor = 'col-resize';
-                        return;
-                    }
-                } 
-
-                element.style.removeProperty('cursor');
-                return;
-            }
-        });
 
         //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);

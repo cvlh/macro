@@ -12,15 +12,13 @@ export default function Field(ctx, append, properties) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let item, index, description, output, visibility,
+        dragType, lineOffset,
         treeviewRow = null, treeviewDeep,
         isSelectedForvisibility = false,
         position = { top: 0, left: 0 },
 
         props = {
             id: null,
-            //prefix: { id: null },
-            //info: '',
-            //help: '',
             text: '',
             type: { type: _TYPES_.LIST },
             order: 0,
@@ -68,22 +66,61 @@ export default function Field(ctx, append, properties) {
         if (main.getVisibilityMode()) return;
 
         evnt.preventDefault();
+
+        context.setDragType(_DRAG_.OUTPUT);
         main.dragStart(evnt, context); 
     },
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
         //const OFFSET = 25;
-        const OFFSET = ((endLeft - position.left) / 2) - 17/2;
+        const lines = output['_PATH_'].children;
+        const startX = position.left + 17;
 
-        const startX = position.left+17,
-              startY = position.top+11;
+        if (dragType !== _DRAG_.LINE) {
+            //const OFFSET = ((endLeft - position.left) / 2) - 17/2;
+            
+            //if (dragType === _DRAG_.OUTPUT) {
+                lineOffset = ((endLeft - position.left) / 2) - 17/2;
+            //}
 
-        const endX = (endLeft) - OFFSET;
+            //const startX = position.left+17,
+            const startY = position.top+11;
 
-        let endY = endTop;
-        if (mov === _MOV_.END) endY += 14;
+            const endX = endLeft;
 
-        output['_PATH_'].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
+            let endY = endTop;
+            if (mov === _MOV_.END) endY += 14;
+
+            lines[0].setAttribute('x1', startX);
+            lines[0].setAttribute('y1', startY);
+            lines[0].setAttribute('x2', startX+lineOffset); 
+            lines[0].setAttribute('y2', startY);
+
+            lines[1].setAttribute('x1', startX+lineOffset);
+            lines[1].setAttribute('y1', startY);
+            lines[1].setAttribute('x2', startX+lineOffset);
+            lines[1].setAttribute('y2', endY);
+
+            lines[2].setAttribute('x1', startX+lineOffset);
+            lines[2].setAttribute('y1', endY);
+            lines[2].setAttribute('x2', endX);
+            lines[2].setAttribute('y2', endY);
+
+        } else  {
+            if (endLeft - startX > 10) {
+                lines[0].setAttribute('x2', endLeft); 
+
+                lines[1].setAttribute('x1', endLeft);
+                lines[1].setAttribute('x2', endLeft);
+    
+                lines[2].setAttribute('x1', endLeft);
+            }
+
+
+            console.log(startX +' '+ endLeft +' '+ (startX-endLeft));
+        }
+        //const endX = (endLeft) - OFFSET;
+        //output['_PATH_'].firstChild.setAttribute('d', 'M ' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
         
         /*if (startX === (endX - OFFSET) || startY === endY) {
             console.log(startX +' '+ endX);
@@ -177,7 +214,8 @@ export default function Field(ctx, append, properties) {
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
-    this.getDragType = function() { return _DRAG_.OUTPUT };
+    this.setDragType = function(type) { dragType = type; };
+    this.getDragType = function() { return dragType; };
     this.hasConnection = function() { 
         if (output['_CONNECTION_'] !== null) {
             return true;
@@ -188,6 +226,7 @@ export default function Field(ctx, append, properties) {
         output.classList.remove('connected');
         //output.classList.add('linked');
 
+        //output['_PATH_'].setAttribute('class', 'linked');
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
         output['_CONNECTION_'] = card;
 
@@ -202,9 +241,14 @@ export default function Field(ctx, append, properties) {
     this.clearConnection = function() {
         output.classList.remove('linked', 'error');
 
-        output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-        output['_PATH_'].setAttribute('d', '');
+        //output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        //output['_PATH_'].setAttribute('d', '');
+        //output['_PATH_'].removeAttribute('class');
 
+        output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        output['_PATH_'].removeAttribute('style');
+        //output['_PATH_'].firstChild.removeAttribute('d');
+        
         if (context.hasConnection()) {
             output['_CONNECTION_'].clearConnection();
             output['_CONNECTION_'] = null;
@@ -218,13 +262,15 @@ export default function Field(ctx, append, properties) {
         }
     };
     this.setPosition = function(left, top, transform, mov) {
-        if (mov === _MOV_.START) {
-            if (context.hasConnection()) {
-                context.clearConnection();
-                main.serialize();
+        if (dragType === _DRAG_.OUTPUT) {
+            if (mov === _MOV_.START) {
+                if (context.hasConnection()) {
+                    context.clearConnection();
+                    main.serialize();
+                }
+                const color = context.getColor();
+                _color(true, color);
             }
-            const color = context.getColor();
-            _color(true, color);
         }
 
         if (mov === _MOV_.START || mov === _MOV_.END) {
@@ -232,7 +278,7 @@ export default function Field(ctx, append, properties) {
             position.left = (rect.left - transform.left) / transform.scale;
             position.top = (rect.top - transform.top) / transform.scale;
         }
-
+        
         const endLeft = (left - transform.left) / transform.scale,
               endTop = (top - transform.top) / transform.scale;
 
@@ -479,13 +525,16 @@ export default function Field(ctx, append, properties) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
+                //output['_PATH_'].setAttribute('class', 'error');
                 //target.style.cursor = 'no-drop'; //'not-allowed';
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
+                //output['_PATH_'].setAttribute('class', 'connected');
                 //target.style.removeProperty('cursor');
             }
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+            //output['_PATH_'].removeAttribute('class');
             //target.style.removeProperty('cursor');
         }
     };
@@ -555,7 +604,7 @@ export default function Field(ctx, append, properties) {
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
-        output['_PATH_'] = main.newSVGPath();
+        output['_PATH_'] = main.newSVG(context);
         output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });
 

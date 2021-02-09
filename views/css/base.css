@@ -184,7 +184,8 @@ body {
             stroke-linecap: round;
             stroke-dasharray: 0.2%; 
 
-            transition: .15s stroke-width linear;
+            transition: .15s stroke-width linear,
+                        .15s stroke linear;
         }
         .main-app-svg-path.linked { 
             stroke-dasharray: none;

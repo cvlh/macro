@@ -12,7 +12,7 @@ export default function Field(ctx, append, properties) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let item, index, description, output, visibility,
-        dragType, lineOffset,
+        dragType,
         treeviewRow = null, treeviewDeep,
         isSelectedForvisibility = false,
         position = { top: 0, left: 0 },
@@ -26,7 +26,6 @@ export default function Field(ctx, append, properties) {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
                 fields: []
             },
-
             expanded: true
         },
 
@@ -72,52 +71,53 @@ export default function Field(ctx, append, properties) {
     },
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
-        //const OFFSET = 25;
         const lines = output['_PATH_'].children;
-        const startX = position.left + 17;
 
         if (dragType !== _DRAG_.LINE) {
-            //const OFFSET = ((endLeft - position.left) / 2) - 17/2;
-            
-            //if (dragType === _DRAG_.OUTPUT) {
-                lineOffset = ((endLeft - position.left) / 2) - 17/2;
-            //}
 
-            //const startX = position.left+17,
-            const startY = position.top+11;
+            let offsetLine;
+            if (props.line === undefined) {
+                offsetLine = ((endLeft - position.left) / 2) - 17/2;
+            } else {
+                offsetLine = props.line;
+            }
 
-            const endX = endLeft;
+            const startX = position.left+17,
+                  startY = position.top+11;
 
             let endY = endTop;
-            if (mov === _MOV_.END) endY += 14;
+            if (mov === _MOV_.END) endY += 15;
 
             lines[0].setAttribute('x1', startX);
             lines[0].setAttribute('y1', startY);
-            lines[0].setAttribute('x2', startX+lineOffset); 
+            lines[0].setAttribute('x2', startX + offsetLine); 
             lines[0].setAttribute('y2', startY);
 
-            lines[1].setAttribute('x1', startX+lineOffset);
+            lines[1].setAttribute('x1', startX + offsetLine);
             lines[1].setAttribute('y1', startY);
-            lines[1].setAttribute('x2', startX+lineOffset);
+            lines[1].setAttribute('x2', startX + offsetLine);
             lines[1].setAttribute('y2', endY);
 
-            lines[2].setAttribute('x1', startX+lineOffset);
+            lines[2].setAttribute('x1', startX + offsetLine);
             lines[2].setAttribute('y1', endY);
-            lines[2].setAttribute('x2', endX);
+            lines[2].setAttribute('x2', endLeft);
             lines[2].setAttribute('y2', endY);
 
         } else  {
-            if (endLeft - startX > 10) {
+            const maxLeft  = parseFloat(lines[0].getAttribute('x1')) + 10,
+                  maxRight = parseFloat(lines[2].getAttribute('x2')) - 10;
+
+            if ((endLeft > maxLeft && endLeft < maxRight) || maxLeft > maxRight){
+
                 lines[0].setAttribute('x2', endLeft); 
 
                 lines[1].setAttribute('x1', endLeft);
                 lines[1].setAttribute('x2', endLeft);
     
                 lines[2].setAttribute('x1', endLeft);
+
+                props.line = endLeft - maxLeft + 10;
             }
-
-
-            console.log(startX +' '+ endLeft +' '+ (startX-endLeft));
         }
         //const endX = (endLeft) - OFFSET;
         //output['_PATH_'].firstChild.setAttribute('d', 'M ' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
@@ -239,16 +239,26 @@ export default function Field(ctx, append, properties) {
         context.setColor(color);
     };
     this.clearConnection = function() {
+        const lines = output['_PATH_'].children;
+
         output.classList.remove('linked', 'error');
+        output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        output['_PATH_'].removeAttribute('style');
 
         //output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         //output['_PATH_'].setAttribute('d', '');
         //output['_PATH_'].removeAttribute('class');
-
-        output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-        output['_PATH_'].removeAttribute('style');
         //output['_PATH_'].firstChild.removeAttribute('d');
-        
+
+        for (let counter=0; counter<lines.length; counter++) {
+            lines[counter].removeAttribute('x1');
+            lines[counter].removeAttribute('y1');
+            lines[counter].removeAttribute('x2'); 
+            lines[counter].removeAttribute('y2');
+        }
+
+        delete props.line;
+
         if (context.hasConnection()) {
             output['_CONNECTION_'].clearConnection();
             output['_CONNECTION_'] = null;
@@ -476,7 +486,7 @@ export default function Field(ctx, append, properties) {
     this.setSelected = function(selected) { 
         if (selected) {
             item.classList.add('selected');
-            output['_PATH_'].style.strokeWidth = '6px';
+            output['_PATH_'].style.strokeWidth = '7px';
         } else {
             item.classList.remove('selected');
             output['_PATH_'].style.removeProperty('stroke-width');

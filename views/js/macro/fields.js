@@ -375,7 +375,7 @@ export default function Field(ctx, append, properties) {
             if (hasChild) {
                 fieldOffset.classList.add('expand');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.ARROW);
-                if (properties.expand) fieldOffset.style.transform = 'rotate(90deg)';
+                if (properties.expand || props.expanded) fieldOffset.style.transform = 'rotate(90deg)';
             } else {
                 fieldOffset.classList.add('none');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.EMPTY);

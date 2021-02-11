@@ -6,7 +6,7 @@ import { _COLORS_, _TYPES_ } from './utils/constants.js';
 fetch('macro.json')
     .then(function(response) {
         if(response.ok) {
-            response.json().then(data => { _build(data); });
+            response.json().then(data => { create_macro(data); });
         } else {
             console.log('Network response was not ok.');
         }
@@ -15,15 +15,13 @@ fetch('macro.json')
     }
 );
 
-function _build (data) {
-    let macro, allFields;
+function create_macro (data) {
+    let macro, allFields = {};
     
-    macro = new Macro({'transform': data['transform'], 'size': data['size'] });
-    allFields = {};
+    macro = new Macro({ 'transform': data['transform'], 'size': data['size'] });
 
     create_card(macro, data['root'], allFields);
-    macro.initVisibility(allFields);  
-    
+    macro.initVisibility(allFields);
 }
 function create_card (macro, props, allFields, output = null) {
     let card = macro.createCard(props['position'], output);

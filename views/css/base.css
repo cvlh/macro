@@ -105,7 +105,7 @@ body {
     position: relative;
     z-index: 1;
 }
-    .main-app-builder-bottom-bar {
+    .main-app-builder-widget-holder {
         position: absolute;
         box-sizing: border-box;
         padding: 0;
@@ -125,18 +125,21 @@ body {
         color: var(--main-font-color-high);
         z-index: 2;
     }
-        .main-app-builder-bottom-bar-divider { background-color: var(--main-border-color-high); }
-        .main-app-builder-bottom-bar-button {
+        .main-app-builder-widget-holder .divider { background-color: var(--main-border-color-high); }
+        .main-app-builder-widget-holder .button {
             font-size: 16px;
             line-height: 24px;
             cursor: pointer;
             border-radius: 2px;
         }
-            .main-app-builder-bottom-bar-button:hover { 
+            .main-app-builder-widget-holder .button:hover { 
                 background-color: var(--main-border-color);
                 color: var(--main-font-color-high); 
             }
-            .main-app-builder-bottom-bar-button:active { color: var(--main-font-color-black); }
+            .main-app-builder-widget-holder .button:active { color: var(--main-font-color-black); }
+    .main-app-builder-toolbar {
+        
+    }
     .main-app-wrapper {
         margin: 0;
         padding: 0;
@@ -522,6 +525,7 @@ body {
         border-bottom: 1px solid var(--main-border-color);
 
         display: grid;
+        /*grid-template-columns: auto 25px 25px;*/
         grid-template-columns: 250px 25px 25px;
 
         align-items: center;
@@ -662,6 +666,7 @@ body {
 
         background-color: var(--main-background);
     }
+
 /*// AUX CSS /////////////////////////////////////////////////////////////////*/
 .remove-focus-select {
     -moz-user-select: none;
@@ -680,4 +685,14 @@ body {
     padding: 0;
     margin: 0;
     border: 0;
+}
+.crosshair {
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: #000;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0.2;
 }

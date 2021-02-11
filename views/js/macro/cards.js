@@ -185,9 +185,8 @@ export default function Card(ctx, append, root = false) {
     };
     this.setExpand = function(status) {
         const sizeFields = fieldsArray.length;
-        let counterFields;
 
-        for (counterFields=0; counterFields<sizeFields; counterFields++) {
+        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
             fieldsArray[counterFields].setExpand(status);
         }
     };

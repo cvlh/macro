@@ -17,6 +17,7 @@ export default function Macro(props) {
     let mainApp,
         mainTreeView, mainTreeViewItems,
         mainBuilder, mainAppWrapper, mainAppSVG, 
+            mainBuilderToolbar,
         mainProperties, properties,
 
         rootCard, 
@@ -32,10 +33,6 @@ export default function Macro(props) {
     // PRIVATE /////////////////////////////////////////////////////////////////
     _receive_events = function(evnt) {
         evnt.stopPropagation();
-
-        /*if (evnt.type === 'resize') {
-            console.log(evnt.type);
-        }*/
 
         const target = evnt.target,
               targetClass = target.classList,
@@ -81,14 +78,20 @@ export default function Macro(props) {
                         }
                         break;
                 }
-            } /*else {
-                switch (evnt.type) {
-                    case 'click':
-                        //const properties = field.getProps();
-                        //mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
-                        break;
-                }
-            }*/
+            }
+        } else if (targetClass.contains('main-app-wrapper')) {
+            switch (evnt.type) {
+                case 'dblclick':
+                    let cardLeft = (evnt.clientX - transform.left) / transform.scale,
+                        cardRight = (evnt.clientY - transform.top) / transform.scale;
+
+                    context.createCard([cardLeft, cardRight]);
+
+                    //var x = context.serialize();
+                    //console.log(JSON.stringify(x));
+
+                    break;
+            }
         }
     },
     _control_events = function(evnt) {
@@ -251,15 +254,6 @@ export default function Macro(props) {
 
             root: rootCard.serialize(fragment)
         };
-
-        /*while (mainTreeViewItems.hasChildNodes()) {
-            mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
-        }
-
-        
-        if (response['root'].hasOwnProperty('fields')) {
-            _update(response['root']['fields'], fragment);
-        }*/
         mainTreeViewItems.appendChild(fragment);
 
         return response;
@@ -425,8 +419,7 @@ export default function Macro(props) {
                             context.connect(currentDrag, targetCtx);
                             use = true;
 
-                            var x = context.serialize();
-                            console.log(JSON.stringify(x));
+                            context.serialize();
                         }
                     }
                 } 
@@ -476,13 +469,15 @@ export default function Macro(props) {
         mainAppSVG.setAttribute('width',  size.width);
         mainAppSVG.setAttribute('height', size.height);
 
-        const bottomBar = addElement(mainBuilder, 'div', 'main-app-builder-bottom-bar');
+        const bottomBar = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
         bottomBar['buttons'] = [];
-        bottomBar['buttons']['in'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-in', _ICON_CHAR_.ZOOM_IN);
-        bottomBar['buttons']['out'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-out', _ICON_CHAR_.ZOOM_OUT);
-        bottomBar['buttons']['reset'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-reset', _ICON_CHAR_.ZOOM);
-        addElement(bottomBar, 'div', 'main-app-builder-bottom-bar-divider');
-        bottomBar['buttons']['fit'] = addElement(bottomBar, 'div', 'icon main-app-builder-bottom-bar-button zoom-fit', _ICON_CHAR_.FIT);
+        bottomBar['buttons']['in'] = addElement(bottomBar, 'div', 'icon button zoom-in', _ICON_CHAR_.ZOOM_IN);
+        bottomBar['buttons']['out'] = addElement(bottomBar, 'div', 'icon button zoom-out', _ICON_CHAR_.ZOOM_OUT);
+        bottomBar['buttons']['reset'] = addElement(bottomBar, 'div', 'icon button zoom-reset', _ICON_CHAR_.ZOOM);
+        addElement(bottomBar, 'div', 'divider');
+        bottomBar['buttons']['fit'] = addElement(bottomBar, 'div', 'icon button zoom-fit', _ICON_CHAR_.FIT);
+
+        mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
 
         document.body.appendChild(fragment);
         
@@ -507,11 +502,11 @@ export default function Macro(props) {
             } else if (evnt.target.classList.contains('moveable')) {
                 const field = evnt.target['_FIELD_'];
                 field.setDragType(_DRAG_.LINE);
-
                 context.dragStart(evnt, field);
             }
             //}
         }, { capture: false });
+        mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: true });
 
         //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);
@@ -525,31 +520,14 @@ export default function Macro(props) {
             transform.scale = props.transform[2];
             context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
         }
-        
 
         const builderRect = mainBuilder.getBoundingClientRect();
   
         const builderLeftCenter = builderRect.width / 2,
               builderTopCenter = builderRect.height / 2;
 
-        let builderCenterDiv = addElement(mainBuilder, 'div');
-            builderCenterDiv.style.position = 'absolute';
-            builderCenterDiv.style.width = '10px';
-            builderCenterDiv.style.height = '1px';
-            builderCenterDiv.style.backgroundColor = 'red';
+        let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
             builderCenterDiv.style.left = builderLeftCenter + 'px';
             builderCenterDiv.style.top = builderTopCenter + 'px';
-            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
-            builderCenterDiv.style.pointerEvents = 'none';
-
-            builderCenterDiv = addElement(mainBuilder, 'div');
-            builderCenterDiv.style.position = 'absolute';
-            builderCenterDiv.style.width = '1px';
-            builderCenterDiv.style.height = '10px';
-            builderCenterDiv.style.backgroundColor = 'red';
-            builderCenterDiv.style.left = builderLeftCenter + 'px';
-            builderCenterDiv.style.top = builderTopCenter + 'px';
-            builderCenterDiv.style.transform = 'translate(-50%, -50%)';
-            builderCenterDiv.style.pointerEvents = 'none';
     })(props);
 }

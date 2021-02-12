@@ -103,7 +103,6 @@ export default function Card(ctx, append, root = false) {
 
             case _MOV_.END:
                 header.style.removeProperty('cursor');
-                //console.log(this.getPosition());
                 break;
         }
 

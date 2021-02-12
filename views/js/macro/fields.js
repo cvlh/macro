@@ -53,18 +53,21 @@ export default function Field(ctx, append, properties) {
                 output.style.color = 'var(--main-background)';
             }
 
-            output['_PATH_'].style.stroke = color;
+            if (output['_PATH_'] !== null) output['_PATH_'].style.stroke = color;
         } else {
             output.style.removeProperty('background-color');
             output.style.removeProperty('color');
 
-            output['_PATH_'].style.removeProperty('stroke');
+            if (output['_PATH_'] !== null) output['_PATH_'].style.removeProperty('stroke');
         }
     },
     _drag = function (evnt) { 
         if (main.getVisibilityMode()) return;
 
         evnt.preventDefault();
+
+        if (output['_PATH_'] === null) output['_PATH_'] = main.newSVG(context);
+        output['_PATH_'].setAttribute('visibility', 'visible');
 
         context.setDragType(_DRAG_.OUTPUT);
         main.dragStart(evnt, context); 
@@ -227,6 +230,8 @@ export default function Field(ctx, append, properties) {
         //output.classList.add('linked');
 
         //output['_PATH_'].setAttribute('class', 'linked');
+        if (output['_PATH_'] === null) output['_PATH_'] = main.newSVG(context);
+
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
         output['_CONNECTION_'] = card;
 
@@ -243,13 +248,9 @@ export default function Field(ctx, append, properties) {
 
         output.classList.remove('linked', 'error');
         output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        output['_PATH_'].setAttribute('visibility', 'hidden');
         output['_PATH_'].removeAttribute('style');
-
-        //output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-        //output['_PATH_'].setAttribute('d', '');
-        //output['_PATH_'].removeAttribute('class');
-        //output['_PATH_'].firstChild.removeAttribute('d');
-
+        
         for (let counter=0; counter<lines.length; counter++) {
             lines[counter].removeAttribute('x1');
             lines[counter].removeAttribute('y1');
@@ -486,10 +487,10 @@ export default function Field(ctx, append, properties) {
     this.setSelected = function(selected) { 
         if (selected) {
             item.classList.add('selected');
-            output['_PATH_'].style.strokeWidth = '7px';
+            if (context.hasConnection()) output['_PATH_'].style.strokeWidth = '7px';
         } else {
             item.classList.remove('selected');
-            output['_PATH_'].style.removeProperty('stroke-width');
+            if (context.hasConnection()) output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
 
@@ -512,7 +513,7 @@ export default function Field(ctx, append, properties) {
         const numFieldType = parseInt(fieldType);
 
         if (numFieldType !== _TYPES_.LIST) {
-            if (context.hasConnection) context.clearConnection();
+            if (context.hasConnection()) context.clearConnection();
 
             output.classList.remove('app-cards-content-item-output');
             output.textContent = fieldType;
@@ -607,14 +608,15 @@ export default function Field(ctx, append, properties) {
 
         visibility = addElement(item, 'div', 'app-cards-content-item-visibility');
         visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
-        visibility.addEventListener('mouseout', _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
 
         //addElement(visibility, 'div', 'icon', 'V');
         //addElement(visibility, 'span');
         //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
-        output['_PATH_'] = main.newSVG(context);
+        //output['_PATH_'] = main.newSVG(context);
+        output['_PATH_'] = null;
         output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });
 

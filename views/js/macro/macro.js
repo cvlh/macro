@@ -527,7 +527,8 @@ export default function Macro(props) {
               builderTopCenter = builderRect.height / 2;
 
         let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
-            builderCenterDiv.style.left = builderLeftCenter + 'px';
-            builderCenterDiv.style.top = builderTopCenter + 'px';
+        builderCenterDiv.style.left = builderLeftCenter + 'px';
+        builderCenterDiv.style.top = builderTopCenter + 'px';
+
     })(props);
 }

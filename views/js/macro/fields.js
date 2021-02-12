@@ -62,9 +62,15 @@ export default function Field(ctx, append, properties) {
         }
     },
     _drag = function (evnt) { 
+        evnt.preventDefault();
+
         if (main.getVisibilityMode()) return;
 
-        evnt.preventDefault();
+        if (context.hasConnection()) {
+            context.clearConnection();
+
+            main.serialize();
+        }
 
         if (output['_PATH_'] === null) output['_PATH_'] = main.newSVG(context);
         output['_PATH_'].setAttribute('visibility', 'visible');
@@ -275,10 +281,10 @@ export default function Field(ctx, append, properties) {
     this.setPosition = function(left, top, transform, mov) {
         if (dragType === _DRAG_.OUTPUT) {
             if (mov === _MOV_.START) {
-                if (context.hasConnection()) {
+                /*if (context.hasConnection()) {
                     context.clearConnection();
                     main.serialize();
-                }
+                }*/
                 const color = context.getColor();
                 _color(true, color);
             }
@@ -331,7 +337,7 @@ export default function Field(ctx, append, properties) {
         visibilityFields = { 'visibility' : { 'fields': [] }};
         for (counterVisibility=0; counterVisibility<props['visibility']['fields'].length; counterVisibility++) {
             //if (typeof props['visibility']['fields'][counterVisibility] === Field) {
-                visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
+            visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
             //}
         }
         response['properties'] = { ...props, ...visibilityFields };

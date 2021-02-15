@@ -100,6 +100,9 @@ body {
     /*border: 3px solid #00ff00;*/
 }
 .main-app-builder {
+    display: grid;
+    grid-template-rows: 40px auto;
+
     background-color: #F5F5F5;
     overflow: hidden;
     position: relative;
@@ -138,8 +141,32 @@ body {
             }
             .main-app-builder-widget-holder .button:active { color: var(--main-font-color-black); }
     .main-app-builder-toolbar {
-        
+        display: grid;
+
+        grid-template-columns: 40px 40px auto 100px;
+
+        align-items: center;
+        justify-items: center;
+
+        background-color: #fff;
+        border-bottom: 1px solid #e5e5e5;
+        z-index: 5;
     }
+        .main-app-builder-toolbar .button {
+            background-image: url(../img/simulate.png);
+            background-repeat: no-repeat;
+            background-position: 66px center;
+            background-color: #81c784;
+            padding-left: 10px;
+            border-radius: 4px;
+            color: #fff;
+            line-height: 28px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 90px;
+        }
+            .main-app-builder-toolbar .button:hover { background-color: #66bb6a; }
+            .main-app-builder-toolbar .button:active { background-color: #4caf50; }
     .main-app-wrapper {
         margin: 0;
         padding: 0;
@@ -156,14 +183,14 @@ body {
         background: url(../img/background.svg);
 
         /*border: 2px solid var(--main-border-color-high);*/
-
         /*transition: 0.2s ease;*/
     }
         .main-app-wrapper:focus {
-             outline-style: dashed;
-             outline-width: 2px;
-             outline-offset: 1px;
-             outline-color: inherit;
+            outline-style: dashed;
+            outline-width: 2px;
+            outline-offset: 1px;
+            /*outline-color: inherit;*/
+            outline-color: var(--main-font-color-med);
         }
     .main-app-svg {
         z-index: 0;
@@ -175,10 +202,6 @@ body {
             pointer-events: stroke; 
             cursor: col-resize;
         }
-        /*.main-app-svg path:hover {
-            cursor: col-resize;
-            stroke-width: 6px;
-        }*/
         .main-app-svg-path {
             stroke: var(--main-border-color-high);
             stroke-width: 3px;
@@ -695,4 +718,9 @@ body {
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0.2;
+}
+
+/*// SIMULATE ////////////////////////////////////////////////////////////////*/
+.simulate-app {
+    
 }

@@ -59,6 +59,8 @@ export const _I18N_ = {
 
     field_foreign_key: 'Chave estrangeira',
 
+    simulate: 'Simular',
+    
     0 : '',
     1 : '',
     2 : '',

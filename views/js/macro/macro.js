@@ -443,7 +443,6 @@ export default function Macro(props) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-
         const fragment = document.createDocumentFragment();
 
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
@@ -456,6 +455,19 @@ export default function Macro(props) {
 
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
         
+        mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
+        addElement(mainBuilderToolbar, 'div', 'button');
+        addElement(mainBuilderToolbar, 'div', 'button');
+        addElement(mainBuilderToolbar, 'div');
+
+        const simulate = addElement(mainBuilderToolbar, 'div', 'button', _I18N_.simulate);
+        simulate.addEventListener('click', function(evnt) {
+            
+            const result = context.serialize();
+            console.log(result);
+            //console.log(JSON.stringify(result));
+        }, { capture: true });
+
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
 
@@ -476,8 +488,6 @@ export default function Macro(props) {
         bottomBar['buttons']['reset'] = addElement(bottomBar, 'div', 'icon button zoom-reset', _ICON_CHAR_.ZOOM);
         addElement(bottomBar, 'div', 'divider');
         bottomBar['buttons']['fit'] = addElement(bottomBar, 'div', 'icon button zoom-fit', _ICON_CHAR_.FIT);
-
-        mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
 
         document.body.appendChild(fragment);
         

@@ -152,11 +152,9 @@ body {
         border-bottom: 1px solid #e5e5e5;
         z-index: 5;
     }
+        .main-app-builder-toolbar .holder { position: relative; }
         .main-app-builder-toolbar .button {
-            background-image: url(../img/simulate.png);
-            background-repeat: no-repeat;
-            background-position: 66px center;
-            background-color: #81c784;
+            background: #81c784 url(../img/simulate.png) no-repeat 66px center;
             padding-left: 10px;
             border-radius: 4px;
             color: #fff;
@@ -722,5 +720,26 @@ body {
 
 /*// SIMULATE ////////////////////////////////////////////////////////////////*/
 .simulate-app {
+    position: absolute;
+    left: -118px;
+    top: 40px;
+    box-shadow: 0px 0px 8px 2px rgb(0 0 0 / 10%);
+    border: 2px solid #bdbdbd;
+    box-sizing: content-box;
+    background-color: #fff;
+    border-radius: 35px;
+}
+    .simulate-app:before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 10px solid #0000;
+        border-right: 10px solid #0000;
+        position: absolute;
+        left: 73%;
+        top: -13px;
+        border-bottom: 12px solid #bdbdbd;
+    }
+.simulate-content {
     
 }

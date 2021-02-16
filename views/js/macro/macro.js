@@ -460,12 +460,82 @@ export default function Macro(props) {
         addElement(mainBuilderToolbar, 'div', 'button');
         addElement(mainBuilderToolbar, 'div');
 
-        const simulate = addElement(mainBuilderToolbar, 'div', 'button', _I18N_.simulate);
+        const simulateDiv = addElement(mainBuilderToolbar, 'div', 'holder');
+        const simulate = addElement(simulateDiv, 'div', 'button', _I18N_.simulate);
         simulate.addEventListener('click', function(evnt) {
-            
+
             const result = context.serialize();
             console.log(result);
             //console.log(JSON.stringify(result));
+
+            const simulatePopup = addElement(simulateDiv, 'div', 'simulate-app');
+            const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
+
+            const simulateSVG = simulatePopup.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+            simulateSVG.setAttribute('class', 'main-app-svg');
+            simulateSVG.setAttribute('width',  201);
+            simulateSVG.setAttribute('height', 391);
+            simulateSVG.style.fill = 'none';
+            simulateSVG.style.stroke = '#bdbdbd';
+            //const svg_g = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));   
+            //svg_g.setAttribute('class', 'simulate-svg');
+
+            const svg_path = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+            svg_path.setAttribute('d',"M 8 35 L 8 355 L 193 355 L 193 35 Z");
+            svg_path.style.strokeWidth = '1px';
+
+            let svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
+            svg_rect.setAttribute('x', '78.5');
+            svg_rect.setAttribute('y', '366');
+            svg_rect.setAttribute('rx', '6');
+            svg_rect.setAttribute('ry', '6');
+            svg_rect.setAttribute('width', '48');
+            svg_rect.setAttribute('height', '16');
+            svg_rect.style.pointerEvents = 'visible';
+            svg_rect.style.cursor = 'pointer';
+            svg_rect.style.fill = '#f5f5f5';
+            svg_rect.style.strokeWidth = '1px';
+            svg_rect.style.stroke = '#e0e0e0';
+
+            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
+            svg_rect.setAttribute('x', '87');
+            svg_rect.setAttribute('y', '378');
+            svg_rect.style.fontSize = '10px';
+            svg_rect.style.textTransform = 'uppercase';
+            svg_rect.style.fontFamily = 'ADDLOG-FONT';
+            svg_rect.style.stroke = 'none';
+            svg_rect.style.fill = '#9e9e9e';
+            svg_rect.style.fontWeight = '600';
+            svg_rect.textContent = 'Reset';
+
+            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
+            svg_rect.setAttribute('x', '78.5');
+            svg_rect.setAttribute('y', '7');
+            svg_rect.setAttribute('rx', '2');
+            svg_rect.setAttribute('ry', '2');
+            svg_rect.setAttribute('width', '45');
+            svg_rect.setAttribute('height', '5');
+            svg_rect.style.strokeWidth = '0';
+            svg_rect.style.fill = '#e0e0e0';
+
+            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
+            svg_rect.setAttribute('cx', '134');
+            svg_rect.setAttribute('cy', '9');
+            svg_rect.setAttribute('rx', '3');
+            svg_rect.setAttribute('ry', '3');
+            svg_rect.style.strokeWidth = '0';
+            svg_rect.style.fill = '#e0e0e0';
+
+            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
+            svg_rect.setAttribute('cx', '68');
+            svg_rect.setAttribute('cy', '9');
+            svg_rect.setAttribute('rx', '3');
+            svg_rect.setAttribute('ry', '3');
+            svg_rect.style.strokeWidth = '0';
+            svg_rect.style.fill = '#e0e0e0';
+
+
+
         }, { capture: true });
 
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');

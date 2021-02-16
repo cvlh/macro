@@ -10,7 +10,8 @@ fetch('macro.json')
         } else {
             console.log('Network response was not ok.');
         }
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
         console.log('There has been a problem with your fetch operation: ' + error.message);
     }
 );

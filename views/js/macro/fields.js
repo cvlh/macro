@@ -334,12 +334,13 @@ export default function Field(ctx, append, properties) {
             counterVisibility, visibilityFields,
             response = {  };
 
-        visibilityFields = { 'visibility' : { 'fields': [] }};
+        visibilityFields = { 'visibility' : { 'fields': [], 'flags': props['visibility']['flags']}};
         for (counterVisibility=0; counterVisibility<props['visibility']['fields'].length; counterVisibility++) {
             //if (typeof props['visibility']['fields'][counterVisibility] === Field) {
             visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
             //}
         }
+        props.text = description.value;
         response['properties'] = { ...props, ...visibilityFields };
 
         if (rootField) properties.color = props.color;

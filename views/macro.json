@@ -3,9 +3,9 @@
 	"name": "Macro",
 	"version": 1,
 	"transform": [
-		262.7503356933594,
-		11.796356201171875,
-		0.4731919496102088
+		255.02386474609376,
+		46.173980712890628,
+		0.4230926163871699
 	],
 	"size": [
 		4096,
@@ -22,6 +22,7 @@
 				"properties": {
 					"id": "1",
 					"text": "INICIAR",
+					"icon": "\uf04b",
 					"type": {
 						"type": 0
 					},
@@ -43,7 +44,8 @@
 							"1.13",
 							"1.14",
 							"1"
-						]
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 238.104767839075,
@@ -70,7 +72,8 @@
 										"1.1.3",
 										"1.1.4",
 										"1.1.5"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 34.66897874084691
@@ -169,7 +172,8 @@
 										"1.2.1",
 										"1.2.2",
 										"1.2.3"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 66.93212003075883
@@ -241,7 +245,8 @@
 										"1.3.3",
 										"1.3.4",
 										"1.3.5"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 460.89489967650209
@@ -338,7 +343,8 @@
 										"1.4",
 										"1.4.1",
 										"1.4.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 494.1935533013839
@@ -393,7 +399,8 @@
 										"1.5.1",
 										"1.5.2",
 										"1.5"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 526.9475510920094
@@ -448,7 +455,8 @@
 										"1.6",
 										"1.6.1",
 										"1.6.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 892.3079676831425
@@ -503,7 +511,8 @@
 										"1.7",
 										"1.7.1",
 										"1.7.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 917.7390932467293
@@ -559,7 +568,8 @@
 										"1.8.1",
 										"1.8.2",
 										"1.8.3"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 946.9336781665869
@@ -628,7 +638,8 @@
 										"1.9",
 										"1.9.1",
 										"1.9.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": true,
 								"line": 980.2988893456742
@@ -683,7 +694,8 @@
 										"1.10",
 										"1.10.1",
 										"1.10.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 541.1932582916801
@@ -738,7 +750,8 @@
 										"1.11",
 										"1.11.1",
 										"1.11.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 984.2488172690776
@@ -795,7 +808,8 @@
 										"1.12.2",
 										"1.12.3",
 										"1.12.4"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 956.6836202170478
@@ -879,7 +893,8 @@
 										"1.13.1",
 										"1.13.3",
 										"1.13.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 927.261895696235
@@ -948,7 +963,8 @@
 										"1.14",
 										"1.14.1",
 										"1.14.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 541.3142429603911
@@ -997,6 +1013,7 @@
 				"properties": {
 					"id": "2",
 					"text": "MOTORISTA",
+					"icon": "\uf007",
 					"type": {
 						"type": 0
 					},
@@ -1005,7 +1022,8 @@
 						"fields": [
 							"2",
 							"2.1"
-						]
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 208.21738106495708,
@@ -1038,6 +1056,7 @@
 				"properties": {
 					"id": "3",
 					"text": "VISTORIA DIÁRIA",
+					"icon": "\uf560",
 					"type": {
 						"type": 0
 					},
@@ -1051,7 +1070,8 @@
 							"3.4",
 							"3.5",
 							"3.6"
-						]
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 178.38023068973485,
@@ -1089,7 +1109,8 @@
 									"fields": [
 										"3.2.1",
 										"3.2.2"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false
 							},
@@ -1143,7 +1164,8 @@
 										"3.3.1",
 										"3.3.2",
 										"3.3.3"
-									]
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 63.649038127917837
@@ -1248,6 +1270,7 @@
 				"properties": {
 					"id": "4",
 					"text": "EM TRABALHO",
+					"icon": "\uf0d1",
 					"type": {
 						"type": 0
 					},
@@ -1259,7 +1282,8 @@
 							"4.14",
 							"4.10",
 							"4.7"
-						]
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 147.5316637439406,
@@ -1346,7 +1370,8 @@
 								},
 								"order": 5,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 25.178041511300195,
@@ -1457,7 +1482,8 @@
 								},
 								"order": 8,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 48.335994314273197
@@ -1508,7 +1534,8 @@
 								},
 								"order": 10,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 60.93824054501664
@@ -1601,7 +1628,8 @@
 								},
 								"order": 11,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 50.75238614435682
@@ -1764,7 +1792,8 @@
 								},
 								"order": 17,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 34.21575190591693
@@ -1869,12 +1898,17 @@
 				"properties": {
 					"id": "5",
 					"text": "TROCA MOTORISTA",
+					"icon": "\uf2f1",
 					"type": {
 						"type": 0
 					},
 					"order": 5,
 					"visibility": {
-						"fields": []
+						"fields": [
+							"5",
+							"5.1"
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 118.23053534842672,
@@ -1907,12 +1941,22 @@
 				"properties": {
 					"id": "6",
 					"text": "EM MANUTENÇÃO",
+					"icon": "\uf7d9",
 					"type": {
 						"type": 0
 					},
 					"order": 6,
 					"visibility": {
-						"fields": []
+						"fields": [
+							"6",
+							"6.2",
+							"6.1",
+							"6.3",
+							"6.4",
+							"6.5",
+							"6.6"
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 86.94284831139584,
@@ -2015,12 +2059,21 @@
 				"properties": {
 					"id": "7",
 					"text": "PONTO ELETRÔNICO",
+					"icon": "\uf4fd",
 					"type": {
 						"type": 0
 					},
 					"order": 7,
 					"visibility": {
-						"fields": []
+						"fields": [
+							"7",
+							"7.1",
+							"7.2",
+							"7.4",
+							"7.5",
+							"7.3"
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 57.16908161486646,
@@ -2041,7 +2094,11 @@
 								},
 								"order": 1,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"7.1.1",
+										"7.1"
+									],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 38.235160429437659
@@ -2078,7 +2135,8 @@
 								},
 								"order": 2,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 64.67572268004
@@ -2115,7 +2173,8 @@
 								},
 								"order": 3,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 64.22049718079512
@@ -2152,7 +2211,8 @@
 								},
 								"order": 4,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 57.99336422000215
@@ -2189,7 +2249,8 @@
 								},
 								"order": 5,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": false,
 								"line": 27.405593466585743
@@ -2223,13 +2284,19 @@
 			{
 				"properties": {
 					"id": "8",
-					"text": "FINALIZAR CDE",
+					"text": "FINALIZAR",
+					"icon": "\uf11e",
 					"type": {
 						"type": 0
 					},
 					"order": 8,
 					"visibility": {
-						"fields": []
+						"fields": [
+							"8",
+							"8.1",
+							"8.2"
+						],
+						"flags": 17
 					},
 					"expanded": true,
 					"line": 27.899955031837579,
@@ -2250,7 +2317,12 @@
 								},
 								"order": 1,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"8.1.1",
+										"8.1.2",
+										"8.1"
+									],
+									"flags": 17
 								},
 								"expanded": false
 							},

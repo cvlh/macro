@@ -471,70 +471,29 @@ export default function Macro(props) {
             const simulatePopup = addElement(simulateDiv, 'div', 'simulate-app');
             const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
 
-            const simulateSVG = simulatePopup.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
-            simulateSVG.setAttribute('class', 'main-app-svg');
-            simulateSVG.setAttribute('width',  201);
-            simulateSVG.setAttribute('height', 391);
-            simulateSVG.style.fill = 'none';
-            simulateSVG.style.stroke = '#bdbdbd';
-            //const svg_g = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));   
-            //svg_g.setAttribute('class', 'simulate-svg');
+            const simulateHeader = addElement(simulateContent, 'div', 'header');
+            const simulateMain = addElement(simulateContent, 'div', 'main');
+            const simulateFooter = addElement(simulateContent, 'div', 'footer');
 
-            const svg_path = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-            svg_path.setAttribute('d',"M 8 35 L 8 355 L 193 355 L 193 35 Z");
-            svg_path.style.strokeWidth = '1px';
+            var icon, item, div, label;
+            for (var counter=0; counter<result['root']['fields'].length; counter++) {
+                item = addElement(simulateMain, 'div', 'item');
 
-            let svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
-            svg_rect.setAttribute('x', '78.5');
-            svg_rect.setAttribute('y', '366');
-            svg_rect.setAttribute('rx', '6');
-            svg_rect.setAttribute('ry', '6');
-            svg_rect.setAttribute('width', '48');
-            svg_rect.setAttribute('height', '16');
-            svg_rect.style.pointerEvents = 'visible';
-            svg_rect.style.cursor = 'pointer';
-            svg_rect.style.fill = '#f5f5f5';
-            svg_rect.style.strokeWidth = '1px';
-            svg_rect.style.stroke = '#e0e0e0';
+                label = result['root']['fields'][counter]['properties']['text'];
+                icon = result['root']['fields'][counter]['properties']['icon'];
 
-            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'text'));
-            svg_rect.setAttribute('x', '87');
-            svg_rect.setAttribute('y', '378');
-            svg_rect.style.fontSize = '10px';
-            svg_rect.style.textTransform = 'uppercase';
-            svg_rect.style.fontFamily = 'ADDLOG-FONT';
-            svg_rect.style.stroke = 'none';
-            svg_rect.style.fill = '#9e9e9e';
-            svg_rect.style.fontWeight = '600';
-            svg_rect.textContent = 'Reset';
+                div = addElement(item, 'div', 'fontAwesome itemIcon', icon);
+                div.style.color = result['root']['fields'][counter]['properties']['color'];
 
-            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'rect'));
-            svg_rect.setAttribute('x', '78.5');
-            svg_rect.setAttribute('y', '7');
-            svg_rect.setAttribute('rx', '2');
-            svg_rect.setAttribute('ry', '2');
-            svg_rect.setAttribute('width', '45');
-            svg_rect.setAttribute('height', '5');
-            svg_rect.style.strokeWidth = '0';
-            svg_rect.style.fill = '#e0e0e0';
+                div = addElement(item, 'div', 'itemHeader');
+                div.textContent = label;
+                div.style.color = result['root']['fields'][counter]['properties']['color'];
 
-            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
-            svg_rect.setAttribute('cx', '134');
-            svg_rect.setAttribute('cy', '9');
-            svg_rect.setAttribute('rx', '3');
-            svg_rect.setAttribute('ry', '3');
-            svg_rect.style.strokeWidth = '0';
-            svg_rect.style.fill = '#e0e0e0';
+                div = addElement(item, 'div', 'itemSubheader');
+                div.textContent = label +' '+ label;
 
-            svg_rect = simulateSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'ellipse'));
-            svg_rect.setAttribute('cx', '68');
-            svg_rect.setAttribute('cy', '9');
-            svg_rect.setAttribute('rx', '3');
-            svg_rect.setAttribute('ry', '3');
-            svg_rect.style.strokeWidth = '0';
-            svg_rect.style.fill = '#e0e0e0';
-
-
+                div = addElement(item, 'div', 'icon itemArrow', '^');
+            }
 
         }, { capture: true });
 

@@ -475,24 +475,70 @@ export default function Macro(props) {
             const simulateMain = addElement(simulateContent, 'div', 'main');
             const simulateFooter = addElement(simulateContent, 'div', 'footer');
 
-            var icon, item, div, label;
+            var icon, item, div, label, color, shortcut, type;
+            var mainSlide = addElement(simulateMain, 'div', 'simulate-content-slide');
+            mainSlide.style.left = '0';
+
             for (var counter=0; counter<result['root']['fields'].length; counter++) {
-                item = addElement(simulateMain, 'div', 'item');
+                shortcut = result['root']['fields'][counter];
+                color = shortcut['properties']['color'];
 
-                label = result['root']['fields'][counter]['properties']['text'];
-                icon = result['root']['fields'][counter]['properties']['icon'];
+                item = addElement(mainSlide, 'div', 'item');
+                item['_props_'] = [];
+                item['_props_']['id'] = counter;
+                item['_props_']['color'] = color;
+                item['_props_']['slide'] = mainSlide;
 
+                item.addEventListener('click', function(evnt) {
+                    mainSlide = addElement(simulateMain, 'div', 'simulate-content-slide');
+
+                    for (var counter=0; counter<result['root']['fields'][this['_props_']['id']]['output']['fields'].length; counter++) {
+                        item = addElement(mainSlide, 'div', 'item');
+
+                        shortcut = result['root']['fields'][this['_props_']['id']]['output']['fields'][counter];
+
+                        label = shortcut['properties']['text'];
+                        icon = shortcut['properties']['icon'];
+                        color = this['_props_']['color'];
+                        type = shortcut['properties']['type']['type'];
+
+                        div = addElement(item, 'div', 'fontAwesome itemIcon', icon);
+                        div.style.color = color;
+        
+                        div = addElement(item, 'div', 'itemHeader');
+                        div.textContent = label;
+                        div.style.color = color;
+        
+                        div = addElement(item, 'div', 'itemSubheader');
+                        div.textContent = label +' '+ label;
+        
+                        div = addElement(item, 'div', 'icon itemArrow', type);
+                        div.style.color = color;
+                    }
+                    setTimeout(() => {
+                        this['_props_']['slide'].style.left = '-100%';
+                        //simulateMain.scrollTop = 0;
+                        mainSlide.style.left = 0;
+                    }, 50)
+
+                });
+                
+                label = shortcut['properties']['text'];
+                icon = shortcut['properties']['icon'];
+                type = shortcut['properties']['type']['type'];
+                
                 div = addElement(item, 'div', 'fontAwesome itemIcon', icon);
-                div.style.color = result['root']['fields'][counter]['properties']['color'];
+                div.style.color = color;
 
                 div = addElement(item, 'div', 'itemHeader');
                 div.textContent = label;
-                div.style.color = result['root']['fields'][counter]['properties']['color'];
+                div.style.color = color;
 
                 div = addElement(item, 'div', 'itemSubheader');
                 div.textContent = label +' '+ label;
 
-                div = addElement(item, 'div', 'icon itemArrow', '^');
+                div = addElement(item, 'div', 'icon itemArrow', type);
+                div.style.color = color;
             }
 
         }, { capture: true });

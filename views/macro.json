@@ -2,21 +2,11 @@
 	"status": true,
 	"name": "Macro",
 	"version": 1,
-	"transform": [
-		255.02386474609376,
-		46.173980712890628,
-		0.4230926163871699
-	],
-	"size": [
-		4096,
-		3072
-	],
+	"transform": [ 255.02386474609376, 46.173980712890628, 0.4230926163871699 ],
+	"size": [ 4096, 3072 ],
 	"visibility": [],
 	"root": {
-		"position": [
-			62.428820885105199,
-			75.2814995867913
-		],
+		"position": [ 62.428820885105199, 75.2814995867913 ],
 		"fields": [
 			{
 				"properties": {
@@ -52,15 +42,13 @@
 					"color": "#ff0000"
 				},
 				"output": {
-					"position": [
-						610.3266284350319,
-						273.11669370359348
-					],
+					"position": [ 610.3266284350319, 273.11669370359348 ],
 					"fields": [
 						{
 							"properties": {
 								"id": "1.1",
 								"text": "COMBUSTÍVEL",
+								"icon": "\uf52f",
 								"type": {
 									"type": 0
 								},
@@ -334,6 +322,7 @@
 							"properties": {
 								"id": "1.4",
 								"text": "ÓLEO DO MOTOR",
+								"icon": "\uf613",
 								"type": {
 									"type": 0
 								},
@@ -1924,6 +1913,7 @@
 							"properties": {
 								"id": "5.1",
 								"text": "SENHA MOTORISTA",
+								"icon": "\uf084",
 								"type": {
 									"type": 1
 								},
@@ -1971,7 +1961,7 @@
 						{
 							"properties": {
 								"id": "6.1",
-								"text": "MANUTENÇÃO DENTRO DO TURNO",
+								"text": "DENTRO DO TURNO",
 								"type": {
 									"type": 0
 								},
@@ -2000,6 +1990,7 @@
 							"properties": {
 								"id": "6.3",
 								"text": "LAVAGEM",
+								"icon": "\uf2cc",
 								"type": {
 									"type": 0
 								},
@@ -2013,7 +2004,7 @@
 						{
 							"properties": {
 								"id": "6.4",
-								"text": "MANUTENÇÃO FORA DO TURNO",
+								"text": "FORA DO TURNO",
 								"type": {
 									"type": 0
 								},
@@ -2028,6 +2019,7 @@
 							"properties": {
 								"id": "6.5",
 								"text": "TROCA DE ÓLEO",
+								"icon": "\uf613",
 								"type": {
 									"type": 0
 								},
@@ -2303,15 +2295,13 @@
 					"color": "#000000"
 				},
 				"output": {
-					"position": [
-						607.8422615080195,
-						2814.832867967025
-					],
+					"position": [ 607.8422615080195, 2814.832867967025 ],
 					"fields": [
 						{
 							"properties": {
 								"id": "8.1",
 								"text": "SIM",
+								"icon": "\uf058",
 								"type": {
 									"type": 0
 								},
@@ -2327,10 +2317,7 @@
 								"expanded": false
 							},
 							"output": {
-								"position": [
-									998.5024290084494,
-									2818.083910843756
-								],
+								"position": [ 998.5024290084494, 2818.083910843756 ],
 								"fields": [
 									{
 										"properties": {
@@ -2367,6 +2354,7 @@
 							"properties": {
 								"id": "8.2",
 								"text": "NÃO",
+								"icon": "\uf057",
 								"type": {
 									"type": 0
 								},

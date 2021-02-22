@@ -645,9 +645,9 @@ body {
                 text-align: center;
             }
             .app-cards-content-item-visibility {
-                background-color: var(--main-red-bold);
+                background-color: #424242;
                 color: #fff;
-                border-radius: 20%;
+                border-radius: 15%;
                 text-align: center;
                 font-size: 9px;
                 font-weight: 600;
@@ -744,6 +744,7 @@ body {
     background-color: #fafafa;
 
     box-sizing: content-box;
+    display: none;
 }
     .simulate-app:before {
         content: "";
@@ -828,7 +829,7 @@ body {
                 grid-auto-rows: 44px;
                 grid-row-gap: 5px;
 
-                transition: 1s left linear;
+                transition: .15s left linear;
             }
             .simulate-content-slide .item {
                 grid-column: 2 / 3;
@@ -847,7 +848,7 @@ body {
                 border: 2px solid #eeeeee;
             }
                 .simulate-content-slide .item:hover { background-color: #fafafa; }
-                .simulate-content-slide .item .itemIcon {
+                .simulate-content-slide .item-icon {
                     grid-area: image;
                     background-color: #fafafa;
                     margin: 2px 4px 2px 2px;
@@ -857,8 +858,10 @@ body {
                     align-items: center;
                     font-size: 15px;
                     border-radius: 3px;
+
+                    pointer-events: none;
                 }
-                .simulate-content-slide .item .itemHeader {
+                .simulate-content-slide .item-header {
                     grid-area: header;
                     font-size: 11px;
                     font-weight: 600;
@@ -866,8 +869,10 @@ body {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+
+                    pointer-events: none;
                 }
-                .simulate-content-slide .item .itemSubheader {
+                .simulate-content-slide .item-subheader {
                     grid-area: subheader;
                     color: #bdbdbd;
                     font-size: 9px;
@@ -875,14 +880,18 @@ body {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+
+                    pointer-events: none;
                 }
-                .simulate-content-slide .item .itemArrow {
+                .simulate-content-slide .item-arrow {
                     grid-area: arrow;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     font-size: 10px;
+
+                    pointer-events: none;
                 }
         .simulate-content .footer {
             transform: translate(79px, 9px);

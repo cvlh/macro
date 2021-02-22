@@ -6,6 +6,7 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
 import Properties from './properties.js';
+import Simulate from './simulate/simulate.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro(props) {
@@ -18,7 +19,8 @@ export default function Macro(props) {
         mainTreeView, mainTreeViewItems,
         mainBuilder, mainAppWrapper, mainAppSVG, 
             mainBuilderToolbar,
-        mainProperties, properties,
+
+        properties, simulate,
 
         rootCard, 
         currentDrag = null,
@@ -250,7 +252,7 @@ export default function Macro(props) {
             
             transform:  [ transform.left, transform.top, transform.scale ],
             size:       [ size.width, size.height ],
-            visibility: [ ],
+            visibility: [ "1", "2", "3", "4", "5", "6", "7", "8" ],
 
             root: rootCard.serialize(fragment)
         };
@@ -451,7 +453,7 @@ export default function Macro(props) {
         const colResize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
 
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
-        mainProperties = addElement(mainApp, 'div', 'main-app-properties');
+        const mainProperties = addElement(mainApp, 'div', 'main-app-properties');
 
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
         
@@ -461,87 +463,8 @@ export default function Macro(props) {
         addElement(mainBuilderToolbar, 'div');
 
         const simulateDiv = addElement(mainBuilderToolbar, 'div', 'holder');
-        const simulate = addElement(simulateDiv, 'div', 'button', _I18N_.simulate);
-        simulate.addEventListener('click', function(evnt) {
-
-            const result = context.serialize();
-            console.log(result);
-            //console.log(JSON.stringify(result));
-
-            const simulatePopup = addElement(simulateDiv, 'div', 'simulate-app');
-            const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
-
-            const simulateHeader = addElement(simulateContent, 'div', 'header');
-            const simulateMain = addElement(simulateContent, 'div', 'main');
-            const simulateFooter = addElement(simulateContent, 'div', 'footer');
-
-            var icon, item, div, label, color, shortcut, type;
-            var mainSlide = addElement(simulateMain, 'div', 'simulate-content-slide');
-            mainSlide.style.left = '0';
-
-            for (var counter=0; counter<result['root']['fields'].length; counter++) {
-                shortcut = result['root']['fields'][counter];
-                color = shortcut['properties']['color'];
-
-                item = addElement(mainSlide, 'div', 'item');
-                item['_props_'] = [];
-                item['_props_']['id'] = counter;
-                item['_props_']['color'] = color;
-                item['_props_']['slide'] = mainSlide;
-
-                item.addEventListener('click', function(evnt) {
-                    mainSlide = addElement(simulateMain, 'div', 'simulate-content-slide');
-
-                    for (var counter=0; counter<result['root']['fields'][this['_props_']['id']]['output']['fields'].length; counter++) {
-                        item = addElement(mainSlide, 'div', 'item');
-
-                        shortcut = result['root']['fields'][this['_props_']['id']]['output']['fields'][counter];
-
-                        label = shortcut['properties']['text'];
-                        icon = shortcut['properties']['icon'];
-                        color = this['_props_']['color'];
-                        type = shortcut['properties']['type']['type'];
-
-                        div = addElement(item, 'div', 'fontAwesome itemIcon', icon);
-                        div.style.color = color;
-        
-                        div = addElement(item, 'div', 'itemHeader');
-                        div.textContent = label;
-                        div.style.color = color;
-        
-                        div = addElement(item, 'div', 'itemSubheader');
-                        div.textContent = label +' '+ label;
-        
-                        div = addElement(item, 'div', 'icon itemArrow', type);
-                        div.style.color = color;
-                    }
-                    setTimeout(() => {
-                        this['_props_']['slide'].style.left = '-100%';
-                        //simulateMain.scrollTop = 0;
-                        mainSlide.style.left = 0;
-                    }, 50)
-
-                });
-                
-                label = shortcut['properties']['text'];
-                icon = shortcut['properties']['icon'];
-                type = shortcut['properties']['type']['type'];
-                
-                div = addElement(item, 'div', 'fontAwesome itemIcon', icon);
-                div.style.color = color;
-
-                div = addElement(item, 'div', 'itemHeader');
-                div.textContent = label;
-                div.style.color = color;
-
-                div = addElement(item, 'div', 'itemSubheader');
-                div.textContent = label +' '+ label;
-
-                div = addElement(item, 'div', 'icon itemArrow', type);
-                div.style.color = color;
-            }
-
-        }, { capture: true });
+        const simulateBtn = addElement(simulateDiv, 'div', 'button', _I18N_.simulate);
+        simulateBtn.addEventListener('click', function(evnt) { simulate.start(); }, { capture: false });
 
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
@@ -591,7 +514,7 @@ export default function Macro(props) {
             }
             //}
         }, { capture: false });
-        mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: true });
+        mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: false });
 
         //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);
@@ -600,6 +523,9 @@ export default function Macro(props) {
 
         properties = new Properties(context);
         mainProperties.appendChild(properties.getFragment());
+
+        simulate = new Simulate(context);
+        simulateDiv.appendChild(simulate.getFragment());
 
         if (props.hasOwnProperty('transform')) {
             transform.scale = props.transform[2];

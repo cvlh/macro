@@ -38,7 +38,6 @@
     src: url("../font/fa-solid-900.woff") format("woff"),
          url("../font/fa-solid-900.ttf") format("truetype"); 
 }
-  
 
 * { 
     font-family: 'ADDLOG-FONT', sans-serif;
@@ -209,6 +208,7 @@ body {
             pointer-events: stroke; 
             cursor: col-resize;
         }
+            .main-app-svg line.moveable:hover { stroke-width: 4px; } 
         .main-app-svg-path {
             stroke: var(--main-border-color-high);
             stroke-width: 3px;

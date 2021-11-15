@@ -281,16 +281,16 @@ export default function Macro(props) {
         return new_card;
     };
     this.newSVG = function(field) {
-        let svg_g = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+        const svg_g = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
         svg_g.setAttribute('class', 'main-app-svg-path');
 
-        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         
         const moveableLine = svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
         moveableLine.setAttribute('class', 'moveable');
         moveableLine['_FIELD_'] = field;
 
-        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         
         //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         //let new_path = new_group.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));

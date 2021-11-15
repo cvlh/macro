@@ -80,7 +80,10 @@ export default function Field(ctx, append, properties) {
     },
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
-        const lines = output['_PATH_'].children;
+
+        const elements = output['_PATH_'].children,
+              startX   = position.left + 17,
+              startY   = position.top  + 11;
 
         if (dragType !== _DRAG_.LINE) {
 
@@ -91,39 +94,42 @@ export default function Field(ctx, append, properties) {
                 offsetLine = props.line;
             }
 
-            const startX = position.left+17,
-                  startY = position.top+11;
+            const startXEnd = startX + offsetLine,
+                  endY = (mov === _MOV_.END) ? (endTop += 15) : endTop;
 
-            let endY = endTop;
-            if (mov === _MOV_.END) endY += 15;
+            const y1 = (startY > endY) ? startY - 10 : startY + 10,
+                  y2 = (startY > endY) ? endY + 10 : endY - 10;
 
-            lines[0].setAttribute('x1', startX);
-            lines[0].setAttribute('y1', startY);
-            lines[0].setAttribute('x2', startX + offsetLine); 
-            lines[0].setAttribute('y2', startY);
+            elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - 10)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1);
+            elements[0]['_POS_'] = { x1: startX };
 
-            lines[1].setAttribute('x1', startX + offsetLine);
-            lines[1].setAttribute('y1', startY);
-            lines[1].setAttribute('x2', startX + offsetLine);
-            lines[1].setAttribute('y2', endY);
+            elements[1].setAttribute('x1', startXEnd);
+            elements[1].setAttribute('y1', y1);
+            elements[1].setAttribute('x2', startXEnd);
+            elements[1].setAttribute('y2', y2);
+            //elements[1].style.stroke = 'red';
 
-            lines[2].setAttribute('x1', startX + offsetLine);
-            lines[2].setAttribute('y1', endY);
-            lines[2].setAttribute('x2', endLeft);
-            lines[2].setAttribute('y2', endY);
-
+            elements[2].setAttribute('d', 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + 10)+ ' ' +endY+ ' H ' +endLeft);
+            elements[2]['_POS_'] = { y1: endY, x2: endLeft };
+  
         } else  {
-            const maxLeft  = parseFloat(lines[0].getAttribute('x1')) + 10,
-                  maxRight = parseFloat(lines[2].getAttribute('x2')) - 10;
+            //const maxLeft  = parseFloat(elements[0].getAttribute('x1')) + 10,
+            //      maxRight = parseFloat(elements[2].getAttribute('x2')) - 10;
+            const maxLeft  = elements[0]['_POS_'].x1 + 10,
+                  maxRight = elements[2]['_POS_'].x2 - 10;
+            
+            if ((endLeft > maxLeft && endLeft < maxRight) || maxLeft > maxRight) {
 
-            if ((endLeft > maxLeft && endLeft < maxRight) || maxLeft > maxRight){
+                elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +endLeft);
+                
+                //elements[0].setAttribute('x2', endLeft); 
 
-                lines[0].setAttribute('x2', endLeft); 
+                elements[1].setAttribute('x1', endLeft);
+                elements[1].setAttribute('x2', endLeft);
 
-                lines[1].setAttribute('x1', endLeft);
-                lines[1].setAttribute('x2', endLeft);
-    
-                lines[2].setAttribute('x1', endLeft);
+                elements[2].setAttribute('d', 'M ' +endLeft+ ' ' +elements[2]['_POS_'].y1+ ' H ' +elements[2]['_POS_'].x2);
+                
+                //lements[2].setAttribute('x1', endLeft);
 
                 props.line = endLeft - maxLeft + 10;
             }

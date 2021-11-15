@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_, _ORDER_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _QUADRATIC_CURVE_OFFSET_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -81,10 +81,12 @@ export default function Field(ctx, append, properties) {
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
 
+        let offset = _QUADRATIC_CURVE_OFFSET_;
+
         const elements = output['_PATH_'].children,
               startX   = position.left + 17,
               startY   = position.top  + 11;
-
+        
         if (dragType !== _DRAG_.LINE) {
 
             let offsetLine;
@@ -95,22 +97,38 @@ export default function Field(ctx, append, properties) {
             }
 
             const startXEnd = startX + offsetLine,
-                  endY = (mov === _MOV_.END) ? (endTop += 15) : endTop;
+                  endY = (mov === _MOV_.END) ? (endTop += 15) : endTop,
+                  diffY = Math.abs(startY-endY),
+                  diffX = Math.abs(startXEnd-endLeft);
 
-            const y1 = (startY > endY) ? startY - 10 : startY + 10,
-                  y2 = (startY > endY) ? endY + 10 : endY - 10;
+            if (diffY < (_QUADRATIC_CURVE_OFFSET_ * 2) || diffX < (_QUADRATIC_CURVE_OFFSET_ * 2)) {
+                offset = Math.min(diffY / 2, diffX / 2);
+            } 
 
-            elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - 10)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1);
-            elements[0]['_POS_'] = { x1: startX };
+            const y1 = (startY > endY) ? startY - offset : startY + offset,
+                  y2 = (startY > endY) ? endY   + offset : endY   - offset;
+
+            const oldOffset = offset;
+            if (startX > startXEnd) offset *= -1;
+
+            let data = 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - offset)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1;
+            //elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - offset)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1);
+            //elements[0]['_POS_'] = { x1: startX };
 
             elements[1].setAttribute('x1', startXEnd);
             elements[1].setAttribute('y1', y1);
             elements[1].setAttribute('x2', startXEnd);
             elements[1].setAttribute('y2', y2);
-            //elements[1].style.stroke = 'red';
+            elements[1].style.stroke = 'red';
+            //elements[1].setAttribute('visibility', 'hidden');
+            
+            offset = oldOffset;
+            if (startXEnd > endLeft) offset *= -1;
 
-            elements[2].setAttribute('d', 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + 10)+ ' ' +endY+ ' H ' +endLeft);
-            elements[2]['_POS_'] = { y1: endY, x2: endLeft };
+            data += 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + offset)+ ' ' +endY+ ' H ' +endLeft;
+            elements[0].setAttribute('d', data);
+            //elements[2].setAttribute('d', 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + offset)+ ' ' +endY+ ' H ' +endLeft);
+            //elements[2]['_POS_'] = { y1: endY, x2: endLeft };
   
         } else  {
             //const maxLeft  = parseFloat(elements[0].getAttribute('x1')) + 10,

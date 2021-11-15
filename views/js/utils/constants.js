@@ -79,3 +79,5 @@ export const _ORDER_ = {
     UP   : 1,
     DOWN : 2
 };
+
+export const _QUADRATIC_CURVE_OFFSET_ = 15;

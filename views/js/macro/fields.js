@@ -26,7 +26,10 @@ export default function Field(ctx, append, properties) {
                 flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
                 fields: []
             },
-            expanded: true
+            expanded: true,
+
+            tail: { x: 0, y: 0 },
+            // line: 0
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -81,84 +84,66 @@ export default function Field(ctx, append, properties) {
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (endLeft, endTop, mov) {
 
-        let offset = _QUADRATIC_CURVE_OFFSET_;
+        let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
         const elements = output['_PATH_'].children,
               startX   = position.left + 17,
               startY   = position.top  + 11;
         
         if (dragType !== _DRAG_.LINE) {
-
-            let offsetLine;
             if (props.line === undefined) {
                 offsetLine = ((endLeft - position.left) / 2) - 17/2;
             } else {
                 offsetLine = props.line;
             }
 
-            const startXEnd = startX + offsetLine,
-                  endY = (mov === _MOV_.END) ? (endTop += 15) : endTop,
-                  diffY = Math.abs(startY-endY),
-                  diffX = Math.abs(startXEnd-endLeft);
+            if (mov === _MOV_.END) endTop += 15;
+        } else {
+            offsetLine = endLeft - startX;
+            endLeft = props.tail.x;
+            endTop  = props.tail.y;
 
-            if (diffY < (_QUADRATIC_CURVE_OFFSET_ * 2) || diffX < (_QUADRATIC_CURVE_OFFSET_ * 2)) {
-                offset = Math.min(diffY / 2, diffX / 2);
-            } 
-
-            const y1 = (startY > endY) ? startY - offset : startY + offset,
-                  y2 = (startY > endY) ? endY   + offset : endY   - offset;
-
-            const oldOffset = offset;
-            if (startX > startXEnd) offset *= -1;
-
-            let data = 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - offset)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1;
-            //elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +(startXEnd - offset)+ ' Q ' +startXEnd+ ' ' +startY+ ', ' +startXEnd+ ' ' +y1);
-            //elements[0]['_POS_'] = { x1: startX };
-
-            elements[1].setAttribute('x1', startXEnd);
-            elements[1].setAttribute('y1', y1);
-            elements[1].setAttribute('x2', startXEnd);
-            elements[1].setAttribute('y2', y2);
-            elements[1].style.stroke = 'red';
-            //elements[1].setAttribute('visibility', 'hidden');
-            
-            offset = oldOffset;
-            if (startXEnd > endLeft) offset *= -1;
-
-            data += 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + offset)+ ' ' +endY+ ' H ' +endLeft;
-            elements[0].setAttribute('d', data);
-            //elements[2].setAttribute('d', 'M ' +startXEnd+ ' ' +y2+ ' Q ' +startXEnd+ ' ' +endY+  ', ' +(startXEnd + offset)+ ' ' +endY+ ' H ' +endLeft);
-            //elements[2]['_POS_'] = { y1: endY, x2: endLeft };
-  
-        } else  {
-            //const maxLeft  = parseFloat(elements[0].getAttribute('x1')) + 10,
-            //      maxRight = parseFloat(elements[2].getAttribute('x2')) - 10;
-            const maxLeft  = elements[0]['_POS_'].x1 + 10,
-                  maxRight = elements[2]['_POS_'].x2 - 10;
-            
-            if ((endLeft > maxLeft && endLeft < maxRight) || maxLeft > maxRight) {
-
-                elements[0].setAttribute('d', 'M ' +startX+ ' ' +startY+ ' H ' +endLeft);
-                
-                //elements[0].setAttribute('x2', endLeft); 
-
-                elements[1].setAttribute('x1', endLeft);
-                elements[1].setAttribute('x2', endLeft);
-
-                elements[2].setAttribute('d', 'M ' +endLeft+ ' ' +elements[2]['_POS_'].y1+ ' H ' +elements[2]['_POS_'].x2);
-                
-                //lements[2].setAttribute('x1', endLeft);
-
-                props.line = endLeft - maxLeft + 10;
-            }
+            if (mov === _MOV_.END) props.line = offsetLine;
         }
-        //const endX = (endLeft) - OFFSET;
-        //output['_PATH_'].firstChild.setAttribute('d', 'M ' +startX+ ' ' +startY+ ' h ' +OFFSET+ ' L ' +endX+ ' ' +endY+ ' h ' +OFFSET) ;
-        
-        /*if (startX === (endX - OFFSET) || startY === endY) {
-            console.log(startX +' '+ endX);
-            console.log(startY +' '+ endY);
-        }*/
+
+        const startXEnd = startX + offsetLine,
+                  diffY = Math.abs(startY - endTop),
+                  diffX = Math.abs(startXEnd - endLeft),
+                  diffZ = Math.abs(startX - startXEnd);
+
+        if (diffY < (_QUADRATIC_CURVE_OFFSET_ * 2) || 
+            diffX < (_QUADRATIC_CURVE_OFFSET_ * 2) || 
+            diffZ < (_QUADRATIC_CURVE_OFFSET_ * 2)) {
+
+            offset = Math.min(diffY, diffX, diffZ);
+            offset /= 2;
+        }
+
+        const y1 = (startY > endTop) ? startY - offset : startY + offset,
+              y2 = (startY > endTop) ? endTop + offset : endTop - offset;
+
+        const d = {
+            M0: { x: startX, y: startY },                                        //  MOVE TO - M x y
+            H0: { x: startXEnd - (startX > startXEnd ? offset * -1 : offset) },  //  HORIZONTAL LINE - H x
+            Q0: { x1: startXEnd, y1: startY, x: startXEnd, y: y1 },              //  QUADRATIC CURVE - Q x1 y1, x y
+
+            M1: { x: startXEnd, y: y2 },
+            Q1: { x1: startXEnd, y1: endTop, x: startXEnd + (startXEnd > endLeft ? offset * -1 : offset), y: endTop },
+            H1: { x: endLeft }
+        };
+
+        elements[0].setAttribute('d', 'M ' +d.M0.x+ ' ' +d.M0.y+ ' H ' +d.H0.x+ ' Q ' +d.Q0.x1+ ' ' +d.Q0.y1+ ', ' +d.Q0.x+ ' ' +d.Q0.y+ 
+                                     ' M ' +d.M1.x+ ' ' +d.M1.y+ ' Q ' +d.Q1.x1+ ' ' +d.Q1.y1+ ', ' +d.Q1.x+ ' ' +d.Q1.y+ ' H ' +d.H1.x);
+
+        elements[1].setAttribute('x1', startXEnd);
+        elements[1].setAttribute('y1', y1);
+        elements[1].setAttribute('x2', startXEnd);
+        elements[1].setAttribute('y2', y2);
+
+        if (mov === _MOV_.END) {
+            props.tail.x = endLeft;
+            props.tail.y = endTop;
+        }
     },
     _refresh = function() {
         const value = description.value;
@@ -274,21 +259,24 @@ export default function Field(ctx, append, properties) {
         context.setColor(color);
     };
     this.clearConnection = function() {
-        const lines = output['_PATH_'].children;
+        const elements = output['_PATH_'].children;
 
         output.classList.remove('linked', 'error');
         output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         output['_PATH_'].setAttribute('visibility', 'hidden');
         output['_PATH_'].removeAttribute('style');
         
-        for (let counter=0; counter<lines.length; counter++) {
-            lines[counter].removeAttribute('x1');
-            lines[counter].removeAttribute('y1');
-            lines[counter].removeAttribute('x2'); 
-            lines[counter].removeAttribute('y2');
-        }
+        elements[0].removeAttribute('d');
+
+        elements[1].removeAttribute('x1');
+        elements[1].removeAttribute('y1');
+        elements[1].removeAttribute('x2'); 
+        elements[1].removeAttribute('y2');
 
         delete props.line;
+
+        props.tail.x = 0;
+        props.tail.y = 0;
 
         if (context.hasConnection()) {
             output['_CONNECTION_'].clearConnection();

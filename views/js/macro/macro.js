@@ -281,23 +281,23 @@ export default function Macro(props) {
         return new_card;
     };
     this.newSVG = function(field) {
-        const svg_g = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
-        svg_g.setAttribute('class', 'main-app-svg-path');
+        const svgGroup = mainAppSVG.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'g'));
+        svgGroup.setAttribute('class', 'main-app-svg-path');
 
-        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+        svgGroup.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         
-        const moveableLine = svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
+        const moveableLine = svgGroup.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
         moveableLine.setAttribute('class', 'moveable');
         moveableLine['_FIELD_'] = field;
 
-        svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
+        //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         
         //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         //let new_path = new_group.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
         //new_path.setAttribute('class', 'main-app-svg-path');
 
         //return new_path;
-        return svg_g;
+        return svgGroup;
     };
     this.connect = function(fromOutput, toInput) {
         const viewportInput = toInput.getInputBounding();

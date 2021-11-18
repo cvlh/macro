@@ -24,7 +24,7 @@ export default function Macro(props) {
 
         rootCard, 
         currentDrag = null,
-        currentSelectedObject = null, // Field
+        currentSelectedObject = null, // Field | Card | Workspace
         visibilityMode = false,       // Boolean
 
         cardsArray = [],
@@ -267,10 +267,10 @@ export default function Macro(props) {
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.createCard = function(position, connect = null) {
-        const isRoot = (cardsArray.length ? false : true),
+        const isRoot = (cardsArray.length === 0 ? true : false),
               left = position[0], top = position[1];
 
-        let new_card = new Card(context, mainAppWrapper, isRoot);
+        let new_card = new Card(context, mainAppWrapper, cardsArray.length);
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;

@@ -537,13 +537,14 @@ body {
 
     outline-color: var(--main-border-color-high);
 }
-    /*.app-cards:focus {
-        outline-style: dashed;
+    .app-cards:focus {
+        outline-style: dashed; 
         outline-width: 2px;
         outline-offset: 1px;
 
-        border-color: transparent !important;
-     }*/
+        box-shadow: 0px 0px 12px 4px rgb(0 0 0 / 20%);
+        /* border-color: transparent !important; */
+     }
     .app-cards-header {
         position: relative;
 
@@ -665,10 +666,11 @@ body {
                 color: inherit;
             }
                 .app-cards-content-item input:focus {
-                    outline-width: 2px;
                     outline-style: dashed;
+                    outline-width: 2px;
+                    outline-offset: -1px;
                     outline-color: inherit;
-
+                    
                     border-color: transparent;
                 }
             .app-cards-content-item-output {

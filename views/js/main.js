@@ -1,7 +1,6 @@
 'use strict';
 
 import Macro from './macro/macro.js';
-import { _COLORS_, _TYPES_ } from './utils/constants.js';
 
 fetch('macro.json')
     .then(function(response) {

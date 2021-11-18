@@ -6,12 +6,12 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, append, root = false) {
+export default function Card(ctx, append, index) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const parent = ctx, 
           context = this, 
-          rootCard = root;
+          rootCard = (index === 0 ? true : false);
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
@@ -252,7 +252,7 @@ export default function Card(ctx, append, root = false) {
         const fragment = document.createDocumentFragment();
 
         card = addElement(fragment, 'div', 'app-cards');
-        //card.setAttribute('tabindex',  0);
+        card.setAttribute('tabindex',  index);
         if (rootCard) card.classList.add('root');
 
         header = addElement(card, 'div', 'app-cards-header');
@@ -262,6 +262,8 @@ export default function Card(ctx, append, root = false) {
             header.style.gridTemplateColumns = '24px 226px 24px';
             icon = addElement(header, 'div', 'icon app-cards-header-title root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
+
+            //card.setAttribute('tabindex', 0)
         } else {
             title = addElement(header, 'div', 'app-cards-header-title');
         }

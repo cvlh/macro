@@ -11,7 +11,7 @@
 			{
 				"properties": {
 					"id": "1",
-					"text": "INICIAR",
+					"text": "CHECKLIST",
 					"icon": "\uf04b",
 					"type": {
 						"type": 0

@@ -375,11 +375,6 @@ export default function Field(ctx, append, properties) {
         if (!properties.expand) treeviewRow.style.height = '0';
         
         treeviewRow['field_ctx'] = context;
-        /*treeviewRow['_ADDLOG_'] = { 
-            ctx: context, 
-            color: [ lightColor, properties.color ]
-        };*/
-        
 
         isExpand = true;
         if (hasChild && !props.expanded && properties.expand) {

@@ -39,13 +39,11 @@ export const _I18N_ = {
 
     field_options: 'Opções',
     field_visibility: 'Visibilidade',
-    field_no_visibility: 'Sem visibilidade',
-    field_visibility_edit: 'Editar',
-    field_visibility_clear: 'Limpar',
+
     field_visibility_fresh: 'Nova',
     field_visibility_extra: 'Complementar',
-    field_visibility_Save: 'Salvar',
-    field_visibility_Restore: 'Restaurar',
+    field_visibility_save: 'Salvar',
+    field_visibility_restore: 'Restaurar',
 
     field_execute: 'Execução', 
     field_execute_instant: 'Imediatamente ao selecionar', 
@@ -58,6 +56,14 @@ export const _I18N_ = {
     field_position_down: 'Descer',
 
     field_foreign_key: 'Chave estrangeira',
+
+    button_visibility_add: 'Adicionar',
+    button_visibility_edit: 'Editar',
+    button_visibility_clear: 'Limpar',
+
+    init_visibility: 'Visibilidade Inicial',
+    without_visibility: 'Nenhuma visibilidade',
+    with_visibility: 'Aplicado',
 
     simulate: 'Simular',
     

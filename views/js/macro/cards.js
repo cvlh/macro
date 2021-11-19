@@ -1,23 +1,28 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _TYPES_, _ICON_CHAR_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _TYPES_, _ICON_CHAR_, _VISIBILITY_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, append, index) {
+export default function Card(ctx, append, tab) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const parent = ctx, 
           context = this, 
-          rootCard = (index === 0 ? true : false);
+          rootCard = (tab === 0 ? true : false),
+          tabindex = ++tab;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
         add, close,
         fieldsArray = [],
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
+
+        props = {
+
+        },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _drag = function (evnt) { 
@@ -31,7 +36,7 @@ export default function Card(ctx, append, index) {
         parent.dragStart(evnt, context)
     },
     _add = function() {
-        const field = context.addField({});
+        const field = context.addField();
 
         parent.redraw(context);
         field.setFocus();
@@ -45,7 +50,8 @@ export default function Card(ctx, append, index) {
         for (let counterFields=0; counterFields<sizeFields; counterFields++) {
             fieldsArray[counterFields].setOrder(counterFields+1);
         }
-    };
+    },
+    _showProperties = function(evnt) { parent.showProperties(context); };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
@@ -202,9 +208,13 @@ export default function Card(ctx, append, index) {
         const size = fieldsArray.length;
 
         if (parent.getVisibilityMode()) {
+            card.removeAttribute('tabindex');
+
             add.style.display = 'none';
             if (!rootCard) close.style.display = 'none';
         } else {
+            card.setAttribute('tabindex',  tabindex);
+
             add.style.removeProperty('display');
             if (!rootCard) close.style.removeProperty('display');
         }
@@ -218,10 +228,51 @@ export default function Card(ctx, append, index) {
         fieldsArray.swap(position, order); 
         _order();
     };
+    this.setSelected = function(selected) { 
+        if (selected) {
+            //card.classList.add('selected');
+        } else {
+            //card.classList.remove('selected');
+        }
+    };
+    this.getProps = function (prop = null) {
+        if (prop === null) {
+            return props;
+        } else {
+            if (props.hasOwnProperty(prop)) {
+                return props[prop];
+            }
+        }
+        return null;
+    };
+    this.addToVisibility = function(field) {
+        props['visibility']['fields'].push(field);
+        field.setForVisibility();
+        //_updateVisibilityCounter();
+    };
+    this.removeFromVisibility = function(field) {
+        const removeId = field.getProps('id');
+        var counter, currentId;
+
+        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
+            currentId = props['visibility']['fields'][counter].getProps('id');
+            if (removeId === currentId) {
+                props['visibility']['fields'].splice(counter, 1); 
+                field.unsetForVisibility();
+                //_updateVisibilityCounter();
+                return;
+            }
+        }
+
+        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
     this.addField = function(properties) {
+        
+        properties = { ...properties, 'tab': tabindex };
+
         let new_field = new Field(this, items, properties);
         fieldsArray.push(new_field); 
         _order();
@@ -252,8 +303,12 @@ export default function Card(ctx, append, index) {
         const fragment = document.createDocumentFragment();
 
         card = addElement(fragment, 'div', 'app-cards');
-        card.setAttribute('tabindex',  index);
-        if (rootCard) card.classList.add('root');
+        card.setAttribute('tabindex', tabindex);
+        if (rootCard) {
+            card.classList.add('root');
+            props.visibility = { fields: [] }
+        }
+        card.addEventListener('focus', _showProperties, { capture: false });
 
         header = addElement(card, 'div', 'app-cards-header');
         header.addEventListener('mousedown', _drag, { capture: false });
@@ -262,8 +317,6 @@ export default function Card(ctx, append, index) {
             header.style.gridTemplateColumns = '24px 226px 24px';
             icon = addElement(header, 'div', 'icon app-cards-header-title root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
-
-            //card.setAttribute('tabindex', 0)
         } else {
             title = addElement(header, 'div', 'app-cards-header-title');
         }

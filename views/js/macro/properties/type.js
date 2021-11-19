@@ -109,7 +109,7 @@ export default function Type (ctx) {
 
         // TYPE SELECT
         rowTypeLabel = addElement(content, 'div', 'main-app-properties-row header');
-        addElement(rowTypeLabel, 'div', 'main-app-properties-label header', _I18N_.field_type);
+        addElement(rowTypeLabel, 'div', 'main-app-properties-label header bold', _I18N_.field_type);
         addElement(rowTypeLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
             rowType = addElement(content, 'div', 'main-app-properties-row');
@@ -152,7 +152,7 @@ export default function Type (ctx) {
 
         // MASK        
         rowMaskLabel = addElement(content, 'div', 'main-app-properties-row');
-        addElement(rowMaskLabel, 'div', 'main-app-properties-label header', _I18N_.field_mask);
+        addElement(rowMaskLabel, 'div', 'main-app-properties-label header bold', _I18N_.field_mask);
         addElement(rowMaskLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
             rowMask = addElement(content, 'div', 'main-app-properties-row');

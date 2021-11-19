@@ -42,6 +42,10 @@
 * { 
     font-family: 'VP-FONT', sans-serif;
     box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 html {
@@ -61,20 +65,19 @@ html {
     --main-green-med: #3ecf8e;
     --main-green-high: #24b47e;
     --main-green-bold: #28a745;
-    
+    --main-green-selected: #18662a;
+
     --main-yellow-med: #FDD835;
 
     --main-red-bold: #F44336;
+    --main-red-selected: #a32d24;
 
     --main-blue-med: #17a2b8;
     --main-blue-bold: #007bff;
+    --main-blue-selected: #0056b2;
 }
 body {
     overflow: hidden;
-    
-    margin: 0;
-    padding: 0;
-    border: 0;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -97,10 +100,6 @@ body {
     position: relative;
     overflow: hidden;
 
-    margin: 0;
-    padding: 0;
-    border: 0;
-
     display: grid; 
 
     grid-template-columns: 240px 5px auto 233px;
@@ -119,8 +118,8 @@ body {
     .main-app-builder-widget-holder {
         position: absolute;
         box-sizing: border-box;
-        padding: 0;
-        margin: 0;
+        /* padding: 0;
+        margin: 0; */
         bottom: 5px;
         right: 5px;
 
@@ -174,10 +173,6 @@ body {
             .main-app-builder-toolbar .button:hover { background-color: #66bb6a; }
             .main-app-builder-toolbar .button:active { background-color: #4caf50; }
     .main-app-wrapper {
-        margin: 0;
-        padding: 0;
-        border: 0;
-
         /*position: absolute;*/
         position: fixed;
         top: 0;
@@ -319,7 +314,10 @@ body {
             cursor: pointer;
         }
         .main-app-properties-row input[type=checkbox]:checked + label,
-        .main-app-properties-row input[type=radio]:checked + label { font-weight: 600; }
+        .main-app-properties-row input[type=radio]:checked + label { 
+            font-weight: 600;
+            color: var(--main-blue-selected);
+        }
         .main-app-properties-row input[type=button] {
             background-color: var(--main-background);
             border: 1px solid var(--main-border-color);
@@ -349,10 +347,10 @@ body {
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-            .main-app-properties-label.header { 
-                font-weight: 600;
-                grid-column: 2 / span 23; 
-            }
+            /* .main-app-properties-label.without { color: var(--main-red-selected);  }
+            .main-app-properties-label.with    { color: var(--main-blue-selected); } */
+            .main-app-properties-label.bold { font-weight: 600; }
+            .main-app-properties-label.header { grid-column: 2 / span 23; }
             .main-app-properties-label.row { grid-column: 2 / span 26; }
 
             .main-app-properties-label.help { 
@@ -597,7 +595,7 @@ body {
         grid-template-columns: 18px auto;
         align-items: center;
         padding: 4px 0 4px 0;
-        margin: 0;
+        /* margin: 0; */
         outline-color: inherit;
     }
         .app-cards-content-input {
@@ -668,7 +666,7 @@ body {
                 .app-cards-content-item input:focus {
                     outline-style: dashed;
                     outline-width: 2px;
-                    outline-offset: -1px;
+                    outline-offset: 0px;
                     outline-color: inherit;
                     
                     border-color: transparent;
@@ -714,9 +712,9 @@ body {
 
     text-align: center;
     
-    padding: 0;
+    /* padding: 0;
     margin: 0;
-    border: 0;
+    border: 0; */
 }
 .crosshair {
     position: absolute;
@@ -726,7 +724,7 @@ body {
     background-color: #000;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.1;
 }
 .fontAwesome {
     font-family: 'Font Awesome 5 Free';

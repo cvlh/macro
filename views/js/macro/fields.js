@@ -481,7 +481,47 @@ export default function Field(ctx, append, properties) {
             _unsetForVisibility();
         }
     };
+    this.setSelected = function(selected) { 
+        if (selected) {
+            item.classList.add('selected');
+            if (context.hasConnection()) output['_PATH_'].style.strokeWidth = '7px';
+        } else {
+            item.classList.remove('selected');
+            if (context.hasConnection()) output['_PATH_'].style.removeProperty('stroke-width');
+        }
+    };
+    this.getProps = function (prop = null) {
+        if (prop === null) {
+            return props;
+        } else {
+            if (props.hasOwnProperty(prop)) {
+                return props[prop];
+            }
+        }
+        return null;
+    };
+    this.addToVisibility = function(field) {
+        props['visibility']['fields'].push(field);
+        field.setForVisibility();
+        _updateVisibilityCounter();
+    };
+    this.removeFromVisibility = function(field) {
+        const removeId = field.getProps('id');
+        var counter, currentId;
 
+        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
+            currentId = props['visibility']['fields'][counter].getProps('id');
+            if (removeId === currentId) {
+                props['visibility']['fields'].splice(counter, 1); 
+                field.unsetForVisibility();
+                _updateVisibilityCounter();
+                return;
+            }
+        }
+
+        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
+    };
+    
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setOrder = function(order) {
         props.order = order;
@@ -498,15 +538,6 @@ export default function Field(ctx, append, properties) {
             main.redraw(parent);
         }
     }
-    this.setSelected = function(selected) { 
-        if (selected) {
-            item.classList.add('selected');
-            if (context.hasConnection()) output['_PATH_'].style.strokeWidth = '7px';
-        } else {
-            item.classList.remove('selected');
-            if (context.hasConnection()) output['_PATH_'].style.removeProperty('stroke-width');
-        }
-    };
 
     this.setFocus = function() { description.focus(); };
     this.toggleExpand = function(icon) { 
@@ -564,42 +595,11 @@ export default function Field(ctx, append, properties) {
         }
     };
 
-    this.getProps = function (prop = null) {
-        if (prop === null) {
-            return props;
-        } else {
-            if (props.hasOwnProperty(prop)) {
-                return props[prop];
-            }
-        }
-        return null;
-    };
     this.getRect = function () { return item.getBoundingClientRect(); };
 
     this.toggleVisibility = function() { _toggleVisibility(); };
     this.setForVisibility = function() { _setForVisibility(); };
     this.unsetForVisibility = function() { _unsetForVisibility(); };
-    this.addToVisibility = function(field) {
-        props['visibility']['fields'].push(field);
-        field.setForVisibility();
-        _updateVisibilityCounter();
-    };
-    this.removeFromVisibility = function(field) {
-        const removeId = field.getProps('id');
-        var counter, currentId;
-
-        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
-            currentId = props['visibility']['fields'][counter].getProps('id');
-            if (removeId === currentId) {
-                props['visibility']['fields'].splice(counter, 1); 
-                field.unsetForVisibility();
-                _updateVisibilityCounter();
-                return;
-            }
-        }
-
-        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
-    };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
@@ -617,8 +617,12 @@ export default function Field(ctx, append, properties) {
         description.setAttribute('type', 'text');
         description.setAttribute('maxlength', '64');
         description.setAttribute('value', props.text);
+        description.setAttribute('tabindex', props.tab);
+        
         description.addEventListener('keyup', _refresh, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });
+
+        delete props.tab;
 
         visibility = addElement(item, 'div', 'app-cards-content-item-visibility');
         visibility.addEventListener('mouseover', _previewVisibility, { capture: false });

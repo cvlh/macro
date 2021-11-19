@@ -62,7 +62,7 @@ export default function Color (ctx) {
         content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
         row = addElement(content, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_color_header);
+              addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_color_header);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(content, 'div', 'main-app-properties-row');

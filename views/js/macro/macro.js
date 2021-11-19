@@ -318,6 +318,8 @@ export default function Macro(props) {
         context.serialize();
     };
     this.showProperties = function(object) {
+        if (visibilityMode) return;
+        
         if (currentSelectedObject !== null) {
             currentSelectedObject.setSelected(false);
         }

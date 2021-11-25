@@ -170,7 +170,10 @@ body {
             font-size: 12px;
             width: 90px;
         }
-            .main-app-builder-toolbar .button:hover { background-color: #66bb6a; }
+            .main-app-builder-toolbar .button:hover { 
+                background-color: #66bb6a;
+                font-weight: 600;
+            }
             .main-app-builder-toolbar .button:active { background-color: #4caf50; }
     .main-app-wrapper {
         /*position: absolute;*/
@@ -190,8 +193,8 @@ body {
             outline-style: dashed;
             outline-width: 2px;
             outline-offset: 1px;
-            /*outline-color: inherit;*/
-            outline-color: var(--main-font-color-med);
+
+            outline-color: var(--main-font-color-high);
         }
     .main-app-svg {
         z-index: 0;
@@ -240,11 +243,7 @@ body {
 
     z-index: 3;
 }
-    .main-app-properties-content {
-        padding: 8px 0;
-        border-bottom: 1px solid #e5e5e5;
-        display: none;
-    }
+    .main-app-properties-content { display: none; }
         .main-app-properties-content.disabled,
         .main-app-properties-content.disabled input {
             background-color: #FAFAFA;
@@ -263,7 +262,12 @@ body {
 
         color: var(--main-font-color-bold);
     }
-        .main-app-properties-row.header { background-color: var(--main-background); }
+        .main-app-properties-row.spacer { padding: 5px 0; }
+        .main-app-properties-row.header { 
+            background-color: var(--main-background); 
+            border-top: 1px solid var(--main-border-color);
+            border-bottom: 1px solid var(--main-border-color);
+        }
         .main-app-properties-row textarea {
             grid-column-start: 2;
             grid-column-end: span 26;
@@ -321,7 +325,7 @@ body {
         .main-app-properties-row input[type=button] {
             background-color: var(--main-background);
             border: 1px solid var(--main-border-color);
-            
+            color: var(--main-font-color-high);
             cursor: pointer;
             outline: none;
             border-radius: 4px;
@@ -330,6 +334,7 @@ body {
             .main-app-properties-row input[type=button]:hover { 
                 background-color: var(--main-border-color);
                 border: 1px solid var(--main-border-color-high);
+                font-weight: 600;
             }
             .main-app-properties-row input[type=button]:active { 
                 background-color: var(--main-border-color-high);
@@ -347,12 +352,19 @@ body {
             white-space: nowrap;
             text-overflow: ellipsis;
         }
-            /* .main-app-properties-label.without { color: var(--main-red-selected);  }
-            .main-app-properties-label.with    { color: var(--main-blue-selected); } */
+            .main-app-properties-label.status {
+                grid-column: 2 / span 26;
+                color: var(--main-blue-selected); 
+                /* text-align: center; */
+            }
             .main-app-properties-label.bold { font-weight: 600; }
             .main-app-properties-label.header { grid-column: 2 / span 23; }
             .main-app-properties-label.row { grid-column: 2 / span 26; }
-
+            /* .main-app-properties-label.counter { 
+                grid-column: 2 / span 8;
+                text-align: center;
+                color: var(--main-green-selected);
+            } */
             .main-app-properties-label.help { 
                 grid-column: 26 / span 2; 
                 font-weight: 100;
@@ -539,9 +551,9 @@ body {
         outline-style: dashed; 
         outline-width: 2px;
         outline-offset: 1px;
+        outline-color: var(--main-font-color-high);
 
         box-shadow: 0px 0px 12px 4px rgb(0 0 0 / 20%);
-        /* border-color: transparent !important; */
      }
     .app-cards-header {
         position: relative;
@@ -618,13 +630,13 @@ body {
                 align-items: center;
                 display: grid;
                 grid-template-columns: 25px auto 20px 20px;
-                grid-auto-rows: 32px;
+                grid-auto-rows: 34px;
                 font-size: 11px;
                 position: relative;
                 color: var(--main-font-color-black);
                 outline-color: inherit;
-                border-top-left-radius: 4px;
-                border-bottom-left-radius: 4px;
+                /* border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px; */
 
                 transition: .15s background-color linear;
             }

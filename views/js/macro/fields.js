@@ -171,9 +171,9 @@ export default function Field(ctx, append, properties) {
         if (props['visibility']['fields'].length) {
             for (var counter=0; counter<props['visibility']['fields'].length; counter++) {
                 if (evnt.type === 'mouseover') {
-                    props['visibility']['fields'][counter].setForVisibility();
+                    props['visibility']['fields'][counter].selectedForVisibility();
                 } else {
-                    props['visibility']['fields'][counter].unsetForVisibility();
+                    props['visibility']['fields'][counter].unselectForVisibility();
                 }
             }
         }
@@ -187,7 +187,7 @@ export default function Field(ctx, append, properties) {
             object.removeFromVisibility(context);
         }
     },
-    _setForVisibility = function() {
+    _selectedForVisibility = function() {
         const color = context.getColor() + 'CC';
 
         treeviewRow.style.outline = 'none';
@@ -204,7 +204,7 @@ export default function Field(ctx, append, properties) {
 
         isSelectedForvisibility = true;
     },
-    _unsetForVisibility = function() {
+    _unselectForVisibility = function() {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
         if (!rootField) {
@@ -224,11 +224,9 @@ export default function Field(ctx, append, properties) {
         isSelectedForvisibility = false;
     },
     _updateVisibilityCounter = function() {
-        if (props['visibility']['fields'].length) {
-            visibility.textContent = props['visibility']['fields'].length;
-        } else {
-            visibility.textContent = '';
-        }
+        const size = props['visibility']['fields'].length;
+
+        visibility.textContent = (size ? size : '');
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -431,17 +429,6 @@ export default function Field(ctx, append, properties) {
 
         return response;
     };
-    this.initVisibility = function(fields) {
-        const sizeVisibility = props['visibility']['fields'].length;
-
-        for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
-            if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
-                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
-            }
-        }
-        _updateVisibilityCounter();
-        if (context.hasConnection()) output['_CONNECTION_'].initVisibility(fields);
-    }
     this.setExpand = function(status) {
         const hasChild = context.hasConnection();
 
@@ -468,17 +455,15 @@ export default function Field(ctx, append, properties) {
         }
         //return color;
     };
-    this.setVisibilityMode = function() {
-        if (main.getVisibilityMode()) {
-            item.classList.add('visibility');
-            description.setAttribute('disabled', true);
-            item.addEventListener('click', _toggleVisibility, { capture: false });
-        } else {            
-            item.classList.remove('visibility');
-            description.removeAttribute('disabled');
-            item.removeEventListener('click', _toggleVisibility, { capture: false });
+    this.swap = function() {
+        let sibling = item.previousElementSibling,
+        parentNode = item.parentNode;
 
-            _unsetForVisibility();
+        if (sibling !== null) { 
+            parentNode.insertBefore(item, sibling);
+
+            parent.swap(props.order-1, _ORDER_.UP);
+            main.redraw(parent);
         }
     };
     this.setSelected = function(selected) { 
@@ -500,9 +485,36 @@ export default function Field(ctx, append, properties) {
         }
         return null;
     };
+
+    this.initVisibility = function(fields) {
+        const sizeVisibility = props['visibility']['fields'].length;
+
+        for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
+            if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
+                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
+            }
+        }
+        _updateVisibilityCounter();
+        if (context.hasConnection()) output['_CONNECTION_'].initVisibility(fields);
+    };
+    this.setVisibilityMode = function() {
+        if (main.getVisibilityMode()) {
+            item.classList.add('visibility');
+            description.setAttribute('disabled', true);
+            item.addEventListener('click', _toggleVisibility, { capture: false });
+        } else {            
+            item.classList.remove('visibility');
+            description.removeAttribute('disabled');
+            item.removeEventListener('click', _toggleVisibility, { capture: false });
+
+            _updateVisibilityCounter();
+            _unselectForVisibility();
+        }
+    };    
     this.addToVisibility = function(field) {
         props['visibility']['fields'].push(field);
-        field.setForVisibility();
+        field.selectedForVisibility();
+
         _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
@@ -513,7 +525,8 @@ export default function Field(ctx, append, properties) {
             currentId = props['visibility']['fields'][counter].getProps('id');
             if (removeId === currentId) {
                 props['visibility']['fields'].splice(counter, 1); 
-                field.unsetForVisibility();
+                field.unselectForVisibility();
+
                 _updateVisibilityCounter();
                 return;
             }
@@ -527,18 +540,6 @@ export default function Field(ctx, append, properties) {
         props.order = order;
         index.textContent = order;
     };
-    this.swap = function() {
-        let sibling = item.previousElementSibling,
-        parentNode = item.parentNode;
-
-        if (sibling !== null) { 
-            parentNode.insertBefore(item, sibling);
-
-            parent.swap(props.order-1, _ORDER_.UP);
-            main.redraw(parent);
-        }
-    }
-
     this.setFocus = function() { description.focus(); };
     this.toggleExpand = function(icon) { 
         props.expanded = !props.expanded;
@@ -553,7 +554,6 @@ export default function Field(ctx, append, properties) {
             output['_CONNECTION_'].setExpand(props.expanded);
         }
     };
-
     this.setType = function(fieldType = props.type.type) { 
         const numFieldType = parseInt(fieldType);
 
@@ -576,7 +576,6 @@ export default function Field(ctx, append, properties) {
 
         return props['type'];
     };
-
     this.check = function(target) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
@@ -594,12 +593,11 @@ export default function Field(ctx, append, properties) {
             //target.style.removeProperty('cursor');
         }
     };
-
     this.getRect = function () { return item.getBoundingClientRect(); };
 
     this.toggleVisibility = function() { _toggleVisibility(); };
-    this.setForVisibility = function() { _setForVisibility(); };
-    this.unsetForVisibility = function() { _unsetForVisibility(); };
+    this.selectedForVisibility = function() { _selectedForVisibility(); };
+    this.unselectForVisibility = function() { _unselectForVisibility(); };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {

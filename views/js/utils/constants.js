@@ -80,4 +80,4 @@ export const _ORDER_ = {
     DOWN : 2
 };
 
-export const _QUADRATIC_CURVE_OFFSET_ = 15;
+export const _QUADRATIC_CURVE_OFFSET_ = 20;

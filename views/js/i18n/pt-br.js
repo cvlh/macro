@@ -3,6 +3,8 @@
 export const _I18N_ = {
     root_header: 'INÍCIO DA MACRO',
 
+    item_selected: ['item selecionado', 'itens selecionados'],
+
     field_id: 'Identificação',
     field_value: 'Texto',
 
@@ -59,10 +61,13 @@ export const _I18N_ = {
 
     button_visibility_add: 'Adicionar',
     button_visibility_edit: 'Editar',
-    button_visibility_clear: 'Limpar',
+    button_visibility_cancel: 'Cancelar',
+    button_visibility_save: 'Salvar',
+    button_visibility_clear: 'Excluir',
 
     init_visibility: 'Visibilidade Inicial',
     without_visibility: 'Nenhuma visibilidade',
+    create_visibility: 'Selecione a nova visibilidade',
     with_visibility: 'Aplicado',
 
     simulate: 'Simular',

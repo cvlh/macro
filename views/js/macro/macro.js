@@ -235,7 +235,7 @@ export default function Macro(props) {
         transform.top = top - position.offsetTop;
 
         mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
-    }
+    };
     this.getDragType = function() { return _DRAG_.AREA; };
     this.serialize = function() {
 
@@ -263,7 +263,7 @@ export default function Macro(props) {
     this.initVisibility = function(fields) { 
         rootCard.initVisibility(fields);
         context.redraw();
-     };
+    };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.createCard = function(position, connect = null) {
@@ -331,26 +331,30 @@ export default function Macro(props) {
 
     this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function() {
-        const size = cardsArray.length,
-              visibility = currentSelectedObject.getProps('visibility');
+        let counter;
+
+        const sizeCard = cardsArray.length,
+              visibility = currentSelectedObject.getProps('visibility'),
+              sizeFields = visibility['fields'].length;
 
         visibilityMode = !visibilityMode;
 
-        if (visibility['fields'].length) {
-            for (var counter=0; counter<visibility['fields'].length; counter++) {
-                visibility['fields'][counter].setForVisibility();
-            }
+        for (counter=0; counter<sizeFields; counter++) {
+            visibility['fields'][counter].selectedForVisibility();
         }
 
-        for (let counter=0; counter<size; counter++) {
+        for (counter=0; counter<sizeCard; counter++) {
             cardsArray[counter].setVisibilityMode();
         }
     };
-    this.clearVisibility = function() {
-        const visibility = currentSelectedObject.getProps('visibility');
+    this.deleteVisibility = function() {
+        if (visibilityMode) {
+            const visibility = currentSelectedObject.getProps('visibility');
 
-        while (visibility['fields'].length) {
-            currentSelectedObject.removeFromVisibility(visibility['fields'][0]);
+            while (visibility['fields'].length) {
+                currentSelectedObject.removeFromVisibility(visibility['fields'][0]);
+            }
+            context.setVisibilityMode();
         }
     };
 

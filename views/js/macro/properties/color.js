@@ -61,11 +61,11 @@ export default function Color (ctx) {
 
         content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
-        row = addElement(content, 'div', 'main-app-properties-row');
+        row = addElement(content, 'div', 'main-app-properties-row header');
               addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_color_header);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        row = addElement(content, 'div', 'main-app-properties-row');
+        row = addElement(content, 'div', 'main-app-properties-row spacer');
         for (let color_idx in _COLORS_) {
             if (_COLORS_.hasOwnProperty(color_idx)) {
                 color = addElement(row, 'div', 'icon main-app-properties-color');

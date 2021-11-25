@@ -26,8 +26,7 @@ export default function Card(ctx, append, tab) {
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _drag = function (evnt) { 
-        evnt.preventDefault();
-
+        //evnt.preventDefault();
         const target = evnt.target,
               targetClass = target.classList;
 
@@ -181,13 +180,6 @@ export default function Card(ctx, append, tab) {
 
         return response;
     };
-    this.initVisibility = function(fields) {
-        const sizeFields = fieldsArray.length;
-        
-        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
-            fieldsArray[counterFields].initVisibility(fields);
-        }
-    };
     this.setExpand = function(status) {
         const sizeFields = fieldsArray.length;
 
@@ -201,27 +193,6 @@ export default function Card(ctx, append, tab) {
 
         for (counterFields=0; counterFields<sizeFields; counterFields++) {
             fieldsArray[counterFields].setBorderColor(light, index, color);
-        }
-    };
-    this.setVisibilityMode = function() {
-        let counter;
-        const size = fieldsArray.length;
-
-        if (parent.getVisibilityMode()) {
-            card.removeAttribute('tabindex');
-
-            add.style.display = 'none';
-            if (!rootCard) close.style.display = 'none';
-        } else {
-            card.setAttribute('tabindex',  tabindex);
-
-            add.style.removeProperty('display');
-            if (!rootCard) close.style.removeProperty('display');
-        }
-
-        for (counter=0; counter<size; counter++) {
-            //if (rootCard) fieldsArray[counter].setColor(null);
-            fieldsArray[counter].setVisibilityMode();
         }
     };
     this.swap = function(position, order) { 
@@ -245,10 +216,38 @@ export default function Card(ctx, append, tab) {
         }
         return null;
     };
+
+    this.initVisibility = function(fields) {
+        const sizeFields = fieldsArray.length;
+        
+        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+            fieldsArray[counterFields].initVisibility(fields);
+        }
+    };      
+    this.setVisibilityMode = function() {
+        let counter;
+        const size = fieldsArray.length;
+
+        if (parent.getVisibilityMode()) {
+            card.removeAttribute('tabindex');
+
+            add.style.display = 'none';
+            if (!rootCard) close.style.display = 'none';
+        } else {
+            card.setAttribute('tabindex',  tabindex);
+
+            add.style.removeProperty('display');
+            if (!rootCard) close.style.removeProperty('display');
+        }
+
+        for (counter=0; counter<size; counter++) {
+            //if (rootCard) fieldsArray[counter].setColor(null);
+            fieldsArray[counter].setVisibilityMode();
+        }
+    };
     this.addToVisibility = function(field) {
         props['visibility']['fields'].push(field);
-        field.setForVisibility();
-        //_updateVisibilityCounter();
+        field.selectedForVisibility();
     };
     this.removeFromVisibility = function(field) {
         const removeId = field.getProps('id');
@@ -258,8 +257,7 @@ export default function Card(ctx, append, tab) {
             currentId = props['visibility']['fields'][counter].getProps('id');
             if (removeId === currentId) {
                 props['visibility']['fields'].splice(counter, 1); 
-                field.unsetForVisibility();
-                //_updateVisibilityCounter();
+                field.unselectForVisibility();
                 return;
             }
         }
@@ -281,6 +279,7 @@ export default function Card(ctx, append, tab) {
     };
     this.isRoot = function() { return rootCard; };
     this.removeField = function() { };
+
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!rootCard) {

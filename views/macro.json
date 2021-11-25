@@ -1013,7 +1013,8 @@
 								},
 								"order": 1,
 								"visibility": {
-									"fields": []
+									"fields": [],
+									"flags": 17
 								},
 								"expanded": true
 							}

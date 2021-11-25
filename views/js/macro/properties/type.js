@@ -112,7 +112,7 @@ export default function Type (ctx) {
         addElement(rowTypeLabel, 'div', 'main-app-properties-label header bold', _I18N_.field_type);
         addElement(rowTypeLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-            rowType = addElement(content, 'div', 'main-app-properties-row');
+            rowType = addElement(content, 'div', 'main-app-properties-row spacer');
             icon = addElement(rowType, 'div', 'icon main-app-properties-type-icon');
 
             type = addElement(rowType, 'select');

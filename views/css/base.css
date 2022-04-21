@@ -206,7 +206,11 @@ body {
             pointer-events: stroke; 
             cursor: col-resize;
         }
-            .main-app-svg line.moveable:hover { stroke-width: 4px; } 
+            .main-app-svg line.moveable:hover { 
+                /* stroke-width: 6px; */
+                stroke-dasharray: 8 2;
+                stroke-linecap: butt;
+            } 
         .main-app-svg-path {
             stroke: var(--main-border-color-high);
             stroke-width: 3px;
@@ -552,7 +556,7 @@ body {
         outline-width: 2px;
         outline-offset: 1px;
         outline-color: var(--main-font-color-high);
-
+        background-attachment: scroll ;
         box-shadow: 0px 0px 12px 4px rgb(0 0 0 / 20%);
      }
     .app-cards-header {
@@ -604,7 +608,7 @@ body {
     .app-cards-content {
         position: relative;
         display: grid;
-        grid-template-columns: 18px auto;
+        grid-template-columns: 22px auto;
         align-items: center;
         padding: 4px 0 4px 0;
         /* margin: 0; */
@@ -640,7 +644,11 @@ body {
 
                 transition: .15s background-color linear;
             }
-                .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
+                .app-cards-content-item.selected { 
+                    background-color: var(--main-border-color) !important; 
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
                     opacity: 0.85;

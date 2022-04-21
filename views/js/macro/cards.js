@@ -6,10 +6,10 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(ctx, append, tab) {
+export default function Card(_ctx, _properties, tab) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, 
+    const parent = _ctx, 
           context = this, 
           rootCard = (tab === 0 ? true : false),
           tabindex = ++tab;
@@ -21,7 +21,9 @@ export default function Card(ctx, append, tab) {
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
         props = {
-
+            visibility: { 
+                fields: []
+            }
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -171,7 +173,14 @@ export default function Card(ctx, append, tab) {
             position: [ position.left, position.top ],
             fields: []
         };
-        
+        if (props.hasOwnProperty('visibility')) {
+            const visibilityFields = { 'visibility' : { 'fields': [] }};
+            for (counterFields=0; counterFields<props['visibility']['fields'].length; counterFields++) {
+                visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterFields].getProps('id'));
+            }
+            response['properties'] = { ...props, ...visibilityFields };
+        }
+
         for (counterFields=0; counterFields<sizeFields; counterFields++) {
             properties.tab.push(counterFields+1);
             response['fields'].push(fieldsArray[counterFields].serialize(fragment, properties));
@@ -219,6 +228,15 @@ export default function Card(ctx, append, tab) {
 
     this.initVisibility = function(fields) {
         const sizeFields = fieldsArray.length;
+
+        if (props.hasOwnProperty('visibility')) {
+            const sizeVisibility = props['visibility']['fields'].length;
+            for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
+                if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
+                    props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
+                }
+            }
+        }
         
         for (let counterFields=0; counterFields<sizeFields; counterFields++) {
             fieldsArray[counterFields].initVisibility(fields);
@@ -283,10 +301,10 @@ export default function Card(ctx, append, tab) {
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!rootCard) {
-        this.setHeader = function(text) {     
+        this.setHeader = function(text) {
             title.textContent = text;
         };
-        this.getInputBounding = function() {    
+        this.getInputBounding = function() {
             const rect = input.getBoundingClientRect();
             return { left: rect.left, top: rect.top }; 
             
@@ -303,10 +321,14 @@ export default function Card(ctx, append, tab) {
 
         card = addElement(fragment, 'div', 'app-cards');
         card.setAttribute('tabindex', tabindex);
-        if (rootCard) {
-            card.classList.add('root');
-            props.visibility = { fields: [] }
+        if (rootCard) { 
+            card.classList.add('root'); 
+
+            props.visibility['autoExecute'] = false;
         }
+
+        props = {...props, ..._properties};
+
         card.addEventListener('focus', _showProperties, { capture: false });
 
         header = addElement(card, 'div', 'app-cards-header');
@@ -340,6 +362,6 @@ export default function Card(ctx, append, tab) {
             items = addElement(content, 'div', 'app-cards-content-items');
         }
 
-        append.appendChild(fragment);
+        parent.appendAt().appendChild(fragment);
     })();
 }

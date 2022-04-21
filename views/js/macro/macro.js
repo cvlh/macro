@@ -252,7 +252,7 @@ export default function Macro(props) {
             
             transform:  [ transform.left, transform.top, transform.scale ],
             size:       [ size.width, size.height ],
-            visibility: [ "1", "2", "3", "4", "5", "6", "7", "8" ],
+            //visibility: [ "1", "2", "3", "4", "5", "6", "7", "8" ],
 
             root: rootCard.serialize(fragment)
         };
@@ -260,17 +260,15 @@ export default function Macro(props) {
 
         return response;
     };
-    this.initVisibility = function(fields) { 
-        rootCard.initVisibility(fields);
-        context.redraw();
-    };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.createCard = function(position, connect = null) {
+    this.appendAt = function () { return mainAppWrapper; }
+
+    this.createCard = function(position, properties, connect = null) {
         const isRoot = (cardsArray.length === 0 ? true : false),
               left = position[0], top = position[1];
 
-        let new_card = new Card(context, mainAppWrapper, cardsArray.length);
+        const new_card = new Card(context, properties, cardsArray.length);
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;
@@ -329,6 +327,10 @@ export default function Macro(props) {
         properties.refresh();
     };
 
+    this.initVisibility = function(fields) { 
+        rootCard.initVisibility(fields);
+        context.redraw();
+    };
     this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function() {
         let counter;
@@ -464,7 +466,12 @@ export default function Macro(props) {
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
         
         mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
-        addElement(mainBuilderToolbar, 'div', 'button');
+        const serializeBtn = addElement(mainBuilderToolbar, 'div', 'icon', _ICON_CHAR_.OUTPUT);
+        serializeBtn.addEventListener('click', () => {
+            var x = context.serialize();
+            console.log(JSON.stringify(x));
+        }, { capture: false });
+        
         addElement(mainBuilderToolbar, 'div', 'button');
         addElement(mainBuilderToolbar, 'div');
 

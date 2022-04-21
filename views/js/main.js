@@ -24,7 +24,7 @@ function create_macro (data) {
     macro.initVisibility(allFields);
 }
 function create_card (macro, props, allFields, output = null) {
-    let card = macro.createCard(props['position'], output);
+    let card = macro.createCard(props['position'], props['properties'], output);
     create_field(card, props['fields'], allFields);
 }
 function create_field (card, fields, allFields) {

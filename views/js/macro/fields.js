@@ -7,7 +7,9 @@ import { _I18N_ } from './../i18n/pt-br.js';
 export default function Field(ctx, append, properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const main = ctx.getMain(), parent = ctx, context = this, 
+    const main = ctx.getMain(), 
+          parent = ctx, 
+          context = this, 
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////

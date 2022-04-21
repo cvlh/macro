@@ -27,11 +27,15 @@ export default function Simulate(ctx) {
             path = target['_props_']['path'];
             color = target['_props_']['color'];
 
+            visibility = path['properties']['visibility']['fields'];
             if (path.hasOwnProperty('output')) {
+
                 slide = addElement(simulateMain, 'div', 'simulate-content-slide');
                 for (counter=0; counter<path['output']['fields'].length; counter++) {
                     shortcut = path['output']['fields'][counter]['properties'];
 
+                    if (visibility.indexOf(shortcut['id']) === -1) continue;
+                    
                     label = shortcut['text'];
                     icon  = shortcut['icon'];
                     type  = shortcut['type']['type'];
@@ -69,7 +73,11 @@ export default function Simulate(ctx) {
 
         macro = parent.serialize();
 
-        visibility = macro['visibility'];
+        while (simulateMain.hasChildNodes()) {
+            simulateMain.removeChild(simulateMain.firstChild);
+        }
+
+        visibility = macro['root']['properties']['visibility']['fields'];
 
         slide = addElement(simulateMain, 'div', 'simulate-content-slide');
         slide.style.left = '0';

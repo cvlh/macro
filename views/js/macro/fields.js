@@ -30,8 +30,7 @@ export default function Field(ctx, append, properties) {
             },
             expanded: true,
 
-            tail: { x: 0, y: 0 },
-            // line: 0
+            tail: { x: 0, y: 0 }
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -352,6 +351,7 @@ export default function Field(ctx, append, properties) {
             visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
             //}
         }
+        visibilityFields['visibility']['fields'].sort();
         props.text = description.value;
         response['properties'] = { ...props, ...visibilityFields };
 

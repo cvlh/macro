@@ -214,8 +214,10 @@ export default function Visibility (ctx) {
         title = addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_visibility);
             addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        row = addElement(content, 'div', 'main-app-properties-row spacer');
-        status = addElement(row, 'div', 'main-app-properties-label status bold');
+        // row = addElement(content, 'div', 'main-app-properties-row spacer');
+        row = addElement(content, 'div', 'main-app-properties-row');
+        // status = addElement(row, 'div', 'main-app-properties-label status bold');
+        status = addElement(row, 'div', 'main-app-properties-label status');
 
             btnAdd = addElement(row, 'input');
             btnAdd.setAttribute('type', 'button');
@@ -249,8 +251,8 @@ export default function Visibility (ctx) {
 
         optionsGroup = addElement(content, 'div');
         row = addElement(optionsGroup, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_options);
-              addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
+              addElement(row, 'div', 'main-app-properties-label sub-header', _I18N_.field_options);
+              // addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(optionsGroup, 'div', 'main-app-properties-row');
             fresh = addElement(row, 'input');
@@ -302,8 +304,8 @@ export default function Visibility (ctx) {
 
         executionGroup = addElement(content, 'div');
         row = addElement(executionGroup, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label header', _I18N_.field_execute);
-              addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
+              addElement(row, 'div', 'main-app-properties-label sub-header', _I18N_.field_execute);
+              // addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
         row = addElement(executionGroup, 'div', 'main-app-properties-row');
             instant = addElement(row, 'input', 'main-app-properties-checkbox');

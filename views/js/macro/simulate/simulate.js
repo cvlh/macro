@@ -13,6 +13,7 @@ export default function Simulate(ctx) {
     let fragment, 
         simulatePopup, simulateMain,
         macro,
+        currentVisibilityIds, stackVisibility,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _receive_events = function(evnt) {
@@ -21,80 +22,50 @@ export default function Simulate(ctx) {
         const target = evnt.target,
               parent = target.parentElement;
 
-        var slide, item, label, icon, type, div, color, shortcut, visibility, path, counter;
-        
+        // let slide, item, label, icon, type, div, color, shortcut, visibility, path, counter;
+
         if (target.classList.contains('item')) {
-            path = target['_props_']['path'];
-            color = target['_props_']['color'];
+            const [id, color] = target['_props_'];
 
-            visibility = path['properties']['visibility']['fields'];
-            if (path.hasOwnProperty('output')) {
+            currentVisibilityIds = macro[id]['visibility']['fields'];
+            // currentVisibilityIds.sort();
+            // console.log(currentVisibilityIds);
 
-                slide = addElement(simulateMain, 'div', 'simulate-content-slide');
-                for (counter=0; counter<path['output']['fields'].length; counter++) {
-                    shortcut = path['output']['fields'][counter]['properties'];
+            const slide = _create_view(id, color);
 
-                    if (visibility.indexOf(shortcut['id']) === -1) continue;
-                    
-                    label = shortcut['text'];
-                    icon  = shortcut['icon'];
-                    type  = shortcut['type']['type'];
-
-                    item = addElement(slide, 'div', 'item');
-                    item['_props_'] = {'path': path['output']['fields'][counter], 'color': color};
-
-                    div = addElement(item, 'div', 'fontAwesome item-icon', icon);
-                    div.style.color = color;
-
-                    div = addElement(item, 'div', 'item-header');
-                    div.textContent = label;
-                    div.style.color = color;
-
-                    div = addElement(item, 'div', 'item-subheader');
-                    div.textContent = label +' '+ label;
-
-                    div = addElement(item, 'div', 'icon item-arrow', type);
-                    div.style.color = color;
-                }
-                setTimeout(() => {
-                    parent.style.left = '-100%';
-                    slide.style.left = 0;
-                }, 50);
-            } else {
-                context.start();
-            }
+            setTimeout(() => {
+                parent.style.left = '-100%';
+                slide.style.left = 0;
+            }, 50);
         }
-    };
+    },
+    _create_view = function (parentId = null, color = null) {
+        let item, label, icon, type, div, shortcut;
+        
+        const slide = addElement(simulateMain, 'div', 'simulate-content-slide');
+        if (parentId === null) 
+            slide.style.left = '0';
 
-    // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.getFragment = function() { return fragment; };
-    this.start = function() {
-        var slide, item, label, icon, type, div, color, shortcut, visibility, counter;
+        for (const visibleId of currentVisibilityIds) {
 
-        macro = parent.serialize();
+            if (visibleId === parentId) 
+                continue;
 
-        while (simulateMain.hasChildNodes()) {
-            simulateMain.removeChild(simulateMain.firstChild);
-        }
+            if (parentId !== null && !visibleId.startsWith(parentId))
+                continue;
 
-        visibility = macro['root']['properties']['visibility']['fields'];
+            shortcut = macro[visibleId];
 
-        slide = addElement(simulateMain, 'div', 'simulate-content-slide');
-        slide.style.left = '0';
-
-        for (counter=0; counter<macro['root']['fields'].length; counter++) {
-            shortcut = macro['root']['fields'][counter]['properties'];
-
-            if (visibility.indexOf(shortcut['id']) === -1) continue;
-
-            color = shortcut['color'];
+            if (shortcut.hasOwnProperty('color'))
+                color = shortcut['color'];
+            
             label = shortcut['text'];
             icon  = shortcut['icon'];
             type  = shortcut['type']['type'];
 
-            item = addElement(slide, 'div', 'item');
-            item['_props_'] = {'path': macro['root']['fields'][counter], 'color': color};        
-            
+            item = addElement(slide, 'div', 'item'); 
+            item['_props_'] = [ visibleId, color ]; 
+
             div = addElement(item, 'div', 'fontAwesome item-icon', icon);
             div.style.color = color;
 
@@ -108,6 +79,50 @@ export default function Simulate(ctx) {
             div = addElement(item, 'div', 'icon item-arrow', type);
             div.style.color = color;
         }
+
+        // if (filtered.length === 1) {
+        //     _create_view(filtered[0]);
+        // }
+
+        return slide;
+    },
+    _create_hash = function (fields, hashs = { }) {
+        let id;
+
+        for (const field of fields) {
+            id = field['properties']['id'];
+
+            delete field['properties']['expanded'];
+            delete field['properties']['tail'];
+            delete field['properties']['line'];
+            delete field['properties']['order'];
+
+            hashs[id] = field['properties'];
+             
+            if (field.hasOwnProperty('output')) 
+                _create_hash(field['output']['fields'], hashs);
+        }
+        return hashs;
+    };
+
+    // PUBLIC  /////////////////////////////////////////////////////////////////
+    this.getFragment = function() { return fragment; };
+    this.start = function() {
+        const serialize = parent.serialize();
+
+        macro = _create_hash(serialize['root']['fields']);
+
+        currentVisibilityIds = serialize['root']['properties']['visibility']['fields'];
+        // currentVisibilityIds.sort();
+        // console.log(currentVisibilityIds);
+
+        stackVisibility = [];
+
+        while (simulateMain.hasChildNodes()) {
+            simulateMain.removeChild(simulateMain.firstChild);
+        }
+
+        _create_view();
 
         simulatePopup.style.display = 'block';
     };

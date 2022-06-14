@@ -17,7 +17,8 @@ export default function Color (ctx) {
     _set = function(target) {        
         let selected = target.parentElement.querySelector('.selected');
         if (selected) {
-            if (target.isSameNode(selected)) return;
+            if (target.isSameNode(selected))
+                return;
 
             selected.classList.remove('selected');
             selected.style.removeProperty('border-color');
@@ -49,9 +50,12 @@ export default function Color (ctx) {
             if (colors.hasOwnProperty(objectColor)) {
                 _set(colors[objectColor]);
                 content.style.display = 'block';
+                //content.style.height = 'auto';
+                //content.style.maxHeight = '1000px';
                 return;
             }
         }
+        //content.style.removeProperty('max-height');
         content.style.removeProperty('display');
     };
 
@@ -65,18 +69,21 @@ export default function Color (ctx) {
               addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_color_header);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        row = addElement(content, 'div', 'main-app-properties-row spacer');
-        for (let color_idx in _COLORS_) {
+        // row = addElement(content, 'div', 'main-app-properties-row spacer');
+        row = addElement(content, 'div', 'main-app-properties-row');
+        for (const color_idx in _COLORS_) {
             if (_COLORS_.hasOwnProperty(color_idx)) {
+                const rgb_color = _COLORS_[color_idx];
+
                 color = addElement(row, 'div', 'icon main-app-properties-color');
                 color.setAttribute('title', _I18N_.field_color_text[color_idx]);
-                color.style.backgroundColor = _COLORS_[color_idx];
+                color.style.backgroundColor = rgb_color;
                 color.style.gridColumn = count + ' / span 2';
-                color['_COLOR_'] = _COLORS_[color_idx];
+                color['_COLOR_'] = rgb_color;
 
                 count += 3;
 
-                colors[_COLORS_[color_idx]] = color;
+                colors[rgb_color] = color;
             }
         }
         

@@ -256,6 +256,7 @@ export default function Macro(props) {
 
             root: rootCard.serialize(fragment)
         };
+        
         mainTreeViewItems.appendChild(fragment);
 
         return response;

@@ -237,7 +237,7 @@ body {
 .main-app-properties {
    /* width: 240px;*/
     background-color: #ffffff;
-    border-left: 1px solid #e5e5e5;
+    border-left: 1px solid var(--main-border-color);
 
     position: relative;
 
@@ -247,7 +247,17 @@ body {
 
     z-index: 3;
 }
-    .main-app-properties-content { display: none; }
+    .main-app-properties-content {
+        /* overflow: hidden;
+        max-height: 0;
+        transition: .15s max-height linear; */
+
+        /* height: 0; */
+        padding-bottom: 10px;
+        display: none;
+        border-bottom: 1px solid var(--main-border-color);
+    }
+        /* .main-app-properties-content:first-child { margin-top: 0; } */
         .main-app-properties-content.disabled,
         .main-app-properties-content.disabled input {
             background-color: #FAFAFA;
@@ -266,11 +276,14 @@ body {
 
         color: var(--main-font-color-bold);
     }
-        .main-app-properties-row.spacer { padding: 5px 0; }
-        .main-app-properties-row.header { 
-            background-color: var(--main-background); 
+        /* .main-app-properties-row.spacer { padding: 5px 0; } */
+        .main-app-properties-row.header {
+            grid-template-rows: 28px;
+            margin-bottom: 5px;
+            /* background-color: var(--main-background); 
+            margin-top: 5px; 
             border-top: 1px solid var(--main-border-color);
-            border-bottom: 1px solid var(--main-border-color);
+            border-bottom: 1px solid var(--main-border-color); */
         }
         .main-app-properties-row textarea {
             grid-column-start: 2;
@@ -363,6 +376,13 @@ body {
             }
             .main-app-properties-label.bold { font-weight: 600; }
             .main-app-properties-label.header { grid-column: 2 / span 23; }
+            .main-app-properties-label.sub-header { 
+                grid-column: 2 / span 26;
+                line-height: 21px;
+                background-color: var(--main-background);
+                padding-left: 8px;
+                border-radius: 4px;
+            }
             .main-app-properties-label.row { grid-column: 2 / span 26; }
             /* .main-app-properties-label.counter { 
                 grid-column: 2 / span 8;
@@ -408,7 +428,7 @@ body {
             .main-app-properties-color:hover { opacity: 1; }
             .main-app-properties-color.selected { 
                 opacity: 1;
-                border-radius: 20%;
+                border-radius: 15%;
              }
         .main-app-properties-type-icon {
             grid-column: 3 / span 2;

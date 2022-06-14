@@ -8,7 +8,7 @@ export const _I18N_ = {
     field_id: 'Identificação',
     field_value: 'Texto',
 
-    field_type: 'Tipo',
+    field_type: 'Tipo do elemento',
     field_type_text: {
         LIST:      'Lista',
         TEXT:      'Texto',
@@ -24,7 +24,7 @@ export const _I18N_ = {
     field_size_min: 'Mínimo',
     field_mask: 'Máscara',
     
-    field_color_header: 'Cor da Atividade',
+    field_color_header: 'Cor da atividade',
     field_color: 'Cor',
     field_color_text: {
         RED:    'Vermelho',

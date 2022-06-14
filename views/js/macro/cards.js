@@ -21,9 +21,9 @@ export default function Card(_ctx, _properties, tab) {
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
         props = {
-            visibility: { 
-                fields: []
-            }
+            // visibility: { 
+            //     fields: []
+            // }
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -173,11 +173,13 @@ export default function Card(_ctx, _properties, tab) {
             position: [ position.left, position.top ],
             fields: []
         };
-        if (props.hasOwnProperty('visibility')) {
+        // if (props.hasOwnProperty('visibility')) {
+        if (rootCard) {
             const visibilityFields = { 'visibility' : { 'fields': [] }};
             for (counterFields=0; counterFields<props['visibility']['fields'].length; counterFields++) {
                 visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterFields].getProps('id'));
             }
+            visibilityFields['visibility']['fields'].sort();
             response['properties'] = { ...props, ...visibilityFields };
         }
 

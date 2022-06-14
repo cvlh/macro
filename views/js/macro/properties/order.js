@@ -43,7 +43,8 @@ export default function Order (ctx) {
               addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_position);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        row = addElement(content, 'div', 'main-app-properties-row spacer');
+        // row = addElement(content, 'div', 'main-app-properties-row spacer');
+        row = addElement(content, 'div', 'main-app-properties-row');
 
         up = addElement(row, 'input', 'icon');
         up.setAttribute('type', 'button');

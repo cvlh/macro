@@ -1,7 +1,6 @@
 'use strict';
 
 import { addElement } from '../../utils/functions.js';
-import Macro from '../macro.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Simulate(ctx) {
@@ -14,6 +13,7 @@ export default function Simulate(ctx) {
         simulatePopup, simulateMain,
         macro,
         currentVisibilityIds, stackVisibility,
+        lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _receive_events = function(evnt) {
@@ -22,15 +22,9 @@ export default function Simulate(ctx) {
         const target = evnt.target,
               parent = target.parentElement;
 
-        // let slide, item, label, icon, type, div, color, shortcut, visibility, path, counter;
-
         if (target.classList.contains('item')) {
             const [id, color] = target['_props_'];
-
             currentVisibilityIds = macro[id]['visibility']['fields'];
-            // currentVisibilityIds.sort();
-            // console.log(currentVisibilityIds);
-
             const slide = _create_view(id, color);
 
             setTimeout(() => {
@@ -43,12 +37,19 @@ export default function Simulate(ctx) {
         let item, label, icon, type, div, shortcut;
         
         const slide = addElement(simulateMain, 'div', 'simulate-content-slide');
-        if (parentId === null) 
+        if (parentId === null) {
             slide.style.left = '0';
+        } else {
+            const visibilitySize = currentVisibilityIds.filter( element => {
+                return element.startsWith(parentId);
+            });
+
+            if (visibilitySize.length === 0)
+                parentId = null;
+        }
 
         for (const visibleId of currentVisibilityIds) {
-
-            if (visibleId === parentId) 
+            if (visibleId === parentId)
                 continue;
 
             if (parentId !== null && !visibleId.startsWith(parentId))
@@ -92,6 +93,7 @@ export default function Simulate(ctx) {
         for (const field of fields) {
             id = field['properties']['id'];
 
+            delete field['properties']['id'];
             delete field['properties']['expanded'];
             delete field['properties']['tail'];
             delete field['properties']['line'];
@@ -111,12 +113,11 @@ export default function Simulate(ctx) {
         const serialize = parent.serialize();
 
         macro = _create_hash(serialize['root']['fields']);
+        console.log(macro);
 
         currentVisibilityIds = serialize['root']['properties']['visibility']['fields'];
-        // currentVisibilityIds.sort();
-        // console.log(currentVisibilityIds);
-
         stackVisibility = [];
+        lastRootExecuted = null;
 
         while (simulateMain.hasChildNodes()) {
             simulateMain.removeChild(simulateMain.firstChild);
@@ -129,7 +130,6 @@ export default function Simulate(ctx) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-
         fragment = document.createDocumentFragment();
 
         simulatePopup = addElement(fragment, 'div', 'simulate-app');

@@ -3,44 +3,48 @@
 	"name": "Macro",
 	"version": 1,
 	"transform": [
-		290.82301330566409,
-		108.409423828125,
-		0.585579518933912
+		242.10112655639648,
+		34.87624094963074,
+		0.2834410855501096
 	],
 	"size": [
 		4096,
 		3072
 	],
-	"visibility": [],
 	"root": {
 		"position": [
-			69.66508823055864,
-			82.86051982859707
+			57.58466007491441,
+			73.66679674002516
 		],
 		"fields": [
 			{
 				"properties": {
 					"id": "1",
-					"text": "INICIAR",
+					"text": "CHECKLIST",
 					"type": {
 						"type": 0
 					},
 					"order": 1,
 					"visibility": {
 						"fields": [
-							"1.1",
-							"1.2",
-							"1"
-						]
+							"1",
+							"1.1"
+						],
+						"flags": 17
 					},
 					"expanded": true,
-					"line": 46.96357635364592,
+					"tail": {
+						"x": 1033.1068208412944,
+						"y": 319.32399321613445
+					},
+					"icon": "",
+					"line": 238.104767839075,
 					"color": "#ff0000"
 				},
 				"output": {
 					"position": [
-						426.7757144387348,
-						194.9249756790253
+						1031.106819507371,
+						46.82401073719807
 					],
 					"fields": [
 						{
@@ -53,19 +57,28 @@
 								"order": 1,
 								"visibility": {
 									"fields": [
+										"1",
+										"1.1",
 										"1.1.1",
 										"1.1.2",
 										"1.1.3",
 										"1.1.4",
 										"1.1.5"
-									]
+									],
+									"flags": 17
 								},
-								"expanded": true
+								"expanded": false,
+								"tail": {
+									"x": 1992.18659814206,
+									"y": 166.2305227884371
+								},
+								"icon": "",
+								"line": 502.3469755378883
 							},
 							"output": {
 								"position": [
-									817.2895088746034,
-									42.16169637191944
+									1990.186698993828,
+									46.73052699106759
 								],
 								"fields": [
 									{
@@ -80,7 +93,10 @@
 												"fields": []
 											},
 											"expanded": true,
-											"line": null
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
@@ -94,13 +110,17 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
 										"properties": {
 											"id": "1.1.3",
-											"text": "1/4 de TANQUE",
+											"text": "1/4 DE TANQUE",
 											"type": {
 												"type": 0
 											},
@@ -108,7 +128,11 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
@@ -122,7 +146,11 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
@@ -136,10 +164,22 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									}
-								]
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.2"
+										]
+									}
+								}
 							}
 						},
 						{
@@ -152,19 +192,25 @@
 								"order": 2,
 								"visibility": {
 									"fields": [
+										"1",
 										"1.2",
 										"1.2.1",
 										"1.2.2",
 										"1.2.3"
-									]
+									],
+									"flags": 17
 								},
-								"expanded": true,
-								"line": 40.56993444011812
+								"expanded": false,
+								"tail": {
+									"x": 1988.1383213594559,
+									"y": 370.3838777313217
+								},
+								"line": 472.00820546106274
 							},
 							"output": {
 								"position": [
-									823.5355123976433,
-									283.44301449347275
+									1986.1384222112238,
+									284.8838776671582
 								],
 								"fields": [
 									{
@@ -178,7 +224,11 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
@@ -192,7 +242,11 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									},
 									{
@@ -206,15 +260,2875 @@
 											"visibility": {
 												"fields": []
 											},
-											"expanded": true
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
 										}
 									}
-								]
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.3"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.3",
+								"text": "CAIXA DE CÂMBIO",
+								"type": {
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.3",
+										"1.3.1",
+										"1.3.2",
+										"1.3.3",
+										"1.3.4",
+										"1.3.5"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1986.976992291478,
+									"y": 568.9535883705612
+								},
+								"line": 440.635270074476
+							},
+							"output": {
+								"position": [
+									1984.9770931432458,
+									449.4536329719302
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.3.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.3.2",
+											"text": "FAZENDO BARULHO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.3.3",
+											"text": "ESCAPANDO MARCHA",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.3.4",
+											"text": "NAO ENTRA MARCHA",
+											"type": {
+												"type": 0
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.3.5",
+											"text": "VAZAMENTO",
+											"type": {
+												"type": 0
+											},
+											"order": 5,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.4"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.4",
+								"text": "ÓLEO DO MOTOR",
+								"type": {
+									"type": 0
+								},
+								"order": 4,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.4",
+										"1.4.1",
+										"1.4.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1988.4057071430107,
+									"y": 744.1379775406265
+								},
+								"icon": "",
+								"line": 413.09394750428737
+							},
+							"output": {
+								"position": [
+									1986.4055925348403,
+									675.637982076189
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.4.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.4.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.5"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.5",
+								"text": "ÓLEO HIDRÁULICO",
+								"type": {
+									"type": 0
+								},
+								"order": 5,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.5",
+										"1.5.1",
+										"1.5.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.3163805223805,
+									"y": 868.297172611151
+								},
+								"line": 381.31549838483875
+							},
+							"output": {
+								"position": [
+									1985.3164160273368,
+									799.7971916865135
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.5.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.5.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.6"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.6",
+								"text": "GRAXA SAPATAS",
+								"type": {
+									"type": 0
+								},
+								"order": 6,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.6",
+										"1.6.1",
+										"1.6.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.3518896285354,
+									"y": 989.8066134173098
+								},
+								"line": 349.53704926539035
+							},
+							"output": {
+								"position": [
+									1985.3519251334917,
+									921.3065609017324
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.6.1",
+											"text": "ENGRAXADO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.6.2",
+											"text": "RUIM",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.7"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.7",
+								"text": "CAMERA DE RÉ",
+								"type": {
+									"type": 0
+								},
+								"order": 7,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.7",
+										"1.7.1",
+										"1.7.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1984.933547681135,
+									"y": 1109.703754667595
+								},
+								"line": 319.87716342057183
+							},
+							"output": {
+								"position": [
+									1982.9335831860913,
+									1041.2037021520177
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.7.1",
+											"text": "FUNCIONANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.7.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.8"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.8",
+								"text": "ÁGUA DO RADIADOR",
+								"type": {
+									"type": 0
+								},
+								"order": 8,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.8",
+										"1.8.1",
+										"1.8.2",
+										"1.8.3"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.3390032593663,
+									"y": 1246.9957045226645
+								},
+								"line": 285.98015102649333
+							},
+							"output": {
+								"position": [
+									1985.3390387643226,
+									1161.495667435456
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.8.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.8.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.8.3",
+											"text": "VAZAMENTO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.9"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.9",
+								"text": "FARÓIS E LANTERNAS",
+								"type": {
+									"type": 0
+								},
+								"order": 9,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.9",
+										"1.9.1",
+										"1.9.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.880803491987,
+									"y": 1390.1976296424407
+								},
+								"line": 254.20170190704494
+							},
+							"output": {
+								"position": [
+									1985.8808389969433,
+									1321.6975771268633
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.9.1",
+											"text": "FUNCIONANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.9.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.10"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.10",
+								"text": "PRESSÃO PNEU",
+								"type": {
+									"type": 0
+								},
+								"order": 10,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.10",
+										"1.10.1",
+										"1.10.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1986.9893531092448,
+									"y": 1521.4507405411123
+								},
+								"line": 222.4232527875963
+							},
+							"output": {
+								"position": [
+									1984.9894123828756,
+									1452.950688168368
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.10.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.10.2",
+											"text": "IRREGULAR",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.11"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.11",
+								"text": "MOLAS",
+								"type": {
+									"type": 0
+								},
+								"order": 11,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.11",
+										"1.11.1",
+										"1.11.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.339575986885,
+									"y": 1643.8277203561104
+								},
+								"line": 190.64480366814792
+							},
+							"output": {
+								"position": [
+									1985.3396302969443,
+									1575.327732332925
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.11.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.11.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.12"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.12",
+								"text": "EXTINTOR",
+								"type": {
+									"type": 0
+								},
+								"order": 12,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.12",
+										"1.12.1",
+										"1.12.2",
+										"1.12.3",
+										"1.12.4"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1987.0580648179864,
+									"y": 1801.304516179923
+								},
+								"line": 158.48222619513376
+							},
+							"output": {
+								"position": [
+									1985.0580179451695,
+									1698.8045626074445
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.12.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.12.2",
+											"text": "VENCIDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.12.3",
+											"text": "VAZIO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.12.4",
+											"text": "SEM LACRE",
+											"type": {
+												"type": 0
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.13"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.13",
+								"text": "DOCUMENTOS DO VEÍCULO",
+								"type": {
+									"type": 0
+								},
+								"order": 13,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.13",
+										"1.13.1",
+										"1.13.2",
+										"1.13.3"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1985.0146316898636,
+									"y": 1973.8642049292014
+								},
+								"line": 123.34503347920258
+							},
+							"output": {
+								"position": [
+									1983.0145308691535,
+									1888.364277720565
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.13.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.13.2",
+											"text": "VENCIDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.13.3",
+											"text": "NÃO ENCONTRADO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"1",
+											"1.14"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "1.14",
+								"text": "TEMPERATURA DO MOTOR",
+								"type": {
+									"type": 0
+								},
+								"order": 14,
+								"visibility": {
+									"fields": [
+										"1",
+										"1.14",
+										"1.14.1",
+										"1.14.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1984.8975716078821,
+									"y": 2111.3282001515104
+								},
+								"line": 88.2078407632714
+							},
+							"output": {
+								"position": [
+									1982.8974326514065,
+									2042.8279515557538
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "1.14.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "1.14.2",
+											"text": "ESQUENTANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
 							}
 						}
-					]
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "2",
+					"text": "MOTORISTA",
+					"type": {
+						"type": 0
+					},
+					"order": 2,
+					"visibility": {
+						"fields": [
+							"2",
+							"2.1"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 611.6991631516391,
+						"y": 907.5594857897117
+					},
+					"icon": "",
+					"line": 208.21738106495707,
+					"color": "#aa00ff"
+				},
+				"output": {
+					"position": [
+						609.6992139827058,
+						856.0594936404616
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "2.1",
+								"text": "CÓDIGO MOTORISTA",
+								"type": {
+									"type": 2
+								},
+								"order": 1,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "3",
+					"text": "VISTORIA DIÁRIA",
+					"type": {
+						"type": 0
+					},
+					"order": 3,
+					"visibility": {
+						"fields": [
+							"3",
+							"3.1",
+							"3.2",
+							"3.3",
+							"3.4",
+							"3.5",
+							"3.6"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 609.9999735538701,
+						"y": 1143.4938537218459
+					},
+					"icon": "",
+					"line": 178.38023068973484,
+					"color": "#304ffe"
+				},
+				"output": {
+					"position": [
+						607.9999333408755,
+						1006.9939813566732
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "3.1",
+								"text": "CONTROLE",
+								"type": {
+									"type": 1
+								},
+								"order": 1,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "3.2",
+								"text": "CDE M2 V43",
+								"type": {
+									"type": 0
+								},
+								"order": 2,
+								"visibility": {
+									"fields": [
+										"3.2.1",
+										"3.2.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1044.9714852282045,
+									"y": 1031.7737571890855
+								}
+							},
+							"output": {
+								"position": [
+									1042.971518693208,
+									963.2737526182373
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "3.2.1",
+											"text": "INICIAR",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "3.2.2",
+											"text": "CANCELAR",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "3.3",
+								"text": "CD CENTRO RESUL",
+								"type": {
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": [
+										"3.3.1",
+										"3.3.2",
+										"3.3.3"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1045.7229427641853,
+									"y": 1173.7757058224918
+								},
+								"line": 63.649038127917834
+							},
+							"output": {
+								"position": [
+									1043.7229193025469,
+									1088.2757610715369
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "3.3.1",
+											"text": "COLETA DOMICILIAR",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "3.3.2",
+											"text": "COLETA DIVERSOS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "3.3.3",
+											"text": "COLETA SELECTIVA",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "3.4",
+								"text": "CÓDIGO UT",
+								"type": {
+									"type": 2
+								},
+								"order": 4,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "3.5",
+								"text": "CÓDIGO SETOR",
+								"type": {
+									"type": 2
+								},
+								"order": 5,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "3.6",
+								"text": "KM INICIAL",
+								"type": {
+									"type": 2
+								},
+								"order": 6,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "4",
+					"text": "EM TRABALHO",
+					"type": {
+						"type": 0
+					},
+					"order": 4,
+					"visibility": {
+						"fields": [
+							"4.1",
+							"4.10",
+							"4.14",
+							"4.19",
+							"4.7"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 612.4147071090703,
+						"y": 1666.839817462663
+					},
+					"icon": "",
+					"line": 147.5316637439406,
+					"color": "#008080"
+				},
+				"output": {
+					"position": [
+						610.4146557880679,
+						1275.3398216322205
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "4.1",
+								"text": "INÍCIO COLETA",
+								"type": {
+									"type": 0
+								},
+								"order": 1,
+								"visibility": {
+									"fields": [
+										"4.14",
+										"4.19",
+										"4.2",
+										"4.7"
+									]
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.2",
+								"text": "FIM COLETA",
+								"type": {
+									"type": 0
+								},
+								"order": 2,
+								"visibility": {
+									"fields": [
+										"4.14",
+										"4.18",
+										"4.3",
+										"4.7"
+									]
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.3",
+								"text": "TRÂNSITO PARA DESCARGA",
+								"type": {
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.4",
+								"text": "INÍCIO DESCARGA",
+								"type": {
+									"type": 0
+								},
+								"order": 4,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.5",
+								"text": "FIM DESCARGA",
+								"type": {
+									"type": 0
+								},
+								"order": 5,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1043.5869940450045,
+									"y": 1349.5827877230504
+								},
+								"line": 25.178041511300194,
+								"output": {
+									"position": [
+										1284,
+										618
+									],
+									"fields": [
+										{
+											"id": "4.5.1",
+											"type": {
+												"type": 2
+											},
+											"text": "NR TICKET",
+											"visibility": {
+												"flags": 17,
+												"fields": []
+											},
+											"expanded": true
+										},
+										{
+											"id": "4.5.2",
+											"type": {
+												"type": 2
+											},
+											"text": "PESO KG",
+											"visibility": {
+												"flags": 17,
+												"fields": []
+											},
+											"expanded": true
+										}
+									]
+								}
+							},
+							"output": {
+								"position": [
+									1041.5870421797022,
+									1281.0827921844168
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "4.5.1",
+											"text": "NR TICKET",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.5.2",
+											"text": "PESO KG",
+											"type": {
+												"type": 2
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.6",
+								"text": "TRÂNSITO LOCAL",
+								"type": {
+									"type": 0
+								},
+								"order": 6,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.7",
+								"text": "INÍCIO ABASTECIMENTO",
+								"type": {
+									"type": 0
+								},
+								"order": 7,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.8",
+								"text": "FIM ABASTECIMENTO",
+								"type": {
+									"type": 0
+								},
+								"order": 8,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1038.8602670453918,
+									"y": 1453.9761732799982
+								},
+								"line": 48.335994314273194
+							},
+							"output": {
+								"position": [
+									1036.860363418142,
+									1402.4762463410461
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "4.8.1",
+											"text": "QTDE LITROS",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.9",
+								"text": "COND LOCAIS",
+								"type": {
+									"type": 0
+								},
+								"order": 9,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.10",
+								"text": "INÍCIO REFEIÇÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 10,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1040.1738402760127,
+									"y": 1618.073269212653
+								},
+								"line": 60.93824054501664
+							},
+							"output": {
+								"position": [
+									1038.1738606121805,
+									1498.5732543049903
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "4.10.1",
+											"text": "CÓDIGO PONTO MOTORISTA",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.10.2",
+											"text": "CÓDIGO PONTO COLETOR 1",
+											"type": {
+												"type": 2
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.10.3",
+											"text": "CÓDIGO PONTO COLETOR 2",
+											"type": {
+												"type": 2
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.10.4",
+											"text": "CÓDIGO PONTO COLETOR 3",
+											"type": {
+												"type": 2
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.10.5",
+											"text": "CÓDIGO PONTO COLETOR 4",
+											"type": {
+												"type": 2
+											},
+											"order": 5,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.11",
+								"text": "FIM REFEIÇÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 11,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1038.8641311646027,
+									"y": 1838.5300212955615
+								},
+								"line": 50.75238614435682
+							},
+							"output": {
+								"position": [
+									1036.8640853373981,
+									1719.030066421826
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "4.11.1",
+											"text": "CÓDIGO PONTO MOTORISTA",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.11.2",
+											"text": "CÓDIGO PONTO COLETOR 1",
+											"type": {
+												"type": 2
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.11.3",
+											"text": "CÓDIGO PONTO COLETOR 2",
+											"type": {
+												"type": 2
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.11.4",
+											"text": "CÓDIGO PONTO COLETOR 3",
+											"type": {
+												"type": 2
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.11.5",
+											"text": "CÓDIGO PONTO COLETOR 4",
+											"type": {
+												"type": 2
+											},
+											"order": 5,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.12",
+								"text": "CAFÉ",
+								"type": {
+									"type": 0
+								},
+								"order": 12,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.13",
+								"text": "A DISPOSIÇÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 13,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.14",
+								"text": "PEDIDO DE SOS",
+								"type": {
+									"type": 0
+								},
+								"order": 14,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.15",
+								"text": "INÍCIO SOS",
+								"type": {
+									"type": 0
+								},
+								"order": 15,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.16",
+								"text": "FIM SOS",
+								"type": {
+									"type": 0
+								},
+								"order": 16,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.17",
+								"text": "FISCALIZAÇÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 17,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1037.6910300323593,
+									"y": 2009.5141141679267
+								},
+								"line": 34.21575190591693
+							},
+							"output": {
+								"position": [
+									1035.6909039110526,
+									1941.0140848366789
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "4.17.1",
+											"text": "CÓDIGO FISCAL",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "4.17.2",
+											"text": "OBSERVAÇÕES",
+											"type": {
+												"type": 1
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.18",
+								"text": "OBSERVAÇÕES",
+								"type": {
+									"type": 1
+								},
+								"order": 18,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.19",
+								"text": "TROCA MOTORISTA",
+								"type": {
+									"type": 0
+								},
+								"order": 19,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.20",
+								"text": "SAIR TRABALHO",
+								"type": {
+									"type": 0
+								},
+								"order": 20,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "4.21",
+								"text": "VERIFICA COLETA",
+								"type": {
+									"type": 0
+								},
+								"order": 21,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "5",
+					"text": "TROCA MOTORISTA",
+					"type": {
+						"type": 0
+					},
+					"order": 5,
+					"visibility": {
+						"fields": [
+							"5",
+							"5.1"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 608.1688356501008,
+						"y": 2114.0283102755016
+					},
+					"icon": "",
+					"line": 118.23053534842671,
+					"color": "#43a047"
+				},
+				"output": {
+					"position": [
+						606.1688231527731,
+						2062.5283129415375
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "5.1",
+								"text": "SENHA MOTORISTA",
+								"type": {
+									"type": 1
+								},
+								"order": 1,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								},
+								"icon": ""
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "6",
+					"text": "EM MANUTENÇÃO",
+					"type": {
+						"type": 0
+					},
+					"order": 6,
+					"visibility": {
+						"fields": [
+							"6",
+							"6.1",
+							"6.2",
+							"6.3",
+							"6.4",
+							"6.5",
+							"6.6"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 610.6238015053218,
+						"y": 2315.2404985312533
+					},
+					"icon": "",
+					"line": 86.94284831139584,
+					"color": "#ff6d00"
+				},
+				"output": {
+					"position": [
+						608.6238422296288,
+						2178.7405479765475
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "6.1",
+								"text": "DENTRO DO TURNO",
+								"type": {
+									"type": 0
+								},
+								"order": 1,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "6.2",
+								"text": "TROCA DE PNEUS",
+								"type": {
+									"type": 0
+								},
+								"order": 2,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "6.3",
+								"text": "LAVAGEM",
+								"type": {
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								},
+								"icon": ""
+							}
+						},
+						{
+							"properties": {
+								"id": "6.4",
+								"text": "FORA DO TURNO",
+								"type": {
+									"type": 0
+								},
+								"order": 4,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "6.5",
+								"text": "TROCA DE ÓLEO",
+								"type": {
+									"type": 0
+								},
+								"order": 5,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								},
+								"icon": ""
+							}
+						},
+						{
+							"properties": {
+								"id": "6.6",
+								"text": "SAIR MANUTENÇÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 6,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "7",
+					"text": "PONTO ELETRÔNICO",
+					"type": {
+						"type": 0
+					},
+					"order": 7,
+					"visibility": {
+						"fields": [
+							"7",
+							"7.1",
+							"7.2",
+							"7.3",
+							"7.4",
+							"7.5"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 609.213397993295,
+						"y": 2625.6738346958773
+					},
+					"icon": "",
+					"line": 57.16908161486646,
+					"color": "#795548"
+				},
+				"output": {
+					"position": [
+						607.2134439667622,
+						2506.173751003334
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "7.1",
+								"text": "ENTRADA TRABALHO",
+								"type": {
+									"type": 0
+								},
+								"order": 1,
+								"visibility": {
+									"fields": [
+										"7.1",
+										"7.1.1"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1001.7655181734355,
+									"y": 2459.1180224393556
+								},
+								"line": 38.235160429437656
+							},
+							"output": {
+								"position": [
+									999.7655414291986,
+									2407.6180070887804
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "7.1.1",
+											"text": "CÓDIGO COLABORADOR",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "7.2",
+								"text": "SAÍDA INTERVALO",
+								"type": {
+									"type": 0
+								},
+								"order": 2,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1002.145565662897,
+									"y": 2541.8867740362807
+								},
+								"line": 64.67572268004
+							},
+							"output": {
+								"position": [
+									1000.1455607789636,
+									2490.386612997355
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "7.2.1",
+											"text": "CÓDIGO COLABORADOR",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "7.3",
+								"text": "RETORNO INTERVALO",
+								"type": {
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1000.9198443190445,
+									"y": 2621.11690164042
+								},
+								"line": 64.22049718079512
+							},
+							"output": {
+								"position": [
+									998.9197885185158,
+									2569.616841343687
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "7.3.1",
+											"text": "CÓDIGO COLABORADOR",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "7.4",
+								"text": "SAÍDA TRABALHO",
+								"type": {
+									"type": 0
+								},
+								"order": 4,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1000.3497730848521,
+									"y": 2699.5137433017567
+								},
+								"line": 57.99336422000215
+							},
+							"output": {
+								"position": [
+									998.3497678714567,
+									2648.013603545695
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "7.4.1",
+											"text": "CÓDIGO COLABORADOR",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "7.5",
+								"text": "SAIR PONTO",
+								"type": {
+									"type": 0
+								},
+								"order": 5,
+								"visibility": {
+									"fields": [],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 999.7860662823015,
+									"y": 2780.042214960803
+								},
+								"line": 27.405593466585742
+							},
+							"output": {
+								"position": [
+									997.7860398741727,
+									2728.5421177689695
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "7.5.1",
+											"text": "CÓDIGO COLABORADOR",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
+				}
+			},
+			{
+				"properties": {
+					"id": "8",
+					"text": "FINALIZAR",
+					"type": {
+						"type": 0
+					},
+					"order": 8,
+					"visibility": {
+						"fields": [
+							"8",
+							"8.1",
+							"8.2"
+						],
+						"flags": 17
+					},
+					"expanded": false,
+					"tail": {
+						"x": 609.842340220173,
+						"y": 2883.332849085261
+					},
+					"icon": "",
+					"line": 27.899955031837578,
+					"color": "#000000"
+				},
+				"output": {
+					"position": [
+						607.8422615080195,
+						2814.832867967025
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "8.1",
+								"text": "SIM",
+								"type": {
+									"type": 0
+								},
+								"order": 1,
+								"visibility": {
+									"fields": [
+										"8.1",
+										"8.1.1",
+										"8.1.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 1000.5024057936879,
+									"y": 2886.58393714852
+								},
+								"icon": ""
+							},
+							"output": {
+								"position": [
+									998.5024290084494,
+									2818.083910843756
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "8.1.1",
+											"text": "ODÔMETRO FINAL",
+											"type": {
+												"type": 2
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "8.1.2",
+											"text": "HORÍMETRO FINAL",
+											"type": {
+												"type": 2
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": []
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "8.2",
+								"text": "NÃO",
+								"type": {
+									"type": 0
+								},
+								"order": 2,
+								"visibility": {
+									"fields": []
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								},
+								"icon": ""
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": []
+						}
+					}
 				}
 			}
-		]
+		],
+		"properties": {
+			"visibility": {
+				"fields": [
+					"1"
+				]
+			}
+		}
 	}
 }

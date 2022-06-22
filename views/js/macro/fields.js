@@ -166,19 +166,7 @@ export default function Field(ctx, append, properties) {
         //props['prefix']['text'] = value;
     },
     _showProperties = function() { main.showProperties(context); },
-    _previewVisibility = function(evnt) {
-        if (main.getVisibilityMode()) return;
-
-        if (props['visibility']['fields'].length) {
-            for (var counter=0; counter<props['visibility']['fields'].length; counter++) {
-                if (evnt.type === 'mouseover') {
-                    props['visibility']['fields'][counter].selectedForVisibility();
-                } else {
-                    props['visibility']['fields'][counter].unselectForVisibility();
-                }
-            }
-        }
-    },
+    _previewVisibility = function(evnt) { main.previewVisibility(props['visibility']['fields'], evnt.type); },
     _toggleVisibility = function() {
         const object = main.getSelectedObject();
 
@@ -227,7 +215,13 @@ export default function Field(ctx, append, properties) {
     _updateVisibilityCounter = function() {
         const size = props['visibility']['fields'].length;
 
-        visibility.textContent = (size ? size : '');
+        if (size) {
+            visibility.style.display = 'block';
+        } else {
+            visibility.style.removeProperty('display');
+        }
+        
+        visibility.textContent = size;
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -459,7 +453,7 @@ export default function Field(ctx, append, properties) {
     };
     this.swap = function() {
         let sibling = item.previousElementSibling,
-        parentNode = item.parentNode;
+            parentNode = item.parentNode;
 
         if (sibling !== null) { 
             parentNode.insertBefore(item, sibling);
@@ -491,13 +485,15 @@ export default function Field(ctx, append, properties) {
     this.initVisibility = function(fields) {
         const sizeVisibility = props['visibility']['fields'].length;
 
-        for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
-            if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
+        for (let counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
+            if (typeof props['visibility']['fields'][counterVisibility] === 'string')
                 props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
-            }
         }
+        
+        if (context.hasConnection())
+            output['_CONNECTION_'].initVisibility(fields);
+
         _updateVisibilityCounter();
-        if (context.hasConnection()) output['_CONNECTION_'].initVisibility(fields);
     };
     this.setVisibilityMode = function() {
         if (main.getVisibilityMode()) {
@@ -509,21 +505,20 @@ export default function Field(ctx, append, properties) {
             description.removeAttribute('disabled');
             item.removeEventListener('click', _toggleVisibility, { capture: false });
 
-            _updateVisibilityCounter();
             _unselectForVisibility();
         }
-    };    
+    };
     this.addToVisibility = function(field) {
         props['visibility']['fields'].push(field);
         field.selectedForVisibility();
 
-        _updateVisibilityCounter();
+         _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
         const removeId = field.getProps('id');
-        var counter, currentId;
+        let counter, currentId;
 
-        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
+        for (counter = 0; counter < props['visibility']['fields'].length; counter++) {
             currentId = props['visibility']['fields'][counter].getProps('id');
             if (removeId === currentId) {
                 props['visibility']['fields'].splice(counter, 1); 
@@ -536,7 +531,7 @@ export default function Field(ctx, append, properties) {
 
         console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
     };
-    
+
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setOrder = function(order) {
         props.order = order;
@@ -612,8 +607,11 @@ export default function Field(ctx, append, properties) {
 
         index = addElement(item, 'div', 'app-cards-content-item-index', props.order);
 
+        const div = addElement(item, 'div');
+        div.style.position = 'relative';
+
         //description = addElement(item, 'input', 'app-cards-content-item-description');
-        description = addElement(item, 'input');
+        description = addElement(div, 'input');
         description.setAttribute('type', 'text');
         description.setAttribute('maxlength', '64');
         description.setAttribute('value', props.text);
@@ -624,7 +622,8 @@ export default function Field(ctx, append, properties) {
 
         delete props.tab;
 
-        visibility = addElement(item, 'div', 'app-cards-content-item-visibility');
+        visibility = addElement(div, 'div', 'app-cards-content-item-visibility');
+
         visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
         visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
 

@@ -2,7 +2,7 @@
 
 import Macro from './macro/macro.js';
 
-fetch('macro.json')
+fetch('macro_simple.json')
     .then(function(response) {
         if(response.ok) {
             response.json().then(data => { create_macro(data); });

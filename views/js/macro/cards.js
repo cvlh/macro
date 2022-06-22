@@ -16,14 +16,14 @@ export default function Card(_ctx, _properties, tab) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
-        add, close,
+        add, visibility, close,
         fieldsArray = [],
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
         props = {
-            // visibility: { 
-            //     fields: []
-            // }
+            visibility: { 
+                fields: []
+            }
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -32,7 +32,9 @@ export default function Card(_ctx, _properties, tab) {
         const target = evnt.target,
               targetClass = target.classList;
 
-        if (targetClass.contains('app-cards-header-button')) return;
+        if (targetClass.contains('app-cards-header-button') ||
+            targetClass.contains('app-cards-header-visibility')) 
+            return;
 
         parent.dragStart(evnt, context)
     },
@@ -52,7 +54,18 @@ export default function Card(_ctx, _properties, tab) {
             fieldsArray[counterFields].setOrder(counterFields+1);
         }
     },
-    _showProperties = function(evnt) { parent.showProperties(context); };
+    _showProperties = function(evnt) { parent.showProperties(context); },
+    _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
+    _updateVisibilityCounter = function() {
+        const size = props['visibility']['fields'].length;
+        
+        if (size) {
+            visibility.style.visibility = 'visible';
+        } else {
+            visibility.style.removeProperty('visibility');
+        }
+        visibility.textContent = size;
+    };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
@@ -174,14 +187,14 @@ export default function Card(_ctx, _properties, tab) {
             fields: []
         };
         // if (props.hasOwnProperty('visibility')) {
-        if (rootCard) {
+        //if (rootCard) {
             const visibilityFields = { 'visibility' : { 'fields': [] }};
             for (counterFields=0; counterFields<props['visibility']['fields'].length; counterFields++) {
                 visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterFields].getProps('id'));
             }
             visibilityFields['visibility']['fields'].sort();
             response['properties'] = { ...props, ...visibilityFields };
-        }
+        //}
 
         for (counterFields=0; counterFields<sizeFields; counterFields++) {
             properties.tab.push(counterFields+1);
@@ -231,53 +244,56 @@ export default function Card(_ctx, _properties, tab) {
     this.initVisibility = function(fields) {
         const sizeFields = fieldsArray.length;
 
-        if (props.hasOwnProperty('visibility')) {
-            const sizeVisibility = props['visibility']['fields'].length;
-            for (let counterVisibility=0; counterVisibility<sizeVisibility; counterVisibility++) {
-                if (typeof props['visibility']['fields'][counterVisibility] === 'string') {
-                    props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
-                }
-            }
+        //if (props.hasOwnProperty('visibility')) {
+        const sizeVisibility = props['visibility']['fields'].length;
+        for (let counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
+            if (typeof props['visibility']['fields'][counterVisibility] === 'string')
+                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
         }
+        //}
         
-        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+        for (let counterFields = 0; counterFields < sizeFields; counterFields++)
             fieldsArray[counterFields].initVisibility(fields);
-        }
+
+        _updateVisibilityCounter();
     };      
     this.setVisibilityMode = function() {
-        let counter;
         const size = fieldsArray.length;
 
         if (parent.getVisibilityMode()) {
             card.removeAttribute('tabindex');
 
             add.style.display = 'none';
-            if (!rootCard) close.style.display = 'none';
+            if (!rootCard) 
+                close.style.display = 'none';
         } else {
             card.setAttribute('tabindex',  tabindex);
 
             add.style.removeProperty('display');
-            if (!rootCard) close.style.removeProperty('display');
+            if (!rootCard) 
+                close.style.removeProperty('display');
         }
 
-        for (counter=0; counter<size; counter++) {
-            //if (rootCard) fieldsArray[counter].setColor(null);
+        for (let counter = 0; counter < size; counter++)
             fieldsArray[counter].setVisibilityMode();
-        }
     };
     this.addToVisibility = function(field) {
         props['visibility']['fields'].push(field);
         field.selectedForVisibility();
+
+        _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
         const removeId = field.getProps('id');
-        var counter, currentId;
+        let counter, currentId;
 
         for (counter=0; counter<props['visibility']['fields'].length; counter++) {
             currentId = props['visibility']['fields'][counter].getProps('id');
             if (removeId === currentId) {
                 props['visibility']['fields'].splice(counter, 1); 
                 field.unselectForVisibility();
+
+                _updateVisibilityCounter();
                 return;
             }
         }
@@ -326,7 +342,7 @@ export default function Card(_ctx, _properties, tab) {
         if (rootCard) { 
             card.classList.add('root'); 
 
-            props.visibility['autoExecute'] = false;
+            //props.visibility['autoExecute'] = false;
         }
 
         props = {...props, ..._properties};
@@ -337,12 +353,17 @@ export default function Card(_ctx, _properties, tab) {
         header.addEventListener('mousedown', _drag, { capture: false });
         
         if (rootCard) {
-            header.style.gridTemplateColumns = '24px 226px 24px';
-            icon = addElement(header, 'div', 'icon app-cards-header-title root', _ICON_CHAR_.HOME);
+            header.style.gridTemplateColumns = '25px 225px 25px 25px';
+            icon = addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
             title = addElement(header, 'div', 'app-cards-header-title');
         }
+
+        visibility = addElement(header, 'div', 'app-cards-header-visibility', props['visibility']['fields'].length);
+        
+        visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
 
         add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
         add.addEventListener('click', _add, { capture: false });

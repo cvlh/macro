@@ -342,12 +342,23 @@ export default function Macro(props) {
 
         visibilityMode = !visibilityMode;
 
-        for (counter=0; counter<sizeFields; counter++) {
+        for (counter = 0; counter < sizeFields; counter++) {
             visibility['fields'][counter].selectedForVisibility();
         }
 
-        for (counter=0; counter<sizeCard; counter++) {
+        for (counter = 0; counter < sizeCard; counter++) {
             cardsArray[counter].setVisibilityMode();
+        }
+    };
+    this.previewVisibility = function (fields, evntType) {
+        if (visibilityMode || !fields.length) return;
+
+        for (let counter = 0; counter < fields.length; counter++) {
+            if (evntType === 'mouseover') {
+                fields[counter].selectedForVisibility();
+            } else {
+                fields[counter].unselectForVisibility();
+            }
         }
     };
     this.deleteVisibility = function() {

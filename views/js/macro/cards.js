@@ -58,7 +58,7 @@ export default function Card(_ctx, _properties, tab) {
     _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
     _updateVisibilityCounter = function() {
         const size = props['visibility']['fields'].length;
-        
+
         if (size) {
             visibility.style.visibility = 'visible';
         } else {
@@ -223,8 +223,8 @@ export default function Card(_ctx, _properties, tab) {
         fieldsArray.swap(position, order); 
         _order();
     };
-    this.setSelected = function(selected) { 
-        if (selected) {
+    this.setSelected = function(isSelected) { 
+        if (isSelected) {
             //card.classList.add('selected');
         } else {
             //card.classList.remove('selected');

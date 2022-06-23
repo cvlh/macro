@@ -220,7 +220,7 @@ export default function Field(ctx, append, properties) {
         } else {
             visibility.style.removeProperty('display');
         }
-        
+
         visibility.textContent = size;
     };
 
@@ -309,7 +309,8 @@ export default function Field(ctx, append, properties) {
     this.setColor = function(color) { 
         if (rootField && color !== null) {
             props.color = color;
-            description.style.outlineColor = color;
+            // description.style.outlineColor = color;
+            item.style.outlineColor = color;
         }
 
         _color(false, color);
@@ -462,13 +463,20 @@ export default function Field(ctx, append, properties) {
             main.redraw(parent);
         }
     };
-    this.setSelected = function(selected) { 
-        if (selected) {
+    this.setSelected = function(isSelected) { 
+        if (isSelected) {
             item.classList.add('selected');
-            if (context.hasConnection()) output['_PATH_'].style.strokeWidth = '7px';
+
+            if (!rootField) 
+                item.classList.add('radius');
+
+            if (context.hasConnection()) 
+                output['_PATH_'].style.strokeWidth = '7px';
         } else {
             item.classList.remove('selected');
-            if (context.hasConnection()) output['_PATH_'].style.removeProperty('stroke-width');
+
+            if (context.hasConnection())
+                output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
     this.getProps = function (prop = null) {
@@ -605,10 +613,12 @@ export default function Field(ctx, append, properties) {
         item = addElement(fragment, 'div', 'app-cards-content-item');
         //item.setAttribute('draggable', true);
 
-        index = addElement(item, 'div', 'app-cards-content-item-index', props.order);
-
         const div = addElement(item, 'div');
         div.style.position = 'relative';
+        div.style.borderRadius = '4px';
+        div.style.margin = '0 5px 0 5px';
+
+        index = addElement(div, 'div', 'app-cards-content-item-index', props.order);
 
         //description = addElement(item, 'input', 'app-cards-content-item-description');
         description = addElement(div, 'input');

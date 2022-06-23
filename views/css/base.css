@@ -71,6 +71,7 @@ html {
     --main-green-bold: #28a745;
     --main-green-selected: #18662a;
 
+    --main-yellow-low: #ffeb3b;
     --main-yellow-med: #FDD835;
 
     --main-red-bold: #F44336;
@@ -617,12 +618,14 @@ body {
             text-align: center;
             font-size: 11px;
             font-weight: 600;
-            width: 25px;
+            width: 20px;
             line-height: 20px;
             height: 20px;
             cursor: context-menu;
             visibility: hidden;
+            margin: auto;
         }
+            .app-cards-header-visibility:hover { background-color: var(--main-yellow-low); }
         .app-cards-header-dot.root,
         .app-cards-header-title.root {
             color: var(--main-font-color-high);
@@ -680,23 +683,34 @@ body {
                 transition: .15s background-color linear;
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
-                .app-cards-content-item.radius { border-radius: 8px 0 0 8px; }
+                .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }
                 .app-cards-content-item.selected > div:nth-child(1) { 
                     outline-style: solid;
                     outline-width: 3px;
                     outline-offset: -1px;
                     outline-color: inherit;
+
+                    /* box-shadow: 0px 0px 1px 7px var(--main-yellow-med); */
                 }
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
-                    opacity: 0.85;
+                    /* opacity: 0.85; */
                 }
-                    .app-cards-content-item.visibility:hover { background-color: var(--main-background); }
+                    .app-cards-content-item.visibility:hover { 
+                        border-radius: 8px 0 0 8px;
+                        background-color: var(--main-border-color); 
+                    }
+                .app-cards-content-item.visibility .app-cards-content-item-output{
+                    pointer-events: none;
+                    background-color: transparent;
+                    color: transparent;
+                }
                 .app-cards-content-item.visibility input[type=text] {
                     background-color: transparent;
                     border-color: transparent;
                     pointer-events: none;
                 }
+                
             .app-cards-content-item-index {
                 position: absolute;
                 background-color: var(--main-background);
@@ -712,11 +726,12 @@ body {
                 text-align: center;
             }
             .app-cards-content-item-visibility {
-                display: none;
+                visibility: hidden;
                 position: absolute;
                 background-color: var(--main-yellow-med);
                 color: var(--main-font-color-black);
-                border-radius: 0 10% 10% 0;
+                /* border-radius: 0 10% 10% 0; */
+                border-radius: 10%;
                 text-align: center;
                 font-size: 11px;
                 font-weight: 600;
@@ -727,6 +742,7 @@ body {
                 top: 2px;
                 cursor: context-menu;
             }
+                .app-cards-content-item-visibility:hover { background-color: var(--main-yellow-low); }
             .app-cards-content-item input {
                 font-weight: 600;
                 border: 1px solid var(--main-border-color);

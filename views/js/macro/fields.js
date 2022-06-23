@@ -13,10 +13,11 @@ export default function Field(ctx, append, properties) {
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let item, index, description, output, visibility,
+    let item, index, description, output, visibility, selected,
         dragType,
         treeviewRow = null, treeviewDeep,
         isSelectedForvisibility = false,
+        isCurrentSelectObject = false,
         position = { top: 0, left: 0 },
 
         props = {
@@ -186,7 +187,7 @@ export default function Field(ctx, append, properties) {
         description.style.backgroundColor = color;
         description.style.borderColor = color;
         description.style.color = '#ffffff';
-        description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
+        // description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
 
         item.style.color = color;
         item.style.opacity = '1';
@@ -216,9 +217,9 @@ export default function Field(ctx, append, properties) {
         const size = props['visibility']['fields'].length;
 
         if (size) {
-            visibility.style.display = 'block';
+            visibility.style.visibility = 'visible';
         } else {
-            visibility.style.removeProperty('display');
+            visibility.style.removeProperty('visibility');
         }
 
         visibility.textContent = size;
@@ -465,14 +466,18 @@ export default function Field(ctx, append, properties) {
     };
     this.setSelected = function(isSelected) { 
         if (isSelected) {
+            isCurrentSelectObject = true;
+
             item.classList.add('selected');
 
             if (!rootField) 
-                item.classList.add('radius');
+                item.classList.add('border-radius');
 
             if (context.hasConnection()) 
                 output['_PATH_'].style.strokeWidth = '7px';
         } else {
+            isCurrentSelectObject = false;
+
             item.classList.remove('selected');
 
             if (context.hasConnection())
@@ -505,12 +510,18 @@ export default function Field(ctx, append, properties) {
     };
     this.setVisibilityMode = function() {
         if (main.getVisibilityMode()) {
+
             item.classList.add('visibility');
             description.setAttribute('disabled', true);
+
+            if (!isCurrentSelectObject)
+                visibility.style.visibility = 'hidden';
+
             item.addEventListener('click', _toggleVisibility, { capture: false });
         } else {            
             item.classList.remove('visibility');
             description.removeAttribute('disabled');
+            _updateVisibilityCounter();
             item.removeEventListener('click', _toggleVisibility, { capture: false });
 
             _unselectForVisibility();
@@ -646,6 +657,8 @@ export default function Field(ctx, append, properties) {
         output['_PATH_'] = null;
         output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });
+
+        selected = addElement(div, 'div', 'app-cards-content-item-visibility');
 
         append.appendChild(fragment);
         

@@ -17,6 +17,7 @@ export default function Card(_ctx, _properties, tab) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
         add, visibility, close,
+        isCurrentSelectObject = false,
         fieldsArray = [],
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
@@ -225,8 +226,10 @@ export default function Card(_ctx, _properties, tab) {
     };
     this.setSelected = function(isSelected) { 
         if (isSelected) {
+            isCurrentSelectObject = true;
             //card.classList.add('selected');
         } else {
+            isCurrentSelectObject = false;
             //card.classList.remove('selected');
         }
     };
@@ -263,15 +266,22 @@ export default function Card(_ctx, _properties, tab) {
         if (parent.getVisibilityMode()) {
             card.removeAttribute('tabindex');
 
-            add.style.display = 'none';
+            if (!isCurrentSelectObject)
+                visibility.style.visibility = 'hidden';
+
+            add.style.visibility = 'hidden';
+
             if (!rootCard) 
-                close.style.display = 'none';
+                close.style.visibility = 'hidden';
+
         } else {
             card.setAttribute('tabindex',  tabindex);
 
-            add.style.removeProperty('display');
+            _updateVisibilityCounter();
+            add.style.removeProperty('visibility');
+
             if (!rootCard) 
-                close.style.removeProperty('display');
+                close.style.removeProperty('visibility');
         }
 
         for (let counter = 0; counter < size; counter++)
@@ -357,11 +367,11 @@ export default function Card(_ctx, _properties, tab) {
             icon = addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
+            
             title = addElement(header, 'div', 'app-cards-header-title');
         }
-
-        visibility = addElement(header, 'div', 'app-cards-header-visibility', props['visibility']['fields'].length);
         
+        visibility = addElement(header, 'div', 'app-cards-header-visibility');
         visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
         visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
 

@@ -266,8 +266,11 @@ export default function Card(_ctx, _properties, tab) {
         if (parent.getVisibilityMode()) {
             card.removeAttribute('tabindex');
 
-            if (!isCurrentSelectObject)
+            if (!isCurrentSelectObject) {
                 visibility.style.visibility = 'hidden';
+            } else {
+                card.appendChild(parent.getSelectedArrow());
+            }
 
             add.style.visibility = 'hidden';
 
@@ -278,6 +281,10 @@ export default function Card(_ctx, _properties, tab) {
             card.setAttribute('tabindex',  tabindex);
 
             _updateVisibilityCounter();
+
+            if (isCurrentSelectObject)
+                card.removeChild(parent.getSelectedArrow());
+
             add.style.removeProperty('visibility');
 
             if (!rootCard) 

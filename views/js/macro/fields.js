@@ -13,7 +13,7 @@ export default function Field(ctx, append, properties) {
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let item, index, description, output, visibility, selected,
+    let item, index, description, output, visibility,
         dragType,
         treeviewRow = null, treeviewDeep,
         isSelectedForvisibility = false,
@@ -190,7 +190,7 @@ export default function Field(ctx, append, properties) {
         // description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
 
         item.style.color = color;
-        item.style.opacity = '1';
+        // item.style.opacity = '1';
 
         isSelectedForvisibility = true;
     },
@@ -209,7 +209,7 @@ export default function Field(ctx, append, properties) {
         description.style.removeProperty('box-shadow');
 
         item.style.removeProperty('color');
-        item.style.removeProperty('opacity');
+        // item.style.removeProperty('opacity');
 
         isSelectedForvisibility = false;
     },
@@ -514,13 +514,20 @@ export default function Field(ctx, append, properties) {
             item.classList.add('visibility');
             description.setAttribute('disabled', true);
 
-            if (!isCurrentSelectObject)
+            if (!isCurrentSelectObject) {
                 visibility.style.visibility = 'hidden';
+            } else {
+                item.appendChild(main.getSelectedArrow());
+            }
 
             item.addEventListener('click', _toggleVisibility, { capture: false });
         } else {            
             item.classList.remove('visibility');
             description.removeAttribute('disabled');
+
+            if (isCurrentSelectObject)
+                item.removeChild(main.getSelectedArrow());
+
             _updateVisibilityCounter();
             item.removeEventListener('click', _toggleVisibility, { capture: false });
 
@@ -658,7 +665,7 @@ export default function Field(ctx, append, properties) {
         output['_CONNECTION_'] = null;
         //output.addEventListener('mousedown', _drag, { capture: false });
 
-        selected = addElement(div, 'div', 'app-cards-content-item-visibility');
+        // selected = addElement(item, 'div', 'app-cards-content-item-selected');
 
         append.appendChild(fragment);
         

@@ -26,6 +26,7 @@ export default function Macro(props) {
         currentDrag = null,
         currentSelectedObject = null, // Field | Card | Workspace
         visibilityMode = false,       // Boolean
+        selectedArrow = null,
 
         cardsArray = [],
         transform = { scale: 1, left: 0, top: 0, index: 0 },
@@ -340,6 +341,12 @@ export default function Macro(props) {
               visibility = currentSelectedObject.getProps('visibility'),
               sizeFields = visibility['fields'].length;
 
+        if (selectedArrow === null) {
+            selectedArrow = document.createElement('div');
+            selectedArrow.className = 'app-cards-content-item-selected';
+            selectedArrow.appendChild(document.createTextNode(_I18N_.selected_visibility));
+        }
+
         visibilityMode = !visibilityMode;
 
         for (counter = 0; counter < sizeFields; counter++) {
@@ -372,6 +379,7 @@ export default function Macro(props) {
         }
     };
 
+    this.getSelectedArrow = function () { return selectedArrow; }
     this.getSelectedObject = function () { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////

@@ -235,6 +235,7 @@ body {
             stroke-dasharray: 0.1%; 
             stroke-width: 1px;
         }
+/*// PROPERTIES CSS //////////////////////////////////////////////////////////*/
 .main-app-properties {
    /* width: 240px;*/
     background-color: #ffffff;
@@ -552,6 +553,7 @@ body {
             pointer-events: none;
             display: none;
         }
+/*// CARDS CSS ///////////////////////////////////////////////////////////////*/
 .app-cards {
     position: absolute;
     top: 0;
@@ -568,7 +570,7 @@ body {
     border-width: 2px;
     border-style: solid;
     border-color: var(--main-border-color-high);
-    opacity: 0.9;
+    /* opacity: 0.9; */
 
     outline-color: var(--main-border-color-high);
 }
@@ -689,18 +691,14 @@ body {
                     outline-width: 3px;
                     outline-offset: -1px;
                     outline-color: inherit;
-
-                    /* box-shadow: 0px 0px 1px 7px var(--main-yellow-med); */
                 }
+
                 .app-cards-content-item.visibility { 
                     cursor: pointer; 
                     /* opacity: 0.85; */
                 }
-                    .app-cards-content-item.visibility:hover { 
-                        border-radius: 8px 0 0 8px;
-                        background-color: var(--main-border-color); 
-                    }
-                .app-cards-content-item.visibility .app-cards-content-item-output{
+                    .app-cards-content-item.visibility:hover { background-color: var(--main-border-color); }
+                .app-cards-content-item.visibility .app-cards-content-item-output {
                     pointer-events: none;
                     background-color: transparent;
                     color: transparent;
@@ -711,6 +709,34 @@ body {
                     pointer-events: none;
                 }
                 
+                .app-cards-content-item-selected {
+                    position: absolute;
+                    top: 6px;
+                    left: -61px;
+                    height: 22px;
+                    background-color: var(--main-yellow-med);
+                    color: var(--main-font-color-bold);
+                    line-height: 23px;
+                    font-size: 8px;
+                    font-weight: 600;
+                    padding: 0 18px 0 8px;
+                    text-transform: uppercase;
+                    border-radius: 5px;
+                    pointer-events: none;
+                }
+                    .app-cards > .app-cards-content-item-selected { top: 4px; }
+                    .app-cards-content-item-selected:before {
+                        content: "";
+                        width: 0;
+                        height: 0;
+                        border-left: 6px solid #0000;
+                        border-right: 6px solid #0000;
+                        position: absolute;
+                        right: 2px;
+                        top: 7px;
+                        border-bottom: 8px solid #ff9800;
+                        transform: rotate(90deg);
+                    }
             .app-cards-content-item-index {
                 position: absolute;
                 background-color: var(--main-background);

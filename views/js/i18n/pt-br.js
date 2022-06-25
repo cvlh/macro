@@ -70,6 +70,8 @@ export const _I18N_ = {
     create_visibility: 'Selecione a nova visibilidade',
     with_visibility: 'Aplicado',
 
+    selected_visibility: 'Edição',
+
     simulate: 'Simular',
     
     0 : '',

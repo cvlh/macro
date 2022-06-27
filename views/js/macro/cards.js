@@ -227,10 +227,10 @@ export default function Card(_ctx, _properties, tab) {
     this.setSelected = function(isSelected) { 
         if (isSelected) {
             isCurrentSelectObject = true;
-            //card.classList.add('selected');
+            card.classList.add('selected');
         } else {
             isCurrentSelectObject = false;
-            //card.classList.remove('selected');
+            card.classList.remove('selected');
         }
     };
     this.getProps = function (prop = null) {

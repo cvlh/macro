@@ -18,7 +18,7 @@ fetch('macro_simple.json')
 function create_macro (data) {
     let macro, allFields = {};
     
-    macro = new Macro({ 'transform': data['transform'], 'size': data['size'] });
+    macro = new Macro(data.properties);
 
     create_card(macro, data['root'], allFields);
     macro.initVisibility(allFields);

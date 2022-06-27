@@ -512,8 +512,9 @@ export default function Field(ctx, append, properties) {
         if (main.getVisibilityMode()) {
 
             item.classList.add('visibility');
-            description.setAttribute('disabled', true);
-
+            //description.setAttribute('disabled', true);
+            description.setAttribute('readonly', true);
+            
             if (!isCurrentSelectObject) {
                 visibility.style.visibility = 'hidden';
             } else {
@@ -523,8 +524,9 @@ export default function Field(ctx, append, properties) {
             item.addEventListener('click', _toggleVisibility, { capture: false });
         } else {            
             item.classList.remove('visibility');
-            description.removeAttribute('disabled');
-
+            //description.removeAttribute('disabled');
+            description.removeAttribute('readonly');
+            
             if (isCurrentSelectObject)
                 item.removeChild(main.getSelectedArrow());
 

@@ -9,7 +9,7 @@ import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
 
 ////////////////////////////////////////////////////////////////////////////////
-export default function Macro(props) {
+export default function Macro(_properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const context = this;
@@ -24,14 +24,18 @@ export default function Macro(props) {
 
         rootCard, 
         currentDrag = null,
+        isCurrentSelectObject = false,
         currentSelectedObject = null, // Field | Card | Workspace
         visibilityMode = false,       // Boolean
         selectedArrow = null,
 
         cardsArray = [],
-        transform = { scale: 1, left: 0, top: 0, index: 0 },
         position = { offsetLeft: 0, offsetTop: 0 },
-        size = { width: 4096, height: 3072 },
+
+        props = { 
+            size: { width: 4096, height: 3072 },
+            transform: { scale: 1, left: 0, top: 0, index: 0 }
+        },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _receive_events = function(evnt) {
@@ -85,8 +89,8 @@ export default function Macro(props) {
         } else if (targetClass.contains('main-app-wrapper')) {
             switch (evnt.type) {
                 case 'dblclick':
-                    let cardLeft = (evnt.clientX - transform.left) / transform.scale,
-                        cardRight = (evnt.clientY - transform.top) / transform.scale;
+                    let cardLeft = (evnt.clientX - props.transform.left) / props.transform.scale,
+                        cardRight = (evnt.clientY - props.transform.top) / props.transform.scale;
 
                     context.createCard([cardLeft, cardRight]);
 
@@ -116,16 +120,16 @@ export default function Macro(props) {
         const builderLeftCenter = builderRect.left + (builderRect.width / 2),
               builderTopCenter = builderRect.top + (builderRect.height / 2);
 
-        const DELTA = 1 - transform.scale;
+        const DELTA = 1 - props.transform.scale;
 
         const builderLeftCenterScale = builderLeftCenter * DELTA,
               builderTopCenterScale = builderTopCenter * DELTA;
         
-        transform.left = (transform.left-builderLeftCenterScale) / transform.scale;
-        transform.top = (transform.top-builderTopCenterScale) / transform.scale;
-        transform.scale = 1;
+        props.transform.left = (props.transform.left-builderLeftCenterScale) / props.transform.scale;
+        props.transform.top = (props.transform.top-builderTopCenterScale) / props.transform.scale;
+        props.transform.scale = 1;
 
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
     },
     _fit = function() {
         const builderRect = mainBuilder.getBoundingClientRect(),
@@ -134,13 +138,13 @@ export default function Macro(props) {
         const builderLeftCenter = builderRect.width / 2,
               builderTopCenter = builderRect.height / 2;
 
-        const wrapperLeftCenter = (wrapperRect.width / transform.scale) / 2,
-              wrapperTopCenter = (wrapperRect.height / transform.scale) / 2;
+        const wrapperLeftCenter = (wrapperRect.width / props.transform.scale) / 2,
+              wrapperTopCenter = (wrapperRect.height / props.transform.scale) / 2;
 
         const widthFactor = wrapperRect.width / builderRect.width,
               heightFactor = wrapperRect.height / builderRect.height;
 
-        let scale = transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
+        let scale = props.transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
 
         if (scale > _ZOOM_.MAX) {
             scale = _ZOOM_.MAX; 
@@ -148,11 +152,11 @@ export default function Macro(props) {
             scale = _ZOOM_.MIN;
         }
 
-        transform.scale = scale;
-        transform.left = builderRect.left + builderLeftCenter - (wrapperLeftCenter * transform.scale);
-        transform.top = builderRect.top + builderTopCenter - (wrapperTopCenter * transform.scale);
+        props.transform.scale = scale;
+        props.transform.left = builderRect.left + builderLeftCenter - (wrapperLeftCenter * props.transform.scale);
+        props.transform.top = builderRect.top + builderTopCenter - (wrapperTopCenter * props.transform.scale);
 
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     },
     _zoom = function(zoom) {
@@ -164,14 +168,14 @@ export default function Macro(props) {
 
         const DELTA = zoom;
 
-        let scale = transform.scale * (1 + DELTA);
+        let scale = props.transform.scale * (1 + DELTA);
         if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
         
-        transform.scale = scale;
-        transform.left += (wrapperRect.left - builderLeftCenter) * DELTA;
-        transform.top +=  (wrapperRect.top - builderTopCenter) * DELTA;
+        props.transform.scale = scale;
+        props.transform.left += (wrapperRect.left - builderLeftCenter) * DELTA;
+        props.transform.top +=  (wrapperRect.top - builderTopCenter) * DELTA;
         
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
         
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     },
@@ -184,31 +188,31 @@ export default function Macro(props) {
         const rectLeftCenter = rect.left + (rect.width / 2),
               rectTopCenter = rect.top + (rect.height / 2);
 
-        const left = (transform.left - rectLeftCenter) + builderLeftCenter,
-              top  = (transform.top - rectTopCenter) + builderTopCenter;
+        const left = (props.transform.left - rectLeftCenter) + builderLeftCenter,
+              top  = (props.transform.top - rectTopCenter) + builderTopCenter;
         
-        transform.left = left;
-        transform.top = top;
-        //transform.scale = 1;
+        props.transform.left = left;
+        props.transform.top = top;
+        //props.transform.scale = 1;
 
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
     },
     _wheel_zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
 
-        const scale = transform.scale * (1 + delta);
+        const scale = props.transform.scale * (1 + delta);
         if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
         
         const rect = mainAppWrapper.getBoundingClientRect();
 
-        transform.scale = scale;
-        transform.left += (rect.left - evnt.clientX) * delta;
-        transform.top +=  (rect.top - evnt.clientY) * delta;
+        props.transform.scale = scale;
+        props.transform.left += (rect.left - evnt.clientX) * delta;
+        props.transform.top +=  (rect.top - evnt.clientY) * delta;
 
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
 
         if (currentDrag != null) {
-            currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.START);
+            currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
         }
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     };
@@ -222,10 +226,11 @@ export default function Macro(props) {
                 position.offsetLeft = left - rect.left;
                 position.offsetTop = top - rect.top;
 
+                mainAppWrapper.style.cursor = 'grabbing';
                 break;
                 
             case _MOV_.END:
-
+                mainAppWrapper.style.removeProperty('cursor');
                 break;
         }
 
@@ -251,8 +256,7 @@ export default function Macro(props) {
             name:    'Macro',
             version: 1,
             
-            transform:  [ transform.left, transform.top, transform.scale ],
-            size:       [ size.width, size.height ],
+            properties: props,
             //visibility: [ "1", "2", "3", "4", "5", "6", "7", "8" ],
 
             root: rootCard.serialize(fragment)
@@ -274,7 +278,7 @@ export default function Macro(props) {
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;
-        new_card.setPosition(left, top, transform, _MOV_.NEW);
+        new_card.setPosition(left, top, props.transform, _MOV_.NEW);
 
         if (connect !== null) connect.makeConnection(new_card);
 
@@ -301,7 +305,7 @@ export default function Macro(props) {
     };
     this.connect = function(fromOutput, toInput) {
         const viewportInput = toInput.getInputBounding();
-        fromOutput.setPosition(viewportInput.left, viewportInput.top, transform, _MOV_.END);
+        fromOutput.setPosition(viewportInput.left, viewportInput.top, props.transform, _MOV_.END);
         fromOutput.makeConnection(toInput);
     };
 
@@ -309,10 +313,10 @@ export default function Macro(props) {
         if (element === null) {
             const size = cardsArray.length;
             for (let counter=0; counter<size; counter++) {
-                cardsArray[counter].redraw(transform);
+                cardsArray[counter].redraw(props.transform);
             }
         } else {
-            element.redraw(transform);
+            element.redraw(props.transform);
         }
 
         context.serialize();
@@ -327,6 +331,25 @@ export default function Macro(props) {
         currentSelectedObject.setSelected(true);
 
         properties.refresh();
+    };
+    this.setSelected = function(isSelected) { 
+        if (isSelected) {
+            isCurrentSelectObject = true;
+            mainAppWrapper.classList.add('selected');
+        } else {
+            isCurrentSelectObject = false;
+            mainAppWrapper.classList.remove('selected');
+        }
+    };
+    this.getProps = function (prop = null) {
+        if (prop === null) {
+            return props;
+        } else {
+            if (props.hasOwnProperty(prop)) {
+                return props[prop];
+            }
+        }
+        return null;
     };
 
     this.initVisibility = function(fields) { 
@@ -394,7 +417,7 @@ export default function Macro(props) {
                 break;
 
             case _DRAG_.HEADER:
-                transform.index++;
+                props.transform.index++;
                 break;
 
             case _DRAG_.OUTPUT:
@@ -404,21 +427,21 @@ export default function Macro(props) {
                 break;
         }
 
-        currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.START);
+        currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
 
         document.addEventListener('mousemove', context.drag,    { capture: true });
         document.addEventListener('mouseup',   context.dragEnd, { capture: true });
     };
     this.drag = function(evnt) {
         evnt.stopPropagation();
-        currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.MOV);
+        currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.MOV);
 
         switch (currentDrag.getDragType()) {
             case _DRAG_.AREA:
                 break;
 
             case _DRAG_.HEADER:
-                currentDrag.redraw(transform);
+                currentDrag.redraw(props.transform);
                 break;
 
             case _DRAG_.OUTPUT:
@@ -428,7 +451,7 @@ export default function Macro(props) {
     };
     this.dragEnd = function(evnt) {
         evnt.stopPropagation();
-        currentDrag.setPosition(evnt.clientX, evnt.clientY, transform, _MOV_.END);
+        currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.END);
 
         switch (currentDrag.getDragType()) {
             case _DRAG_.AREA:
@@ -473,6 +496,8 @@ export default function Macro(props) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
+        props = {...props, ..._properties};
+
         const fragment = document.createDocumentFragment();
 
         mainApp = addElement(fragment, 'div', 'main-app remove-focus-select');
@@ -502,15 +527,17 @@ export default function Macro(props) {
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
 
-        if (props.hasOwnProperty('size')) {
-            size.width = props.size[0];
-            size.height = props.size[1];
-        }
+        mainAppWrapper.addEventListener('focus', () => context.showProperties(context), { capture: false });
+
+        // if (props.hasOwnProperty('size')) {
+        //     size.width = props.size[0];
+        //     size.height = props.size[1];
+        // }
 
         mainAppSVG = mainAppWrapper.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
         mainAppSVG.setAttribute('class', 'main-app-svg');
-        mainAppSVG.setAttribute('width',  size.width);
-        mainAppSVG.setAttribute('height', size.height);
+        mainAppSVG.setAttribute('width',  props.size.width);
+        mainAppSVG.setAttribute('height', props.size.height);
 
         const bottomBar = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
         bottomBar['buttons'] = [];
@@ -560,10 +587,11 @@ export default function Macro(props) {
         simulate = new Simulate(context);
         simulateDiv.appendChild(simulate.getFragment());
 
-        if (props.hasOwnProperty('transform')) {
-            transform.scale = props.transform[2];
-            context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
-        }
+        // if (props.hasOwnProperty('transform')) {
+        //     transform.scale = props.transform[2];
+        //     context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
+        // }
+        context.setPosition(props.transform.left, props.transform.top, props.transform, _MOV_.END);
 
         const builderRect = mainBuilder.getBoundingClientRect();
   
@@ -574,5 +602,5 @@ export default function Macro(props) {
         builderCenterDiv.style.left = builderLeftCenter + 'px';
         builderCenterDiv.style.top = builderTopCenter + 'px';
 
-    })(props);
+    })();
 }

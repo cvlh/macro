@@ -108,8 +108,8 @@ export default function Macro(_properties) {
               targetClass = target.classList;
 
         if (evnt.type === 'click') {
-            if (targetClass.contains('zoom-in'))        _zoom(0.1);
-            else if (targetClass.contains('zoom-out'))  _zoom(-0.1);
+            if (targetClass.contains('zoom-in'))         _zoom(0.1);
+            else if (targetClass.contains('zoom-out'))   _zoom(-0.1);
             else if (targetClass.contains('zoom-reset')) _pan();
             else if (targetClass.contains('zoom-fit'))   _fit();
         }
@@ -270,11 +270,11 @@ export default function Macro(_properties) {
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.appendAt = function () { return mainAppWrapper; }
 
-    this.createCard = function(position, properties, connect = null) {
+    this.createCard = function(cardPosition, cardProperties, connect = null) {
         const isRoot = (cardsArray.length === 0 ? true : false),
-              left = position[0], top = position[1];
+              left = cardPosition[0], top = cardPosition[1];
 
-        const new_card = new Card(context, properties, cardsArray.length);
+        const new_card = new Card(context, cardProperties, cardsArray.length);
         cardsArray.push(new_card); 
 
         if (isRoot) rootCard = new_card;
@@ -324,13 +324,14 @@ export default function Macro(_properties) {
     this.showProperties = function(object) {
         if (visibilityMode) return;
         
-        if (currentSelectedObject !== null) {
+        if (currentSelectedObject !== null)
             currentSelectedObject.setSelected(false);
-        }
+        
         currentSelectedObject = object;
         currentSelectedObject.setSelected(true);
 
-        properties.refresh();
+        if (currentSelectedObject.hasOwnProperty('getProps'))
+            properties.refresh();
     };
     this.setSelected = function(isSelected) { 
         if (isSelected) {
@@ -345,9 +346,8 @@ export default function Macro(_properties) {
         if (prop === null) {
             return props;
         } else {
-            if (props.hasOwnProperty(prop)) {
+            if (props.hasOwnProperty(prop))
                 return props[prop];
-            }
         }
         return null;
     };
@@ -560,19 +560,22 @@ export default function Macro(_properties) {
 
         mainAppWrapper.addEventListener('wheel', _wheel_zoom, { capture: false, passive: true });
         mainAppWrapper.addEventListener('mousedown', function (evnt) {
-            if (currentDrag !== null) {
-                if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
-                return;
-            }
+            if (evnt.button === 0) {
+                if (currentDrag !== null) {
+                    if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
+                    return;
+                }
 
-            if (evnt.target.classList.contains('main-app-wrapper')) {
-                context.dragStart(evnt, context);
-            } else if (evnt.target.classList.contains('moveable')) {
-                const field = evnt.target['_FIELD_'];
-                field.setDragType(_DRAG_.LINE);
-                context.dragStart(evnt, field);
+                if (evnt.target.classList.contains('main-app-wrapper')) {
+                    context.dragStart(evnt, context);
+
+                } else if (evnt.target.classList.contains('moveable')) {
+                    const field = evnt.target['_FIELD_'];
+
+                    field.setDragType(_DRAG_.LINE);
+                    context.dragStart(evnt, field);
+                }
             }
-            //}
         }, { capture: false });
         mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: false });
 

@@ -38,11 +38,11 @@ export default function Visibility (ctx) {
         const object = parent.getMain().getSelectedObject();
               //props = object.getProps('visibility');
 
-        if (object instanceof Card) {
-            if (object.isRoot()) {
+        // if (object instanceof Card) {
+        //     if (object.isRoot()) {
                 
-            }
-        }
+        //     }
+        // }
 
         status.textContent = _I18N_.create_visibility;
         status.style.removeProperty('grid-column');
@@ -188,12 +188,12 @@ export default function Visibility (ctx) {
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function(object) {
         //const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
-        const objectProp = object.getProps('visibility');
+        const objectVisibility = parent.getMain().getSelectedObject().getProps('visibility');
 
-        if (objectProp !== null) {
+        if (objectVisibility !== null) {
 
-            _set_flags(objectProp);
-            _set_status(objectProp);
+            _set_flags(objectVisibility);
+            _set_status(objectVisibility);
 
             content.style.display = 'block';
         } else {

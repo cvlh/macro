@@ -24,6 +24,10 @@ export const _I18N_ = {
     field_size_min: 'Mínimo',
     field_mask: 'Máscara',
     
+    macro_size: 'Tamanho da área',
+    macro_height: 'Altura',
+    macro_width: 'Largura',
+
     field_color_header: 'Cor da atividade',
     field_color: 'Cor',
     field_color_text: {

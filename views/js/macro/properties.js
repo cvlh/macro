@@ -8,6 +8,7 @@ import Color from './properties/color.js';
 import Type from './properties/type.js';
 import Visibility from './properties/visibility.js';
 import Order from './properties/order.js';
+import Size from './properties/size.js';
 
 export default function Properties(ctx) {
 
@@ -38,13 +39,12 @@ export default function Properties(ctx) {
     this.getMain = function() { return parent; };
 
     this.refresh = function() {
-        let object = parent.getSelectedObject();
-
-        if (object.getProps() == null) return;
+        //let object = parent.getSelectedObject();
+        //if (object.getProps() == null) return;
 
         const size = propertiesArray.length;
-        for (var counter=0; counter<size; counter++) {
-            propertiesArray[counter].visible(object);
+        for (var counter = 0; counter < size; counter++) {
+            propertiesArray[counter].visible();
         }
     };
 
@@ -58,57 +58,9 @@ export default function Properties(ctx) {
             new Color(context),
             new Type(context),
             new Order(context),
-            new Visibility(context)
+            new Visibility(context),
+            new Size(context)
         );
-
-        /*prefix['content'] = addElement(fragment, 'div', 'main-app-properties-content');
-
-            row = addElement(prefix['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_id);
-            prefix['id'] = addElement(row, 'div', 'main-app-properties-text');
-            prefix['id'].style.gridColumn = '13 / span 15';
-
-            row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_value);
-
-            row = addElement(prefix['content'] , 'div', 'main-app-properties-row');
-            prefix['text'] = addElement(row, 'div', 'main-app-properties-text');
-            prefix['text'].style.gridColumn = '3 / span 24';*/
-
-        //color = new Color(fragment);
-        //type = new Type(fragment);
-
-        /*
-        info['content'] = addElement(fragment, 'div', 'main-app-properties-content');
-
-            row = addElement(info['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_info);
-
-            row = addElement(info['content'], 'div', 'main-app-properties-row');
-                info['info'] = addElement(row, 'input');
-                info['info'].setAttribute('type', 'text');
-                info['info'].style.gridColumn = '2 / span 26';
-
-            row = addElement(info['content'], 'div', 'main-app-properties-row');
-            addElement(row, 'div', 'main-app-properties-label', _I18N_.field_help);
-
-            row = addElement(info['content'], 'div', 'main-app-properties-row');
-            row.style.gridTemplateRows = '28px 28px';
-                info['help'] = addElement(row, 'textarea');
-                info['help'].setAttribute('rows', '3');
-                info['help'].setAttribute('maxlength', '128');
-
-
-
-        foreign['content'] = addElement(fragment, 'div', 'main-app-properties-content');
-        
-            row = addElement(foreign['content'], 'div', 'main-app-properties-row');
-            label = addElement(row, 'div', 'main-app-properties-label', _I18N_.field_foreign_key);
-            label.style.gridColumn = '2 / span 13';
-
-            info['key'] = addElement(row, 'input');
-            info['key'].setAttribute('type', 'text');
-            info['key'].style.gridColumn = '16 / span 12';*/
 
     })();
 }

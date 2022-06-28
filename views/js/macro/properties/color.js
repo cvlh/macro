@@ -45,7 +45,7 @@ export default function Color (ctx) {
     this.visible = function() {
         //const objectColor = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
         const objectColor = parent.getMain().getSelectedObject().getProps('color');
-        
+
         if (objectColor !== null) {
             if (colors.hasOwnProperty(objectColor)) {
                 _set(colors[objectColor]);

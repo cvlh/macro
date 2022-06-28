@@ -32,12 +32,13 @@ export default function Card(_ctx, _properties, tab) {
         //evnt.preventDefault();
         const target = evnt.target,
               targetClass = target.classList;
-
+              
         if (targetClass.contains('app-cards-header-button') ||
             targetClass.contains('app-cards-header-visibility')) 
             return;
 
-        parent.dragStart(evnt, context)
+        if (evnt.button === 0)
+            parent.dragStart(evnt, context)
     },
     _add = function() {
         const field = context.addField();

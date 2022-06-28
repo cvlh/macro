@@ -66,6 +66,5 @@ export default function Size (ctx) {
             width.setAttribute('type', 'text');
             width.style.gridColumn = '22 / span 6';
             //width.addEventListener('change', () => console.log('mudou maximum'), { capture: false });
-
     })();
 }

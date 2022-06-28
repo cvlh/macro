@@ -20,14 +20,6 @@ export default function Properties(ctx) {
         propertiesArray = [],
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    /*_change_type = function(evnt) {
-        const value = evnt.target.value;
-
-        type['type_icon'].textContent = value;
-        if (currentObject !== null) {
-            currentObject.setType(value)
-        }
-    },*/
     _change = function(evnt) {
         if (currentObject !== null) {
             console.dir(evnt);
@@ -39,10 +31,8 @@ export default function Properties(ctx) {
     this.getMain = function() { return parent; };
 
     this.refresh = function() {
-        //let object = parent.getSelectedObject();
-        //if (object.getProps() == null) return;
-
         const size = propertiesArray.length;
+
         for (var counter = 0; counter < size; counter++) {
             propertiesArray[counter].visible();
         }
@@ -50,8 +40,6 @@ export default function Properties(ctx) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        //let row, label, count;
-
         fragment = document.createDocumentFragment();
 
         propertiesArray.push(

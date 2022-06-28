@@ -67,6 +67,9 @@ export default function Field(ctx, append, properties) {
         }
     },
     _drag = function (evnt) { 
+        if (evnt.button !== 0) 
+            return;
+
         evnt.preventDefault();
 
         if (main.getVisibilityMode()) return;

@@ -37,7 +37,9 @@ export default function Color (ctx) {
 
         if (targetClass.contains('main-app-properties-color')) {
             _set(target);
-            parent.getMain().getSelectedObject().setColor(target['_COLOR_']);
+
+            const newColor = _COLORS_[target['_COLOR_']];
+            parent.getMain().getSelectedObject().setColor(newColor);
         }
     };
 
@@ -50,12 +52,9 @@ export default function Color (ctx) {
             if (colors.hasOwnProperty(objectColor)) {
                 _set(colors[objectColor]);
                 content.style.display = 'block';
-                //content.style.height = 'auto';
-                //content.style.maxHeight = '1000px';
                 return;
             }
         }
-        //content.style.removeProperty('max-height');
         content.style.removeProperty('display');
     };
 
@@ -72,19 +71,16 @@ export default function Color (ctx) {
         // row = addElement(content, 'div', 'main-app-properties-row spacer');
         row = addElement(content, 'div', 'main-app-properties-row');
         for (const color_idx in _COLORS_) {
-            if (_COLORS_.hasOwnProperty(color_idx)) {
-                const rgb_color = _COLORS_[color_idx];
 
-                color = addElement(row, 'div', 'icon main-app-properties-color');
-                color.setAttribute('title', _I18N_.field_color_text[color_idx]);
-                color.style.backgroundColor = rgb_color;
-                color.style.gridColumn = count + ' / span 2';
-                color['_COLOR_'] = rgb_color;
+            color = addElement(row, 'div', 'icon main-app-properties-color');
+            color.setAttribute('title', _I18N_.field_color_text[color_idx]);
+            color.style.backgroundColor = _COLORS_[color_idx];
+            color.style.gridColumn = count + ' / span 2';
+            color['_COLOR_'] = color_idx;
 
-                count += 3;
+            count += 3;
 
-                colors[rgb_color] = color;
-            }
+            colors[color_idx] = color;
         }
         
         row.addEventListener('click', _receive_events, { capture: false });

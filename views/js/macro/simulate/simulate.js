@@ -25,6 +25,7 @@ export default function Simulate(ctx) {
         if (target.classList.contains('item')) {
             const [id, color] = target['_props_'];
             currentVisibilityIds = macro[id]['visibility']['fields'];
+            
             const slide = _create_view(id, color);
 
             setTimeout(() => {

@@ -58,29 +58,33 @@ export default function Field(ctx, append, properties) {
                 output.style.color = 'var(--main-background)';
             }
 
-            if (output['_PATH_'] !== null) output['_PATH_'].style.stroke = color;
+            if (output['_PATH_'] !== null) 
+                output['_PATH_'].style.stroke = color;
         } else {
             output.style.removeProperty('background-color');
             output.style.removeProperty('color');
 
-            if (output['_PATH_'] !== null) output['_PATH_'].style.removeProperty('stroke');
+            if (output['_PATH_'] !== null)
+                output['_PATH_'].style.removeProperty('stroke');
         }
     },
-    _drag = function (evnt) { 
+    _drag = function (evnt) {
+        evnt.preventDefault();
+
         if (evnt.button !== 0) 
             return;
 
-        evnt.preventDefault();
-
-        if (main.getVisibilityMode()) return;
+        if (main.getVisibilityMode())
+            return;
 
         if (context.hasConnection()) {
             context.clearConnection();
-
             main.serialize();
         }
 
-        if (output['_PATH_'] === null) output['_PATH_'] = main.newSVG(context);
+        if (output['_PATH_'] === null) 
+            output['_PATH_'] = main.newSVG(context);
+        
         output['_PATH_'].setAttribute('visibility', 'visible');
 
         context.setDragType(_DRAG_.OUTPUT);
@@ -312,8 +316,13 @@ export default function Field(ctx, append, properties) {
     };
     this.setColor = function(color) { 
         if (rootField && color !== null) {
-            props.color = color;
-            // description.style.outlineColor = color;
+            for (const color_idx in _COLORS_) {
+                if (_COLORS_[color_idx] === color) {
+                    props.color = color_idx;
+                    break;
+                }
+            }
+
             item.style.outlineColor = color;
         }
 
@@ -325,7 +334,7 @@ export default function Field(ctx, append, properties) {
     };
     this.getColor = function() {
         if (rootField /*&& props.color != null*/) {
-            return props.color;
+            return _COLORS_[props.color];
         } else {
             return parent.getColor();
         }
@@ -678,6 +687,7 @@ export default function Field(ctx, append, properties) {
         //index.textContent = props.id;
         context.setType();
 
-        if (rootField) context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
+        if (rootField) 
+            context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
     })();
 }

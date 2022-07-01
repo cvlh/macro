@@ -42,7 +42,7 @@
 					},
 					"icon": "",
 					"line": 238.104767839075,
-					"color": "#ff0000"
+					"color": "RED"
 				},
 				"output": {
 					"position": [
@@ -1366,7 +1366,7 @@
 					},
 					"icon": "",
 					"line": 208.21738106495707,
-					"color": "#aa00ff"
+					"color": "PURPLE"
 				},
 				"output": {
 					"position": [
@@ -1428,7 +1428,7 @@
 					},
 					"icon": "",
 					"line": 178.38023068973484,
-					"color": "#304ffe"
+					"color": "BLUE"
 				},
 				"output": {
 					"position": [
@@ -1703,7 +1703,7 @@
 					},
 					"icon": "",
 					"line": 147.5316637439406,
-					"color": "#008080"
+					"color": "TEAL"
 				},
 				"output": {
 					"position": [
@@ -2506,7 +2506,7 @@
 					},
 					"icon": "",
 					"line": 118.23053534842671,
-					"color": "#43a047"
+					"color": "GREEN"
 				},
 				"output": {
 					"position": [
@@ -2568,7 +2568,7 @@
 					},
 					"icon": "",
 					"line": 86.94284831139584,
-					"color": "#ff6d00"
+					"color": "ORANGE"
 				},
 				"output": {
 					"position": [
@@ -2720,7 +2720,7 @@
 					},
 					"icon": "",
 					"line": 57.16908161486646,
-					"color": "#795548"
+					"color": "BROWN"
 				},
 				"output": {
 					"position": [
@@ -3017,7 +3017,7 @@
 					},
 					"icon": "",
 					"line": 27.899955031837578,
-					"color": "#000000"
+					"color": "BLACK"
 				},
 				"output": {
 					"position": [

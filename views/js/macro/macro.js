@@ -570,6 +570,7 @@ export default function Macro(_properties) {
                     context.dragStart(evnt, context);
 
                 } else if (evnt.target.classList.contains('moveable')) {
+                    evnt.preventDefault();
                     const field = evnt.target['_FIELD_'];
 
                     field.setDragType(_DRAG_.LINE);

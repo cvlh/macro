@@ -1,5 +1,6 @@
 'use strict';
 
+import { _COLORS_ } from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,12 +51,16 @@ export default function Simulate(ctx) {
             }).length;
 
             if (!visibilitySize) {
+                let lastExecId = executedStack.pop();
+                if (macro[lastExecId]['exec'].hasOwnProperty('after')) 
+                    currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
+
                 level--;
                 visibilitySize = currentVisibleIds.filter( element => {
                     return macro[element]['level'].length === level;
                 }).length;
             }
-            
+
             if (!visibilitySize) {
                 let lastExecId = executedStack.pop();
                 while (lastExecId !== undefined) {
@@ -84,25 +89,32 @@ export default function Simulate(ctx) {
         }
     },
     _create_view = function (level = null, color = null) {
-        let item, label, icon, type, div, shortcut, counter;
+        let navbar, item, label, icon, type, div, shortcut, content;
         
         const slide = addElement(simulateMain, 'div', 'simulate-content-slide');
         if (level === null) {
             slide.style.left = '0';
             level = 1;
         }
-        // } else {
-        //     // const visibilitySize = currentVisibleIds.filter( element => {
-        //     //     return element.startsWith(parentId);
-        //     // });
 
-        //     // if (visibilitySize.length === 0)
-        //     //     parentId = null;
-        // }
+        //for (var counter = 0; counter < executedStack.length; counter++) {
+            //id = executedStack[counter];
+        for (const id of executedStack) {
+            shortcut = macro[id];
 
+            navbar = addElement(slide, 'div', 'navbar');
+            navbar.style.color = color;
+
+            addElement(navbar, 'div', 'fontAwesome navbar-icon', shortcut['icon']);
+            addElement(navbar, 'div', 'navbar-text', shortcut['text']);
+        }
+
+        if (executedStack.length) {
+            content = addElement(slide, 'div', 'item-space');
+            content.style.backgroundColor = color;
+        }
 
         for (const visibleId of currentVisibleIds) {
-
             shortcut = macro[visibleId];
 
             if (shortcut['level'].length != level)
@@ -127,35 +139,19 @@ export default function Simulate(ctx) {
             div = addElement(item, 'div', 'fontAwesome item-icon', icon);
             div.style.color = color;
 
-            div = addElement(item, 'div', 'item-header');
-            div.textContent = label;
+            content = addElement(item, 'div', 'item-text');
+            div = addElement(content, 'div', 'item-text-header', label);
             div.style.color = color;
-
-            div = addElement(item, 'div', 'item-subheader');
-            div.textContent = label +' '+ label;
+            let x = Math.floor(Math.random() * 10);
+            if (x < 6)
+                div = addElement(content, 'div', 'item-text-subheader', label +' '+ label);
 
             div = addElement(item, 'div', 'icon item-arrow', type);
             div.style.color = color;
 
+
+            addElement(slide, 'div', 'item-divider');
         }
-        // if (!counter) {
-        //     executedStack.pop();
-        //     level--;
-        // }
-
-        // if (!counter && level) {
-        //     level--;
-
-        //     const lastExecId = executedStack.pop();
-        //     if (macro[lastExecId]['exec'].hasOwnProperty('after'))
-        //         currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
-
-        //     _create_view(level, color);
-        // }
-
-        // if (filtered.length === 1) {
-        //     _create_view(filtered[0]);
-        // }
 
         return slide;
     },

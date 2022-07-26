@@ -194,7 +194,7 @@ export default function Card(_ctx, _properties, tab) {
             for (counterFields=0; counterFields<props['visibility']['fields'].length; counterFields++) {
                 visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterFields].getProps('id'));
             }
-            visibilityFields['visibility']['fields'].sort();
+            //visibilityFields['visibility']['fields'].sort();
             response['properties'] = { ...props, ...visibilityFields };
         //}
 

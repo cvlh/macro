@@ -54,6 +54,7 @@ export default function Macro(_properties) {
                     case 'click':
                         const icon = target.firstChild;
                         field.toggleExpand(icon);
+                        field.setBorderColor(false);
                         break;
 
                     case 'mouseenter':

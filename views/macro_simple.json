@@ -8,22 +8,22 @@
 			"height": 3072
 		},
 		"transform": {
-			"scale": 0.233088493720533,
-			"left": 246.09967041015625,
-			"top": 40.65266418457031,
-			"index": 9
+			"scale": 0.387551673597937,
+			"left": 225.59169006347656,
+			"top": -10.415887832641602,
+			"index": 117
 		}
 	},
 	"root": {
 		"position": [
-			57.584703685782955,
-			73.66678585749072
+			85.91889621575254,
+			167.8387402427611
 		],
 		"fields": [
 			{
 				"properties": {
 					"id": "1",
-					"text": "CHECKLIST",
+					"text": "MOTORISTA",
 					"type": {
 						"type": 0
 					},
@@ -35,1348 +35,24 @@
 						],
 						"flags": 17
 					},
-					"expanded": true,
+					"expanded": false,
 					"tail": {
-						"x": 1033.1068836652312,
-						"y": 319.32401289823
+						"x": 692.2666744943591,
+						"y": 348.01196235293384
 					},
-					"icon": "",
-					"line": 238.104767839075,
-					"color": "RED"
+					"icon": "",
+					"line": 250.29814661464945,
+					"color": "PURPLE"
 				},
 				"output": {
 					"position": [
-						1031.106800035671,
-						46.824006189087534
+						690.2666486227846,
+						296.5119570163352
 					],
 					"fields": [
 						{
 							"properties": {
 								"id": "1.1",
-								"text": "COMBUSTÍVEL",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.1",
-										"1.1.1",
-										"1.1.2",
-										"1.1.3",
-										"1.1.4",
-										"1.1.5"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1992.1866364894042,
-									"y": 166.2305306451418
-								},
-								"icon": "",
-								"line": 502.3469755378883
-							},
-							"output": {
-								"position": [
-									1990.1866393656214,
-									46.730509495250324
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.1.1",
-											"text": "COMPLETO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.1.2",
-											"text": "MEIO TANQUE",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.1.3",
-											"text": "1/4 DE TANQUE",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.1.4",
-											"text": "RESERVA",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.1.5",
-											"text": "VAZIO",
-											"type": {
-												"type": 0
-											},
-											"order": 5,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.2"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.2",
-								"text": "DIFERENCIAL",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.2",
-										"1.2.1",
-										"1.2.2",
-										"1.2.3"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1988.1384855776232,
-									"y": 370.38388171757174
-								},
-								"line": 472.00820546106274
-							},
-							"output": {
-								"position": [
-									1986.1384222112238,
-									284.8838776671582
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.2.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.2.2",
-											"text": "FAZENDO BARULHO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.2.3",
-											"text": "VAZAMENTO DE ÓLEO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.3"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.3",
-								"text": "CAIXA DE CÂMBIO",
-								"type": {
-									"type": 0
-								},
-								"order": 3,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.3",
-										"1.3.1",
-										"1.3.2",
-										"1.3.3",
-										"1.3.4",
-										"1.3.5"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1986.9771211552384,
-									"y": 568.9536385299485
-								},
-								"line": 440.635270074476
-							},
-							"output": {
-								"position": [
-									1984.9770931432458,
-									449.4536329719302
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.3.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.3.2",
-											"text": "FAZENDO BARULHO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.3.3",
-											"text": "ESCAPANDO MARCHA",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.3.4",
-											"text": "NAO ENTRA MARCHA",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.3.5",
-											"text": "VAZAMENTO",
-											"type": {
-												"type": 0
-											},
-											"order": 5,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.4"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.4",
-								"text": "ÓLEO DO MOTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 4,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.4",
-										"1.4.1",
-										"1.4.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1988.4058073116762,
-									"y": 744.1380090408
-								},
-								"icon": "",
-								"line": 413.09394750428737
-							},
-							"output": {
-								"position": [
-									1986.4055925348403,
-									675.637982076189
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.4.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.4.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.5"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.5",
-								"text": "ÓLEO HIDRÁULICO",
-								"type": {
-									"type": 0
-								},
-								"order": 5,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.5",
-										"1.5.1",
-										"1.5.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.3165387508993,
-									"y": 868.2972085533459
-								},
-								"line": 381.31549838483875
-							},
-							"output": {
-								"position": [
-									1985.3164160273368,
-									799.7971916865135
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.5.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.5.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.6"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.6",
-								"text": "GRAXA SAPATAS",
-								"type": {
-									"type": 0
-								},
-								"order": 6,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.6",
-										"1.6.1",
-										"1.6.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.3519116268194,
-									"y": 989.8066151298375
-								},
-								"line": 349.53704926539035
-							},
-							"output": {
-								"position": [
-									1985.3519251334917,
-									921.3065609017324
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.6.1",
-											"text": "ENGRAXADO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.6.2",
-											"text": "RUIM",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.7"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.7",
-								"text": "CAMERA DE RÉ",
-								"type": {
-									"type": 0
-								},
-								"order": 7,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.7",
-										"1.7.1",
-										"1.7.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1984.9335950104792,
-									"y": 1109.7037881269396
-								},
-								"line": 319.87716342057183
-							},
-							"output": {
-								"position": [
-									1982.9335831860913,
-									1041.2037021520177
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.7.1",
-											"text": "FUNCIONANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.7.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.8"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.8",
-								"text": "ÁGUA DO RADIADOR",
-								"type": {
-									"type": 0
-								},
-								"order": 8,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.8",
-										"1.8.1",
-										"1.8.2",
-										"1.8.3"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.3389505730472,
-									"y": 1246.9957753742249
-								},
-								"line": 285.98015102649333
-							},
-							"output": {
-								"position": [
-									1985.3390387643226,
-									1161.495667435456
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.8.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.8.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.8.3",
-											"text": "VAZAMENTO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.9"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.9",
-								"text": "FARÓIS E LANTERNAS",
-								"type": {
-									"type": 0
-								},
-								"order": 9,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.9",
-										"1.9.1",
-										"1.9.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.8808846338998,
-									"y": 1390.1975981087292
-								},
-								"line": 254.20170190704494
-							},
-							"output": {
-								"position": [
-									1985.8808389969433,
-									1321.6975771268633
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.9.1",
-											"text": "FUNCIONANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.9.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.10"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.10",
-								"text": "PRESSÃO PNEU",
-								"type": {
-									"type": 0
-								},
-								"order": 10,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.10",
-										"1.10.1",
-										"1.10.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1986.9895421651033,
-									"y": 1521.4506793749804
-								},
-								"line": 222.4232527875963
-							},
-							"output": {
-								"position": [
-									1984.9894123828756,
-									1452.950688168368
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.10.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.10.2",
-											"text": "IRREGULAR",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.11"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.11",
-								"text": "MOLAS",
-								"type": {
-									"type": 0
-								},
-								"order": 11,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.11",
-										"1.11.1",
-										"1.11.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.339760638908,
-									"y": 1643.8277339938409
-								},
-								"line": 190.64480366814792
-							},
-							"output": {
-								"position": [
-									1985.3396302969443,
-									1575.327732332925
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.11.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.11.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.12"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.12",
-								"text": "EXTINTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 12,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.12",
-										"1.12.1",
-										"1.12.2",
-										"1.12.3",
-										"1.12.4"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1987.058127741315,
-									"y": 1801.3045373267648
-								},
-								"line": 158.48222619513376
-							},
-							"output": {
-								"position": [
-									1985.0580179451695,
-									1698.8045626074445
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.12.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.12.2",
-											"text": "VENCIDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.12.3",
-											"text": "VAZIO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.12.4",
-											"text": "SEM LACRE",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.13"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.13",
-								"text": "DOCUMENTOS DO VEÍCULO",
-								"type": {
-									"type": 0
-								},
-								"order": 13,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.13",
-										"1.13.1",
-										"1.13.2",
-										"1.13.3"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1985.0146015965556,
-									"y": 1973.864226943246
-								},
-								"line": 123.34503347920258
-							},
-							"output": {
-								"position": [
-									1983.0145308691535,
-									1888.364277720565
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.13.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.13.2",
-											"text": "VENCIDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.13.3",
-											"text": "NÃO ENCONTRADO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"1",
-											"1.14"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "1.14",
-								"text": "TEMPERATURA DO MOTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 14,
-								"visibility": {
-									"fields": [
-										"1",
-										"1.14",
-										"1.14.1",
-										"1.14.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1984.8974120686983,
-									"y": 2111.3280831639904
-								},
-								"line": 88.2078407632714
-							},
-							"output": {
-								"position": [
-									1982.8974326514065,
-									2042.8279515557538
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "1.14.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "1.14.2",
-											"text": "ESQUENTANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": []
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "2",
-					"text": "MOTORISTA",
-					"type": {
-						"type": 0
-					},
-					"order": 2,
-					"visibility": {
-						"fields": [
-							"2",
-							"2.1"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 651.1528342485798,
-						"y": 929.8416158448723
-					},
-					"icon": "",
-					"line": 208.21738106495707,
-					"color": "PURPLE"
-				},
-				"output": {
-					"position": [
-						649.1528185497674,
-						878.341592917678
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "2.1",
 								"text": "CÓDIGO MOTORISTA",
 								"type": {
 									"type": 2
@@ -1396,95 +72,82 @@
 					],
 					"properties": {
 						"visibility": {
-							"fields": []
+							"fields": [
+								"2"
+							]
 						}
 					}
 				}
 			},
 			{
 				"properties": {
-					"id": "3",
-					"text": "VISTORIA DIÁRIA",
+					"id": "2",
+					"text": "CHECKLIST",
 					"type": {
 						"type": 0
 					},
-					"order": 3,
+					"order": 2,
 					"visibility": {
 						"fields": [
-							"3",
-							"3.1",
-							"3.2",
-							"3.3",
-							"3.4",
-							"3.5",
-							"3.6"
+							"2",
+							"2.1"
 						],
 						"flags": 17
 					},
-					"expanded": false,
+					"expanded": true,
 					"tail": {
-						"x": 619.3111595118625,
-						"y": 1142.163867308875
+						"x": 1604.4812190876246,
+						"y": 415.78669860817865
 					},
-					"icon": "",
-					"line": 178.38023068973484,
-					"color": "BLUE"
+					"icon": "",
+					"line": 201.17922779238404,
+					"color": "RED"
 				},
 				"output": {
 					"position": [
-						617.3111519992275,
-						1005.6638270009975
+						1602.4812235512863,
+						143.28668293996566
 					],
 					"fields": [
 						{
 							"properties": {
-								"id": "3.1",
-								"text": "CONTROLE",
-								"type": {
-									"type": 1
-								},
-								"order": 1,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.2",
-								"text": "CDE M2 V43",
+								"id": "2.1",
+								"text": "COMBUSTÍVEL",
 								"type": {
 									"type": 0
 								},
-								"order": 2,
+								"order": 1,
 								"visibility": {
 									"fields": [
-										"3.2.1",
-										"3.2.2"
+										"2",
+										"2.1",
+										"2.1.1",
+										"2.1.2",
+										"2.1.3",
+										"2.1.4",
+										"2.1.5",
+										"2.1.6"
 									],
 									"flags": 17
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1044.9715702504443,
-									"y": 1031.773775571306
-								}
+									"x": 2501.6954013463055,
+									"y": 154.22512489650535
+								},
+								"icon": "",
+								"line": 482.99455611587337
 							},
 							"output": {
 								"position": [
-									1042.971518693208,
-									963.2737526182373
+									2499.695373710301,
+									17.725127841784897
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "3.2.1",
-											"text": "INICIAR",
+											"id": "2.1.1",
+											"text": "COMPLETO",
 											"type": {
 												"type": 0
 											},
@@ -1501,14 +164,87 @@
 									},
 									{
 										"properties": {
-											"id": "3.2.2",
-											"text": "CANCELAR",
+											"id": "2.1.2",
+											"text": "MEIO TANQUE",
 											"type": {
 												"type": 0
 											},
 											"order": 2,
 											"visibility": {
 												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.1.3",
+											"text": "1/4 DE TANQUE",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.1.4",
+											"text": "RESERVA",
+											"type": {
+												"type": 0
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.1.5",
+											"text": "VAZIO",
+											"type": {
+												"type": 0
+											},
+											"order": 5,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.1.6",
+											"text": "OUTROS",
+											"type": {
+												"type": 1
+											},
+											"order": 6,
+											"visibility": {
+												"fields": [],
+												"flags": 17
 											},
 											"expanded": true,
 											"tail": {
@@ -1520,44 +256,49 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [
+											"2",
+											"2.2"
+										]
 									}
 								}
 							}
 						},
 						{
 							"properties": {
-								"id": "3.3",
-								"text": "CD CENTRO RESUL",
+								"id": "2.2",
+								"text": "DIFERENCIAL",
 								"type": {
 									"type": 0
 								},
-								"order": 3,
+								"order": 2,
 								"visibility": {
 									"fields": [
-										"3.3.1",
-										"3.3.2",
-										"3.3.3"
+										"2",
+										"2.2",
+										"2.2.1",
+										"2.2.2",
+										"2.2.3"
 									],
 									"flags": 17
 								},
-								"expanded": false,
+								"expanded": true,
 								"tail": {
-									"x": 1045.7228771380176,
-									"y": 1173.7757906358531
+									"x": 2503.0784704405796,
+									"y": 373.2208652373966
 								},
-								"line": 63.649038127917834
+								"line": 481.76026946796514
 							},
 							"output": {
 								"position": [
-									1043.7229193025469,
-									1088.2757610715369
+									2501.078249519875,
+									287.7208613281886
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "3.3.1",
-											"text": "COLETA DOMICILIAR",
+											"id": "2.2.1",
+											"text": "OK",
 											"type": {
 												"type": 0
 											},
@@ -1574,8 +315,8 @@
 									},
 									{
 										"properties": {
-											"id": "3.3.2",
-											"text": "COLETA DIVERSOS",
+											"id": "2.2.2",
+											"text": "FAZENDO BARULHO",
 											"type": {
 												"type": 0
 											},
@@ -1592,8 +333,8 @@
 									},
 									{
 										"properties": {
-											"id": "3.3.3",
-											"text": "COLETA SELECTIVA",
+											"id": "2.2.3",
+											"text": "VAZAMENTO DE ÓLEO",
 											"type": {
 												"type": 0
 											},
@@ -1611,62 +352,1068 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [
+											"2",
+											"2.3"
+										]
 									}
 								}
 							}
 						},
 						{
 							"properties": {
-								"id": "3.4",
-								"text": "CÓDIGO UT",
+								"id": "2.3",
+								"text": "CAIXA DE CÂMBIO",
 								"type": {
-									"type": 2
+									"type": 0
+								},
+								"order": 3,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.3",
+										"2.3.1",
+										"2.3.2",
+										"2.3.3",
+										"2.3.4",
+										"2.3.5"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2504.595405252245,
+									"y": 563.335815281111
+								},
+								"line": 449.72121078338864
+							},
+							"output": {
+								"position": [
+									2502.59542198923,
+									443.8358265742392
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.3.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.3.2",
+											"text": "FAZENDO BARULHO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.3.3",
+											"text": "ESCAPANDO MARCHA",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.3.4",
+											"text": "NAO ENTRA MARCHA",
+											"type": {
+												"type": 0
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.3.5",
+											"text": "VAZAMENTO",
+											"type": {
+												"type": 0
+											},
+											"order": 5,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.4"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.4",
+								"text": "ÓLEO DO MOTOR",
+								"type": {
+									"type": 0
 								},
 								"order": 4,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"2",
+										"2.4",
+										"2.4.1",
+										"2.4.2"
+									],
+									"flags": 17
 								},
 								"expanded": true,
 								"tail": {
-									"x": 0,
-									"y": 0
+									"x": 2503.411717332345,
+									"y": 735.2243179456428
+								},
+								"icon": "",
+								"line": 414.67691723624944
+							},
+							"output": {
+								"position": [
+									2501.4118230979866,
+									666.72433404553
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.4.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.4.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.5"
+										]
+									}
 								}
 							}
 						},
 						{
 							"properties": {
-								"id": "3.5",
-								"text": "CÓDIGO SETOR",
+								"id": "2.5",
+								"text": "ÓLEO HIDRÁULICO",
 								"type": {
-									"type": 2
+									"type": 0
 								},
 								"order": 5,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"2",
+										"2.5",
+										"2.5.1",
+										"2.5.2"
+									],
+									"flags": 17
 								},
-								"expanded": true,
+								"expanded": false,
 								"tail": {
-									"x": 0,
-									"y": 0
+									"x": 2502.3231528163324,
+									"y": 858.3948732185036
+								},
+								"line": 381.31549838483875
+							},
+							"output": {
+								"position": [
+									2500.322957956954,
+									789.8948259250305
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.5.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.5.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.6"
+										]
+									}
 								}
 							}
 						},
 						{
 							"properties": {
-								"id": "3.6",
-								"text": "KM INICIAL",
+								"id": "2.6",
+								"text": "GRAXA SAPATAS",
 								"type": {
-									"type": 2
+									"type": 0
 								},
 								"order": 6,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"2",
+										"2.6",
+										"2.6.1",
+										"2.6.2"
+									],
+									"flags": 17
 								},
 								"expanded": true,
 								"tail": {
-									"x": 0,
-									"y": 0
+									"x": 2504.6549361242146,
+									"y": 981.7338630616588
+								},
+								"line": 349.53704926539035
+							},
+							"output": {
+								"position": [
+									2502.654964825174,
+									913.2338713016302
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.6.1",
+											"text": "ENGRAXADO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.6.2",
+											"text": "RUIM",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.7"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.7",
+								"text": "CAMERA DE RÉ",
+								"type": {
+									"type": 0
+								},
+								"order": 7,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.7",
+										"2.7.1",
+										"2.7.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2504.6880088308644,
+									"y": 1105.4375976124363
+								},
+								"line": 319.87716342057183
+							},
+							"output": {
+								"position": [
+									2502.687959291603,
+									1036.9375747681293
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.7.1",
+											"text": "FUNCIONANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.7.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.8"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.8",
+								"text": "ÁGUA DO RADIADOR",
+								"type": {
+									"type": 0
+								},
+								"order": 8,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.8",
+										"2.8.1",
+										"2.8.2",
+										"2.8.3"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2505.9724897615065,
+									"y": 1248.5311513710687
+								},
+								"line": 285.98015102649333
+							},
+							"output": {
+								"position": [
+									2503.972308290178,
+									1163.0311149482231
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.8.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.8.2",
+											"text": "NÍVEL BAIXO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.8.3",
+											"text": "VAZAMENTO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.9"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.9",
+								"text": "FARÓIS E LANTERNAS",
+								"type": {
+									"type": 0
+								},
+								"order": 9,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.9",
+										"2.9.1",
+										"2.9.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2505.60207544703,
+									"y": 1391.0417593027305
+								},
+								"line": 254.20170190704494
+							},
+							"output": {
+								"position": [
+									2503.6021590806845,
+									1322.5417885511263
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.9.1",
+											"text": "FUNCIONANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.9.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.10"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.10",
+								"text": "PRESSÃO PNEU",
+								"type": {
+									"type": 0
+								},
+								"order": 10,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.10",
+										"2.10.1",
+										"2.10.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2507.1492481619184,
+									"y": 1516.9223079073745
+								},
+								"line": 222.4232527875963
+							},
+							"output": {
+								"position": [
+									2505.1491268424443,
+									1448.4223150712357
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.10.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.10.2",
+											"text": "IRREGULAR",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.11"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.11",
+								"text": "MOLAS",
+								"type": {
+									"type": 0
+								},
+								"order": 11,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.11",
+										"2.11.1",
+										"2.11.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2504.382480017053,
+									"y": 1641.5284548824507
+								},
+								"line": 190.64480366814792
+							},
+							"output": {
+								"position": [
+									2502.3825575444516,
+									1573.0284243569056
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.11.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.11.2",
+											"text": "COM PROBLEMAS",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.12"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.12",
+								"text": "EXTINTOR",
+								"type": {
+									"type": 0
+								},
+								"order": 12,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.12",
+										"2.12.1",
+										"2.12.2",
+										"2.12.3",
+										"2.12.4"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2504.0886053951085,
+									"y": 1802.7990044493704
+								},
+								"line": 158.48222619513376
+							},
+							"output": {
+								"position": [
+									2502.088520027416,
+									1700.2990158649882
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.12.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.12.2",
+											"text": "VENCIDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.12.3",
+											"text": "VAZIO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.12.4",
+											"text": "SEM LACRE",
+											"type": {
+												"type": 0
+											},
+											"order": 4,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.13"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.13",
+								"text": "DOCUMENTOS DO VEÍCULO",
+								"type": {
+									"type": 0
+								},
+								"order": 13,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.13",
+										"2.13.1",
+										"2.13.2",
+										"2.13.3"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2502.0450271023165,
+									"y": 1979.3741852520516
+								},
+								"line": 123.34503347920258
+							},
+							"output": {
+								"position": [
+									2500.0450595566376,
+									1893.8741602361279
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.13.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.13.2",
+											"text": "VENCIDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.13.3",
+											"text": "NÃO ENCONTRADO",
+											"type": {
+												"type": 0
+											},
+											"order": 3,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"2",
+											"2.14"
+										]
+									}
+								}
+							}
+						},
+						{
+							"properties": {
+								"id": "2.14",
+								"text": "TEMPERATURA DO MOTOR",
+								"type": {
+									"type": 0
+								},
+								"order": 14,
+								"visibility": {
+									"fields": [
+										"2",
+										"2.14",
+										"2.14.1",
+										"2.14.2"
+									],
+									"flags": 17
+								},
+								"expanded": false,
+								"tail": {
+									"x": 2500.363043735561,
+									"y": 2124.2041348543326
+								},
+								"line": 88.2078407632714
+							},
+							"output": {
+								"position": [
+									2498.3631303946518,
+									2055.704103539067
+								],
+								"fields": [
+									{
+										"properties": {
+											"id": "2.14.1",
+											"text": "OK",
+											"type": {
+												"type": 0
+											},
+											"order": 1,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									},
+									{
+										"properties": {
+											"id": "2.14.2",
+											"text": "ESQUENTANDO",
+											"type": {
+												"type": 0
+											},
+											"order": 2,
+											"visibility": {
+												"fields": []
+											},
+											"expanded": true,
+											"tail": {
+												"x": 0,
+												"y": 0
+											}
+										}
+									}
+								],
+								"properties": {
+									"visibility": {
+										"fields": [
+											"3"
+										]
+									}
 								}
 							}
 						}
@@ -1680,26 +1427,26 @@
 			},
 			{
 				"properties": {
-					"id": "4",
+					"id": "3",
 					"text": "EM TRABALHO",
 					"type": {
 						"type": 0
 					},
-					"order": 4,
+					"order": 3,
 					"visibility": {
 						"fields": [
-							"4.1",
-							"4.10",
-							"4.14",
-							"4.19",
-							"4.7"
+							"3.1",
+							"3.10",
+							"3.14",
+							"3.6",
+							"3.7"
 						],
 						"flags": 17
 					},
-					"expanded": false,
+					"expanded": true,
 					"tail": {
-						"x": 612.4147051387041,
-						"y": 1666.83981494453
+						"x": 638.8954366493467,
+						"y": 1237.7111791570046
 					},
 					"icon": "",
 					"line": 147.5316637439406,
@@ -1707,13 +1454,13 @@
 				},
 				"output": {
 					"position": [
-						610.4146557880679,
-						1275.3398216322205
+						636.8954275030723,
+						846.2111333701487
 					],
 					"fields": [
 						{
 							"properties": {
-								"id": "4.1",
+								"id": "3.1",
 								"text": "INÍCIO COLETA",
 								"type": {
 									"type": 0
@@ -1721,10 +1468,10 @@
 								"order": 1,
 								"visibility": {
 									"fields": [
-										"4.14",
-										"4.19",
-										"4.2",
-										"4.7"
+										"3.14",
+										"3.19",
+										"3.2",
+										"3.7"
 									]
 								},
 								"expanded": true,
@@ -1736,7 +1483,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.2",
+								"id": "3.2",
 								"text": "FIM COLETA",
 								"type": {
 									"type": 0
@@ -1744,10 +1491,10 @@
 								"order": 2,
 								"visibility": {
 									"fields": [
-										"4.14",
-										"4.18",
-										"4.3",
-										"4.7"
+										"3.14",
+										"3.18",
+										"3.3",
+										"3.7"
 									]
 								},
 								"expanded": true,
@@ -1759,14 +1506,19 @@
 						},
 						{
 							"properties": {
-								"id": "4.3",
+								"id": "3.3",
 								"text": "TRÂNSITO PARA DESCARGA",
 								"type": {
 									"type": 0
 								},
 								"order": 3,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"3.10",
+										"3.14",
+										"3.4",
+										"3.7"
+									]
 								},
 								"expanded": true,
 								"tail": {
@@ -1777,14 +1529,19 @@
 						},
 						{
 							"properties": {
-								"id": "4.4",
+								"id": "3.4",
 								"text": "INÍCIO DESCARGA",
 								"type": {
 									"type": 0
 								},
 								"order": 4,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"3.10",
+										"3.14",
+										"3.5",
+										"3.7"
+									]
 								},
 								"expanded": true,
 								"tail": {
@@ -1795,22 +1552,31 @@
 						},
 						{
 							"properties": {
-								"id": "4.5",
+								"id": "3.5",
 								"text": "FIM DESCARGA",
 								"type": {
 									"type": 0
 								},
 								"order": 5,
 								"visibility": {
-									"fields": [],
+									"fields": [
+										"3.1",
+										"3.10",
+										"3.13",
+										"3.15",
+										"3.20",
+										"3.5.1",
+										"3.5.2",
+										"3.7"
+									],
 									"flags": 17
 								},
-								"expanded": false,
+								"expanded": true,
 								"tail": {
-									"x": 1043.587110738892,
-									"y": 1349.5827860035936
+									"x": 1181.168842704822,
+									"y": 801.3533523807722
 								},
-								"line": 30.852645898285118,
+								"line": 73.71159528410772,
 								"output": {
 									"position": [
 										1284,
@@ -1818,7 +1584,7 @@
 									],
 									"fields": [
 										{
-											"id": "4.5.1",
+											"id": "3.5.1",
 											"type": {
 												"type": 2
 											},
@@ -1830,7 +1596,7 @@
 											"expanded": true
 										},
 										{
-											"id": "4.5.2",
+											"id": "3.5.2",
 											"type": {
 												"type": 2
 											},
@@ -1846,13 +1612,13 @@
 							},
 							"output": {
 								"position": [
-									1041.5870421797022,
-									1281.0827921844168
+									1179.1687912807506,
+									732.8533568871225
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "4.5.1",
+											"id": "3.5.1",
 											"text": "NR TICKET",
 											"type": {
 												"type": 2
@@ -1870,7 +1636,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.5.2",
+											"id": "3.5.2",
 											"text": "PESO KG",
 											"type": {
 												"type": 2
@@ -1896,7 +1662,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.6",
+								"id": "3.6",
 								"text": "TRÂNSITO LOCAL",
 								"type": {
 									"type": 0
@@ -1914,14 +1680,18 @@
 						},
 						{
 							"properties": {
-								"id": "4.7",
+								"id": "3.7",
 								"text": "INÍCIO ABASTECIMENTO",
 								"type": {
 									"type": 0
 								},
 								"order": 7,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"3.14",
+										"3.19",
+										"3.8"
+									]
 								},
 								"expanded": true,
 								"tail": {
@@ -1932,32 +1702,37 @@
 						},
 						{
 							"properties": {
-								"id": "4.8",
+								"id": "3.8",
 								"text": "FIM ABASTECIMENTO",
 								"type": {
 									"type": 0
 								},
 								"order": 8,
 								"visibility": {
-									"fields": [],
+									"fields": [
+										"3.1",
+										"3.10",
+										"3.14",
+										"3.8.1"
+									],
 									"flags": 17
 								},
-								"expanded": false,
+								"expanded": true,
 								"tail": {
-									"x": 1038.8603764413222,
-									"y": 1453.9762435024707
+									"x": 1175.5045904792855,
+									"y": 914.8443138626659
 								},
-								"line": 72.93876432912646
+								"line": 134.7019977201934
 							},
 							"output": {
 								"position": [
-									1036.860363418142,
-									1402.4762463410461
+									1173.5045335406016,
+									863.3443046302418
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "4.8.1",
+											"id": "3.8.1",
 											"text": "QTDE LITROS",
 											"type": {
 												"type": 2
@@ -1983,7 +1758,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.9",
+								"id": "3.9",
 								"text": "COND LOCAIS",
 								"type": {
 									"type": 0
@@ -2001,32 +1776,35 @@
 						},
 						{
 							"properties": {
-								"id": "4.10",
+								"id": "3.10",
 								"text": "INÍCIO REFEIÇÃO",
 								"type": {
 									"type": 0
 								},
 								"order": 10,
 								"visibility": {
-									"fields": [],
+									"fields": [
+										"3.11",
+										"3.14"
+									],
 									"flags": 17
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1040.1738982345544,
-									"y": 1618.0733100825053
+									"x": 1161.8992664090006,
+									"y": 1372.5070270508493
 								},
-								"line": 60.93824054501664
+								"line": 142.79535751422168
 							},
 							"output": {
 								"position": [
-									1038.1738606121805,
-									1498.5732543049903
+									1159.8992341178384,
+									1253.0069578649136
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "4.10.1",
+											"id": "3.10.1",
 											"text": "CÓDIGO PONTO MOTORISTA",
 											"type": {
 												"type": 2
@@ -2044,7 +1822,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.10.2",
+											"id": "3.10.2",
 											"text": "CÓDIGO PONTO COLETOR 1",
 											"type": {
 												"type": 2
@@ -2062,7 +1840,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.10.3",
+											"id": "3.10.3",
 											"text": "CÓDIGO PONTO COLETOR 2",
 											"type": {
 												"type": 2
@@ -2080,7 +1858,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.10.4",
+											"id": "3.10.4",
 											"text": "CÓDIGO PONTO COLETOR 3",
 											"type": {
 												"type": 2
@@ -2098,7 +1876,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.10.5",
+											"id": "3.10.5",
 											"text": "CÓDIGO PONTO COLETOR 4",
 											"type": {
 												"type": 2
@@ -2124,7 +1902,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.11",
+								"id": "3.11",
 								"text": "FIM REFEIÇÃO",
 								"type": {
 									"type": 0
@@ -2136,20 +1914,20 @@
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1038.8641567486723,
-									"y": 1838.5300338704553
+									"x": 1162.2633811603057,
+									"y": 1599.6669126742277
 								},
-								"line": 50.75238614435682
+								"line": 101.81186248807148
 							},
 							"output": {
 								"position": [
-									1036.8640853373981,
-									1719.030066421826
+									1160.2633558341124,
+									1480.1668838493931
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "4.11.1",
+											"id": "3.11.1",
 											"text": "CÓDIGO PONTO MOTORISTA",
 											"type": {
 												"type": 2
@@ -2167,7 +1945,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.11.2",
+											"id": "3.11.2",
 											"text": "CÓDIGO PONTO COLETOR 1",
 											"type": {
 												"type": 2
@@ -2185,7 +1963,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.11.3",
+											"id": "3.11.3",
 											"text": "CÓDIGO PONTO COLETOR 2",
 											"type": {
 												"type": 2
@@ -2203,7 +1981,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.11.4",
+											"id": "3.11.4",
 											"text": "CÓDIGO PONTO COLETOR 3",
 											"type": {
 												"type": 2
@@ -2221,7 +1999,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.11.5",
+											"id": "3.11.5",
 											"text": "CÓDIGO PONTO COLETOR 4",
 											"type": {
 												"type": 2
@@ -2247,7 +2025,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.12",
+								"id": "3.12",
 								"text": "CAFÉ",
 								"type": {
 									"type": 0
@@ -2265,7 +2043,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.13",
+								"id": "3.13",
 								"text": "A DISPOSIÇÃO",
 								"type": {
 									"type": 0
@@ -2283,14 +2061,16 @@
 						},
 						{
 							"properties": {
-								"id": "4.14",
+								"id": "3.14",
 								"text": "PEDIDO DE SOS",
 								"type": {
 									"type": 0
 								},
 								"order": 14,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"3.15"
+									]
 								},
 								"expanded": true,
 								"tail": {
@@ -2301,14 +2081,16 @@
 						},
 						{
 							"properties": {
-								"id": "4.15",
+								"id": "3.15",
 								"text": "INÍCIO SOS",
 								"type": {
 									"type": 0
 								},
 								"order": 15,
 								"visibility": {
-									"fields": []
+									"fields": [
+										"3.16"
+									]
 								},
 								"expanded": true,
 								"tail": {
@@ -2319,7 +2101,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.16",
+								"id": "3.16",
 								"text": "FIM SOS",
 								"type": {
 									"type": 0
@@ -2337,7 +2119,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.17",
+								"id": "3.17",
 								"text": "FISCALIZAÇÃO",
 								"type": {
 									"type": 0
@@ -2349,20 +2131,20 @@
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1037.6909113603294,
-									"y": 2009.5140103767694
+									"x": 1164.5140575923565,
+									"y": 1782.6259133056951
 								},
-								"line": 34.21575190591693
+								"line": 64.70344747410661
 							},
 							"output": {
 								"position": [
-									1035.6909039110526,
-									1941.0140848366789
+									1162.514001243768,
+									1714.125960169752
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "4.17.1",
+											"id": "3.17.1",
 											"text": "CÓDIGO FISCAL",
 											"type": {
 												"type": 2
@@ -2380,7 +2162,7 @@
 									},
 									{
 										"properties": {
-											"id": "4.17.2",
+											"id": "3.17.2",
 											"text": "OBSERVAÇÕES",
 											"type": {
 												"type": 1
@@ -2406,7 +2188,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.18",
+								"id": "3.18",
 								"text": "OBSERVAÇÕES",
 								"type": {
 									"type": 1
@@ -2424,7 +2206,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.19",
+								"id": "3.19",
 								"text": "TROCA MOTORISTA",
 								"type": {
 									"type": 0
@@ -2442,7 +2224,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.20",
+								"id": "3.20",
 								"text": "SAIR TRABALHO",
 								"type": {
 									"type": 0
@@ -2460,7 +2242,7 @@
 						},
 						{
 							"properties": {
-								"id": "4.21",
+								"id": "3.21",
 								"text": "VERIFICA COLETA",
 								"type": {
 									"type": 0
@@ -2486,548 +2268,38 @@
 			},
 			{
 				"properties": {
-					"id": "5",
-					"text": "TROCA MOTORISTA",
-					"type": {
-						"type": 0
-					},
-					"order": 5,
-					"visibility": {
-						"fields": [
-							"5",
-							"5.1"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 608.1688799404756,
-						"y": 2114.0283026998773
-					},
-					"icon": "",
-					"line": 118.23053534842671,
-					"color": "GREEN"
-				},
-				"output": {
-					"position": [
-						606.1688231527731,
-						2062.5283129415375
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "5.1",
-								"text": "SENHA MOTORISTA",
-								"type": {
-									"type": 1
-								},
-								"order": 1,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": ""
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": []
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "6",
-					"text": "EM MANUTENÇÃO",
-					"type": {
-						"type": 0
-					},
-					"order": 6,
-					"visibility": {
-						"fields": [
-							"6",
-							"6.1",
-							"6.2",
-							"6.3",
-							"6.4",
-							"6.5",
-							"6.6"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 610.6239195425039,
-						"y": 2315.2405618555617
-					},
-					"icon": "",
-					"line": 86.94284831139584,
-					"color": "ORANGE"
-				},
-				"output": {
-					"position": [
-						608.6238033379676,
-						2178.7404600414807
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "6.1",
-								"text": "DENTRO DO TURNO",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "6.2",
-								"text": "TROCA DE PNEUS",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "6.3",
-								"text": "LAVAGEM",
-								"type": {
-									"type": 0
-								},
-								"order": 3,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": ""
-							}
-						},
-						{
-							"properties": {
-								"id": "6.4",
-								"text": "FORA DO TURNO",
-								"type": {
-									"type": 0
-								},
-								"order": 4,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "6.5",
-								"text": "TROCA DE ÓLEO",
-								"type": {
-									"type": 0
-								},
-								"order": 5,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": ""
-							}
-						},
-						{
-							"properties": {
-								"id": "6.6",
-								"text": "SAIR MANUTENÇÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 6,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": []
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "7",
-					"text": "PONTO ELETRÔNICO",
-					"type": {
-						"type": 0
-					},
-					"order": 7,
-					"visibility": {
-						"fields": [
-							"7",
-							"7.1",
-							"7.2",
-							"7.3",
-							"7.4",
-							"7.5"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 609.2134598679334,
-						"y": 2625.6737309963814
-					},
-					"icon": "",
-					"line": 57.16908161486646,
-					"color": "BROWN"
-				},
-				"output": {
-					"position": [
-						607.2134439667622,
-						2506.173751003334
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "7.1",
-								"text": "ENTRADA TRABALHO",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [
-										"7.1",
-										"7.1.1"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1001.7655705231687,
-									"y": 2459.117979517945
-								},
-								"line": 38.235160429437656
-							},
-							"output": {
-								"position": [
-									999.7655414291986,
-									2407.6180070887804
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "7.1.1",
-											"text": "CÓDIGO COLABORADOR",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "7.2",
-								"text": "SAÍDA INTERVALO",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1002.1456264228448,
-									"y": 2541.8867288636716
-								},
-								"line": 64.67572268004
-							},
-							"output": {
-								"position": [
-									1000.1455607789636,
-									2490.386612997355
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "7.2.1",
-											"text": "CÓDIGO COLABORADOR",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "7.3",
-								"text": "RETORNO INTERVALO",
-								"type": {
-									"type": 0
-								},
-								"order": 3,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1000.9198617645288,
-									"y": 2621.1168405076187
-								},
-								"line": 64.22049718079512
-							},
-							"output": {
-								"position": [
-									998.9197885185158,
-									2569.616841343687
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "7.3.1",
-											"text": "CÓDIGO COLABORADOR",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "7.4",
-								"text": "SAÍDA TRABALHO",
-								"type": {
-									"type": 0
-								},
-								"order": 4,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1000.3498454205031,
-									"y": 2699.513664402791
-								},
-								"line": 57.99336422000215
-							},
-							"output": {
-								"position": [
-									998.3497678714567,
-									2648.013603545695
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "7.4.1",
-											"text": "CÓDIGO COLABORADOR",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "7.5",
-								"text": "SAIR PONTO",
-								"type": {
-									"type": 0
-								},
-								"order": 5,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 999.78603958141,
-									"y": 2780.042311621546
-								},
-								"line": 27.405593466585742
-							},
-							"output": {
-								"position": [
-									997.7860398741727,
-									2728.5421177689695
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "7.5.1",
-											"text": "CÓDIGO COLABORADOR",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": []
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "8",
+					"id": "4",
 					"text": "FINALIZAR",
 					"type": {
 						"type": 0
 					},
-					"order": 8,
+					"order": 4,
 					"visibility": {
 						"fields": [
-							"8",
-							"8.1",
-							"8.2"
+							"4",
+							"4.1",
+							"4.2"
 						],
 						"flags": 17
 					},
 					"expanded": false,
 					"tail": {
-						"x": 609.8423409978415,
-						"y": 2883.3327294400133
+						"x": 622.424441292406,
+						"y": 2058.09777884662
 					},
 					"icon": "",
-					"line": 27.899955031837578,
+					"line": 94.70219828305954,
 					"color": "BLACK"
 				},
 				"output": {
 					"position": [
-						607.8422615080195,
-						2814.832867967025
+						620.4244169383996,
+						1989.5978066251944
 					],
 					"fields": [
 						{
 							"properties": {
-								"id": "8.1",
+								"id": "4.1",
 								"text": "SIM",
 								"type": {
 									"type": 0
@@ -3035,28 +2307,29 @@
 								"order": 1,
 								"visibility": {
 									"fields": [
-										"8.1",
-										"8.1.1",
-										"8.1.2"
+										"4",
+										"4.1",
+										"4.1.1",
+										"4.1.2"
 									],
 									"flags": 17
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1000.5025428352576,
-									"y": 2886.5840637831748
+									"x": 1103.7527234464715,
+									"y": 2157.5039407563477
 								},
 								"icon": ""
 							},
 							"output": {
 								"position": [
-									998.5024290084494,
-									2818.083910843756
+									1101.7526824842328,
+									2089.0039994391323
 								],
 								"fields": [
 									{
 										"properties": {
-											"id": "8.1.1",
+											"id": "4.1.1",
 											"text": "ODÔMETRO FINAL",
 											"type": {
 												"type": 2
@@ -3074,7 +2347,7 @@
 									},
 									{
 										"properties": {
-											"id": "8.1.2",
+											"id": "4.1.2",
 											"text": "HORÍMETRO FINAL",
 											"type": {
 												"type": 2
@@ -3100,7 +2373,7 @@
 						},
 						{
 							"properties": {
-								"id": "8.2",
+								"id": "4.2",
 								"text": "NÃO",
 								"type": {
 									"type": 0

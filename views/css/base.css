@@ -912,7 +912,7 @@ body {
                 grid-auto-rows: 44px;
                 grid-row-gap: 5px;
 
-                transition: .15s left linear;
+                transition: .2s left linear;
             }
             .simulate-content-slide .item {
                 grid-column: 2 / 3;

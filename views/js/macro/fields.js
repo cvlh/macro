@@ -359,7 +359,7 @@ export default function Field(ctx, append, properties) {
             visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
             //}
         }
-        visibilityFields['visibility']['fields'].sort();
+        //visibilityFields['visibility']['fields'].sort();
         props.text = description.value;
         response['properties'] = { ...props, ...visibilityFields };
 
@@ -390,15 +390,17 @@ export default function Field(ctx, append, properties) {
             isExpand = false;
         }
 
-        for (counterOffset=0; counterOffset<properties.tab.length; counterOffset++) {
+        for (counterOffset = 0; counterOffset < properties.tab.length; counterOffset++) {
             fieldOffset = addElement(treeviewRow, 'div', 'main-app-treeview-item');
-            if (counterOffset > 0) fieldOffset.style.borderLeftColor = properties.color + '40';
+            if (counterOffset > 0) 
+                fieldOffset.style.borderLeftColor = _COLORS_[properties.color] + '40';
         }
         if (hasChild || rootField) {
             if (hasChild) {
                 fieldOffset.classList.add('expand');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.ARROW);
-                if (properties.expand || props.expanded) fieldOffset.style.transform = 'rotate(90deg)';
+                if (properties.expand || props.expanded)
+                    fieldOffset.style.transform = 'rotate(90deg)';
             } else {
                 fieldOffset.classList.add('none');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.EMPTY);

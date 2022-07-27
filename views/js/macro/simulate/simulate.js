@@ -51,6 +51,10 @@ export default function Simulate(ctx) {
             }).length;
 
             if (!visibilitySize) {
+                let txt = '';
+                for (const id of executedStack) txt += id + '  >  ';
+                console.log(txt);
+
                 let lastExecId = executedStack.pop();
                 if (macro[lastExecId]['exec'].hasOwnProperty('after')) 
                     currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
@@ -64,18 +68,18 @@ export default function Simulate(ctx) {
             if (!visibilitySize) {
                 let lastExecId = executedStack.pop();
                 while (lastExecId !== undefined) {
-                    if (macro[lastExecId]['exec'].hasOwnProperty('after')) {
+                    if (macro[lastExecId]['exec'].hasOwnProperty('after')) 
                         currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
                     
-                        visibilitySize = currentVisibleIds.filter( element => {
-                            return macro[element]['level'].length === level;
-                        }).length;
+                    level = macro[lastExecId]['level'].length;
 
-                        level = macro[lastExecId]['level'].length;
+                    visibilitySize = currentVisibleIds.filter( element => {
+                        return macro[element]['level'].length === level;
+                    }).length;
 
-                        if (visibilitySize)
-                            break;
-                    }
+                    if (visibilitySize)
+                        break;
+                    
                     lastExecId = executedStack.pop();
                 }
             }
@@ -146,8 +150,8 @@ export default function Simulate(ctx) {
             if (x < 6)
                 div = addElement(content, 'div', 'item-text-subheader', label +' '+ label);
 
-            div = addElement(item, 'div', 'icon item-arrow', type);
-            div.style.color = color;
+            // div = addElement(item, 'div', 'icon item-arrow', type);
+            // div.style.color = color;
 
 
             addElement(slide, 'div', 'item-divider');

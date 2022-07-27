@@ -1830,39 +1830,7 @@
 									"x": 1043.5870709232972,
 									"y": 1349.582745774571
 								},
-								"line": 30.852645898285118,
-								"output": {
-									"position": [
-										1284,
-										618
-									],
-									"fields": [
-										{
-											"id": "4.5.1",
-											"type": {
-												"type": 2
-											},
-											"text": "NR TICKET",
-											"visibility": {
-												"flags": 17,
-												"fields": []
-											},
-											"expanded": true
-										},
-										{
-											"id": "4.5.2",
-											"type": {
-												"type": 2
-											},
-											"text": "PESO KG",
-											"visibility": {
-												"flags": 17,
-												"fields": []
-											},
-											"expanded": true
-										}
-									]
-								}
+								"line": 30.852645898285118
 							},
 							"output": {
 								"position": [

@@ -921,9 +921,6 @@ body {
                     font-size: 11px;
                     font-weight: 600;
 
-                    border-radius: 2px;
-                    /* margin: 1px 1px 0 1px;  */
-
                     line-height: 24px;
                 }
                     .simulate-content-slide .navbar-icon {
@@ -938,16 +935,14 @@ body {
                     }
                 .simulate-content-slide .item {
                     display: grid;
-                    grid-template-columns: 26px auto 18px;
+                    /* grid-template-columns: 26px auto 18px; */
+                    grid-template-columns: 32px auto;
                     grid-template-rows: 40px;
 
                     cursor: pointer;
                     overflow: hidden;
 
-                    /* border-radius: 3px; */
                     background-color: #ffffff;
-                    /* border: 1px solid #eeeeee;
-                    margin: 4px 4px 0 4px; */
                 }
                     .simulate-content-slide .item:first { margin-top: 4px; }
                     .simulate-content-slide .item:hover { background-color: #fafafa; }
@@ -960,7 +955,7 @@ body {
                 }
                 .simulate-content-slide .item-space {
                     display: block;
-                    height: 2px;
+                    height: 3px;
                     width: 100%;
                 }
                 .simulate-content-slide .item-icon {
@@ -968,7 +963,7 @@ body {
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    font-size: 12px;
+                    font-size: 15px;
                     border-radius: 2px;
 
                     pointer-events: none;
@@ -1003,7 +998,7 @@ body {
 
                         pointer-events: none;
                     }
-                .simulate-content-slide .item-arrow {
+                /* .simulate-content-slide .item-arrow {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -1011,7 +1006,7 @@ body {
                     font-size: 10px;
 
                     pointer-events: none;
-                }
+                } */
         .simulate-content .footer {
             transform: translate(79px, 9px);
 

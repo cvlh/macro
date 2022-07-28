@@ -31,11 +31,11 @@
          url('../font/vp-icon.ttf') format('truetype');
 }
 @font-face {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome';
     font-style: normal;
     font-weight: 900;
     font-display: block;
-    src: url("../font/fa-solid-900.woff") format("woff"),
+    src: url("../font/fa-solid-900.woff2") format("woff2"),
          url("../font/fa-solid-900.ttf") format("truetype"); 
 }
 
@@ -187,7 +187,6 @@ body {
         background: url(../img/background.svg);
 
         /*border: 2px solid var(--main-border-color-high);*/
-        /*transition: 0.2s ease;*/
         border-radius: 3px;
     }
         /* .main-app-wrapper:focus { } */
@@ -221,8 +220,8 @@ body {
             stroke-linecap: round;
             stroke-dasharray: 0.2%; 
 
-            transition: .15s stroke-width linear,
-                        .15s stroke linear;
+            transition: .13s stroke-width linear,
+                        .13s stroke linear;
         }
         .main-app-svg-path.linked { 
             stroke-dasharray: none;
@@ -253,8 +252,7 @@ body {
 }
     .main-app-properties-content {
         /* overflow: hidden;
-        max-height: 0;
-        transition: .15s max-height linear; */
+        max-height: 0;*/
 
         /* height: 0; */
         padding-bottom: 10px;
@@ -424,8 +422,8 @@ body {
 
             margin: 0 1px !important;
 
-            transition: 0.2s opacity linear,
-                        0.2s border-radius linear;
+            transition: 0.13s opacity linear,
+                        0.13s border-radius linear;
 
             cursor: pointer;
         }
@@ -488,7 +486,7 @@ body {
             padding-right: 8px;*/
             /*align-items: center;*/
             /*border: 1px solid transparent;*/
-            transition: .15s height linear;
+            transition: .13s height linear;
         }
             .main-app-treeview-row:hover {
                 background-color: var(--main-background);
@@ -524,7 +522,7 @@ body {
             font-size: 10px;
             line-height: 14px;
             width: 14px;
-            transition: .15s transform linear;
+            transition: .13s transform linear;
         }
         .main-app-treeview-item.none {
             grid-column-end: span 2;
@@ -687,7 +685,7 @@ body {
                 position: relative;
                 color: var(--main-font-color-black);
                 outline-color: inherit;
-                transition: .15s background-color linear;
+                transition: .13s background-color linear;
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }
@@ -885,6 +883,36 @@ body {
                 border-radius: 50%;
                 background-color: #eeeeee;
             }
+        .simulate-content .container {
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: auto min-content;
+            overflow: hidden;
+        }
+        .simulate-content .keyboard {
+            display: grid;
+            height: 0;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-auto-rows: 26px;
+            margin: 4px 8px 0 8px;
+            grid-gap: 4px;
+            font-size: 12px;
+            transition: .13s height linear;
+            overflow: hidden;
+        }
+            .simulate-content .keyboard .key { 
+                display: flex;
+                background-color: #f5f5f5;
+                border-radius: 3px;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                border: 1px solid #e5e5e5;
+                color: var(--main-font-color-high);
+                cursor: pointer;
+            }
+            .simulate-content .keyboard .key:hover { background-color: #f0f0f0; }
+            .simulate-content .keyboard .key:active { background-color: #e5e5e5; }
         .simulate-content .main {
             position: relative;
 
@@ -909,7 +937,7 @@ body {
                 flex-direction: column;
                 flex-wrap: nowrap;
 
-                transition: .2s left linear;
+                transition: .13s left linear;
             }
                 .simulate-content-slide .navbar {
                     background-color: #f5f5f5;
@@ -935,9 +963,8 @@ body {
                     }
                 .simulate-content-slide .item {
                     display: grid;
-                    /* grid-template-columns: 26px auto 18px; */
-                    grid-template-columns: 32px auto;
-                    grid-template-rows: 40px;
+                    grid-template-columns: 34px auto;
+                    grid-template-rows: 48px;
 
                     cursor: pointer;
                     overflow: hidden;
@@ -955,7 +982,7 @@ body {
                 }
                 .simulate-content-slide .item-space {
                     display: block;
-                    height: 3px;
+                    height: 4px;
                     width: 100%;
                 }
                 .simulate-content-slide .item-icon {
@@ -980,7 +1007,7 @@ body {
                 }
                     .simulate-content-slide .item-text-header {
                         display: block;
-                        font-size: 12px;
+                        font-size: 11px;
                         font-weight: 600;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -998,15 +1025,6 @@ body {
 
                         pointer-events: none;
                     }
-                /* .simulate-content-slide .item-arrow {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 10px;
-
-                    pointer-events: none;
-                } */
         .simulate-content .footer {
             transform: translate(79px, 9px);
 
@@ -1047,7 +1065,7 @@ body {
     pointer-events: none;
     opacity: 0.1;
 }
-.fontAwesome {
-    font-family: 'Font Awesome 5 Free';
+.font-awesome {
+    font-family: 'Font Awesome';
     font-weight: 900; 
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { _COLORS_ } from '../../utils/constants.js';
+import { _COLORS_, _TYPES_ } from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -11,13 +11,22 @@ export default function Simulate(ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
-        simulatePopup, simulateMain,
+        simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
         macro,
         executedStack,
         currentVisibleIds, stackVisibility,
         lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
+    _create_keyboard = function() {
+        const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'];
+        keys.forEach( value => {
+            addElement(simulateKeyboard, 'div', 'font-awesome key', value);
+        });
+    },
+    _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
+    _show_keyboard = function() { simulateKeyboard.style.height = '116px'; },
+
     _get_parent_id = function(item) {
         const size = item['level'].length - 1;
         let parend_id = '';
@@ -94,7 +103,9 @@ export default function Simulate(ctx) {
     },
     _create_view = function (level = null, color = null) {
         let navbar, item, label, icon, type, div, shortcut, content;
-        
+
+        _hide_keyboard();
+
         const slide = addElement(simulateMain, 'div', 'simulate-content-slide');
         if (level === null) {
             slide.style.left = '0';
@@ -109,7 +120,7 @@ export default function Simulate(ctx) {
             navbar = addElement(slide, 'div', 'navbar');
             navbar.style.color = color;
 
-            addElement(navbar, 'div', 'fontAwesome navbar-icon', shortcut['icon']);
+            addElement(navbar, 'div', 'font-awesome navbar-icon', shortcut['icon']);
             addElement(navbar, 'div', 'navbar-text', shortcut['text']);
         }
 
@@ -137,22 +148,39 @@ export default function Simulate(ctx) {
             icon  = shortcut['icon'];
             type  = shortcut['type']['type'];
 
+            switch (type) {
+                case _TYPES_.LIST:
+                    break;
+                case _TYPES_.TEXT:
+                    break;
+                case _TYPES_.NUMBER:
+                    _show_keyboard();
+                    break;
+                case _TYPES_.DATE:
+                    break;
+                case _TYPES_.PHOTO:
+                    break;
+                case _TYPES_.SIGNATURE:
+                    break;
+                case _TYPES_.SCAN:
+                    break;
+            }
+
             item = addElement(slide, 'div', 'item'); 
             item['_props_'] = [ visibleId, color ]; 
 
-            div = addElement(item, 'div', 'fontAwesome item-icon', icon);
+            div = addElement(item, 'div', 'font-awesome item-icon', icon);
             div.style.color = color;
 
             content = addElement(item, 'div', 'item-text');
             div = addElement(content, 'div', 'item-text-header', label);
             div.style.color = color;
-            let x = Math.floor(Math.random() * 10);
-            if (x < 6)
+
+            if (Math.floor(Math.random() * 10) < 6)
                 div = addElement(content, 'div', 'item-text-subheader', label +' '+ label);
 
             // div = addElement(item, 'div', 'icon item-arrow', type);
             // div.style.color = color;
-
 
             addElement(slide, 'div', 'item-divider');
         }
@@ -224,7 +252,10 @@ export default function Simulate(ctx) {
         const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
 
         addElement(simulateContent, 'div', 'header');
-        simulateMain = addElement(simulateContent, 'div', 'main');
+        simulateContainer = addElement(simulateContent, 'div', 'container');
+        simulateMain = addElement(simulateContainer, 'div', 'main');
+        simulateKeyboard = addElement(simulateContainer, 'div', 'keyboard');
+        _create_keyboard();
         addElement(simulateContent, 'div', 'footer');
 
         simulateMain.addEventListener('click', _receive_events, { capture: false });

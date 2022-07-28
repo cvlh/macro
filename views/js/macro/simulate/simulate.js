@@ -21,7 +21,7 @@ export default function Simulate(ctx) {
     _create_keyboard = function() {
         const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'];
         keys.forEach( value => {
-            addElement(simulateKeyboard, 'div', 'font-awesome key', value);
+            addElement(simulateKeyboard, 'div', 'font-awesome keyboard-key', value);
         });
     },
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
@@ -45,7 +45,7 @@ export default function Simulate(ctx) {
         const target = evnt.target,
               parent = target.parentElement;
 
-        if (target.classList.contains('item')) {
+        if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
             let slide, visibilitySize = 0,
                 level = macro[id]['level'].length + 1;
@@ -106,7 +106,7 @@ export default function Simulate(ctx) {
 
         _hide_keyboard();
 
-        const slide = addElement(simulateMain, 'div', 'simulate-content-slide');
+        const slide = addElement(simulateMain, 'div', 'container-main-slide');
         if (level === null) {
             slide.style.left = '0';
             level = 1;
@@ -148,39 +148,45 @@ export default function Simulate(ctx) {
             icon  = shortcut['icon'];
             type  = shortcut['type']['type'];
 
+            item = addElement(slide, 'div'); 
+            item['_props_'] = [ visibleId, color ]; 
+
             switch (type) {
                 case _TYPES_.LIST:
+                    item.classList.add('item-list');
+
+                    div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
+                    div.style.color = color;
+
+                    content = addElement(item, 'div', 'item-list-block');
+                    div = addElement(content, 'div', 'item-list-header', label);
+                    div.style.color = color;
+        
+                    if (Math.floor(Math.random() * 10) < 6)
+                        div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
                     break;
+
                 case _TYPES_.TEXT:
                     break;
+
                 case _TYPES_.NUMBER:
                     _show_keyboard();
                     break;
+
                 case _TYPES_.DATE:
                     break;
+
                 case _TYPES_.PHOTO:
                     break;
+
                 case _TYPES_.SIGNATURE:
                     break;
+
                 case _TYPES_.SCAN:
                     break;
             }
 
-            item = addElement(slide, 'div', 'item'); 
-            item['_props_'] = [ visibleId, color ]; 
 
-            div = addElement(item, 'div', 'font-awesome item-icon', icon);
-            div.style.color = color;
-
-            content = addElement(item, 'div', 'item-text');
-            div = addElement(content, 'div', 'item-text-header', label);
-            div.style.color = color;
-
-            if (Math.floor(Math.random() * 10) < 6)
-                div = addElement(content, 'div', 'item-text-subheader', label +' '+ label);
-
-            // div = addElement(item, 'div', 'icon item-arrow', type);
-            // div.style.color = color;
 
             addElement(slide, 'div', 'item-divider');
         }
@@ -238,7 +244,6 @@ export default function Simulate(ctx) {
         while (simulateMain.hasChildNodes())
             simulateMain.removeChild(simulateMain.firstChild);
 
-        // executedStack.push('');
         _create_view();
 
         simulatePopup.style.display = 'block';
@@ -252,10 +257,13 @@ export default function Simulate(ctx) {
         const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
 
         addElement(simulateContent, 'div', 'header');
+
         simulateContainer = addElement(simulateContent, 'div', 'container');
+
         simulateMain = addElement(simulateContainer, 'div', 'main');
         simulateKeyboard = addElement(simulateContainer, 'div', 'keyboard');
         _create_keyboard();
+
         addElement(simulateContent, 'div', 'footer');
 
         simulateMain.addEventListener('click', _receive_events, { capture: false });

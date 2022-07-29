@@ -27,18 +27,18 @@ export default function Simulate(ctx) {
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
     _show_keyboard = function() { simulateKeyboard.style.height = '116px'; },
 
-    _get_parent_id = function(item) {
-        const size = item['level'].length - 1;
-        let parend_id = '';
+    // _get_parent_id = function(item) {
+    //     const size = item['level'].length - 1;
+    //     let parend_id = '';
 
-        for (let counter = 0; counter < size; counter) {
-            parend_id += item['level'][counter];
-            if (counter < size)
-                parend_id += '.';
-        }
+    //     for (let counter = 0; counter < size; counter) {
+    //         parend_id += item['level'][counter];
+    //         if (counter < size)
+    //             parend_id += '.';
+    //     }
 
-        return parend_id;
-    },
+    //     return parend_id;
+    // },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
 
@@ -166,11 +166,19 @@ export default function Simulate(ctx) {
                         div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
                     break;
 
-                case _TYPES_.TEXT:
-                    break;
-
                 case _TYPES_.NUMBER:
+                case _TYPES_.TEXT:
                     _show_keyboard();
+
+                    item.classList.add('item-input');
+
+                    content = addElement(item, 'div', 'item-input-block');
+                    content.style.color = color;
+
+                    div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
+                    div = addElement(content, 'div', 'item-input-header', label);
+
+                    div = addElement(item, 'input', 'item-input-box');
                     break;
 
                 case _TYPES_.DATE:

@@ -220,8 +220,8 @@ body {
             stroke-linecap: round;
             stroke-dasharray: 0.2%; 
 
-            transition: .13s stroke-width linear,
-                        .13s stroke linear;
+            transition: .15s stroke-width linear,
+                        .15s stroke linear;
         }
         .main-app-svg-path.linked { 
             stroke-dasharray: none;
@@ -422,8 +422,8 @@ body {
 
             margin: 0 1px !important;
 
-            transition: 0.13s opacity linear,
-                        0.13s border-radius linear;
+            transition: 0.15s opacity linear,
+                        0.15s border-radius linear;
 
             cursor: pointer;
         }
@@ -486,7 +486,7 @@ body {
             padding-right: 8px;*/
             /*align-items: center;*/
             /*border: 1px solid transparent;*/
-            transition: .13s height linear;
+            transition: .15s height linear;
         }
             .main-app-treeview-row:hover {
                 background-color: var(--main-background);
@@ -522,7 +522,7 @@ body {
             font-size: 10px;
             line-height: 14px;
             width: 14px;
-            transition: .13s transform linear;
+            transition: .15s transform linear;
         }
         .main-app-treeview-item.none {
             grid-column-end: span 2;
@@ -685,7 +685,7 @@ body {
                 position: relative;
                 color: var(--main-font-color-black);
                 outline-color: inherit;
-                transition: .13s background-color linear;
+                transition: .15s background-color linear;
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }

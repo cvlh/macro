@@ -12,6 +12,7 @@ export default function Simulate(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
+        __showKeyboard = false,
         macro,
         executedStack,
         currentVisibleIds, stackVisibility,
@@ -25,7 +26,10 @@ export default function Simulate(ctx) {
         });
     },
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
-    _show_keyboard = function() { simulateKeyboard.style.height = '116px'; },
+    _show_keyboard = function() { 
+        __showKeyboard = false;
+        simulateKeyboard.style.height = '116px'; 
+    },
 
     // _get_parent_id = function(item) {
     //     const size = item['level'].length - 1;
@@ -98,6 +102,9 @@ export default function Simulate(ctx) {
             setTimeout(() => {
                 parent.style.left = '-100%';
                 slide.style.left = 0;
+
+                if (__showKeyboard)
+                    _show_keyboard();
             }, 50);
         }
     },
@@ -166,9 +173,11 @@ export default function Simulate(ctx) {
                         div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
                     break;
 
+                    addElement(slide, 'div', 'item-divider');
                 case _TYPES_.NUMBER:
                 case _TYPES_.TEXT:
-                    _show_keyboard();
+                    //_show_keyboard();
+                    __showKeyboard = true;
 
                     item.classList.add('item-input');
 
@@ -193,10 +202,6 @@ export default function Simulate(ctx) {
                 case _TYPES_.SCAN:
                     break;
             }
-
-
-
-            addElement(slide, 'div', 'item-divider');
         }
 
         return slide;

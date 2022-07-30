@@ -171,9 +171,10 @@ export default function Simulate(ctx) {
         
                     if (Math.floor(Math.random() * 10) < 6)
                         div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
-                    break;
 
                     addElement(slide, 'div', 'item-divider');
+                    break;
+
                 case _TYPES_.NUMBER:
                 case _TYPES_.TEXT:
                     //_show_keyboard();

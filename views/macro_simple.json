@@ -24,6 +24,7 @@
 				"properties": {
 					"id": "1",
 					"text": "MOTORISTA",
+					"description": "",
 					"type": {
 						"type": 0
 					},

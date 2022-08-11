@@ -51,9 +51,9 @@ export const _I18N_ = {
     field_visibility_save: 'Salvar',
     field_visibility_restore: 'Restaurar',
 
-    field_execute: 'Execução', 
-    field_execute_instant: 'Imediatamente ao selecionar', 
-    field_execute_after: 'Quando finalizar atividade',
+    // field_execute: 'Execução', 
+    // field_execute_instant: 'Imediatamente ao selecionar', 
+    // field_execute_after: 'Quando finalizar atividade',
 
     field_empty: 'Sem informação',
 
@@ -76,14 +76,5 @@ export const _I18N_ = {
 
     selected_visibility: 'Edição',
 
-    simulate: 'Simular',
-    
-    0 : '',
-    1 : '',
-    2 : '',
-    3 : '',
-    4 : 'Nenhuma Atividade',
-    5 : '',
-    6 : '',
-    7 : ''
+    simulate: 'Simular'
 }

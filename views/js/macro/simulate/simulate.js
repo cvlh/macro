@@ -30,12 +30,21 @@ export default function Simulate(ctx) {
         __showKeyboard = false;
         simulateKeyboard.style.height = '116px'; 
     },
+    _wildcard = function(id) {
+        let wildcard = '';
+        const size = macro[id]['level'].length - 1;
 
+        for (let counter = 0; counter < size; counter++) 
+            wildcard += macro[id]['level'][counter] + '.';
+        wildcard += 'x';
+
+        return wildcard;
+    },
     // _get_parent_id = function(item) {
     //     const size = item['level'].length - 1;
     //     let parend_id = '';
 
-    //     for (let counter = 0; counter < size; counter) {
+    //     for (let counter = 0; counter < size; counter++) {
     //         parend_id += item['level'][counter];
     //         if (counter < size)
     //             parend_id += '.';
@@ -51,26 +60,39 @@ export default function Simulate(ctx) {
 
         if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
-            let slide, visibilitySize = 0,
+            let slide, visibilitySize,
+                applyVisibility = false,
                 level = macro[id]['level'].length + 1;
 
             executedStack.push(id);
 
-            if (macro[id]['exec'].hasOwnProperty('now'))
-                currentVisibleIds = macro[id]['exec']['now']['fields'];
-            
+            // if (macro[id]['exec'].hasOwnProperty('now')) {
+            //     currentVisibleIds = macro[id]['exec']['now']['fields'];
+            //     applyVisibility = true;
+            // }
+            if (macro[id].hasOwnProperty('visibility')) {
+                currentVisibleIds = macro[id]['visibility']['fields'];
+                applyVisibility = true;
+            }
+
             visibilitySize = currentVisibleIds.filter( element => {
                 return macro[element]['level'].length === level;
             }).length;
 
             if (!visibilitySize) {
+                if (!applyVisibility) {
+                    currentVisibleIds = currentVisibleIds.filter( element => {
+                        return element !== id;
+                    });
+                }
+
                 let txt = '';
                 for (const id of executedStack) txt += id + '  >  ';
                 console.log(txt);
 
-                let lastExecId = executedStack.pop();
-                if (macro[lastExecId]['exec'].hasOwnProperty('after')) 
-                    currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
+                const wildcard = _wildcard(id);
+                if (macro.hasOwnProperty(wildcard))
+                    currentVisibleIds = macro[wildcard]['visibility']['fields'];
 
                 level--;
                 visibilitySize = currentVisibleIds.filter( element => {
@@ -81,9 +103,11 @@ export default function Simulate(ctx) {
             if (!visibilitySize) {
                 let lastExecId = executedStack.pop();
                 while (lastExecId !== undefined) {
-                    if (macro[lastExecId]['exec'].hasOwnProperty('after')) 
-                        currentVisibleIds = macro[lastExecId]['exec']['after']['fields'];
-                    
+
+                    const wildcard = _wildcard(id);
+                    if (macro.hasOwnProperty(wildcard))
+                        currentVisibleIds = macro[wildcard]['visibility']['fields'];
+
                     level = macro[lastExecId]['level'].length;
 
                     visibilitySize = currentVisibleIds.filter( element => {
@@ -224,17 +248,14 @@ export default function Simulate(ctx) {
             delete field['properties']['line'];
             delete field['properties']['order'];
 
-            field['properties']['exec'] = {};
-            if (field['properties']['visibility']['fields'].length) 
-                field['properties']['exec']['now'] = field['properties']['visibility'];
-            
-            delete field['properties']['visibility'];
+            if (!field['properties']['visibility']['fields'].length) 
+                delete field['properties']['visibility'];
 
             hashs[id] = field['properties'];
 
             if (field.hasOwnProperty('output')) {
                 if (field['output']['properties']['visibility']['fields'].length)
-                    hashs[id]['exec']['after'] = field['output']['properties']['visibility'];
+                    hashs[id + '.x'] = field['output']['properties'];
 
                 _create_hash(field['output']['fields'], hashs);
             }

@@ -16,18 +16,18 @@ export default function Visibility (ctx) {
         status, btnAdd,
         actionGroup, btnEdit, btnCancel, btnDelete,
         optionsGroup, fresh, extra, save, restore, 
-        executionGroup, instant, after,
+        // executionGroup, instant, after,
 
         backup,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _backup  = function() { 
         const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
-        backup = [...objectProp['fields']]; 
+        backup = [ ...objectProp['fields'] ]; 
     },
     _restore = function() { 
         const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
-        objectProp['fields'] = [...backup]; 
+        objectProp['fields'] = [ ...backup ]; 
 
         return objectProp['fields'];
     },
@@ -59,9 +59,9 @@ export default function Visibility (ctx) {
         btnCancel.style.visibility = 'visible';
         btnDelete.style.visibility = 'hidden';
 
-        //optionsGroup.style.display = 'block';
-        //executionGroup.style.display = 'block'; 
-        //_set_flags(props);
+        // optionsGroup.style.display = 'block';
+        // executionGroup.style.display = 'block'; 
+        // _set_flags(props);
 
         parent.getMain().setVisibilityMode();
     },
@@ -106,7 +106,7 @@ export default function Visibility (ctx) {
 
             actionGroup.style.display = 'none';
             optionsGroup.style.display = 'none';
-            executionGroup.style.display = 'none';
+            // executionGroup.style.display = 'none';
         } else {
             btnEdit.setAttribute('value', _I18N_.button_visibility_edit);
             btnEdit.style.removeProperty('color');
@@ -134,9 +134,9 @@ export default function Visibility (ctx) {
         objectProp['flags'] = (fresh.checked   ? fresh.value   : _VISIBILITY_.NONE) | 
                               (extra.checked   ? extra.value   : _VISIBILITY_.NONE) | 
                               (save.checked    ? save.value    : _VISIBILITY_.NONE) | 
-                              (restore.checked ? restore.value : _VISIBILITY_.NONE) | 
-                              (instant.checked ? instant.value : _VISIBILITY_.NONE) | 
-                              (after.checked   ? after.value   : _VISIBILITY_.NONE) ;
+                              (restore.checked ? restore.value : _VISIBILITY_.NONE) ; 
+                              // (instant.checked ? instant.value : _VISIBILITY_.NONE) | 
+                              // (after.checked   ? after.value   : _VISIBILITY_.NONE) ;
     },
     _set_flags = function(prop) {
         const fieldsSize = prop['fields'].length;
@@ -146,17 +146,17 @@ export default function Visibility (ctx) {
             if (prop['flags'] & extra.value)   extra.checked   = true; else extra.checked   = false;
             if (prop['flags'] & save.value)    save.checked    = true; else save.checked    = false;
             if (prop['flags'] & restore.value) restore.checked = true; else restore.checked = false;
-            if (prop['flags'] & instant.value) instant.checked = true; else instant.checked = false;
-            if (prop['flags'] & after.value)   after.checked   = true; else after.checked   = false;
+            // if (prop['flags'] & instant.value) instant.checked = true; else instant.checked = false;
+            // if (prop['flags'] & after.value)   after.checked   = true; else after.checked   = false;
             
             optionsGroup.style.display   = 'block';
-            executionGroup.style.display = 'block';
+            // executionGroup.style.display = 'block';
 
             return;
         }
 
         optionsGroup.style.display   = 'none';
-        executionGroup.style.display = 'none';
+        // executionGroup.style.display = 'none';
     },
     _set_status = function(prop) {
         const fieldsSize = prop['fields'].length;
@@ -227,7 +227,7 @@ export default function Visibility (ctx) {
 
         actionGroup = addElement(content, 'div');
         row = addElement(actionGroup, 'div', 'main-app-properties-row');
-            //count = addElement(row, 'div', 'main-app-properties-label counter bold');
+            // count = addElement(row, 'div', 'main-app-properties-label counter bold');
 
             btnDelete = addElement(row, 'input');
             btnDelete.setAttribute('type', 'button');
@@ -302,36 +302,36 @@ export default function Visibility (ctx) {
             label.setAttribute('for', 'restore_checkbox');
             label.style.gridColumn = '19 / span 9';
 
-        executionGroup = addElement(content, 'div');
-        row = addElement(executionGroup, 'div', 'main-app-properties-row');
-              addElement(row, 'div', 'main-app-properties-label sub-header', _I18N_.field_execute);
-              // addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
+        // executionGroup = addElement(content, 'div');
+        // row = addElement(executionGroup, 'div', 'main-app-properties-row');
+        //       addElement(row, 'div', 'main-app-properties-label sub-header', _I18N_.field_execute);
+        //       // addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        row = addElement(executionGroup, 'div', 'main-app-properties-row');
-            instant = addElement(row, 'input', 'main-app-properties-checkbox');
-            instant.setAttribute('id', 'instant_radio');
-            instant.setAttribute('type', 'radio');
-            instant.setAttribute('name', 'execute');
-            instant.setAttribute('value', _VISIBILITY_.INSTANT);
-            instant.style.gridColumn = '2 / span 2';
-            instant.addEventListener('change', _update_flags, { capture: false });
+        // row = addElement(executionGroup, 'div', 'main-app-properties-row');
+        //     instant = addElement(row, 'input', 'main-app-properties-checkbox');
+        //     instant.setAttribute('id', 'instant_radio');
+        //     instant.setAttribute('type', 'radio');
+        //     instant.setAttribute('name', 'execute');
+        //     instant.setAttribute('value', _VISIBILITY_.INSTANT);
+        //     instant.style.gridColumn = '2 / span 2';
+        //     instant.addEventListener('change', _update_flags, { capture: false });
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_instant);
-            label.setAttribute('for', 'instant_radio');
-            label.style.gridColumn = '4 / span 24';
+        //     label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_instant);
+        //     label.setAttribute('for', 'instant_radio');
+        //     label.style.gridColumn = '4 / span 24';
 
-        row = addElement(executionGroup, 'div', 'main-app-properties-row');
-            after = addElement(row, 'input', 'main-app-properties-checkbox');
-            after.setAttribute('id', 'after_radio');
-            after.setAttribute('type', 'radio');
-            after.setAttribute('name', 'execute');
-            after.setAttribute('value', _VISIBILITY_.AFTER);
-            after.style.gridColumn = '2 / span 2';
-            after.addEventListener('change', _update_flags, { capture: false });
+        // row = addElement(executionGroup, 'div', 'main-app-properties-row');
+        //     after = addElement(row, 'input', 'main-app-properties-checkbox');
+        //     after.setAttribute('id', 'after_radio');
+        //     after.setAttribute('type', 'radio');
+        //     after.setAttribute('name', 'execute');
+        //     after.setAttribute('value', _VISIBILITY_.AFTER);
+        //     after.style.gridColumn = '2 / span 2';
+        //     after.addEventListener('change', _update_flags, { capture: false });
 
-            label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_after);
-            label.setAttribute('for', 'after_radio');
-            label.style.gridColumn = '4 / span 24';
+        //     label = addElement(row, 'label', 'main-app-properties-checkbox-label', _I18N_.field_execute_after);
+        //     label.setAttribute('for', 'after_radio');
+        //     label.style.gridColumn = '4 / span 24';
 
     })();
 }

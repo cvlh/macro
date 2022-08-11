@@ -46,10 +46,10 @@ export const _VISIBILITY_ = {
     FRESH:   1,
     EXTRA:   2,
     SAVE:    4,
-    RESTORE: 8,
+    RESTORE: 8
 
-    INSTANT: 16,
-    AFTER:   32
+ // INSTANT: 16,
+ // AFTER:   32
 };
 
 export const _ICON_CHAR_ = {

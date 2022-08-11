@@ -241,26 +241,27 @@
                             align-content: center;
                             flex-wrap: nowrap;
                             width: 100%;
-                            margin: 8px 0;
+                            margin: 8px 0 16px 0;
                         }
                             .item-input-icon {
-                                font-size: 23px;
-                                margin: 0px 8px;
+                                font-size: 20px;
+                                margin: 0 8px 0 0;
                             }
                             .item-input-header {
-                                font-size: 12px;
+                                font-size: 14px;
                                 font-weight: 600;
                                 flex-grow: 1;
                             }
                         .item-input-box {
-                            border: 1px solid #e5e5e5;
-                            padding: 0 10px 0 10px;
-                            height: 32px;
-                            border-radius: 6px;
+                            border: 2px solid #e5e5e5;
                             color: var(--main-font-color-bold);
-                            font-weight: 500;
-                            font-size: 13px;
+                            padding: 0 10px 0 10px;
+                            height: 40px;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            font-size: 18px;
                             width: 100%;
+                            outline: none;
                         }
         .simulate-content > .footer {
             transform: translate(79px, 9px);

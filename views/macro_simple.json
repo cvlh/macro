@@ -15,10 +15,7 @@
 		}
 	},
 	"root": {
-		"position": [
-			85.91889621575254,
-			167.8387402427611
-		],
+		"position": [ 85.91889621575254, 167.8387402427611 ],
 		"fields": [
 			{
 				"properties": {
@@ -46,10 +43,7 @@
 					"color": "PURPLE"
 				},
 				"output": {
-					"position": [
-						690.2666486227846,
-						296.5119570163352
-					],
+					"position": [ 690.2666486227846, 296.5119570163352 ],
 					"fields": [
 						{
 							"properties": {
@@ -74,9 +68,8 @@
 					],
 					"properties": {
 						"visibility": {
-							"fields": [
-								"2"
-							]
+							"fields": [ "2" ],
+							"flags": 17
 						}
 					}
 				}
@@ -106,10 +99,7 @@
 					"color": "RED"
 				},
 				"output": {
-					"position": [
-						1602.4812235512863,
-						143.28668293996566
-					],
+					"position": [ 1602.4812235512863, 143.28668293996566 ],
 					"fields": [
 						{
 							"properties": {
@@ -1407,7 +1397,8 @@
 					],
 					"properties": {
 						"visibility": {
-							"fields": []
+							"fields": [],
+							"flags": 17
 						}
 					}
 				}
@@ -1616,7 +1607,8 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [],
+										"flags": 17
 									}
 								}
 							}
@@ -1715,7 +1707,8 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [],
+										"flags": 17
 									}
 								}
 							}
@@ -1860,7 +1853,8 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [],
+										"flags": 17
 									}
 								}
 							}
@@ -1983,7 +1977,8 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [],
+										"flags": 17
 									}
 								}
 							}
@@ -2150,7 +2145,8 @@
 								],
 								"properties": {
 									"visibility": {
-										"fields": []
+										"fields": [],
+										"flags": 17
 									}
 								}
 							}
@@ -2231,7 +2227,8 @@
 					],
 					"properties": {
 						"visibility": {
-							"fields": []
+							"fields": [],
+							"flags": 17
 						}
 					}
 				}

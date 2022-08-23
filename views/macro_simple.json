@@ -1,2377 +1,2849 @@
 {
-	"status": true,
-	"name": "Macro",
-	"version": 1,
-	"properties": {
-		"size": {
-			"width": 4096,
-			"height": 3072
-		},
-		"transform": {
-			"scale": 0.387551673597937,
-			"left": 225.59169006347656,
-			"top": -10.415887832641602,
-			"index": 117
-		}
-	},
-	"root": {
-		"position": [ 85.91889621575254, 167.8387402427611 ],
-		"fields": [
-			{
-				"properties": {
-					"id": "1",
-					"text": "MOTORISTA",
-					"description": "",
-					"type": {
-						"type": 0
-					},
-					"order": 1,
-					"visibility": {
-						"fields": [
-							"1",
-							"1.1"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 692.2666744943591,
-						"y": 348.01196235293384
-					},
-					"icon": "\uf234",
-					"line": 250.29814661464945,
-					"color": "PURPLE"
-				},
-				"output": {
-					"position": [ 690.2666486227846, 296.5119570163352 ],
-					"fields": [
-						{
-							"properties": {
-								"id": "1.1",
-								"text": "CÓDIGO",
-								"type": {
-									"type": 2
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"icon": "\uf084",
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": [ "2" ],
-							"flags": 17
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "2",
-					"text": "CHECKLIST",
-					"type": {
-						"type": 0
-					},
-					"order": 2,
-					"visibility": {
-						"fields": [
-							"2",
-							"2.1"
-						],
-						"flags": 17
-					},
-					"expanded": true,
-					"tail": {
-						"x": 1604.4812190876246,
-						"y": 415.78669860817865
-					},
-					"icon": "\uf0ae",
-					"line": 201.17922779238404,
-					"color": "RED"
-				},
-				"output": {
-					"position": [ 1602.4812235512863, 143.28668293996566 ],
-					"fields": [
-						{
-							"properties": {
-								"id": "2.1",
-								"text": "COMBUSTÍVEL",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.1",
-										"2.1.1",
-										"2.1.2",
-										"2.1.3",
-										"2.1.4",
-										"2.1.5"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2501.6954013463055,
-									"y": 154.22512489650535
-								},
-								"icon": "\uf52f",
-								"line": 482.99455611587337
-							},
-							"output": {
-								"position": [
-									2499.695373710301,
-									17.725127841784897
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.1.1",
-											"text": "COMPLETO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf240"
-										}
-									},
-									{
-										"properties": {
-											"id": "2.1.2",
-											"text": "3/4 DE TANQUE",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf241"
-										}
-									},
-									{
-										"properties": {
-											"id": "2.1.3",
-											"text": "MEIO TANQUE",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf242"
-										}
-									},
-									{
-										"properties": {
-											"id": "2.1.4",
-											"text": "1/4 DE TANQUE",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf243"
-										}
-									},
-									{
-										"properties": {
-											"id": "2.1.5",
-											"text": "RESERVA",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf244"
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.2"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.2",
-								"text": "DIFERENCIAL",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.2",
-										"2.2.1",
-										"2.2.2",
-										"2.2.3"
-									],
-									"flags": 17
-								},
-								"expanded": true,
-								"tail": {
-									"x": 2503.0784704405796,
-									"y": 373.2208652373966
-								},
-								"line": 481.76026946796514
-							},
-							"output": {
-								"position": [
-									2501.078249519875,
-									287.7208613281886
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.2.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.2.2",
-											"text": "FAZENDO BARULHO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.2.3",
-											"text": "VAZAMENTO DE ÓLEO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.3"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.3",
-								"text": "CAIXA DE CÂMBIO",
-								"type": {
-									"type": 0
-								},
-								"order": 3,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.3",
-										"2.3.1",
-										"2.3.2",
-										"2.3.3",
-										"2.3.4",
-										"2.3.5"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2504.595405252245,
-									"y": 563.335815281111
-								},
-								"line": 449.72121078338864
-							},
-							"output": {
-								"position": [
-									2502.59542198923,
-									443.8358265742392
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.3.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.3.2",
-											"text": "FAZENDO BARULHO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.3.3",
-											"text": "ESCAPANDO MARCHA",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.3.4",
-											"text": "NAO ENTRA MARCHA",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.3.5",
-											"text": "VAZAMENTO",
-											"type": {
-												"type": 0
-											},
-											"order": 5,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.4"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.4",
-								"text": "ÓLEO DO MOTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 4,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.4",
-										"2.4.1",
-										"2.4.2"
-									],
-									"flags": 17
-								},
-								"expanded": true,
-								"tail": {
-									"x": 2503.411717332345,
-									"y": 735.2243179456428
-								},
-								"icon": "",
-								"line": 414.67691723624944
-							},
-							"output": {
-								"position": [
-									2501.4118230979866,
-									666.72433404553
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.4.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.4.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.5"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.5",
-								"text": "ÓLEO HIDRÁULICO",
-								"type": {
-									"type": 0
-								},
-								"order": 5,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.5",
-										"2.5.1",
-										"2.5.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2502.3231528163324,
-									"y": 858.3948732185036
-								},
-								"line": 381.31549838483875
-							},
-							"output": {
-								"position": [
-									2500.322957956954,
-									789.8948259250305
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.5.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.5.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.6"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.6",
-								"text": "GRAXA SAPATAS",
-								"type": {
-									"type": 0
-								},
-								"order": 6,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.6",
-										"2.6.1",
-										"2.6.2"
-									],
-									"flags": 17
-								},
-								"expanded": true,
-								"tail": {
-									"x": 2504.6549361242146,
-									"y": 981.7338630616588
-								},
-								"line": 349.53704926539035
-							},
-							"output": {
-								"position": [
-									2502.654964825174,
-									913.2338713016302
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.6.1",
-											"text": "ENGRAXADO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.6.2",
-											"text": "RUIM",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.7"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.7",
-								"text": "CAMERA DE RÉ",
-								"type": {
-									"type": 0
-								},
-								"order": 7,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.7",
-										"2.7.1",
-										"2.7.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2504.6880088308644,
-									"y": 1105.4375976124363
-								},
-								"line": 319.87716342057183
-							},
-							"output": {
-								"position": [
-									2502.687959291603,
-									1036.9375747681293
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.7.1",
-											"text": "FUNCIONANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.7.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.8"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.8",
-								"text": "ÁGUA DO RADIADOR",
-								"type": {
-									"type": 0
-								},
-								"order": 8,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.8",
-										"2.8.1",
-										"2.8.2",
-										"2.8.3"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2505.9724897615065,
-									"y": 1248.5311513710687
-								},
-								"line": 285.98015102649333
-							},
-							"output": {
-								"position": [
-									2503.972308290178,
-									1163.0311149482231
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.8.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.8.2",
-											"text": "NÍVEL BAIXO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.8.3",
-											"text": "VAZAMENTO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.9"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.9",
-								"text": "FARÓIS E LANTERNAS",
-								"type": {
-									"type": 0
-								},
-								"order": 9,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.9",
-										"2.9.1",
-										"2.9.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2505.60207544703,
-									"y": 1391.0417593027305
-								},
-								"line": 254.20170190704494
-							},
-							"output": {
-								"position": [
-									2503.6021590806845,
-									1322.5417885511263
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.9.1",
-											"text": "FUNCIONANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.9.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.10"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.10",
-								"text": "PRESSÃO PNEU",
-								"type": {
-									"type": 0
-								},
-								"order": 10,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.10",
-										"2.10.1",
-										"2.10.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2507.1492481619184,
-									"y": 1516.9223079073745
-								},
-								"line": 222.4232527875963
-							},
-							"output": {
-								"position": [
-									2505.1491268424443,
-									1448.4223150712357
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.10.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.10.2",
-											"text": "IRREGULAR",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.11"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.11",
-								"text": "MOLAS",
-								"type": {
-									"type": 0
-								},
-								"order": 11,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.11",
-										"2.11.1",
-										"2.11.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2504.382480017053,
-									"y": 1641.5284548824507
-								},
-								"line": 190.64480366814792
-							},
-							"output": {
-								"position": [
-									2502.3825575444516,
-									1573.0284243569056
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.11.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.11.2",
-											"text": "COM PROBLEMAS",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.12"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.12",
-								"text": "EXTINTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 12,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.12",
-										"2.12.1",
-										"2.12.2",
-										"2.12.3",
-										"2.12.4"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2504.0886053951085,
-									"y": 1802.7990044493704
-								},
-								"line": 158.48222619513376
-							},
-							"output": {
-								"position": [
-									2502.088520027416,
-									1700.2990158649882
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.12.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.12.2",
-											"text": "VENCIDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.12.3",
-											"text": "VAZIO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.12.4",
-											"text": "SEM LACRE",
-											"type": {
-												"type": 0
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.13"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.13",
-								"text": "DOCUMENTOS DO VEÍCULO",
-								"type": {
-									"type": 0
-								},
-								"order": 13,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.13",
-										"2.13.1",
-										"2.13.2",
-										"2.13.3"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2502.0450271023165,
-									"y": 1979.3741852520516
-								},
-								"line": 123.34503347920258
-							},
-							"output": {
-								"position": [
-									2500.0450595566376,
-									1893.8741602361279
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.13.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.13.2",
-											"text": "VENCIDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.13.3",
-											"text": "NÃO ENCONTRADO",
-											"type": {
-												"type": 0
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"2",
-											"2.14"
-										]
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "2.14",
-								"text": "TEMPERATURA DO MOTOR",
-								"type": {
-									"type": 0
-								},
-								"order": 14,
-								"visibility": {
-									"fields": [
-										"2",
-										"2.14",
-										"2.14.1",
-										"2.14.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 2500.363043735561,
-									"y": 2124.2041348543326
-								},
-								"line": 88.2078407632714
-							},
-							"output": {
-								"position": [
-									2498.3631303946518,
-									2055.704103539067
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "2.14.1",
-											"text": "OK",
-											"type": {
-												"type": 0
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "2.14.2",
-											"text": "ESQUENTANDO",
-											"type": {
-												"type": 0
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [
-											"3"
-										]
-									}
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": [],
-							"flags": 17
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "3",
-					"text": "EM TRABALHO",
-					"type": {
-						"type": 0
-					},
-					"order": 3,
-					"visibility": {
-						"fields": [
-							"3.1",
-							"3.10",
-							"3.14",
-							"3.6",
-							"3.7"
-						],
-						"flags": 17
-					},
-					"expanded": true,
-					"tail": {
-						"x": 638.8954366493467,
-						"y": 1237.7111791570046
-					},
-					"icon": "",
-					"line": 147.5316637439406,
-					"color": "TEAL"
-				},
-				"output": {
-					"position": [
-						636.8954275030723,
-						846.2111333701487
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "3.1",
-								"text": "INÍCIO COLETA",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [
-										"3.14",
-										"3.19",
-										"3.2",
-										"3.7"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-							    "icon": "\uf04b"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.2",
-								"text": "FIM COLETA",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": [
-										"3.14",
-										"3.18",
-										"3.3",
-										"3.7"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf11e"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.3",
-								"text": "TRÂNSITO PARA DESCARGA",
-								"type": {
-									"type": 0
-								},
-								"order": 3,
-								"visibility": {
-									"fields": [
-										"3.10",
-										"3.14",
-										"3.4",
-										"3.7"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf4d7"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.4",
-								"text": "INÍCIO DESCARGA",
-								"type": {
-									"type": 0
-								},
-								"order": 4,
-								"visibility": {
-									"fields": [
-										"3.10",
-										"3.14",
-										"3.5",
-										"3.7"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf472"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.5",
-								"text": "FIM DESCARGA",
-								"type": {
-									"type": 0
-								},
-								"order": 5,
-								"visibility": {
-									"fields": [
-										"3.1",
-										"3.10",
-										"3.13",
-										"3.15",
-										"3.20",
-										"3.5.1",
-										"3.5.2",
-										"3.7"
-									],
-									"flags": 17
-								},
-								"expanded": true,
-								"tail": {
-									"x": 1181.168842704822,
-									"y": 801.3533523807722
-								},
-								"line": 73.71159528410772
-							},
-							"output": {
-								"position": [
-									1179.1687912807506,
-									732.8533568871225
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "3.5.1",
-											"text": "NR TICKET",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf543"
-										}
-									},
-									{
-										"properties": {
-											"id": "3.5.2",
-											"text": "PESO KG",
-											"type": {
-												"type": 2
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf496"
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [],
-										"flags": 17
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.6",
-								"text": "TRÂNSITO LOCAL",
-								"type": {
-									"type": 0
-								},
-								"order": 6,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf5eb"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.7",
-								"text": "INÍCIO ABASTECIMENTO",
-								"type": {
-									"type": 0
-								},
-								"order": 7,
-								"visibility": {
-									"fields": [
-										"3.14",
-										"3.19",
-										"3.8"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf52f"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.8",
-								"text": "FIM ABASTECIMENTO",
-								"type": {
-									"type": 0
-								},
-								"order": 8,
-								"visibility": {
-									"fields": [
-										"3.1",
-										"3.10",
-										"3.14",
-										"3.8.1"
-									],
-									"flags": 17
-								},
-								"expanded": true,
-								"tail": {
-									"x": 1175.5045904792855,
-									"y": 914.8443138626659
-								},
-								"line": 134.7019977201934
-							},
-							"output": {
-								"position": [
-									1173.5045335406016,
-									863.3443046302418
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "3.8.1",
-											"text": "LITROS",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											},
-											"icon": "\uf1ec"
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [],
-										"flags": 17
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.9",
-								"text": "COND LOCAIS",
-								"type": {
-									"type": 0
-								},
-								"order": 9,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.10",
-								"text": "INÍCIO REFEIÇÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 10,
-								"visibility": {
-									"fields": [
-										"3.11",
-										"3.14"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1161.8992664090006,
-									"y": 1372.5070270508493
-								},
-								"line": 142.79535751422168,
-								"icon": "\uf2e7"
-							},
-							"output": {
-								"position": [
-									1159.8992341178384,
-									1253.0069578649136
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "3.10.1",
-											"text": "CÓDIGO MOTORISTA",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.10.2",
-											"text": "CÓDIGO COLETOR 1",
-											"type": {
-												"type": 2
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.10.3",
-											"text": "CÓDIGO COLETOR 2",
-											"type": {
-												"type": 2
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.10.4",
-											"text": "CÓDIGO COLETOR 3",
-											"type": {
-												"type": 2
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.10.5",
-											"text": "CÓDIGO COLETOR 4",
-											"type": {
-												"type": 2
-											},
-											"order": 5,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [],
-										"flags": 17
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.11",
-								"text": "FIM REFEIÇÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 11,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1162.2633811603057,
-									"y": 1599.6669126742277
-								},
-								"line": 101.81186248807148
-							},
-							"output": {
-								"position": [
-									1160.2633558341124,
-									1480.1668838493931
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "3.11.1",
-											"text": "CÓDIGO PONTO MOTORISTA",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.11.2",
-											"text": "CÓDIGO PONTO COLETOR 1",
-											"type": {
-												"type": 2
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.11.3",
-											"text": "CÓDIGO PONTO COLETOR 2",
-											"type": {
-												"type": 2
-											},
-											"order": 3,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.11.4",
-											"text": "CÓDIGO PONTO COLETOR 3",
-											"type": {
-												"type": 2
-											},
-											"order": 4,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.11.5",
-											"text": "CÓDIGO PONTO COLETOR 4",
-											"type": {
-												"type": 2
-											},
-											"order": 5,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [],
-										"flags": 17
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.12",
-								"text": "CAFÉ",
-								"type": {
-									"type": 0
-								},
-								"order": 12,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf0f4"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.13",
-								"text": "A DISPOSIÇÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 13,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf164"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.14",
-								"text": "PEDIDO DE SOS",
-								"type": {
-									"type": 0
-								},
-								"order": 14,
-								"visibility": {
-									"fields": [
-										"3.15"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\uf0fa"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.15",
-								"text": "INÍCIO SOS",
-								"type": {
-									"type": 0
-								},
-								"order": 15,
-								"visibility": {
-									"fields": [
-										"3.16"
-									]
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.16",
-								"text": "FIM SOS",
-								"type": {
-									"type": 0
-								},
-								"order": 16,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.17",
-								"text": "FISCALIZAÇÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 17,
-								"visibility": {
-									"fields": [],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1164.5140575923565,
-									"y": 1782.6259133056951
-								},
-								"line": 64.70344747410661,
-								"icon": "\uf21b"
-							},
-							"output": {
-								"position": [
-									1162.514001243768,
-									1714.125960169752
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "3.17.1",
-											"text": "CÓDIGO FISCAL",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "3.17.2",
-											"text": "OBSERVAÇÕES",
-											"type": {
-												"type": 1
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": [],
-										"flags": 17
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.18",
-								"text": "OBSERVAÇÕES",
-								"type": {
-									"type": 1
-								},
-								"order": 18,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.19",
-								"text": "TROCA MOTORISTA",
-								"type": {
-									"type": 0
-								},
-								"order": 19,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": "\ue068"
-							}
-						},
-						{
-							"properties": {
-								"id": "3.20",
-								"text": "SAIR TRABALHO",
-								"type": {
-									"type": 0
-								},
-								"order": 20,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "3.21",
-								"text": "VERIFICA COLETA",
-								"type": {
-									"type": 0
-								},
-								"order": 21,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": [],
-							"flags": 17
-						}
-					}
-				}
-			},
-			{
-				"properties": {
-					"id": "4",
-					"text": "FINALIZAR",
-					"type": {
-						"type": 0
-					},
-					"order": 4,
-					"visibility": {
-						"fields": [
-							"4",
-							"4.1",
-							"4.2"
-						],
-						"flags": 17
-					},
-					"expanded": false,
-					"tail": {
-						"x": 622.424441292406,
-						"y": 2058.09777884662
-					},
-					"icon": "",
-					"line": 94.70219828305954,
-					"color": "BLACK"
-				},
-				"output": {
-					"position": [
-						620.4244169383996,
-						1989.5978066251944
-					],
-					"fields": [
-						{
-							"properties": {
-								"id": "4.1",
-								"text": "SIM",
-								"type": {
-									"type": 0
-								},
-								"order": 1,
-								"visibility": {
-									"fields": [
-										"4",
-										"4.1",
-										"4.1.1",
-										"4.1.2"
-									],
-									"flags": 17
-								},
-								"expanded": false,
-								"tail": {
-									"x": 1103.7527234464715,
-									"y": 2157.5039407563477
-								},
-								"icon": ""
-							},
-							"output": {
-								"position": [
-									1101.7526824842328,
-									2089.0039994391323
-								],
-								"fields": [
-									{
-										"properties": {
-											"id": "4.1.1",
-											"text": "ODÔMETRO FINAL",
-											"type": {
-												"type": 2
-											},
-											"order": 1,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									},
-									{
-										"properties": {
-											"id": "4.1.2",
-											"text": "HORÍMETRO FINAL",
-											"type": {
-												"type": 2
-											},
-											"order": 2,
-											"visibility": {
-												"fields": []
-											},
-											"expanded": true,
-											"tail": {
-												"x": 0,
-												"y": 0
-											}
-										}
-									}
-								],
-								"properties": {
-									"visibility": {
-										"fields": []
-									}
-								}
-							}
-						},
-						{
-							"properties": {
-								"id": "4.2",
-								"text": "NÃO",
-								"type": {
-									"type": 0
-								},
-								"order": 2,
-								"visibility": {
-									"fields": []
-								},
-								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
-								"icon": ""
-							}
-						}
-					],
-					"properties": {
-						"visibility": {
-							"fields": []
-						}
-					}
-				}
-			}
-		],
-		"properties": {
-			"visibility": {
-				"fields": [
-					"1", "2", "3"
-				]
-			}
-		}
-	}
+    "status": true,
+    "name": "Macro",
+    "version": 1,
+    "properties": {
+        "size": {
+            "width": 4096,
+            "height": 3072
+        },
+        "transform": {
+            "scale": 0.387551673597937,
+            "left": 225.59169006347656,
+            "top": -10.415887832641602,
+            "index": 117
+        }
+    },
+    "root": {
+        "position": [
+            85.91889621575254,
+            167.8387402427611
+        ],
+        "fields": [
+            {
+                "properties": {
+                    "id": "1",
+                    "text": "MOTORISTA",
+                    "type": {
+                        "type": 0
+                    },
+                    "order": 1,
+                    "visibility": {
+                        "fields": {
+                            "visible": [
+                                "1",
+                                "1.1"
+                            ],
+                            "hidden": []
+                        },
+                        "flags": 17
+                    },
+                    "expanded": false,
+                    "tail": {
+                        "x": 692.2666744943591,
+                        "y": 348.01196235293384
+                    },
+                    "description": "",
+                    "icon": "",
+                    "line": 250.29814661464945,
+                    "color": "PURPLE"
+                },
+                "output": {
+                    "position": [
+                        690.2666486227846,
+                        296.5119570163352
+                    ],
+                    "fields": [
+                        {
+                            "properties": {
+                                "id": "1.1",
+                                "text": "CÓDIGO",
+                                "type": {
+                                    "type": 2
+                                },
+                                "order": 1,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "visibility": {
+                            "fields": {
+                                "visible": [
+                                    "2"
+                                ],
+                                "hidden": []
+                            },
+                            "flags": 17
+                        }
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "id": "2",
+                    "text": "CHECKLIST",
+                    "type": {
+                        "type": 0
+                    },
+                    "order": 2,
+                    "visibility": {
+                        "fields": {
+                            "visible": [
+                                "2",
+                                "2.1"
+                            ],
+                            "hidden": []
+                        },
+                        "flags": 17
+                    },
+                    "expanded": true,
+                    "tail": {
+                        "x": 1604.4812190876246,
+                        "y": 415.78669860817865
+                    },
+                    "icon": "",
+                    "line": 201.17922779238404,
+                    "color": "RED"
+                },
+                "output": {
+                    "position": [
+                        1602.4812235512863,
+                        143.28668293996566
+                    ],
+                    "fields": [
+                        {
+                            "properties": {
+                                "id": "2.1",
+                                "text": "COMBUSTÍVEL",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 1,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.1",
+                                            "2.1.1",
+                                            "2.1.2",
+                                            "2.1.3",
+                                            "2.1.4",
+                                            "2.1.5"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2501.6954013463055,
+                                    "y": 137.22512372224887
+                                },
+                                "icon": "",
+                                "line": 482.99455611587337
+                            },
+                            "output": {
+                                "position": [
+                                    2499.695373710301,
+                                    17.725127841784897
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.1.1",
+                                            "text": "COMPLETO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.1.2",
+                                            "text": "3/4 DE TANQUE",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.1.3",
+                                            "text": "MEIO TANQUE",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.1.4",
+                                            "text": "1/4 DE TANQUE",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 4,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.1.5",
+                                            "text": "RESERVA",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 5,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.2"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.2",
+                                "text": "DIFERENCIAL",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 2,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.2",
+                                            "2.2.1",
+                                            "2.2.2",
+                                            "2.2.3"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 2503.0784704405796,
+                                    "y": 373.2208652373966
+                                },
+                                "line": 481.76026946796514
+                            },
+                            "output": {
+                                "position": [
+                                    2501.078249519875,
+                                    287.7208613281886
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.2.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.2.2",
+                                            "text": "FAZENDO BARULHO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.2.3",
+                                            "text": "VAZAMENTO DE ÓLEO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.3"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.3",
+                                "text": "CAIXA DE CÂMBIO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 3,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.3",
+                                            "2.3.1",
+                                            "2.3.2",
+                                            "2.3.3",
+                                            "2.3.4",
+                                            "2.3.5"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2504.595405252245,
+                                    "y": 563.335815281111
+                                },
+                                "line": 449.72121078338864
+                            },
+                            "output": {
+                                "position": [
+                                    2502.59542198923,
+                                    443.8358265742392
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.3.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.3.2",
+                                            "text": "FAZENDO BARULHO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.3.3",
+                                            "text": "ESCAPANDO MARCHA",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.3.4",
+                                            "text": "NAO ENTRA MARCHA",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 4,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.3.5",
+                                            "text": "VAZAMENTO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 5,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.4"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.4",
+                                "text": "ÓLEO DO MOTOR",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 4,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.4",
+                                            "2.4.1",
+                                            "2.4.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 2503.411717332345,
+                                    "y": 735.2243179456428
+                                },
+                                "icon": "",
+                                "line": 414.67691723624944
+                            },
+                            "output": {
+                                "position": [
+                                    2501.4118230979866,
+                                    666.72433404553
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.4.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.4.2",
+                                            "text": "NÍVEL BAIXO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.5"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.5",
+                                "text": "ÓLEO HIDRÁULICO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 5,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.5",
+                                            "2.5.1",
+                                            "2.5.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2502.3231528163324,
+                                    "y": 858.3948732185036
+                                },
+                                "line": 381.31549838483875
+                            },
+                            "output": {
+                                "position": [
+                                    2500.322957956954,
+                                    789.8948259250305
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.5.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.5.2",
+                                            "text": "NÍVEL BAIXO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.6"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.6",
+                                "text": "GRAXA SAPATAS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 6,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.6",
+                                            "2.6.1",
+                                            "2.6.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 2504.6549361242146,
+                                    "y": 981.7338630616588
+                                },
+                                "line": 349.53704926539035
+                            },
+                            "output": {
+                                "position": [
+                                    2502.654964825174,
+                                    913.2338713016302
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.6.1",
+                                            "text": "ENGRAXADO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.6.2",
+                                            "text": "RUIM",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.7"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.7",
+                                "text": "CAMERA DE RÉ",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 7,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.7",
+                                            "2.7.1",
+                                            "2.7.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2504.6880088308644,
+                                    "y": 1105.4375976124363
+                                },
+                                "line": 319.87716342057183
+                            },
+                            "output": {
+                                "position": [
+                                    2502.687959291603,
+                                    1036.9375747681293
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.7.1",
+                                            "text": "FUNCIONANDO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.7.2",
+                                            "text": "COM PROBLEMAS",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.8"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.8",
+                                "text": "ÁGUA DO RADIADOR",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 8,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.8",
+                                            "2.8.1",
+                                            "2.8.2",
+                                            "2.8.3"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2505.9724897615065,
+                                    "y": 1248.5311513710687
+                                },
+                                "line": 285.98015102649333
+                            },
+                            "output": {
+                                "position": [
+                                    2503.972308290178,
+                                    1163.0311149482231
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.8.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.8.2",
+                                            "text": "NÍVEL BAIXO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.8.3",
+                                            "text": "VAZAMENTO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.9"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.9",
+                                "text": "FARÓIS E LANTERNAS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 9,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.9",
+                                            "2.9.1",
+                                            "2.9.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2505.60207544703,
+                                    "y": 1391.0417593027305
+                                },
+                                "line": 254.20170190704494
+                            },
+                            "output": {
+                                "position": [
+                                    2503.6021590806845,
+                                    1322.5417885511263
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.9.1",
+                                            "text": "FUNCIONANDO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.9.2",
+                                            "text": "COM PROBLEMAS",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.10"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.10",
+                                "text": "PRESSÃO PNEU",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 10,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.10",
+                                            "2.10.1",
+                                            "2.10.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2507.1492481619184,
+                                    "y": 1516.9223079073745
+                                },
+                                "line": 222.4232527875963
+                            },
+                            "output": {
+                                "position": [
+                                    2505.1491268424443,
+                                    1448.4223150712357
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.10.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.10.2",
+                                            "text": "IRREGULAR",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.11"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.11",
+                                "text": "MOLAS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 11,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.11",
+                                            "2.11.1",
+                                            "2.11.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2504.382480017053,
+                                    "y": 1641.5284548824507
+                                },
+                                "line": 190.64480366814792
+                            },
+                            "output": {
+                                "position": [
+                                    2502.3825575444516,
+                                    1573.0284243569056
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.11.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.11.2",
+                                            "text": "COM PROBLEMAS",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.12"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.12",
+                                "text": "EXTINTOR",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 12,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.12",
+                                            "2.12.1",
+                                            "2.12.2",
+                                            "2.12.3",
+                                            "2.12.4"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2504.0886053951085,
+                                    "y": 1802.7990044493704
+                                },
+                                "line": 158.48222619513376
+                            },
+                            "output": {
+                                "position": [
+                                    2502.088520027416,
+                                    1700.2990158649882
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.12.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.12.2",
+                                            "text": "VENCIDO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.12.3",
+                                            "text": "VAZIO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.12.4",
+                                            "text": "SEM LACRE",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 4,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.13"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.13",
+                                "text": "DOCUMENTOS DO VEÍCULO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 13,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.13",
+                                            "2.13.1",
+                                            "2.13.2",
+                                            "2.13.3"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2502.0450271023165,
+                                    "y": 1979.3741852520516
+                                },
+                                "line": 123.34503347920258
+                            },
+                            "output": {
+                                "position": [
+                                    2500.0450595566376,
+                                    1893.8741602361279
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.13.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.13.2",
+                                            "text": "VENCIDO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.13.3",
+                                            "text": "NÃO ENCONTRADO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "2",
+                                                "2.14"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "2.14",
+                                "text": "TEMPERATURA DO MOTOR",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 14,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "2",
+                                            "2.14",
+                                            "2.14.1",
+                                            "2.14.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 2500.363043735561,
+                                    "y": 2124.2041348543326
+                                },
+                                "line": 88.2078407632714
+                            },
+                            "output": {
+                                "position": [
+                                    2498.3631303946518,
+                                    2055.704103539067
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "2.14.1",
+                                            "text": "OK",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "2.14.2",
+                                            "text": "ESQUENTANDO",
+                                            "type": {
+                                                "type": 0
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [
+                                                "3"
+                                            ],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "visibility": {
+                            "fields": {
+                                "visible": [],
+                                "hidden": []
+                            },
+                            "flags": 17
+                        }
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "id": "3",
+                    "text": "EM TRABALHO",
+                    "type": {
+                        "type": 0
+                    },
+                    "order": 3,
+                    "visibility": {
+                        "fields": {
+                            "visible": [
+                                "3.1",
+                                "3.10",
+                                "3.14",
+                                "3.6",
+                                "3.7"
+                            ],
+                            "hidden": []
+                        },
+                        "flags": 17
+                    },
+                    "expanded": true,
+                    "tail": {
+                        "x": 638.8954366493467,
+                        "y": 1237.7111791570046
+                    },
+                    "icon": "",
+                    "line": 147.5316637439406,
+                    "color": "TEAL"
+                },
+                "output": {
+                    "position": [
+                        636.8954275030723,
+                        846.2111333701487
+                    ],
+                    "fields": [
+                        {
+                            "properties": {
+                                "id": "3.1",
+                                "text": "INÍCIO COLETA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 1,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.14",
+                                            "3.19",
+                                            "3.2",
+                                            "3.7"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.2",
+                                "text": "FIM COLETA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 2,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.14",
+                                            "3.18",
+                                            "3.3",
+                                            "3.7"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.3",
+                                "text": "TRÂNSITO PARA DESCARGA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 3,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.10",
+                                            "3.14",
+                                            "3.4",
+                                            "3.7"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.4",
+                                "text": "INÍCIO DESCARGA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 4,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.10",
+                                            "3.14",
+                                            "3.5",
+                                            "3.7"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.5",
+                                "text": "FIM DESCARGA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 5,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.1",
+                                            "3.10",
+                                            "3.13",
+                                            "3.15",
+                                            "3.20",
+                                            "3.5.1",
+                                            "3.5.2",
+                                            "3.7"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 1181.168842704822,
+                                    "y": 801.3533523807722
+                                },
+                                "line": 73.71159528410772
+                            },
+                            "output": {
+                                "position": [
+                                    1179.1687912807506,
+                                    732.8533568871225
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "3.5.1",
+                                            "text": "NR TICKET",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.5.2",
+                                            "text": "PESO KG",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.6",
+                                "text": "TRÂNSITO LOCAL",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 6,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.7",
+                                "text": "INÍCIO ABASTECIMENTO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 7,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.14",
+                                            "3.19",
+                                            "3.8"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.8",
+                                "text": "FIM ABASTECIMENTO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 8,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.1",
+                                            "3.10",
+                                            "3.14",
+                                            "3.8.1"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 1175.5045904792855,
+                                    "y": 914.8443138626659
+                                },
+                                "line": 134.7019977201934
+                            },
+                            "output": {
+                                "position": [
+                                    1173.5045335406016,
+                                    863.3443046302418
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "3.8.1",
+                                            "text": "LITROS",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            },
+                                            "icon": ""
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.9",
+                                "text": "COND LOCAIS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 9,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.10",
+                                "text": "INÍCIO REFEIÇÃO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 10,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.11",
+                                            "3.14"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 1161.8992664090006,
+                                    "y": 1372.5070270508493
+                                },
+                                "line": 142.79535751422168,
+                                "icon": ""
+                            },
+                            "output": {
+                                "position": [
+                                    1159.8992341178384,
+                                    1253.0069578649136
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "3.10.1",
+                                            "text": "CÓDIGO MOTORISTA",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.10.2",
+                                            "text": "CÓDIGO COLETOR 1",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.10.3",
+                                            "text": "CÓDIGO COLETOR 2",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.10.4",
+                                            "text": "CÓDIGO COLETOR 3",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 4,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.10.5",
+                                            "text": "CÓDIGO COLETOR 4",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 5,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.11",
+                                "text": "FIM REFEIÇÃO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 11,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 1162.2633811603057,
+                                    "y": 1599.6669126742277
+                                },
+                                "line": 101.81186248807148
+                            },
+                            "output": {
+                                "position": [
+                                    1160.2633558341124,
+                                    1480.1668838493931
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "3.11.1",
+                                            "text": "CÓDIGO PONTO MOTORISTA",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.11.2",
+                                            "text": "CÓDIGO PONTO COLETOR 1",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.11.3",
+                                            "text": "CÓDIGO PONTO COLETOR 2",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 3,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.11.4",
+                                            "text": "CÓDIGO PONTO COLETOR 3",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 4,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.11.5",
+                                            "text": "CÓDIGO PONTO COLETOR 4",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 5,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.12",
+                                "text": "CAFÉ",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 12,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.13",
+                                "text": "A DISPOSIÇÃO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 13,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.14",
+                                "text": "PEDIDO DE SOS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 14,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.15"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.15",
+                                "text": "INÍCIO SOS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 15,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "3.16"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.16",
+                                "text": "FIM SOS",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 16,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.17",
+                                "text": "FISCALIZAÇÃO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 17,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 1164.5140575923565,
+                                    "y": 1782.6259133056951
+                                },
+                                "line": 64.70344747410661,
+                                "icon": ""
+                            },
+                            "output": {
+                                "position": [
+                                    1162.514001243768,
+                                    1714.125960169752
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "3.17.1",
+                                            "text": "CÓDIGO FISCAL",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "3.17.2",
+                                            "text": "OBSERVAÇÕES",
+                                            "type": {
+                                                "type": 1
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.18",
+                                "text": "OBSERVAÇÕES",
+                                "type": {
+                                    "type": 1
+                                },
+                                "order": 18,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.19",
+                                "text": "TROCA MOTORISTA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 19,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.20",
+                                "text": "SAIR TRABALHO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 20,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "3.21",
+                                "text": "VERIFICA COLETA",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 21,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                }
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "visibility": {
+                            "fields": {
+                                "visible": [],
+                                "hidden": []
+                            },
+                            "flags": 17
+                        }
+                    }
+                }
+            },
+            {
+                "properties": {
+                    "id": "4",
+                    "text": "FINALIZAR",
+                    "type": {
+                        "type": 0
+                    },
+                    "order": 4,
+                    "visibility": {
+                        "fields": {
+                            "visible": [
+                                "4",
+                                "4.1",
+                                "4.2"
+                            ],
+                            "hidden": []
+                        },
+                        "flags": 17
+                    },
+                    "expanded": false,
+                    "tail": {
+                        "x": 622.424441292406,
+                        "y": 2058.09777884662
+                    },
+                    "icon": "",
+                    "line": 94.70219828305954,
+                    "color": "BLACK"
+                },
+                "output": {
+                    "position": [
+                        620.4244169383996,
+                        1989.5978066251944
+                    ],
+                    "fields": [
+                        {
+                            "properties": {
+                                "id": "4.1",
+                                "text": "SIM",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 1,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [
+                                            "4",
+                                            "4.1",
+                                            "4.1.1",
+                                            "4.1.2"
+                                        ],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": false,
+                                "tail": {
+                                    "x": 1103.7527234464715,
+                                    "y": 2157.5039407563477
+                                },
+                                "icon": ""
+                            },
+                            "output": {
+                                "position": [
+                                    1101.7526824842328,
+                                    2089.0039994391323
+                                ],
+                                "fields": [
+                                    {
+                                        "properties": {
+                                            "id": "4.1.1",
+                                            "text": "ODÔMETRO FINAL",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 1,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "id": "4.1.2",
+                                            "text": "HORÍMETRO FINAL",
+                                            "type": {
+                                                "type": 2
+                                            },
+                                            "order": 2,
+                                            "visibility": {
+                                                "fields": {
+                                                    "visible": [],
+                                                    "hidden": []
+                                                },
+                                                "flags": 17
+                                            },
+                                            "expanded": true,
+                                            "tail": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                ],
+                                "properties": {
+                                    "visibility": {
+                                        "fields": {
+                                            "visible": [],
+                                            "hidden": []
+                                        },
+                                        "flags": 17
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "properties": {
+                                "id": "4.2",
+                                "text": "NÃO",
+                                "type": {
+                                    "type": 0
+                                },
+                                "order": 2,
+                                "visibility": {
+                                    "fields": {
+                                        "visible": [],
+                                        "hidden": []
+                                    },
+                                    "flags": 17
+                                },
+                                "expanded": true,
+                                "tail": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "icon": ""
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "visibility": {
+                            "fields": {
+                                "visible": [],
+                                "hidden": []
+                            },
+                            "flags": 17
+                        }
+                    }
+                }
+            }
+        ],
+        "properties": {
+            "visibility": {
+                "fields": {
+                    "visible": [
+                        "1",
+                        "2",
+                        "3"
+                    ],
+                    "hidden": ["4"]
+                },
+                "flags": 17
+            }
+        }
+    }
 }

@@ -118,7 +118,7 @@ export default function Type (ctx) {
 
             type = addElement(rowType, 'select');
             type.style.gridColumn = '7 / span 21';
-            for (let type_idx in _I18N_.field_type_text) {
+            for (const type_idx in _I18N_.field_type_text) {
                 if (_TYPES_.hasOwnProperty(type_idx)) {
                     option = addElement(type, 'option', null, _I18N_.field_type_text[type_idx]);
                     option.setAttribute('value', _TYPES_[type_idx]);

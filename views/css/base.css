@@ -695,23 +695,29 @@ body {
                     outline-offset: -1px;
                     outline-color: inherit;
                 }
-
-                .app-cards-content-item.visibility { 
-                    cursor: pointer; 
-                    /* opacity: 0.85; */
-                }
+                
+                /* .app-cards-content-item.hidden,  */
+                .app-cards-content-item.visibility { cursor: pointer; }
+                    /* .app-cards-content-item.hidden:hover,  */
                     .app-cards-content-item.visibility:hover { background-color: var(--main-border-color); }
-                .app-cards-content-item.visibility .app-cards-content-item-output {
+                /* .app-cards-content-item.hidden > .app-cards-content-item-output, */
+                .app-cards-content-item.visibility > .app-cards-content-item-output {
                     pointer-events: none;
                     background-color: transparent;
                     color: transparent;
                 }
+                /* .app-cards-content-item.hidden input[type=text], */
                 .app-cards-content-item.visibility input[type=text] {
                     background-color: transparent;
                     border-color: transparent;
                     pointer-events: none;
                 }
-                
+                /* .app-cards-content-item.hidden input[type=text] {
+                    border-width: 2px;
+                    border-style: dashed;
+                    font-style: italic;
+                    color: inherit;
+                } */
                 .app-cards-content-item-selected {
                     position: absolute;
                     top: 6px;

@@ -1,8 +1,8 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _QUADRATIC_CURVE_OFFSET_ } from '../utils/constants.js';
-import { addElement } from '../utils/functions.js';
+import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _STATUS_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _QUADRATIC_CURVE_OFFSET_ } from '../utils/constants.js';
 import { _I18N_ } from './../i18n/pt-br.js';
+import { addElement } from '../utils/functions.js';
 
 export default function Field(ctx, append, properties) {
 
@@ -16,7 +16,7 @@ export default function Field(ctx, append, properties) {
     let item, index, description, output, visibility,
         dragType,
         treeviewRow = null, treeviewDeep,
-        isSelectedForvisibility = false,
+        currentVisibilityStatus = _STATUS_.NONE,
         isCurrentSelectObject = false,
         position = { top: 0, left: 0 },
 
@@ -26,8 +26,11 @@ export default function Field(ctx, append, properties) {
             type: { type: _TYPES_.LIST },
             order: 0,
             visibility: {
-                flags: _VISIBILITY_.FRESH | _VISIBILITY_.INSTANT,
-                fields: []
+                flags: _VISIBILITY_.FRESH,
+                fields: {
+                    visible: [],
+                    hidden:  []
+                }
             },
             expanded: true,
 
@@ -178,28 +181,44 @@ export default function Field(ctx, append, properties) {
     _toggleVisibility = function() {
         const object = main.getSelectedObject();
 
-        if (!isSelectedForvisibility) {
-            object.addToVisibility(context);
-        } else {
-            object.removeFromVisibility(context);
+        switch (currentVisibilityStatus) {
+            case _STATUS_.NONE:
+                _selectedForVisibility();
+                object.addToVisibility(context);
+                break;
+
+            case _STATUS_.VISIBLE:
+            case _STATUS_.HIDDEN:
+                _unselectForVisibility();
+                object.removeFromVisibility(context);
+                break;
         }
     },
-    _selectedForVisibility = function() {
+    _selectedForVisibility = function(status) {
         const color = context.getColor() + 'CC';
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
         treeviewRow.style.color = '#ffffff';
 
-        description.style.backgroundColor = color;
         description.style.borderColor = color;
-        description.style.color = '#ffffff';
-        // description.style.boxShadow = '#E0E0E0 0 0 2px 2px';
-
+        switch (status) {
+            case _STATUS_.VISIBLE:
+                description.style.backgroundColor = color;
+                description.style.color = '#ffffff';
+                break;
+        
+            case _STATUS_.HIDDEN:
+                description.style.backgroundColor = 'transparent';
+                description.style.color = color;
+                description.style.borderWidth = '2px';
+                description.style.borderStyle = 'dashed';
+                description.style.fontStyle = 'italic';
+                break;
+        }
         item.style.color = color;
-        // item.style.opacity = '1';
 
-        isSelectedForvisibility = true;
+        currentVisibilityStatus = _STATUS_.VISIBLE;
     },
     _unselectForVisibility = function() {
         treeviewRow.style.removeProperty('outline');
@@ -213,23 +232,21 @@ export default function Field(ctx, append, properties) {
         description.style.removeProperty('background-color');
         description.style.removeProperty('border-color');
         description.style.removeProperty('color');
-        description.style.removeProperty('box-shadow');
 
         item.style.removeProperty('color');
-        // item.style.removeProperty('opacity');
 
-        isSelectedForvisibility = false;
+        currentVisibilityStatus = _STATUS_.NONE;
     },
     _updateVisibilityCounter = function() {
-        const size = props['visibility']['fields'].length;
+        const visibilityFields = props['visibility']['fields'],
+              visibilitySize   = visibilityFields['visible'].length + visibilityFields['hidden'].length;
 
-        if (size) {
+        if (visibilitySize) 
             visibility.style.visibility = 'visible';
-        } else {
+        else 
             visibility.style.removeProperty('visibility');
-        }
-
-        visibility.textContent = size;
+        
+        visibility.textContent = visibilitySize;
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -347,26 +364,31 @@ export default function Field(ctx, append, properties) {
         }
     };
     this.serialize = function (fragment, properties) {
-        let counterOffset, 
+        let counterOffset, counterVisibility,
             fieldOffset, fieldDiv, fieldPath, 
             hasChild, isExpand, deepSize, text, 
-            counterVisibility, visibilityFields,
             response = {  };
 
-        visibilityFields = { 'visibility' : { 'fields': [], 'flags': props['visibility']['flags']}};
-        for (counterVisibility=0; counterVisibility<props['visibility']['fields'].length; counterVisibility++) {
-            //if (typeof props['visibility']['fields'][counterVisibility] === Field) {
-            visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterVisibility].getProps('id'));
-            //}
+        let visibilityFields = {
+            visibility: {
+                fields: {
+                    visible: [],
+                    hidden:  []
+                }, 
+                flags: props['visibility']['flags']
+            }
+        };
+
+        for (const status in props['visibility']['fields']) {
+            for (counterVisibility = 0; counterVisibility<props['visibility']['fields'][status].length; counterVisibility++)
+                visibilityFields['visibility']['fields'][status].push(props['visibility']['fields'][status][counterVisibility].getProps('id'));
         }
-        //visibilityFields['visibility']['fields'].sort();
+
         props.text = description.value;
         response['properties'] = { ...props, ...visibilityFields };
 
         if (rootField) properties.color = props.color;
         treeviewDeep = properties.tab.length;
-
-        //lightColor = properties.color + '40';
 
         hasChild = context.hasConnection();
 
@@ -455,7 +477,7 @@ export default function Field(ctx, append, properties) {
     this.setBorderColor = function(light, index = null, color = null) {
         if (color === null && index === null) {
             color = (light ? context.getColor() + '40' : context.getColor());
-            //if (isSelectedForvisibility && !light) color = 'white';
+            //if (currentVisibilityStatus && !light) color = 'white';
             index = treeviewDeep;
         } else {
             const child = treeviewRow.childNodes.item(index);
@@ -510,11 +532,15 @@ export default function Field(ctx, append, properties) {
     };
 
     this.initVisibility = function(fields) {
-        const sizeVisibility = props['visibility']['fields'].length;
+        let sizeVisibility, counterVisibility, shortVisibility;
 
-        for (let counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
-            if (typeof props['visibility']['fields'][counterVisibility] === 'string')
-                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
+        for (const status in props['visibility']['fields']) {
+            shortVisibility = props['visibility']['fields'][status];
+            sizeVisibility = shortVisibility.length;
+            for (counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
+                if (typeof shortVisibility[counterVisibility] === 'string')
+                shortVisibility[counterVisibility] = fields[shortVisibility[counterVisibility]];
+            }
         }
         
         if (context.hasConnection())
@@ -524,9 +550,7 @@ export default function Field(ctx, append, properties) {
     };
     this.setVisibilityMode = function() {
         if (main.getVisibilityMode()) {
-
             item.classList.add('visibility');
-            //description.setAttribute('disabled', true);
             description.setAttribute('readonly', true);
             
             if (!isCurrentSelectObject) {
@@ -538,7 +562,6 @@ export default function Field(ctx, append, properties) {
             item.addEventListener('click', _toggleVisibility, { capture: false });
         } else {            
             item.classList.remove('visibility');
-            //description.removeAttribute('disabled');
             description.removeAttribute('readonly');
             
             if (isCurrentSelectObject)
@@ -551,27 +574,25 @@ export default function Field(ctx, append, properties) {
         }
     };
     this.addToVisibility = function(field) {
-        props['visibility']['fields'].push(field);
-        field.selectedForVisibility();
+        const fieldVisibilityStatus = field.getVisibilityStatus();
 
+        props['visibility']['fields'][fieldVisibilityStatus].push(field);
          _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
-        const removeId = field.getProps('id');
-        let counter, currentId;
+        const fieldVisibilityStatus = field.getVisibilityStatus(),
+              visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
+              removeId = field.getProps('id');
 
-        for (counter = 0; counter < props['visibility']['fields'].length; counter++) {
-            currentId = props['visibility']['fields'][counter].getProps('id');
-            if (removeId === currentId) {
+        for (let counter = 0; counter < visibilityArray.length; counter++) {
+            if (removeId === visibilityArray[counter].getProps('id')) {
                 props['visibility']['fields'].splice(counter, 1); 
-                field.unselectForVisibility();
-
                 _updateVisibilityCounter();
                 return;
             }
         }
 
-        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
+        console.log(`FATAL ERROR - REMOVE FAILED! ${removeId}`);
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -635,8 +656,9 @@ export default function Field(ctx, append, properties) {
     this.getRect = function () { return item.getBoundingClientRect(); };
 
     this.toggleVisibility = function() { _toggleVisibility(); };
-    this.selectedForVisibility = function() { _selectedForVisibility(); };
+    this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
+    this.getVisibilityStatus = function () { return currentVisibilityStatus; };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {

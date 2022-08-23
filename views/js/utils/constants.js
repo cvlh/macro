@@ -40,6 +40,13 @@ export const _TYPES_ = {
     SCAN:      6
 };
 
+export const _STATUS_ = {
+    NONE:    0,
+
+    VISIBLE: 'visible',
+    HIDDEN:  'hidden'
+}
+
 export const _VISIBILITY_ = {
     NONE:    0,
 

@@ -21,21 +21,18 @@ export default function Visibility (ctx) {
         backup,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _backup  = function() { 
-        const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
-        backup = [ ...objectProp['fields'] ]; 
-    },
+    _backup  = function() { backup = parent.getMain().getSelectedObject().getProps('visibility'); },
     _restore = function() { 
-        const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
-        objectProp['fields'] = [ ...backup ]; 
+        let objectProp = parent.getMain().getSelectedObject().getProps('visibility');
+        objectProp = backup; 
 
-        return objectProp['fields'];
+        return objectProp;
     },
 
     _add = function() {
         _backup();
 
-        const object = parent.getMain().getSelectedObject();
+        // const object = parent.getMain().getSelectedObject();
               //props = object.getProps('visibility');
 
         // if (object instanceof Card) {
@@ -159,18 +156,21 @@ export default function Visibility (ctx) {
         // executionGroup.style.display = 'none';
     },
     _set_status = function(prop) {
-        const fieldsSize = prop['fields'].length;
+        let visibilitySize = 0;
+        
+        for (const status in prop['fields']) 
+            visibilitySize += prop['fields'][status].length;
 
-        if (!fieldsSize) {
+        if (!visibilitySize) {
             status.textContent = _I18N_.without_visibility;
             status.style.gridColumn = '2 / span 17';
             status.style.color = 'var(--main-red-selected)'; 
             
             btnAdd.style.display = 'block';
 
-            actionGroup.style.display    = 'none';
+            actionGroup.style.display = 'none';
         } else {
-            status.textContent = fieldsSize +' '+ (fieldsSize === 1 ? _I18N_.item_selected[0] : _I18N_.item_selected[1]);
+            status.textContent = visibilitySize +' '+ (visibilitySize === 1 ? _I18N_.item_selected[0] : _I18N_.item_selected[1]);
             status.style.color = 'var(--main-blue-selected)'; 
             
             btnAdd.style.display = 'none';
@@ -181,7 +181,7 @@ export default function Visibility (ctx) {
             btnDelete.style.visibility = 'hidden';
             btnCancel.style.visibility = 'hidden';
 
-            actionGroup.style.display    = 'block';
+            actionGroup.style.display = 'block';
         }
     }
 

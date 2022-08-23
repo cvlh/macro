@@ -23,7 +23,11 @@ export default function Card(_ctx, _properties, tab) {
 
         props = {
             visibility: { 
-                fields: []
+                flags: _VISIBILITY_.FRESH,
+                fields: {
+                    visible: [],
+                    hidden:  []
+                }
             }
         },
 
@@ -59,14 +63,15 @@ export default function Card(_ctx, _properties, tab) {
     _showProperties = function(evnt) { parent.showProperties(context); },
     _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
     _updateVisibilityCounter = function() {
-        const size = props['visibility']['fields'].length;
+        const visibilityFields = props['visibility']['fields'],
+              visibilitySize   = visibilityFields['visible'].length + visibilityFields['hidden'].length;
 
-        if (size) {
+        if (visibilitySize) 
             visibility.style.visibility = 'visible';
-        } else {
+        else 
             visibility.style.removeProperty('visibility');
-        }
-        visibility.textContent = size;
+        
+        visibility.textContent = visibilitySize;
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -182,23 +187,26 @@ export default function Card(_ctx, _properties, tab) {
     };
     this.serialize = function (fragment, properties = {tab: [], expand: true, color: null}) {
         const sizeFields = fieldsArray.length;
-        let counterFields;
+        let counterFields, counterVisibility;
 
         let response = { 
             position: [ position.left, position.top ],
-            fields: []
-        };
-        // if (props.hasOwnProperty('visibility')) {
-        //if (rootCard) {
-            const visibilityFields = { 'visibility' : { 'fields': [] }};
-            for (counterFields=0; counterFields<props['visibility']['fields'].length; counterFields++) {
-                visibilityFields['visibility']['fields'].push(props['visibility']['fields'][counterFields].getProps('id'));
+            fields: [],
+            properties : {
+                visibility: {
+                    fields: { }, 
+                    flags: props['visibility']['flags']
+                }
             }
-            //visibilityFields['visibility']['fields'].sort();
-            response['properties'] = { ...props, ...visibilityFields };
-        //}
+        };
 
-        for (counterFields=0; counterFields<sizeFields; counterFields++) {
+        for (const status in props['visibility']['fields']) {
+            response['properties']['visibility']['fields'][status] = [];
+            for (counterVisibility = 0; counterVisibility < props['visibility']['fields'][status].length; counterVisibility++)
+                response['properties']['visibility']['fields'][status].push(props['visibility']['fields'][status][counterVisibility].getProps('id'));
+        }
+
+        for (counterFields = 0; counterFields < sizeFields; counterFields++) {
             properties.tab.push(counterFields+1);
             response['fields'].push(fieldsArray[counterFields].serialize(fragment, properties));
             properties.tab.pop();
@@ -247,15 +255,17 @@ export default function Card(_ctx, _properties, tab) {
 
     this.initVisibility = function(fields) {
         const sizeFields = fieldsArray.length;
+        let sizeVisibility, counterVisibility, shortVisibility;
 
-        //if (props.hasOwnProperty('visibility')) {
-        const sizeVisibility = props['visibility']['fields'].length;
-        for (let counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
-            if (typeof props['visibility']['fields'][counterVisibility] === 'string')
-                props['visibility']['fields'][counterVisibility] = fields[props['visibility']['fields'][counterVisibility]];
+        for (const status in props['visibility']['fields']) {
+            shortVisibility = props['visibility']['fields'][status];
+            sizeVisibility = shortVisibility.length;
+            for (counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
+                if (typeof shortVisibility[counterVisibility] === 'string')
+                    shortVisibility[counterVisibility] = fields[shortVisibility[counterVisibility]];
+            }
         }
-        //}
-        
+
         for (let counterFields = 0; counterFields < sizeFields; counterFields++)
             fieldsArray[counterFields].initVisibility(fields);
 
@@ -296,27 +306,25 @@ export default function Card(_ctx, _properties, tab) {
             fieldsArray[counter].setVisibilityMode();
     };
     this.addToVisibility = function(field) {
-        props['visibility']['fields'].push(field);
-        field.selectedForVisibility();
+        const fieldVisibilityStatus = field.getVisibilityStatus();
 
-        _updateVisibilityCounter();
+        props['visibility']['fields'][fieldVisibilityStatus].push(field);
+         _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
-        const removeId = field.getProps('id');
-        let counter, currentId;
+        const fieldVisibilityStatus = field.getVisibilityStatus(),
+        visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
+        removeId = field.getProps('id');
 
-        for (counter=0; counter<props['visibility']['fields'].length; counter++) {
-            currentId = props['visibility']['fields'][counter].getProps('id');
-            if (removeId === currentId) {
+        for (let counter = 0; counter < visibilityArray.length; counter++) {
+            if (removeId === visibilityArray[counter].getProps('id')) {
                 props['visibility']['fields'].splice(counter, 1); 
-                field.unselectForVisibility();
-
                 _updateVisibilityCounter();
                 return;
             }
         }
 
-        console.log('FATAL ERROR - REMOVE FAILED! ' +removeId);
+        console.log(`FATAL ERROR - REMOVE FAILED! ${removeId}`);
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////

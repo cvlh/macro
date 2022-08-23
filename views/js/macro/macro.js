@@ -362,8 +362,7 @@ export default function Macro(_properties) {
         let counter;
 
         const sizeCard = cardsArray.length,
-              visibility = currentSelectedObject.getProps('visibility'),
-              sizeFields = visibility['fields'].length;
+              visibility = currentSelectedObject.getProps('visibility');
 
         if (selectedArrow === null) {
             selectedArrow = document.createElement('div');
@@ -373,22 +372,25 @@ export default function Macro(_properties) {
 
         visibilityMode = !visibilityMode;
 
-        for (counter = 0; counter < sizeFields; counter++) {
-            visibility['fields'][counter].selectedForVisibility();
+        for (const status in visibility['fields']) {
+            for (counter = 0; counter < visibility['fields'][status].length; counter++) 
+                visibility['fields'][status][counter].selectedForVisibility(status);
         }
 
-        for (counter = 0; counter < sizeCard; counter++) {
+        for (counter = 0; counter < sizeCard; counter++) 
             cardsArray[counter].setVisibilityMode();
-        }
     };
     this.previewVisibility = function (fields, evntType) {
-        if (visibilityMode || !fields.length) return;
+        if (visibilityMode) return;
 
-        for (let counter = 0; counter < fields.length; counter++) {
-            if (evntType === 'mouseover') {
-                fields[counter].selectedForVisibility();
-            } else {
-                fields[counter].unselectForVisibility();
+        let counter;
+        for (const status in props['visibility']['fields']) {
+            for (counter = 0; counter < fields[status].length; counter++) {
+                if (evntType === 'mouseover') {
+                    fields[status][counter].selectedForVisibility();
+                } else {
+                    fields[status][counter].unselectForVisibility();
+                }
             }
         }
     };

@@ -232,7 +232,7 @@ export default function Simulate(ctx) {
         return slide;
     },
     _create_hash = function (fields, hashs = { }) {
-        let id, levels;
+        let id, levels, visibilitySize = 0;
 
         for (const field of fields) {
             id = field['properties']['id'];
@@ -254,7 +254,10 @@ export default function Simulate(ctx) {
             hashs[id] = field['properties'];
 
             if (field.hasOwnProperty('output')) {
-                if (field['output']['properties']['visibility']['fields'].length)
+                for (const status in field['output']['properties']['visibility']['fields']) 
+                    visibilitySize += field['output']['properties']['visibility']['fields'][status].length;
+
+                if (visibilitySize)
                     hashs[id + '.x'] = field['output']['properties'];
 
                 _create_hash(field['output']['fields'], hashs);

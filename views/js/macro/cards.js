@@ -32,7 +32,7 @@ export default function Card(_ctx, _properties, tab) {
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _drag = function (evnt) { 
+    _drag = function(evnt) { 
         //evnt.preventDefault();
         const target = evnt.target,
               targetClass = target.classList;
@@ -50,7 +50,7 @@ export default function Card(_ctx, _properties, tab) {
         parent.redraw(context);
         field.setFocus();
     },
-    _remove = function (evnt) {
+    _remove = function(evnt) {
         evnt.stopPropagation();
     },
     _order = function() {
@@ -60,7 +60,16 @@ export default function Card(_ctx, _properties, tab) {
             fieldsArray[counterFields].setOrder(counterFields+1);
         }
     },
-    _showProperties = function(evnt) { parent.showProperties(context); },
+    _showProperties = function() { parent.showProperties(context); },
+    _showVisibilityTools = function(evnt) {
+        evnt.stopPropagation();
+
+        const target = evnt.target,
+              targetClass = target.classList;
+        
+        //console.log(evnt);
+        console.log(`${targetClass}`);
+    },
     _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
     _updateVisibilityCounter = function() {
         const visibilityFields = props['visibility']['fields'],
@@ -254,56 +263,56 @@ export default function Card(_ctx, _properties, tab) {
     };
 
     this.initVisibility = function(fields) {
-        const sizeFields = fieldsArray.length;
-        let sizeVisibility, counterVisibility, shortVisibility;
+        let counter, shortVisibility;
 
         for (const status in props['visibility']['fields']) {
             shortVisibility = props['visibility']['fields'][status];
-            sizeVisibility = shortVisibility.length;
-            for (counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
-                if (typeof shortVisibility[counterVisibility] === 'string')
-                    shortVisibility[counterVisibility] = fields[shortVisibility[counterVisibility]];
+            for (counter = 0; counter < shortVisibility.length; counter++) {
+                if (typeof shortVisibility[counter] === 'string')
+                    shortVisibility[counter] = fields[shortVisibility[counter]];
             }
         }
 
-        for (let counterFields = 0; counterFields < sizeFields; counterFields++)
-            fieldsArray[counterFields].initVisibility(fields);
+        for (const current_field of fieldsArray)
+            current_field.initVisibility(fields);
 
         _updateVisibilityCounter();
     };      
     this.setVisibilityMode = function() {
-        const size = fieldsArray.length;
-
         if (parent.getVisibilityMode()) {
             card.removeAttribute('tabindex');
 
-            if (!isCurrentSelectObject) {
+            if (!isCurrentSelectObject)
                 visibility.style.visibility = 'hidden';
-            } else {
+            else
                 card.appendChild(parent.getSelectedArrow());
-            }
 
             add.style.visibility = 'hidden';
 
             if (!rootCard) 
                 close.style.visibility = 'hidden';
 
+            items.addEventListener('mouseover', _showVisibilityTools, { capture: false });
+            items.addEventListener('mouseout',  _showVisibilityTools, { capture: false });
         } else {
             card.setAttribute('tabindex',  tabindex);
 
-            _updateVisibilityCounter();
-
             if (isCurrentSelectObject)
-                card.removeChild(parent.getSelectedArrow());
-
+            card.removeChild(parent.getSelectedArrow());
+            
             add.style.removeProperty('visibility');
-
+            
             if (!rootCard) 
                 close.style.removeProperty('visibility');
+            
+            _updateVisibilityCounter();
+
+            items.removeEventListener('mouseover', _showVisibilityTools, { capture: false });
+            items.removeEventListener('mouseout',  _showVisibilityTools, { capture: false });
         }
 
-        for (let counter = 0; counter < size; counter++)
-            fieldsArray[counter].setVisibilityMode();
+        for (const current_field of fieldsArray)
+            current_field.setVisibilityMode();
     };
     this.addToVisibility = function(field) {
         const fieldVisibilityStatus = field.getVisibilityStatus();
@@ -313,8 +322,8 @@ export default function Card(_ctx, _properties, tab) {
     };
     this.removeFromVisibility = function(field) {
         const fieldVisibilityStatus = field.getVisibilityStatus(),
-        visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
-        removeId = field.getProps('id');
+              visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
+              removeId = field.getProps('id');
 
         for (let counter = 0; counter < visibilityArray.length; counter++) {
             if (removeId === visibilityArray[counter].getProps('id')) {
@@ -367,7 +376,6 @@ export default function Card(_ctx, _properties, tab) {
         card.setAttribute('tabindex', tabindex);
         if (rootCard) { 
             card.classList.add('root'); 
-
             //props.visibility['autoExecute'] = false;
         }
 
@@ -383,7 +391,6 @@ export default function Card(_ctx, _properties, tab) {
             icon = addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
-            
             title = addElement(header, 'div', 'app-cards-header-title');
         }
         

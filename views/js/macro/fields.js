@@ -13,13 +13,13 @@ export default function Field(ctx, append, properties) {
           rootField = ctx.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let item, index, description, output, visibility,
+    let item, container, index, description, visibility, output, 
         dragType,
         treeviewRow = null, treeviewDeep,
-        currentVisibilityStatus = _STATUS_.NONE,
-        isCurrentSelectObject = false,
-        position = { top: 0, left: 0 },
 
+        isCurrentSelectObject = false,
+
+        position = { top: 0, left: 0 },
         props = {
             id: null,
             text: '',
@@ -212,30 +212,48 @@ export default function Field(ctx, append, properties) {
                 description.style.backgroundColor = 'transparent';
                 description.style.color = color;
                 description.style.borderWidth = '2px';
-                description.style.borderStyle = 'dashed';
+                description.style.borderStyle = 'solid';
                 description.style.fontStyle = 'italic';
+                description.style.textDecoration = 'line-through';
+
+                const path = treeviewRow.querySelector('.field');
+                if (path !== null) {
+                    path.style.fontStyle = 'italic';
+                    path.style.textDecoration = 'line-through';
+                }
                 break;
         }
         item.style.color = color;
 
-        currentVisibilityStatus = _STATUS_.VISIBLE;
+        // currentVisibilityStatus = _STATUS_.VISIBLE;
     },
     _unselectForVisibility = function() {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
-        if (!rootField) {
-            treeviewRow.style.removeProperty('color');
-        } else {
-            treeviewRow.style.color = context.getColor();
-        }
 
-        description.style.removeProperty('background-color');
+        if (!rootField)
+            treeviewRow.style.removeProperty('color');
+        else 
+            treeviewRow.style.color = context.getColor();
+
         description.style.removeProperty('border-color');
+        description.style.removeProperty('background-color');
         description.style.removeProperty('color');
+
+        description.style.removeProperty('border-width');
+        description.style.removeProperty('border-style');
+        description.style.removeProperty('font-style');
+        description.style.removeProperty('text-decoration');
+
+        const path = treeviewRow.querySelector('.field');
+        if (path !== null) {
+            path.style.removeProperty('font-style');
+            path.style.removeProperty('text-decoration');
+        }
 
         item.style.removeProperty('color');
 
-        currentVisibilityStatus = _STATUS_.NONE;
+        // currentVisibilityStatus = _STATUS_.NONE;
     },
     _updateVisibilityCounter = function() {
         const visibilityFields = props['visibility']['fields'],
@@ -253,9 +271,9 @@ export default function Field(ctx, append, properties) {
     this.setDragType = function(type) { dragType = type; };
     this.getDragType = function() { return dragType; };
     this.hasConnection = function() { 
-        if (output['_CONNECTION_'] !== null) {
+        if (output['_CONNECTION_'] !== null)
             return true;
-        }
+    
         return false;
     };
     this.makeConnection = function(card) {
@@ -345,9 +363,8 @@ export default function Field(ctx, append, properties) {
 
         _color(false, color);
 
-        if (context.hasConnection()) {
+        if (context.hasConnection())
             output['_CONNECTION_'].setColor(color);
-        }
     };
     this.getColor = function() {
         if (rootField /*&& props.color != null*/) {
@@ -468,10 +485,12 @@ export default function Field(ctx, append, properties) {
 
         if (!status) {
             treeviewRow.style.height = 0;
-            if (hasChild) output['_CONNECTION_'].setExpand(status);
+            if (hasChild)
+                output['_CONNECTION_'].setExpand(status);
         } else {
             treeviewRow.style.removeProperty('height');
-            if (hasChild) output['_CONNECTION_'].setExpand(context.getProps('expanded'));
+            if (hasChild)
+                output['_CONNECTION_'].setExpand(context.getProps('expanded'));
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {
@@ -484,9 +503,9 @@ export default function Field(ctx, append, properties) {
             child.style.borderLeftColor = color;
         }
 
-        if (context.hasConnection()) {
+        if (context.hasConnection())
             output['_CONNECTION_'].setBorderColor(light, index, color);
-        }
+
         //return color;
     };
     this.swap = function() {
@@ -523,11 +542,10 @@ export default function Field(ctx, append, properties) {
     this.getProps = function (prop = null) {
         if (prop === null) {
             return props;
-        } else {
-            if (props.hasOwnProperty(prop)) {
-                return props[prop];
-            }
+        } else if (props.hasOwnProperty(prop)) {
+            return props[prop];
         }
+
         return null;
     };
 
@@ -552,25 +570,26 @@ export default function Field(ctx, append, properties) {
         if (main.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('readonly', true);
-            
-            if (!isCurrentSelectObject) {
+            container.style.pointerEvents = 'none';
+
+            if (!isCurrentSelectObject)
                 visibility.style.visibility = 'hidden';
-            } else {
+            else
                 item.appendChild(main.getSelectedArrow());
-            }
 
             item.addEventListener('click', _toggleVisibility, { capture: false });
         } else {            
             item.classList.remove('visibility');
             description.removeAttribute('readonly');
-            
+            container.style.removeProperty('pointer-events');
+
             if (isCurrentSelectObject)
                 item.removeChild(main.getSelectedArrow());
 
             _updateVisibilityCounter();
-            item.removeEventListener('click', _toggleVisibility, { capture: false });
-
             _unselectForVisibility();
+
+            item.removeEventListener('click', _toggleVisibility, { capture: false });
         }
     };
     this.addToVisibility = function(field) {
@@ -610,15 +629,15 @@ export default function Field(ctx, append, properties) {
             icon.style.removeProperty('transform');
         }
 
-        if (context.hasConnection()) {
+        if (context.hasConnection())
             output['_CONNECTION_'].setExpand(props.expanded);
-        }
     };
     this.setType = function(fieldType = props.type.type) { 
         const numFieldType = parseInt(fieldType);
 
         if (numFieldType !== _TYPES_.LIST) {
-            if (context.hasConnection()) context.clearConnection();
+            if (context.hasConnection())
+                context.clearConnection();
 
             output.classList.remove('app-cards-content-item-output');
             output.textContent = fieldType;
@@ -640,17 +659,11 @@ export default function Field(ctx, append, properties) {
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
-                //output['_PATH_'].setAttribute('class', 'error');
-                //target.style.cursor = 'no-drop'; //'not-allowed';
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
-                //output['_PATH_'].setAttribute('class', 'connected');
-                //target.style.removeProperty('cursor');
             }
         } else {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-            //output['_PATH_'].removeAttribute('class');
-            //target.style.removeProperty('cursor');
         }
     };
     this.getRect = function () { return item.getBoundingClientRect(); };
@@ -658,7 +671,7 @@ export default function Field(ctx, append, properties) {
     this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
-    this.getVisibilityStatus = function () { return currentVisibilityStatus; };
+    // this.getVisibilityStatus = function () { return currentVisibilityStatus; };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
@@ -667,17 +680,12 @@ export default function Field(ctx, append, properties) {
         if (properties !== null) props = {...props, ...properties};
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
-        //item.setAttribute('draggable', true);
 
-        const div = addElement(item, 'div');
-        div.style.position = 'relative';
-        div.style.borderRadius = '4px';
-        div.style.margin = '0 5px 0 5px';
+        container = addElement(item, 'div', 'app-cards-content-item-container');
 
-        index = addElement(div, 'div', 'app-cards-content-item-index', props.order);
+        index = addElement(container, 'div', 'app-cards-content-item-index', props.order);
 
-        //description = addElement(item, 'input', 'app-cards-content-item-description');
-        description = addElement(div, 'input');
+        description = addElement(container, 'input');
         description.setAttribute('type', 'text');
         description.setAttribute('maxlength', '64');
         description.setAttribute('value', props.text);
@@ -688,30 +696,21 @@ export default function Field(ctx, append, properties) {
 
         delete props.tab;
 
-        visibility = addElement(div, 'div', 'app-cards-content-item-visibility');
+        visibility = addElement(container, 'div', 'app-cards-content-item-visibility');
 
         visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
         visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
-
-        //addElement(visibility, 'div', 'icon', 'V');
-        //addElement(visibility, 'span');
-        //type.addEventListener('click', _remove, { once: true, capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
-        //output['_PATH_'] = main.newSVG(context);
         output['_PATH_'] = null;
         output['_CONNECTION_'] = null;
-        //output.addEventListener('mousedown', _drag, { capture: false });
-
-        // selected = addElement(item, 'div', 'app-cards-content-item-selected');
 
         append.appendChild(fragment);
         
-        //description.value = props.text;
-        //index.textContent = props.id;
         context.setType();
 
-        if (rootField) 
-            context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
+        if (rootField)
+            context.setColor((props.color ?? _COLORS_.BLACK));
+            // context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
     })();
 }

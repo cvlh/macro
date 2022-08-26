@@ -77,7 +77,9 @@ export const _ICON_CHAR_ = {
     FIT:       'F',
     ZOOM_IN:   'i',
     ZOOM_OUT:  'o',
-    ZOOM:      'z'
+    ZOOM:      'z',
+    VISIBLE:   '[',
+    HIDDEN:    ']'
 };
 
 export const _ORDER_ = {

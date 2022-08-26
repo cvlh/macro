@@ -28,6 +28,7 @@ export default function Macro(_properties) {
         currentSelectedObject = null, // Field | Card | Workspace
         visibilityMode = false,       // Boolean
         selectedArrow = null,
+        visibilityToolbar = null,
 
         cardsArray = [],
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -246,9 +247,8 @@ export default function Macro(_properties) {
     this.getDragType = function() { return _DRAG_.AREA; };
     this.serialize = function() {
 
-        while (mainTreeViewItems.hasChildNodes()) {
+        while (mainTreeViewItems.hasChildNodes()) 
             mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
-        }
 
         const fragment = document.createDocumentFragment();
 
@@ -258,7 +258,6 @@ export default function Macro(_properties) {
             version: 1,
             
             properties: props,
-            //visibility: [ "1", "2", "3", "4", "5", "6", "7", "8" ],
 
             root: rootCard.serialize(fragment)
         };
@@ -359,37 +358,33 @@ export default function Macro(_properties) {
     };
     this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function() {
-        let counter;
-
-        const sizeCard = cardsArray.length,
-              visibility = currentSelectedObject.getProps('visibility');
+        const visibility = currentSelectedObject.getProps('visibility');
 
         if (selectedArrow === null) {
             selectedArrow = document.createElement('div');
-            selectedArrow.className = 'app-cards-content-item-selected';
+            selectedArrow.className = 'app-cards-item-highlight';
             selectedArrow.appendChild(document.createTextNode(_I18N_.selected_visibility));
         }
 
         visibilityMode = !visibilityMode;
 
         for (const status in visibility['fields']) {
-            for (counter = 0; counter < visibility['fields'][status].length; counter++) 
-                visibility['fields'][status][counter].selectedForVisibility(status);
+            for (const field_status of visibility['fields'][status]) 
+                field_status.selectedForVisibility(status);
         }
 
-        for (counter = 0; counter < sizeCard; counter++) 
-            cardsArray[counter].setVisibilityMode();
+        for (const current_card of cardsArray)
+            current_card.setVisibilityMode();
     };
     this.previewVisibility = function (fields, evntType) {
         if (visibilityMode) return;
 
-        let counter;
-        for (const status in props['visibility']['fields']) {
-            for (counter = 0; counter < fields[status].length; counter++) {
+        for (const status in fields) {
+            for (const field_status of fields[status]) {
                 if (evntType === 'mouseover') {
-                    fields[status][counter].selectedForVisibility();
+                    field_status.selectedForVisibility(status);
                 } else {
-                    fields[status][counter].unselectForVisibility();
+                    field_status.unselectForVisibility();
                 }
             }
         }
@@ -406,6 +401,7 @@ export default function Macro(_properties) {
     };
 
     this.getSelectedArrow = function () { return selectedArrow; }
+    this.getVisibilityToolbar = function () { return visibilityToolbar; }
     this.getSelectedObject = function () { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////

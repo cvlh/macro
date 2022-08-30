@@ -75,6 +75,8 @@ export const _I18N_ = {
     with_visibility: 'Aplicado',
 
     selected_visibility: 'Edição',
+    visible: 'Visível',
+    hidden: 'Invisível',
 
     simulate: 'Simular'
 }

@@ -177,23 +177,36 @@ export default function Field(ctx, append, properties) {
         //props['prefix']['text'] = value;
     },
     _showProperties = function() { main.showProperties(context); },
-    _previewVisibility = function(evnt) { main.previewVisibility(props['visibility']['fields'], evnt.type); },
-    _toggleVisibility = function() {
-        const object = main.getSelectedObject();
+    _showVisibilityTools = function(evnt) {
+        evnt.stopPropagation();
 
-        switch (currentVisibilityStatus) {
-            case _STATUS_.NONE:
-                _selectedForVisibility();
-                object.addToVisibility(context);
-                break;
+        const target = evnt.target,
+              targetClass = target.classList;
+        
+        if (targetClass.contains('app-cards-content-item')) {
+            switch (evnt.type) {
+                case 'mouseenter':
+                    target.appendChild(main.getVisibilityToolbar());
+                    break;
 
-            case _STATUS_.VISIBLE:
-            case _STATUS_.HIDDEN:
-                _unselectForVisibility();
-                object.removeFromVisibility(context);
-                break;
+                case 'mouseleave':
+                    // target.removeChild(main.getVisibilityToolbar());
+                    break;
+            }
         }
+        console.log(`${targetClass} -> ${evnt.type}`);
     },
+    _previewVisibility = function(evnt) { main.previewVisibility(props['visibility']['fields'], evnt.type); },
+    // _toggleVisibility = function() {
+    //     const object = main.getSelectedObject();
+
+    //     _selectedForVisibility();
+    //     object.addToVisibility(context);
+
+    //     _unselectForVisibility();
+    //     object.removeFromVisibility(context);
+
+    // },
     _selectedForVisibility = function(status) {
         const color = context.getColor() + 'CC';
 
@@ -224,8 +237,6 @@ export default function Field(ctx, append, properties) {
                 break;
         }
         item.style.color = color;
-
-        // currentVisibilityStatus = _STATUS_.VISIBLE;
     },
     _unselectForVisibility = function() {
         treeviewRow.style.removeProperty('outline');
@@ -252,8 +263,6 @@ export default function Field(ctx, append, properties) {
         }
 
         item.style.removeProperty('color');
-
-        // currentVisibilityStatus = _STATUS_.NONE;
     },
     _updateVisibilityCounter = function() {
         const visibilityFields = props['visibility']['fields'],
@@ -570,18 +579,21 @@ export default function Field(ctx, append, properties) {
         if (main.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('readonly', true);
-            container.style.pointerEvents = 'none';
+            // container.style.pointerEvents = 'none';
 
             if (!isCurrentSelectObject)
                 visibility.style.visibility = 'hidden';
             else
                 item.appendChild(main.getSelectedArrow());
 
-            item.addEventListener('click', _toggleVisibility, { capture: false });
+            // item.addEventListener('click', _toggleVisibility, { capture: false });
+
+            item.addEventListener('mouseenter', _showVisibilityTools, { capture: false });
+            item.addEventListener('mouseleave',  _showVisibilityTools, { capture: false });
         } else {            
             item.classList.remove('visibility');
             description.removeAttribute('readonly');
-            container.style.removeProperty('pointer-events');
+            // container.style.removeProperty('pointer-events');
 
             if (isCurrentSelectObject)
                 item.removeChild(main.getSelectedArrow());
@@ -589,7 +601,10 @@ export default function Field(ctx, append, properties) {
             _updateVisibilityCounter();
             _unselectForVisibility();
 
-            item.removeEventListener('click', _toggleVisibility, { capture: false });
+            // item.removeEventListener('click', _toggleVisibility, { capture: false });
+
+            item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
+            item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
         }
     };
     this.addToVisibility = function(field) {
@@ -668,7 +683,7 @@ export default function Field(ctx, append, properties) {
     };
     this.getRect = function () { return item.getBoundingClientRect(); };
 
-    this.toggleVisibility = function() { _toggleVisibility(); };
+    // this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
     // this.getVisibilityStatus = function () { return currentVisibilityStatus; };
@@ -698,8 +713,8 @@ export default function Field(ctx, append, properties) {
 
         visibility = addElement(container, 'div', 'app-cards-content-item-visibility');
 
-        visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
-        visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
         output['_PATH_'] = null;

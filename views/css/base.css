@@ -77,10 +77,18 @@ html {
     --main-red-bold: #F44336;
     --main-red-selected: #a32d24;
 
-    --main-blue-med: #17a2b8;
-    --main-blue-bold: #007bff;
+    --color-bg-design: #0d99ff;
+    --color-bg-design-hover: #007be5;
+    --color-bg-design-pressed: #0768cf;
+
+    /* --main-blue-med: #17a2b8; */
+    /* --main-blue-bold: #007bff; */
     --main-blue-selected: #0056b2;
+
+    /* --color-shadow: rgba(0, 0, 0, .15);
+    --bg-overlay-outline: var(--color-shadow, rgba(0, 0, 0, .1)); */
 }
+
 body {
     overflow: hidden;
 
@@ -685,28 +693,53 @@ body {
 
     .app-cards-item-visibility-toolbar {
         position: absolute;
-        top: 0;
-        left: 0;
-
-        height: 20px;
-        background-color: var(--main-border-color);
-        color: var(--main-font-color-bold);
-        font-size: 10px;
-
-        border-radius: 5px;
+        left: -72px;
+        padding: 3px;
 
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: nowrap;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        padding: 0 5px;
-    }
-        .app-cards-item-visibility-toolbar > div { cursor: pointer; }
-        .app-cards-item-visibility-toolbar > div:hover { background-color: var(--main-yellow-low); }
+        /* gap: 2px; */
 
+        font-size: 10px;
+        font-weight: 400;
+        color: white;
+        background-color: #37474f;
+        border-radius: 3px;
+
+        box-shadow:  5px  5px 8px rgb(0 0 0 / 8%), 
+                    -5px  5px 8px rgb(0 0 0 / 8%), 
+                    -5px -5px 8px rgb(0 0 0 / 8%), 
+                     5px -5px 8px rgb(0 0 0 / 8%);
+    }
+        .app-cards-item-visibility-toolbar:before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 6px solid #0000;
+            border-right: 6px solid #0000;
+            position: absolute;
+            right: -8px;
+            top: 21px;
+            border-bottom: 6px solid #37474f;
+            transform: rotate(90deg);
+        }
+
+        .app-cards-item-visibility-toolbar > .button { 
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            height: 20px;
+            border-radius: 2px;
+        }
+        .app-cards-item-visibility-toolbar > .button:hover { 
+            background-color: var(--color-bg-design-hover); 
+            color: white;
+        }
+        .app-cards-item-visibility-toolbar > .button:active { background-color: var(--color-bg-design-pressed); }
+            .app-cards-item-visibility-toolbar > .button > div:first-child { padding: 0 5px; }
+            .app-cards-item-visibility-toolbar > .button > div:last-child { padding: 0 8px 0 2px; }
     .app-cards-content {
         position: relative;
         display: grid;
@@ -760,6 +793,7 @@ body {
                         background-color: transparent;
                         color: transparent;
                     }
+                    .app-cards-content-item.visibility > .app-cards-content-item-container { pointer-events: none; }
                     .app-cards-content-item.visibility input[type=text] {
                         background-color: transparent;
                         border-color: transparent;
@@ -786,7 +820,7 @@ body {
                         text-align: center;
                         pointer-events: none;
                     }
-                    
+
                     .app-cards-content-item-visibility {
                         visibility: hidden;
                         position: absolute;

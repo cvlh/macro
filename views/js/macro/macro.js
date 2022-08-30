@@ -171,7 +171,8 @@ export default function Macro(_properties) {
         const DELTA = zoom;
 
         let scale = props.transform.scale * (1 + DELTA);
-        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
+        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN)
+            return;
         
         props.transform.scale = scale;
         props.transform.left += (wrapperRect.left - builderLeftCenter) * DELTA;
@@ -203,7 +204,8 @@ export default function Macro(_properties) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
 
         const scale = props.transform.scale * (1 + delta);
-        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN) return;
+        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN)
+            return;
         
         const rect = mainAppWrapper.getBoundingClientRect();
 
@@ -213,9 +215,9 @@ export default function Macro(_properties) {
 
         mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
 
-        if (currentDrag != null) {
+        if (currentDrag != null)
             currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
-        }
+
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
     };
 
@@ -354,6 +356,7 @@ export default function Macro(_properties) {
 
     this.initVisibility = function(fields) { 
         rootCard.initVisibility(fields);
+
         context.redraw();
     };
     this.getVisibilityMode = function() { return visibilityMode; };
@@ -364,6 +367,19 @@ export default function Macro(_properties) {
             selectedArrow = document.createElement('div');
             selectedArrow.className = 'app-cards-item-highlight';
             selectedArrow.appendChild(document.createTextNode(_I18N_.selected_visibility));
+        }
+
+        if (visibilityToolbar === null) {
+            visibilityToolbar = document.createElement('div');
+            visibilityToolbar.className = 'app-cards-item-visibility-toolbar';
+        
+            let button = addElement(visibilityToolbar, 'div', 'button');
+            addElement(button, 'div', 'icon', _ICON_CHAR_.VISIBLE);
+            addElement(button, 'div', null, _I18N_.visible);
+
+            button = addElement(visibilityToolbar, 'div', 'button');
+            addElement(button, 'div', 'icon', _ICON_CHAR_.HIDDEN);
+            addElement(button, 'div', null, _I18N_.hidden);
         }
 
         visibilityMode = !visibilityMode;
@@ -381,11 +397,10 @@ export default function Macro(_properties) {
 
         for (const status in fields) {
             for (const field_status of fields[status]) {
-                if (evntType === 'mouseover') {
+                if (evntType === 'mouseenter')
                     field_status.selectedForVisibility(status);
-                } else {
+                else
                     field_status.unselectForVisibility();
-                }
             }
         }
     };
@@ -393,9 +408,9 @@ export default function Macro(_properties) {
         if (visibilityMode) {
             const visibility = currentSelectedObject.getProps('visibility');
 
-            while (visibility['fields'].length) {
+            while (visibility['fields'].length)
                 currentSelectedObject.removeFromVisibility(visibility['fields'][0]);
-            }
+
             context.setVisibilityMode();
         }
     };

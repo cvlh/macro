@@ -61,15 +61,6 @@ export default function Card(_ctx, _properties, tab) {
         }
     },
     _showProperties = function() { parent.showProperties(context); },
-    _showVisibilityTools = function(evnt) {
-        evnt.stopPropagation();
-
-        const target = evnt.target,
-              targetClass = target.classList;
-        
-        //console.log(evnt);
-        console.log(`${targetClass}`);
-    },
     _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
     _updateVisibilityCounter = function() {
         const visibilityFields = props['visibility']['fields'],
@@ -291,9 +282,6 @@ export default function Card(_ctx, _properties, tab) {
 
             if (!rootCard) 
                 close.style.visibility = 'hidden';
-
-            items.addEventListener('mouseover', _showVisibilityTools, { capture: false });
-            items.addEventListener('mouseout',  _showVisibilityTools, { capture: false });
         } else {
             card.setAttribute('tabindex',  tabindex);
 
@@ -306,9 +294,6 @@ export default function Card(_ctx, _properties, tab) {
                 close.style.removeProperty('visibility');
             
             _updateVisibilityCounter();
-
-            items.removeEventListener('mouseover', _showVisibilityTools, { capture: false });
-            items.removeEventListener('mouseout',  _showVisibilityTools, { capture: false });
         }
 
         for (const current_field of fieldsArray)
@@ -395,8 +380,8 @@ export default function Card(_ctx, _properties, tab) {
         }
         
         visibility = addElement(header, 'div', 'app-cards-header-visibility');
-        visibility.addEventListener('mouseover', _previewVisibility, { capture: false });
-        visibility.addEventListener('mouseout',  _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
+        visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
 
         add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
         add.addEventListener('click', _add, { capture: false });

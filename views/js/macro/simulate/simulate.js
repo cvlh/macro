@@ -20,8 +20,7 @@ export default function Simulate(ctx) {
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _create_keyboard = function() {
-        const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'];
-        keys.forEach( value => {
+        ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'].forEach( value => {
             addElement(simulateKeyboard, 'div', 'font-awesome keyboard-key', value);
         });
     },
@@ -71,7 +70,7 @@ export default function Simulate(ctx) {
             //     applyVisibility = true;
             // }
             if (macro[id].hasOwnProperty('visibility')) {
-                currentVisibleIds = macro[id]['visibility']['fields'];
+                currentVisibleIds = macro[id]['visibility']['fields']['visible'];
                 applyVisibility = true;
             }
 
@@ -248,8 +247,8 @@ export default function Simulate(ctx) {
             delete field['properties']['line'];
             delete field['properties']['order'];
 
-            if (!field['properties']['visibility']['fields'].length) 
-                delete field['properties']['visibility'];
+            // if (!field['properties']['visibility']['fields'].length) 
+            //     delete field['properties']['visibility'];
 
             hashs[id] = field['properties'];
 
@@ -274,7 +273,7 @@ export default function Simulate(ctx) {
         macro = _create_hash(serialize['root']['fields']);
         console.log(macro);
 
-        currentVisibleIds = serialize['root']['properties']['visibility']['fields'];
+        currentVisibleIds = serialize['root']['properties']['visibility']['fields']['visible'];
         stackVisibility = [];
         executedStack = [];
         lastRootExecuted = null;

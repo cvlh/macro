@@ -7,6 +7,7 @@ import { _I18N_ } from './../i18n/pt-br.js';
 import Card from './cards.js';
 import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
+import VisibilityTool from './tools/visibility.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro(_properties) {
@@ -28,7 +29,7 @@ export default function Macro(_properties) {
         currentSelectedObject = null, // Field | Card | Workspace
         visibilityMode = false,       // Boolean
         selectedArrow = null,
-        visibilityToolbar = null,
+        visibilityTool = null,
 
         cardsArray = [],
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -369,18 +370,8 @@ export default function Macro(_properties) {
             selectedArrow.appendChild(document.createTextNode(_I18N_.selected_visibility));
         }
 
-        if (visibilityToolbar === null) {
-            visibilityToolbar = document.createElement('div');
-            visibilityToolbar.className = 'app-cards-item-visibility-toolbar';
-        
-            let button = addElement(visibilityToolbar, 'div', 'button');
-            addElement(button, 'div', 'icon', _ICON_CHAR_.VISIBLE);
-            addElement(button, 'div', null, _I18N_.visible);
-
-            button = addElement(visibilityToolbar, 'div', 'button');
-            addElement(button, 'div', 'icon', _ICON_CHAR_.HIDDEN);
-            addElement(button, 'div', null, _I18N_.hidden);
-        }
+        if (visibilityTool === null)
+            visibilityTool = new VisibilityTool();
 
         visibilityMode = !visibilityMode;
 
@@ -416,7 +407,7 @@ export default function Macro(_properties) {
     };
 
     this.getSelectedArrow = function () { return selectedArrow; }
-    this.getVisibilityToolbar = function () { return visibilityToolbar; }
+    this.getVisibilityTool = function () { return visibilityTool; }
     this.getSelectedObject = function () { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////

@@ -181,20 +181,17 @@ export default function Field(ctx, append, properties) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              targetClass = target.classList;
-        
-        if (targetClass.contains('app-cards-content-item')) {
-            switch (evnt.type) {
-                case 'mouseenter':
-                    target.appendChild(main.getVisibilityToolbar());
-                    break;
+              tool = main.getVisibilityTool();
 
-                case 'mouseleave':
-                    // target.removeChild(main.getVisibilityToolbar());
-                    break;
-            }
+        switch (evnt.type) {
+            case 'mouseenter':
+                tool.show(context);
+                break;
+
+            case 'mouseleave':
+                tool.hide(context);
+                break;
         }
-        console.log(`${targetClass} -> ${evnt.type}`);
     },
     _previewVisibility = function(evnt) { main.previewVisibility(props['visibility']['fields'], evnt.type); },
     // _toggleVisibility = function() {
@@ -208,11 +205,15 @@ export default function Field(ctx, append, properties) {
 
     // },
     _selectedForVisibility = function(status) {
+        _unselectForVisibility();
+        
         const color = context.getColor() + 'CC';
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
         treeviewRow.style.color = '#ffffff';
+
+        const path = treeviewRow.querySelector('.field');
 
         description.style.borderColor = color;
         switch (status) {
@@ -228,8 +229,7 @@ export default function Field(ctx, append, properties) {
                 description.style.borderStyle = 'solid';
                 description.style.fontStyle = 'italic';
                 description.style.textDecoration = 'line-through';
-
-                const path = treeviewRow.querySelector('.field');
+                
                 if (path !== null) {
                     path.style.fontStyle = 'italic';
                     path.style.textDecoration = 'line-through';
@@ -681,7 +681,8 @@ export default function Field(ctx, append, properties) {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
         }
     };
-    this.getRect = function () { return item.getBoundingClientRect(); };
+    this.getRect = function() { return item.getBoundingClientRect(); };
+    this.getDiv = function() { return item; };
 
     // this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
@@ -725,7 +726,7 @@ export default function Field(ctx, append, properties) {
         context.setType();
 
         if (rootField)
-            context.setColor((props.color ?? _COLORS_.BLACK));
+            context.setColor(props.color ?? _COLORS_.BLACK);
             // context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
     })();
 }

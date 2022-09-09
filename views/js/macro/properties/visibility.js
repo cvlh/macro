@@ -3,7 +3,6 @@
 import { addElement } from '../../utils/functions.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { _VISIBILITY_, _ICON_CHAR_ } from '../../utils/constants.js';
-import Card from '../cards.js';
 
 export default function Visibility (ctx) {
 
@@ -136,9 +135,11 @@ export default function Visibility (ctx) {
                               // (after.checked   ? after.value   : _VISIBILITY_.NONE) ;
     },
     _set_flags = function(prop) {
-        const fieldsSize = prop['fields'].length;
+        // const fieldsSize = prop['fields'].length;
+        // const visibilitySize = prop['fields']['visible'].length + prop['fields']['hidden'].length;
 
-        if (fieldsSize && prop.hasOwnProperty('flags')) {
+        // if (visibilitySize && prop.hasOwnProperty('flags')) {
+        if (prop.hasOwnProperty('flags')) {
             if (prop['flags'] & fresh.value)   fresh.checked   = true; else fresh.checked   = false;
             if (prop['flags'] & extra.value)   extra.checked   = true; else extra.checked   = false;
             if (prop['flags'] & save.value)    save.checked    = true; else save.checked    = false;
@@ -191,7 +192,6 @@ export default function Visibility (ctx) {
         const objectVisibility = parent.getMain().getSelectedObject().getProps('visibility');
 
         if (objectVisibility !== null) {
-
             _set_flags(objectVisibility);
             _set_status(objectVisibility);
 
@@ -201,7 +201,6 @@ export default function Visibility (ctx) {
         }
     };
     this.update = function() {
-
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

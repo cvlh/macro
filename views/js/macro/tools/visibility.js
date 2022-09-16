@@ -5,10 +5,10 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _ICON_CHAR_, _STATUS_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-export default function VisibilityTool () {
+export default function VisibilityTool (ctx) {
     
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    // const parent = ctx;
+    const main = ctx;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let content,
@@ -27,8 +27,11 @@ export default function VisibilityTool () {
 
         // console.log(targetClass);
         if (targetClass.contains('button')) {
-            const status = target['_action'];
+            const object = main.getSelectedObject(),
+                  status = target['_action'];
+
             currentField.selectedForVisibility(status);
+            object.addToVisibility(currentField, status);
         }
     };
 
@@ -41,7 +44,7 @@ export default function VisibilityTool () {
     };
     this.hide = function(field) {
         const div = field.getDiv();
-        //div.removeChild(content);
+        div.removeChild(content);
 
         currentField = null;
     };

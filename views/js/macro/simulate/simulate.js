@@ -230,6 +230,18 @@ export default function Simulate(ctx) {
 
         return slide;
     },
+    _order_visibility = function (visibility) {
+        for (const status in visibility['fields']) {
+            let sort_array = visibility['fields'][status].map( element => {
+                return element.split('.').map( item => { return parseInt(item, 10); });
+            }).sort();
+
+            delete visibility['fields'][status];
+            visibility['fields'][status] = sort_array.map( element => {
+                return element.join('.');
+            });
+        }
+    },
     _create_hash = function (fields, hashs = { }) {
         let id, levels, visibilitySize = 0;
 
@@ -247,8 +259,7 @@ export default function Simulate(ctx) {
             delete field['properties']['line'];
             delete field['properties']['order'];
 
-            // if (!field['properties']['visibility']['fields'].length) 
-            //     delete field['properties']['visibility'];
+            _order_visibility(field['properties']['visibility']);
 
             hashs[id] = field['properties'];
 
@@ -256,8 +267,10 @@ export default function Simulate(ctx) {
                 for (const status in field['output']['properties']['visibility']['fields']) 
                     visibilitySize += field['output']['properties']['visibility']['fields'][status].length;
 
-                if (visibilitySize)
+                if (visibilitySize) {
+                    _order_visibility(field['output']['properties']['visibility']);
                     hashs[id + '.x'] = field['output']['properties'];
+                }
 
                 _create_hash(field['output']['fields'], hashs);
             }
@@ -273,7 +286,9 @@ export default function Simulate(ctx) {
         macro = _create_hash(serialize['root']['fields']);
         console.log(macro);
 
+        _order_visibility(serialize['root']['properties']['visibility']);
         currentVisibleIds = serialize['root']['properties']['visibility']['fields']['visible'];
+        
         stackVisibility = [];
         executedStack = [];
         lastRootExecuted = null;

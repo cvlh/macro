@@ -371,7 +371,7 @@ export default function Macro(_properties) {
         }
 
         if (visibilityTool === null)
-            visibilityTool = new VisibilityTool();
+            visibilityTool = new VisibilityTool(context);
 
         visibilityMode = !visibilityMode;
 

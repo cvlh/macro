@@ -299,20 +299,19 @@ export default function Card(_ctx, _properties, tab) {
         for (const current_field of fieldsArray)
             current_field.setVisibilityMode();
     };
-    this.addToVisibility = function(field) {
-        const fieldVisibilityStatus = field.getVisibilityStatus();
+    this.addToVisibility = function(field, status) {
+        this.removeFromVisibility(field, status);
 
-        props['visibility']['fields'][fieldVisibilityStatus].push(field);
+        props['visibility']['fields'][status].push(field);
          _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field) {
-        const fieldVisibilityStatus = field.getVisibilityStatus(),
-              visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
+    this.removeFromVisibility = function(field, status) {
+        const visibilityArray = props['visibility']['fields'][status],
               removeId = field.getProps('id');
 
         for (let counter = 0; counter < visibilityArray.length; counter++) {
             if (removeId === visibilityArray[counter].getProps('id')) {
-                props['visibility']['fields'].splice(counter, 1); 
+                props['visibility']['fields'][status].splice(counter, 1); 
                 _updateVisibilityCounter();
                 return;
             }

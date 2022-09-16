@@ -205,9 +205,9 @@ export default function Field(ctx, append, properties) {
 
     // },
     _selectedForVisibility = function(status) {
-        _unselectForVisibility();
-        
         const color = context.getColor() + 'CC';
+
+        _unselectForVisibility();
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
@@ -236,6 +236,7 @@ export default function Field(ctx, append, properties) {
                 }
                 break;
         }
+        
         item.style.color = color;
     },
     _unselectForVisibility = function() {
@@ -406,7 +407,7 @@ export default function Field(ctx, append, properties) {
         };
 
         for (const status in props['visibility']['fields']) {
-            for (counterVisibility = 0; counterVisibility<props['visibility']['fields'][status].length; counterVisibility++)
+            for (counterVisibility = 0; counterVisibility < props['visibility']['fields'][status].length; counterVisibility++)
                 visibilityFields['visibility']['fields'][status].push(props['visibility']['fields'][status][counterVisibility].getProps('id'));
         }
 
@@ -607,20 +608,19 @@ export default function Field(ctx, append, properties) {
             item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
         }
     };
-    this.addToVisibility = function(field) {
-        const fieldVisibilityStatus = field.getVisibilityStatus();
+    this.addToVisibility = function(field, status) {
+        this.removeFromVisibility(field, status);
 
-        props['visibility']['fields'][fieldVisibilityStatus].push(field);
+        props['visibility']['fields'][status].push(field);
          _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field) {
-        const fieldVisibilityStatus = field.getVisibilityStatus(),
-              visibilityArray = props['visibility']['fields'][fieldVisibilityStatus],
+    this.removeFromVisibility = function(field, status) {
+        const visibilityArray = props['visibility']['fields'][status],
               removeId = field.getProps('id');
 
         for (let counter = 0; counter < visibilityArray.length; counter++) {
             if (removeId === visibilityArray[counter].getProps('id')) {
-                props['visibility']['fields'].splice(counter, 1); 
+                props['visibility']['fields'][status].splice(counter, 1); 
                 _updateVisibilityCounter();
                 return;
             }

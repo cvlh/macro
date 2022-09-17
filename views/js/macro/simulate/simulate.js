@@ -51,6 +51,21 @@ export default function Simulate(ctx) {
 
     //     return parend_id;
     // },
+    _filter_ids = function (visibility, execute_level, level) {
+        return visibility.filter( element => {
+            const current_level = macro[element]['level'];
+            
+            if (current_level.length !== level) 
+                return false;
+
+            for (let counter = 0; counter < execute_level.length; counter++) {
+                if (current_level[counter] !== execute_level[counter] )
+                    return false;
+            }
+
+            return true;
+        });
+    },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
 
@@ -58,27 +73,25 @@ export default function Simulate(ctx) {
               parent = target.parentElement;
 
         if (target.classList.contains('item-list')) {
-            const [id, color] = target['_props_'];
+            const [id, color] = target['_props_'],
+                  execute_level = macro[id]['level'];
+
             let slide, visibilitySize,
                 applyVisibility = false,
-                level = macro[id]['level'].length + 1;
+                level = execute_level.length + 1;
 
             executedStack.push(id);
 
-            // if (macro[id]['exec'].hasOwnProperty('now')) {
-            //     currentVisibleIds = macro[id]['exec']['now']['fields'];
-            //     applyVisibility = true;
-            // }
-            if (macro[id].hasOwnProperty('visibility')) {
-                currentVisibleIds = macro[id]['visibility']['fields']['visible'];
+            if (macro[id]['visibility']['fields'].hasOwnProperty('visible')) {
+                currentVisibleIds = _filter_ids(macro[id]['visibility']['fields']['visible'], execute_level, level);
                 applyVisibility = true;
             }
 
-            visibilitySize = currentVisibleIds.filter( element => {
-                return macro[element]['level'].length === level;
-            }).length;
+            // visibilitySize = currentVisibleIds.filter( element => {
+            //     return macro[element]['level'].length === level;
+            // }).length;
 
-            if (!visibilitySize) {
+            if (!currentVisibleIds.length) {
                 if (!applyVisibility) {
                     currentVisibleIds = currentVisibleIds.filter( element => {
                         return element !== id;
@@ -87,33 +100,43 @@ export default function Simulate(ctx) {
 
                 let txt = '';
                 for (const id of executedStack) txt += id + '  >  ';
-                console.log(txt);
+                    console.log(txt);
 
                 const wildcard = _wildcard(id);
-                if (macro.hasOwnProperty(wildcard))
-                    currentVisibleIds = macro[wildcard]['visibility']['fields'];
-
-                level--;
-                visibilitySize = currentVisibleIds.filter( element => {
-                    return macro[element]['level'].length === level;
-                }).length;
+                if (macro.hasOwnProperty(wildcard)) {
+                    level--;
+                    // currentVisibleIds = macro[wildcard]['visibility']['fields']['visible'];
+                    if (macro[wildcard]['visibility']['fields'].hasOwnProperty('visible'))
+                        currentVisibleIds = _filter_ids(macro[wildcard]['visibility']['fields']['visible'], execute_level, level);
+                }
+                
+                
+                // visibilitySize = currentVisibleIds.filter( element => {
+                //     return macro[element]['level'].length === level;
+                // }).length;
             }
 
-            if (!visibilitySize) {
+            if (!currentVisibleIds.length) {
                 let lastExecId = executedStack.pop();
                 while (lastExecId !== undefined) {
 
                     const wildcard = _wildcard(id);
-                    if (macro.hasOwnProperty(wildcard))
-                        currentVisibleIds = macro[wildcard]['visibility']['fields'];
+                    if (macro.hasOwnProperty(wildcard)) {
+                        level = macro[lastExecId]['level'].length;
 
-                    level = macro[lastExecId]['level'].length;
+                        // currentVisibleIds = macro[wildcard]['visibility']['fields']['visible'];
+                        if (macro[wildcard]['visibility']['fields'].hasOwnProperty('visible')) 
+                            currentVisibleIds = _filter_ids(macro[wildcard]['visibility']['fields']['visible'], execute_level, level);
+                    }
 
-                    visibilitySize = currentVisibleIds.filter( element => {
-                        return macro[element]['level'].length === level;
-                    }).length;
+                    
 
-                    if (visibilitySize)
+                    // visibilitySize = currentVisibleIds.filter( element => {
+                    //     return macro[element]['level'].length === level;
+                    // }).length;
+                    // currentVisibleIds = _filter_ids(macro[wildcard]['visibility']['fields']['visible'], execute_level, level);
+
+                    if (currentVisibleIds.length)
                         break;
                     
                     lastExecId = executedStack.pop();
@@ -236,10 +259,17 @@ export default function Simulate(ctx) {
                 return element.split('.').map( item => { return parseInt(item, 10); });
             }).sort();
 
+            // console.log(sort_array);
+
             delete visibility['fields'][status];
-            visibility['fields'][status] = sort_array.map( element => {
-                return element.join('.');
-            });
+
+            if (sort_array.length) {
+                visibility['fields'][status] = sort_array.map( element => {
+                    return element.join('.');
+                });
+            }
+
+            // console.log(visibility['fields'][status]);
         }
     },
     _create_hash = function (fields, hashs = { }) {
@@ -288,7 +318,7 @@ export default function Simulate(ctx) {
 
         _order_visibility(serialize['root']['properties']['visibility']);
         currentVisibleIds = serialize['root']['properties']['visibility']['fields']['visible'];
-        
+
         stackVisibility = [];
         executedStack = [];
         lastRootExecuted = null;

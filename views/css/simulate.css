@@ -234,6 +234,7 @@
                         align-items: center;
                         margin: 8px;
                         overflow: hidden;
+                        transition: .15s all;
                     }
                         .item-input-block {
                             display: flex;
@@ -244,15 +245,21 @@
                             flex-wrap: nowrap;
                             width: 100%;
                             margin: 8px 0 16px 0;
+
+                            transition: .15s all;
                         }
                             .item-input-icon {
                                 font-size: 20px;
                                 margin: 0 8px 0 0;
+
+                                transition: .15s all;
                             }
                             .item-input-header {
                                 font-size: 14px;
                                 font-weight: 600;
                                 flex-grow: 1;
+
+                                transition: .15s all;
                             }
                         .item-input-box {
                             border: 2px solid #e5e5e5;

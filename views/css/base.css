@@ -435,8 +435,8 @@ body {
 
             margin: 0 1px !important;
 
-            transition: 0.15s opacity linear,
-                        0.15s border-radius linear;
+            transition: .15s opacity linear,
+                        .15s border-radius linear;
 
             cursor: pointer;
         }

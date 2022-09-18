@@ -29,7 +29,7 @@ export default function Simulate(ctx) {
         __showKeyboard = false;
         simulateKeyboard.style.height = '116px'; 
     },
-    
+
     _wildcard = function(id) {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
@@ -150,7 +150,38 @@ export default function Simulate(ctx) {
         const target = evnt.target,
               current_slide = target.parentElement;
 
-        if (target.classList.contains('item-list')) {
+        if (target.classList.contains('input-type')) {
+            const [id, color] = target['_props_'];
+
+            let child, icon, label, nodes;
+
+            __showKeyboard = true;
+
+            target.className = 'item-input';
+            target.style.color = color;
+
+            icon = target.firstChild.textContent;
+            target.removeChild(target.firstChild);
+
+            child = target.childNodes;
+            child[0].className = 'item-input-block';
+
+            nodes = child[0].childNodes;
+
+            label = nodes[0].textContent;
+            nodes[0].className = 'font-awesome item-input-icon';
+            nodes[0].textContent = icon;
+
+            if (nodes.length > 1) {
+                nodes[1].className = 'item-input-header';
+                nodes[1].textContent = label;
+            } else {
+                addElement(child[0], 'div', 'item-input-header', label);
+            }
+            target.removeChild(child[1]);
+
+            addElement(target, 'input', 'item-input-box');
+        } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
 
             _execute(id, color, current_slide);
@@ -169,7 +200,7 @@ export default function Simulate(ctx) {
         content = addElement(item, 'div', 'item-list-block');
         div = addElement(content, 'div', 'item-list-header', label);
 
-        if (Math.floor(Math.random() * 10) < 6)
+        // if (Math.floor(Math.random() * 10) < 6)
             div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
 
         if (input) 

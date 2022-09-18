@@ -169,11 +169,17 @@ export default function Simulate(ctx) {
         }
     },
     _create_view = function (ids, color = null) {
-        let navbar, item, label, icon, type, div, shortcut, content;
+        let navbar, item, label, icon, type, div, shortcut, content,
+            auto_execute = false;
+
+        const is_list = ids.every( element => macro[element]['type']['type'] === _TYPES_.LIST );
+
+        const slide = addElement(simulateMain, 'div', 'container-main-slide');
 
         _hide_keyboard();
 
-        const slide = addElement(simulateMain, 'div', 'container-main-slide');
+        if (!is_list && ids.length === 1)
+            auto_execute = true;
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -203,50 +209,66 @@ export default function Simulate(ctx) {
             item = addElement(slide, 'div'); 
             item['_props_'] = [id, color]; 
 
-            switch (type) {
-                case _TYPES_.LIST:
-                    item.classList.add('item-list');
+            if (type === _TYPES_.LIST) {
+                item.classList.add('item-list');
+                item.style.color = color;
+
+                div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
+
+                content = addElement(item, 'div', 'item-list-block');
+                div = addElement(content, 'div', 'item-list-header', label);
+    
+                if (Math.floor(Math.random() * 10) < 6)
+                    div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
+
+                addElement(slide, 'div', 'item-divider');
+            } else {
+                if (auto_execute) {
+                    switch(type) {
+                        case _TYPES_.NUMBER:
+                        case _TYPES_.TEXT:
+                            __showKeyboard = true;
+
+                            item.classList.add('item-input');
+                            item.style.color = color;
+
+                            content = addElement(item, 'div', 'item-input-block');
+        
+                            div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
+                            div = addElement(content, 'div', 'item-input-header', label);
+        
+                            div = addElement(item, 'input', 'item-input-box');
+                            break;
+        
+                        case _TYPES_.DATE:
+                            break;
+        
+                        case _TYPES_.PHOTO:
+                            break;
+        
+                        case _TYPES_.SIGNATURE:
+                            break;
+        
+                        case _TYPES_.SCAN:
+                            break;
+                    }
+                } else {
+                    item.classList.add('item-list', 'input-type');
+                    item.style.color = color;
 
                     div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
-                    div.style.color = color;
-
+    
                     content = addElement(item, 'div', 'item-list-block');
                     div = addElement(content, 'div', 'item-list-header', label);
-                    div.style.color = color;
         
                     if (Math.floor(Math.random() * 10) < 6)
                         div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
+    
+                    addElement(item, 'div', 'icon item-list-icon small', type);
 
                     addElement(slide, 'div', 'item-divider');
-                    break;
+                }
 
-                case _TYPES_.NUMBER:
-                case _TYPES_.TEXT:
-                    //_show_keyboard();
-                    __showKeyboard = true;
-
-                    item.classList.add('item-input');
-
-                    content = addElement(item, 'div', 'item-input-block');
-                    content.style.color = color;
-
-                    div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
-                    div = addElement(content, 'div', 'item-input-header', label);
-
-                    div = addElement(item, 'input', 'item-input-box');
-                    break;
-
-                case _TYPES_.DATE:
-                    break;
-
-                case _TYPES_.PHOTO:
-                    break;
-
-                case _TYPES_.SIGNATURE:
-                    break;
-
-                case _TYPES_.SCAN:
-                    break;
             }
         }
 

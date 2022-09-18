@@ -176,6 +176,7 @@
 
                         background-color: #ffffff;
                     }
+                        .container-main-slide > .item-list.input-type { grid-template-columns: 34px auto 24px; }
                         .item-list:first  { margin-top: 4px; }
                         .item-list:hover  { background-color: #fafafa; }
                         .item-list:active { background-color: #f5f5f5; }
@@ -187,9 +188,10 @@
                             align-items: center;
                             font-size: 15px;
                             /* border-radius: 2px; */
-
                             pointer-events: none;
                         }
+                            .item-list-icon.small { font-size: 11px; }
+
                         .item-list-block {
                             display: flex;
                             pointer-events: none;

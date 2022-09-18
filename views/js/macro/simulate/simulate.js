@@ -14,9 +14,9 @@ export default function Simulate(ctx) {
         simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
         __showKeyboard = false,
         macro,
-        executedStack,
-        currentVisibleIDs, stackVisibility,
-        lastRootExecuted,
+        stackExecute, stackVisibility,
+        queueViews,
+        currentVisibleIDs,lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _create_keyboard = function() {
@@ -42,7 +42,7 @@ export default function Simulate(ctx) {
 
     //     return parend_id;
     // },
-     _wildcard = function(id) {
+    _wildcard = function(id) {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
 
@@ -101,53 +101,71 @@ export default function Simulate(ctx) {
             return true;
         });
     },
+    _clear_stack_view = function() {
+        while (queueViews.length > 1) {
+            let view = queueViews.shift();
+            simulateMain.removeChild(view);
+        }
+    },
+    _execute = function(id, color, current_slide) {
+        const origin_level = macro[id]['level'];
+
+        let slide, visiblesIDs,
+            level = origin_level.length + 1;
+
+        stackExecute.push(id);
+
+        if (lastRootExecuted !== id)
+            _apply_visibility(macro[id]['visibility']);
+
+        visiblesIDs = _filter_ids(currentVisibleIDs, level, origin_level);
+        if (!visiblesIDs.length) {
+            console.log(stackExecute);
+            _clear_stack_view();
+
+            let lastExecId = stackExecute.pop();
+            while (lastExecId !== undefined) {
+                const wildcard = _wildcard(lastExecId);
+                if (macro.hasOwnProperty(wildcard))
+                    _apply_visibility(macro[wildcard]['visibility']);
+
+                lastExecId = stackExecute.pop();
+                level--;
+            }
+            visiblesIDs = _filter_ids(currentVisibleIDs, level, origin_level);
+        }
+
+        slide = _create_view(visiblesIDs, color);
+
+        if (visiblesIDs.length === 1 && lastRootExecuted === visiblesIDs[0]) {
+            simulateMain.removeChild(slide);
+            queueViews.pop();
+            //slide.style.left = '0';
+            
+            _execute(lastRootExecuted, color, current_slide);
+        } else {
+            setTimeout(() => {
+                current_slide.style.left = '-100%';
+                slide.style.left = 0;
+    
+                if (__showKeyboard)
+                    _show_keyboard();
+            }, 50);
+        }
+
+        if (origin_level.length === 1)
+            lastRootExecuted = id;
+    },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              parent = target.parentElement;
+              current_slide = target.parentElement;
 
         if (target.classList.contains('item-list')) {
-            const [id, color] = target['_props_'],
-                  origin_level = macro[id]['level'];
+            const [id, color] = target['_props_'];
 
-            let slide,
-                visiblesIDs,
-                level = origin_level.length + 1;
-
-            executedStack.push(id);
-
-            if (lastRootExecuted !== id)
-                _apply_visibility(macro[id]['visibility']);
-
-            visiblesIDs = _filter_ids(currentVisibleIDs, level, origin_level);
-            if (!visiblesIDs.length) {
-                console.log(executedStack);
-
-                let lastExecId = executedStack.pop();
-                while (lastExecId !== undefined) {
-                    const wildcard = _wildcard(lastExecId);
-                    if (macro.hasOwnProperty(wildcard))
-                        _apply_visibility(macro[wildcard]['visibility']);
-
-                    lastExecId = executedStack.pop();
-                    level--;
-                }
-                visiblesIDs = _filter_ids(currentVisibleIDs, level, origin_level);
-            }
-
-            if (origin_level.length === 1)
-                lastRootExecuted = id;
-
-            slide = _create_view(visiblesIDs, color);
-
-            setTimeout(() => {
-                parent.style.left = '-100%';
-                slide.style.left = 0;
-
-                if (__showKeyboard)
-                    _show_keyboard();
-            }, 50);
+            _execute(id, color, current_slide);
         }
     },
     _create_view = function (ids, color = null) {
@@ -157,7 +175,7 @@ export default function Simulate(ctx) {
 
         const slide = addElement(simulateMain, 'div', 'container-main-slide');
 
-        for (const id of executedStack) {
+        for (const id of stackExecute) {
             shortcut = macro[id];
 
             navbar = addElement(slide, 'div', 'navbar');
@@ -167,7 +185,7 @@ export default function Simulate(ctx) {
             addElement(navbar, 'div', 'navbar-text', shortcut['text']);
         }
 
-        if (executedStack.length) {
+        if (stackExecute.length) {
             content = addElement(slide, 'div', 'item-space');
             content.style.backgroundColor = color;
         }
@@ -232,6 +250,7 @@ export default function Simulate(ctx) {
             }
         }
 
+        queueViews.push(slide);
         return slide;
     },
     _order_visibility = function (visibility) {
@@ -294,6 +313,9 @@ export default function Simulate(ctx) {
     this.start = function() {
         const serialize = parent.serialize();
 
+        while (simulateMain.hasChildNodes())
+            simulateMain.removeChild(simulateMain.firstChild);
+
         macro = _create_hash(serialize['root']['fields']);
         console.log(macro);
 
@@ -301,14 +323,11 @@ export default function Simulate(ctx) {
         currentVisibleIDs = serialize['root']['properties']['visibility']['fields']['visible'];
 
         stackVisibility = [];
-        executedStack = [];
+        queueViews = [];
+        stackExecute = [];
         lastRootExecuted = null;
 
-        while (simulateMain.hasChildNodes())
-            simulateMain.removeChild(simulateMain.firstChild);
-
         const visiblesIDs = _filter_ids(currentVisibleIDs, 1);
-
         const new_slide = _create_view(visiblesIDs);
         new_slide.style.left = '0';
 

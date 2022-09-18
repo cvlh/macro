@@ -29,19 +29,7 @@ export default function Simulate(ctx) {
         __showKeyboard = false;
         simulateKeyboard.style.height = '116px'; 
     },
-
-    // _get_parent_id = function(item) {
-    //     const size = item['level'].length - 1;
-    //     let parend_id = '';
-
-    //     for (let counter = 0; counter < size; counter++) {
-    //         parend_id += item['level'][counter];
-    //         if (counter < size)
-    //             parend_id += '.';
-    //     }
-
-    //     return parend_id;
-    // },
+    
     _wildcard = function(id) {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
@@ -168,18 +156,36 @@ export default function Simulate(ctx) {
             _execute(id, color, current_slide);
         }
     },
+    _create_list_item = function(item, color, label, icon, type, input = false) {
+        let div, content;
+
+        item.classList.add('item-list');
+        item.style.color = color;
+        if (input) 
+            item.classList.add('input-type');
+
+        div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
+
+        content = addElement(item, 'div', 'item-list-block');
+        div = addElement(content, 'div', 'item-list-header', label);
+
+        if (Math.floor(Math.random() * 10) < 6)
+            div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
+
+        if (input) 
+            addElement(item, 'div', 'icon item-list-icon small', type);
+    },
     _create_view = function (ids, color = null) {
         let navbar, item, label, icon, type, div, shortcut, content,
             auto_execute = false;
 
-        const is_list = ids.every( element => macro[element]['type']['type'] === _TYPES_.LIST );
-
         const slide = addElement(simulateMain, 'div', 'container-main-slide');
 
-        _hide_keyboard();
-
+        const is_list = ids.every( element => macro[element]['type']['type'] === _TYPES_.LIST );
         if (!is_list && ids.length === 1)
             auto_execute = true;
+
+        _hide_keyboard();
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -210,18 +216,7 @@ export default function Simulate(ctx) {
             item['_props_'] = [id, color]; 
 
             if (type === _TYPES_.LIST) {
-                item.classList.add('item-list');
-                item.style.color = color;
-
-                div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
-
-                content = addElement(item, 'div', 'item-list-block');
-                div = addElement(content, 'div', 'item-list-header', label);
-    
-                if (Math.floor(Math.random() * 10) < 6)
-                    div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
-
-                addElement(slide, 'div', 'item-divider');
+                _create_list_item(item, color, label, icon, type);
             } else {
                 if (auto_execute) {
                     switch(type) {
@@ -253,23 +248,12 @@ export default function Simulate(ctx) {
                             break;
                     }
                 } else {
-                    item.classList.add('item-list', 'input-type');
-                    item.style.color = color;
-
-                    div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
-    
-                    content = addElement(item, 'div', 'item-list-block');
-                    div = addElement(content, 'div', 'item-list-header', label);
-        
-                    if (Math.floor(Math.random() * 10) < 6)
-                        div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
-    
-                    addElement(item, 'div', 'icon item-list-icon small', type);
-
-                    addElement(slide, 'div', 'item-divider');
+                    _create_list_item(item, color, label, icon, type, true);
                 }
 
             }
+
+            addElement(slide, 'div', 'item-divider');
         }
 
         queueViews.push(slide);

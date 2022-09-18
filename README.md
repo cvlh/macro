@@ -10,4 +10,4 @@ Use the concept of visibility to guide the user through every step of the activi
 
 ## Demo
 
-https://sistema.addlog.com.br/macro/views/
+http://dev.addlog.com.br:8080/macro/views/

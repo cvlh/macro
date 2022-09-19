@@ -20,14 +20,23 @@ export default function Simulate(ctx) {
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _create_keyboard = function() {
+        const controls_buttons = addElement(simulateKeyboard, 'div', 'controls-buttons');
+
+        const back = addElement(controls_buttons, 'div', null, 'Voltar');
+        back.style.backgroundColor = 'var(--main-font-color-med)';
+
+        const confirm = addElement(controls_buttons, 'div', null, 'Confirmar');
+        confirm.style.backgroundColor = 'var(--main-green-bold)';
+
+        const keyboard = addElement(simulateKeyboard, 'div', 'keyboard');
         ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'].forEach( value => {
-            addElement(simulateKeyboard, 'div', 'font-awesome keyboard-key', value);
+            addElement(keyboard, 'div', 'font-awesome keyboard-key', value);
         });
     },
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
     _show_keyboard = function() { 
         __showKeyboard = false;
-        simulateKeyboard.style.height = '116px'; 
+        simulateKeyboard.style.height = '130px'; 
     },
 
     _wildcard = function(id) {
@@ -148,43 +157,71 @@ export default function Simulate(ctx) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              current_slide = target.parentElement;
+              current_parent = target.parentElement;
 
         if (target.classList.contains('input-type')) {
-            const [id, color] = target['_props_'];
+            const [_, color] = target['_props_'];
 
-            let child, icon, label, nodes;
+            // let child, icon, label, nodes;
 
-            __showKeyboard = true;
+            _show_keyboard();
 
-            target.className = 'item-input';
-            target.style.color = color;
+            target.className = 'item-input-block';
+            target.removeChild(target.lastChild);
 
-            icon = target.firstChild.textContent;
-            target.removeChild(target.firstChild);
+            //const node = current_parent.removeChild(target);
+            const content = addElement(current_parent, 'div', 'item-input');
+            current_parent.replaceChild(content, target);
+            content.appendChild(target);
 
-            child = target.childNodes;
-            child[0].className = 'item-input-block';
+            const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
+            for (const listItem of listItems)
+                listItem.style.animationPlayState = 'running';
 
-            nodes = child[0].childNodes;
+            const dividers = current_parent.querySelectorAll('.item-divider');
+            for (const divider of dividers)
+                divider.style.height = '0px';
 
-            label = nodes[0].textContent;
-            nodes[0].className = 'font-awesome item-input-icon';
-            nodes[0].textContent = icon;
+            // for (let counter = 0; counter < matches.length; counter++)
+            //     matches[counter].style.animationPlayState = 'running';
 
-            if (nodes.length > 1) {
-                nodes[1].className = 'item-input-header';
-                nodes[1].textContent = label;
-            } else {
-                addElement(child[0], 'div', 'item-input-header', label);
-            }
-            target.removeChild(child[1]);
+            // matches[counter].style.height = '0';
+            // current_parent.removeChild(matches[counter]);
+            // content.style.height = '100px';
+            // content.style.flexGrow = '1';
+            // content.appendChild(node);
+            
+            const input = addElement(content, 'input', 'item-input-box');
+            input.style.borderColor = color;
 
-            addElement(target, 'input', 'item-input-box');
+            content.style.animationPlayState = 'running';
+            // target.className = 'item-input';
+            // target.style.color = color;
+
+            // icon = target.firstChild.textContent;
+            // target.removeChild(target.firstChild);
+
+            // child = target.childNodes;
+            // child[0].className = 'item-input-block';
+
+            // nodes = child[0].childNodes;
+
+            // label = nodes[0].textContent;
+            // nodes[0].className = 'font-awesome item-input-icon';
+            // nodes[0].textContent = icon;
+
+            // if (nodes.length > 1) {
+            //     nodes[1].className = 'item-input-header';
+            //     nodes[1].textContent = label;
+            // } else {
+            //     addElement(child[0], 'div', 'item-input-header', label);
+            // }
+            // target.removeChild(child[1]);
+
+            
         } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
-
-            _execute(id, color, current_slide);
+            _execute(id, color, current_parent);
         }
     },
     _create_list_item = function(item, color, label, icon, type, input = false) {
@@ -383,7 +420,7 @@ export default function Simulate(ctx) {
         simulateContainer = addElement(simulateContent, 'div', 'container');
 
         simulateMain = addElement(simulateContainer, 'div', 'main');
-        simulateKeyboard = addElement(simulateContainer, 'div', 'keyboard');
+        simulateKeyboard = addElement(simulateContainer, 'div', 'controls');
         _create_keyboard();
 
         addElement(simulateContent, 'div', 'footer');

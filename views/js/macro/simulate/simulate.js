@@ -67,13 +67,14 @@ export default function Simulate(ctx) {
     },
     _additional_visibility = function(visibility_fields) {
         if (visibility_fields.hasOwnProperty('visible')) {
-            for (const id in visibility_fields['visible']) 
+            for (const id of visibility_fields['visible']) 
                 currentVisibleIDs.push(id);
             
             // TODO: order ids
         }
+        
         if (visibility_fields.hasOwnProperty('hidden')) {
-            for (const id in visibility_fields['hidden']) {
+            for (const id of visibility_fields['hidden']) {
                 let result = currentVisibleIDs.findIndex( element => element === id);
 
                 if (result !== -1)

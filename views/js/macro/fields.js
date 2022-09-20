@@ -609,24 +609,18 @@ export default function Field(ctx, append, properties) {
         }
     };
     this.addToVisibility = function(field, status) {
-        this.removeFromVisibility(field, status);
+        this.removeFromVisibility(field);
 
         props['visibility']['fields'][status].push(field);
          _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field, status) {
-        const visibilityArray = props['visibility']['fields'][status],
-              removeId = field.getProps('id');
-
-        for (let counter = 0; counter < visibilityArray.length; counter++) {
-            if (removeId === visibilityArray[counter].getProps('id')) {
-                props['visibility']['fields'][status].splice(counter, 1); 
-                _updateVisibilityCounter();
-                return;
-            }
+    this.removeFromVisibility = function(field) {
+        const removeId = field.getProps('id');
+        for (const status in props['visibility']['fields']) {
+            let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
+            if (result !== -1)
+                props['visibility']['fields'][status].splice(result, 1);
         }
-
-        console.log(`FATAL ERROR - REMOVE FAILED! ${removeId}`);
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////

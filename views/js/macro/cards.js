@@ -300,24 +300,35 @@ export default function Card(_ctx, _properties, tab) {
             current_field.setVisibilityMode();
     };
     this.addToVisibility = function(field, status) {
-        this.removeFromVisibility(field, status);
+        this.removeFromVisibility(field);
 
         props['visibility']['fields'][status].push(field);
          _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field, status) {
-        const visibilityArray = props['visibility']['fields'][status],
-              removeId = field.getProps('id');
-
-        for (let counter = 0; counter < visibilityArray.length; counter++) {
-            if (removeId === visibilityArray[counter].getProps('id')) {
-                props['visibility']['fields'][status].splice(counter, 1); 
-                _updateVisibilityCounter();
-                return;
-            }
+    this.removeFromVisibility = function(field) {
+        const removeId = field.getProps('id');
+        for (const status in props['visibility']['fields']) {
+            let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
+            if (result !== -1)
+                props['visibility']['fields'][status].splice(result, 1);
         }
+        // const removeId = field.getProps('id');
+        // for (const status in props['visibility']['fields']) {
+        //     let txt = status + ' antes -> ';
+        //     props['visibility']['fields'][status].map( element => txt += element.getProps('id') + ', ' );
+        //     console.log(txt);
 
-        console.log(`FATAL ERROR - REMOVE FAILED! ${removeId}`);
+        //     let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
+        //     if (result !== -1) {
+        //         props['visibility']['fields'][status].splice(result, 1);
+
+        //         console.log(`removeu -> ${status} -> ${removeId} -> ${result}`);
+        //     }
+
+        //     txt = status + ' depois -> ';
+        //     props['visibility']['fields'][status].map( element => txt += element.getProps('id') + ', ' );
+        //     console.log(txt);
+        // }
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////

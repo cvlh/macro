@@ -188,7 +188,10 @@ body {
                 background-color: #66bb6a;
                 font-weight: 600;
             }
-            .main-app-builder-toolbar .button:active { background-color: #4caf50; }
+            .main-app-builder-toolbar .button:active { 
+                transform: scale(0.96);
+                background-color: #4caf50; 
+            }
     .main-app-wrapper {
         position: fixed;
         top: 0;
@@ -371,6 +374,7 @@ body {
             .main-app-properties-row input[type=button]:active { 
                 background-color: var(--main-border-color-high);
                 border: 1px solid var(--main-border-color-bold);
+                transform: scale(0.96);
             }
             .main-app-properties-row input[type=button]:disabled { 
                 color: var(--main-border-color-high);
@@ -661,7 +665,10 @@ body {
             justify-self: center;
         }
         .app-cards-header-button:hover  { background-color: var(--main-border-color); }
-        .app-cards-header-button:active { background-color: var(--main-border-color-high); }
+        .app-cards-header-button:active { 
+            transform: scale(0.96);
+            background-color: var(--main-border-color-high);
+        }
         
         .app-cards-header-button.new   { color: var(--main-green-bold); }
         .app-cards-header-button.close { color: var(--main-red-bold); }

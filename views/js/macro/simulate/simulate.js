@@ -163,14 +163,11 @@ export default function Simulate(ctx) {
         if (target.classList.contains('input-type')) {
             const [_, color] = target['_props_'];
 
-            // let child, icon, label, nodes;
-
             _show_keyboard();
 
             target.className = 'item-input-block';
             target.removeChild(target.lastChild);
 
-            //const node = current_parent.removeChild(target);
             const content = addElement(current_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
             content.appendChild(target);
@@ -182,70 +179,42 @@ export default function Simulate(ctx) {
             const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
                 divider.style.height = '0px';
-
-            // for (let counter = 0; counter < matches.length; counter++)
-            //     matches[counter].style.animationPlayState = 'running';
-
-            // matches[counter].style.height = '0';
-            // current_parent.removeChild(matches[counter]);
-            // content.style.height = '100px';
-            // content.style.flexGrow = '1';
-            // content.appendChild(node);
             
             const input = addElement(content, 'input', 'item-input-box');
             input.style.borderColor = color;
 
             content.style.animationPlayState = 'running';
-            // target.className = 'item-input';
-            // target.style.color = color;
-
-            // icon = target.firstChild.textContent;
-            // target.removeChild(target.firstChild);
-
-            // child = target.childNodes;
-            // child[0].className = 'item-input-block';
-
-            // nodes = child[0].childNodes;
-
-            // label = nodes[0].textContent;
-            // nodes[0].className = 'font-awesome item-input-icon';
-            // nodes[0].textContent = icon;
-
-            // if (nodes.length > 1) {
-            //     nodes[1].className = 'item-input-header';
-            //     nodes[1].textContent = label;
-            // } else {
-            //     addElement(child[0], 'div', 'item-input-header', label);
-            // }
-            // target.removeChild(child[1]);
-
             
         } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
             _execute(id, color, current_parent);
         }
     },
-    _create_list_item = function(item, color, label, icon, type, input = false) {
-        let div, content;
+    _create_list_item = function(id, color, input = false) {
+        const item_fragment = document.createDocumentFragment();
+        const data = macro[id];
 
-        item.classList.add('item-list');
+        const item = addElement(item_fragment, 'div', 'item-list'); 
         item.style.color = color;
+        item['_props_'] = [id, color]; 
+
         if (input) 
             item.classList.add('input-type');
 
-        div = addElement(item, 'div', 'font-awesome item-list-icon', icon);
+        addElement(item, 'div', 'font-awesome item-list-icon', data['icon']);
 
-        content = addElement(item, 'div', 'item-list-block');
-        div = addElement(content, 'div', 'item-list-header', label);
+        const content = addElement(item, 'div', 'item-list-block');
+        addElement(content, 'div', 'item-list-header', data['text']);
 
-        // if (Math.floor(Math.random() * 10) < 6)
-            div = addElement(content, 'div', 'item-list-subheader', label +' '+ label);
+        addElement(content, 'div', 'item-list-subheader', data['text']);
 
         if (input) 
-            addElement(item, 'div', 'icon item-list-icon small', type);
+            addElement(item, 'div', 'icon item-list-icon small', data['type']['type']);
+
+        return item_fragment;
     },
     _create_view = function (ids, color = null) {
-        let navbar, item, label, icon, type, div, shortcut, content,
+        let navbar, item, shortcut, type, content,
             auto_execute = false;
 
         const slide = addElement(simulateMain, 'div', 'container-main-slide');
@@ -272,20 +241,15 @@ export default function Simulate(ctx) {
         }
 
         for (const id of ids) {
-            shortcut = macro[id];       
+            shortcut = macro[id];
+
+            type = shortcut['type']['type'];
 
             if (shortcut.hasOwnProperty('color'))
                 color = shortcut['color'];
-            
-            label = shortcut['text'];
-            icon  = shortcut['icon'];
-            type  = shortcut['type']['type'];
-
-            item = addElement(slide, 'div'); 
-            item['_props_'] = [id, color]; 
 
             if (type === _TYPES_.LIST) {
-                _create_list_item(item, color, label, icon, type);
+                item = _create_list_item(id, color);
             } else {
                 if (auto_execute) {
                     switch(type) {
@@ -293,15 +257,31 @@ export default function Simulate(ctx) {
                         case _TYPES_.TEXT:
                             __showKeyboard = true;
 
-                            item.classList.add('item-input');
-                            item.style.color = color;
+                            const content = addElement(current_parent, 'div', 'item-input');
 
-                            content = addElement(item, 'div', 'item-input-block');
+                            item.classList.add('item-list');
+                            item.style.color = color;
+                            if (input) 
+                                item.classList.add('input-type');
+                    
+                            addElement(item, 'div', 'font-awesome item-list-icon', icon);
+                    
+                            content = addElement(item, 'div', 'item-list-block');
+                            addElement(content, 'div', 'item-list-header', label);
+                    
+                            addElement(content, 'div', 'item-list-subheader', label);
+                    
+                            if (input) 
+                                addElement(item, 'div', 'icon item-list-icon small', type);
+                            // item.classList.add('item-input');
+                            // item.style.color = color;
+
+                            // content = addElement(item, 'div', 'item-input-block');
         
-                            div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
-                            div = addElement(content, 'div', 'item-input-header', label);
+                            // div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
+                            // div = addElement(content, 'div', 'item-input-header', label);
         
-                            div = addElement(item, 'input', 'item-input-box');
+                            // div = addElement(item, 'input', 'item-input-box');
                             break;
         
                         case _TYPES_.DATE:
@@ -317,11 +297,11 @@ export default function Simulate(ctx) {
                             break;
                     }
                 } else {
-                    _create_list_item(item, color, label, icon, type, true);
+                    item = _create_list_item(id, color, true);
                 }
-
             }
-
+            
+            slide.appendChild(item);
             addElement(slide, 'div', 'item-divider');
         }
 

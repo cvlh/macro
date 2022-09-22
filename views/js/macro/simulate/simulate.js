@@ -257,31 +257,22 @@ export default function Simulate(ctx) {
                         case _TYPES_.TEXT:
                             __showKeyboard = true;
 
-                            const content = addElement(current_parent, 'div', 'item-input');
+                            item = addElement(slide, 'div', 'item-input');
 
-                            item.classList.add('item-list');
-                            item.style.color = color;
-                            if (input) 
-                                item.classList.add('input-type');
+                            const block = addElement(item, 'div', 'item-input-block'); 
+                            block.style.color = color;
                     
-                            addElement(item, 'div', 'font-awesome item-list-icon', icon);
+                            addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
                     
-                            content = addElement(item, 'div', 'item-list-block');
-                            addElement(content, 'div', 'item-list-header', label);
+                            const content = addElement(block, 'div', 'item-list-block');
+                            addElement(content, 'div', 'item-list-header', shortcut['text']);
                     
-                            addElement(content, 'div', 'item-list-subheader', label);
+                            addElement(content, 'div', 'item-list-subheader', shortcut['text']);
                     
-                            if (input) 
-                                addElement(item, 'div', 'icon item-list-icon small', type);
-                            // item.classList.add('item-input');
-                            // item.style.color = color;
+                            const input = addElement(item, 'input', 'item-input-box');
+                            input.style.borderColor = color;
 
-                            // content = addElement(item, 'div', 'item-input-block');
-        
-                            // div = addElement(content, 'div', 'font-awesome item-input-icon', icon);
-                            // div = addElement(content, 'div', 'item-input-header', label);
-        
-                            // div = addElement(item, 'input', 'item-input-box');
+                            item.style.animationPlayState = 'running';
                             break;
         
                         case _TYPES_.DATE:

@@ -92,16 +92,17 @@
                     grid-template-columns: 1fr 1fr;
                     grid-template-rows: 30px;
                 }
-                .controls-buttons > div {
-                    text-align: center;
-                    line-height: 30px;
-                    font-size: 11px;
-                    text-transform: uppercase;
-                    font-weight: 600;
+                    .controls-buttons > div {
+                        text-align: center;
+                        line-height: 30px;
+                        font-size: 11px;
+                        text-transform: uppercase;
+                        font-weight: 600;
 
-                    cursor: pointer;
-                    color: white;
-                }
+                        cursor: pointer;
+                        color: white;
+                    }
+                    
                 .controls > .keyboard {
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
@@ -203,8 +204,7 @@
                             from {
                                 height: 50px;
                                 opacity: 1;
-                            }
-                            to { 
+                            } to { 
                                 opacity: 0;
                                 height: 0px;
                             }
@@ -266,7 +266,7 @@
                         animation-name: stretch_item_input;
                         animation-duration: .15s;
                         animation-timing-function: ease-in;
-                        animation-delay: 0;
+                        animation-delay: 0s;
                         animation-iteration-count: 1;
                         animation-direction: normal;
                         animation-fill-mode: both;
@@ -275,9 +275,8 @@
                         @keyframes stretch_item_input {
                             from {
                                 padding: 0;
-                                height: 50px; 
-                            }
-                            to { 
+                                height: 50px;
+                            } to {
                                 padding: 8px;
                                 height: 110px;
                             }

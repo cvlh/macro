@@ -12,7 +12,7 @@ export default function Simulate(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
-        __showKeyboard = false,
+        confirm,
         macro,
         stackExecute, stackVisibility,
         queueViews,
@@ -25,8 +25,13 @@ export default function Simulate(ctx) {
         const back = addElement(controls_buttons, 'div', null, 'Voltar');
         back.style.backgroundColor = 'var(--main-font-color-med)';
 
-        const confirm = addElement(controls_buttons, 'div', null, 'Confirmar');
+        confirm = addElement(controls_buttons, 'div', null, 'Confirmar');
         confirm.style.backgroundColor = 'var(--main-green-bold)';
+
+        confirm.addEventListener('click', function(evnt) {
+            const [id, color, current_parent] = this['_props_'];
+            _execute(id, color, current_parent);
+        });
 
         const keyboard = addElement(simulateKeyboard, 'div', 'keyboard');
         ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'].forEach( value => {
@@ -34,8 +39,8 @@ export default function Simulate(ctx) {
         });
     },
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
-    _show_keyboard = function() { 
-        __showKeyboard = false;
+    _show_keyboard = function(id, color, current_parent) { 
+        confirm['_props_'] = [id, color, current_parent];
         simulateKeyboard.style.height = '130px'; 
     },
 
@@ -145,9 +150,6 @@ export default function Simulate(ctx) {
             setTimeout(() => {
                 current_slide.style.left = '-100%';
                 slide.style.left = 0;
-    
-                if (__showKeyboard)
-                    _show_keyboard();
             }, 50);
         }
 
@@ -161,9 +163,11 @@ export default function Simulate(ctx) {
               current_parent = target.parentElement;
 
         if (target.classList.contains('input-type')) {
-            const [_, color] = target['_props_'];
+            const [id, color] = target['_props_'];
 
-            _show_keyboard();
+            delete target['_props_'];
+
+            _show_keyboard(id, color, current_parent);
 
             target.className = 'item-input-block';
             target.removeChild(target.lastChild);
@@ -171,6 +175,8 @@ export default function Simulate(ctx) {
             const content = addElement(current_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
             content.appendChild(target);
+
+            // content['_props_'] = target['_props_'];
 
             const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
             for (const listItem of listItems)
@@ -214,14 +220,13 @@ export default function Simulate(ctx) {
         return item_fragment;
     },
     _create_view = function (ids, color = null) {
-        let navbar, item, shortcut, type, content,
-            auto_execute = false;
+        let navbar, shortcut, type,
+            item, block, content, input,
+            counter,
+            divider = true;
 
         const slide = addElement(simulateMain, 'div', 'container-main-slide');
-
-        const is_list = ids.every( element => macro[element]['type']['type'] === _TYPES_.LIST );
-        if (!is_list && ids.length === 1)
-            auto_execute = true;
+        const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
         _hide_keyboard();
 
@@ -240,60 +245,63 @@ export default function Simulate(ctx) {
             content.style.backgroundColor = color;
         }
 
+        counter = 0;
         for (const id of ids) {
             shortcut = macro[id];
 
             type = shortcut['type']['type'];
-
             if (shortcut.hasOwnProperty('color'))
                 color = shortcut['color'];
 
-            if (type === _TYPES_.LIST) {
-                item = _create_list_item(id, color);
-            } else {
-                if (auto_execute) {
-                    switch(type) {
-                        case _TYPES_.NUMBER:
-                        case _TYPES_.TEXT:
-                            __showKeyboard = true;
+            if (all_inputs) {
+                switch(type) {
+                    case _TYPES_.NUMBER:
+                    case _TYPES_.TEXT:
+                        item = addElement(slide, 'div', 'item-input');
 
-                            item = addElement(slide, 'div', 'item-input');
+                        block = addElement(item, 'div', 'item-input-block'); 
+                        block.style.color = color;
+                
+                        addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
+                
+                        content = addElement(block, 'div', 'item-list-block');
+                        addElement(content, 'div', 'item-list-header', shortcut['text']);
+                        addElement(content, 'div', 'item-list-subheader', shortcut['text']);
+                
+                        input = addElement(item, 'input', 'item-input-box');
+                        input.style.borderColor = color;
 
-                            const block = addElement(item, 'div', 'item-input-block'); 
-                            block.style.color = color;
-                    
-                            addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
-                    
-                            const content = addElement(block, 'div', 'item-list-block');
-                            addElement(content, 'div', 'item-list-header', shortcut['text']);
-                    
-                            addElement(content, 'div', 'item-list-subheader', shortcut['text']);
-                    
-                            const input = addElement(item, 'input', 'item-input-box');
-                            input.style.borderColor = color;
-
+                        if (counter === 0) {
                             item.style.animationPlayState = 'running';
-                            break;
-        
-                        case _TYPES_.DATE:
-                            break;
-        
-                        case _TYPES_.PHOTO:
-                            break;
-        
-                        case _TYPES_.SIGNATURE:
-                            break;
-        
-                        case _TYPES_.SCAN:
-                            break;
-                    }
-                } else {
-                    item = _create_list_item(id, color, true);
+                            _show_keyboard(id, color, slide);
+                        } 
+                        break;
+    
+                    case _TYPES_.DATE:
+                        break;
+    
+                    case _TYPES_.PHOTO:
+                        break;
+    
+                    case _TYPES_.SIGNATURE:
+                        break;
+    
+                    case _TYPES_.SCAN:
+                        break;
                 }
+
+                divider = false;
+            } else {
+                item = _create_list_item(id, color, type !== _TYPES_.LIST);
             }
-            
+
             slide.appendChild(item);
-            addElement(slide, 'div', 'item-divider');
+
+            if (divider)
+                addElement(slide, 'div', 'item-divider');
+            divider = true;
+
+            counter++;
         }
 
         queueViews.push(slide);

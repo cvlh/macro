@@ -16,7 +16,7 @@ export default function Simulate(ctx) {
         macro,
         stackExecute, stackVisibility,
         queueViews,
-        currentVisibleIDs,lastRootExecuted,
+        currentVisibleIDs, lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _create_keyboard = function() {
@@ -27,11 +27,7 @@ export default function Simulate(ctx) {
 
         confirm = addElement(controls_buttons, 'div', null, 'Confirmar');
         confirm.style.backgroundColor = 'var(--main-green-bold)';
-
-        confirm.addEventListener('click', function(evnt) {
-            const [id, color, current_parent] = this['_props_'];
-            _execute(id, color, current_parent);
-        });
+        confirm.addEventListener('click', _confirm_keyboard, { capture: false });
 
         const keyboard = addElement(simulateKeyboard, 'div', 'keyboard');
         ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'].forEach( value => {
@@ -39,9 +35,22 @@ export default function Simulate(ctx) {
         });
     },
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
-    _show_keyboard = function(id, color, current_parent) { 
-        confirm['_props_'] = [id, color, current_parent];
-        simulateKeyboard.style.height = '130px'; 
+    _show_keyboard = function() { simulateKeyboard.style.height = '130px'; },
+    _confirm_keyboard = function() {
+        if (confirm.hasOwnProperty('_inputs_')) {
+            const firstInput = confirm['_inputs_']['list'].shift();
+            if (firstInput) {
+                if (confirm['_inputs_']['last']) 
+                    confirm['_inputs_']['last'].style.animationDirection = 'reverse';
+
+                firstInput.style.animationPlayState = 'running';
+
+                confirm['_inputs_']['last'] = firstInput;
+                _show_keyboard();
+                return;
+            } 
+            delete this['_inputs_'];
+        }
     },
 
     _wildcard = function(id) {
@@ -150,6 +159,17 @@ export default function Simulate(ctx) {
             setTimeout(() => {
                 current_slide.style.left = '-100%';
                 slide.style.left = 0;
+
+                _confirm_keyboard();
+                // if (slide.hasOwnProperty('_inputs_')) {
+                //     const firstInput = slide['_inputs_'].shift();
+                //     // const [id, color] = firstElement['_props_'];
+
+                //     _show_keyboard();
+                //     firstElement.style.animationPlayState = 'running';
+
+                //     delete slide['_inputs_'];
+                // }
             }, 50);
         }
 
@@ -166,30 +186,29 @@ export default function Simulate(ctx) {
             const [id, color] = target['_props_'];
 
             delete target['_props_'];
-
-            _show_keyboard(id, color, current_parent);
-
+            
             target.className = 'item-input-block';
             target.removeChild(target.lastChild);
-
+            
             const content = addElement(current_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
             content.appendChild(target);
-
+            
             // content['_props_'] = target['_props_'];
-
+            
             const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
             for (const listItem of listItems)
-                listItem.style.animationPlayState = 'running';
-
+            listItem.style.animationPlayState = 'running';
+            
             const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
-                divider.style.height = '0px';
+            divider.style.height = '0px';
             
             const input = addElement(content, 'input', 'item-input-box');
             input.style.borderColor = color;
 
             content.style.animationPlayState = 'running';
+            _show_keyboard();
             
         } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
@@ -222,7 +241,7 @@ export default function Simulate(ctx) {
     _create_view = function (ids, color = null) {
         let navbar, shortcut, type,
             item, block, content, input,
-            counter,
+            // counter,
             divider = true;
 
         const slide = addElement(simulateMain, 'div', 'container-main-slide');
@@ -245,7 +264,10 @@ export default function Simulate(ctx) {
             content.style.backgroundColor = color;
         }
 
-        counter = 0;
+        if (all_inputs)
+            confirm['_inputs_'] = { last: null, list: [] };
+
+        // counter = 0;
         for (const id of ids) {
             shortcut = macro[id];
 
@@ -271,10 +293,12 @@ export default function Simulate(ctx) {
                         input = addElement(item, 'input', 'item-input-box');
                         input.style.borderColor = color;
 
-                        if (counter === 0) {
-                            item.style.animationPlayState = 'running';
-                            _show_keyboard(id, color, slide);
-                        } 
+                        item['_props_'] = [id, color];
+
+                        // if (counter !== 0) 
+                        //     item.style.display = 'none';
+
+                        confirm['_inputs_']['list'].push(item);
                         break;
     
                     case _TYPES_.DATE:
@@ -301,7 +325,7 @@ export default function Simulate(ctx) {
                 addElement(slide, 'div', 'item-divider');
             divider = true;
 
-            counter++;
+            // counter++;
         }
 
         queueViews.push(slide);

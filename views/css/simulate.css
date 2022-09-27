@@ -267,17 +267,17 @@
                         animation-duration: .15s;
                         animation-timing-function: ease-in;
                         animation-delay: 0s;
-                        animation-iteration-count: 1;
+                        /* animation-iteration-count: 1; */
                         animation-direction: normal;
                         animation-fill-mode: both;
                         animation-play-state: paused;
                     }
                         @keyframes stretch_item_input {
-                            from {
+                            0% {
                                 padding: 0;
-                                height: 50px;
-                            } to {
-                                padding: 8px;
+                                height: 0px;
+                            } 100% {
+                                padding: 10px;
                                 height: 110px;
                             }
                         }

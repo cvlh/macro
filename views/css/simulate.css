@@ -193,21 +193,11 @@
                         overflow: hidden;
 
                         background-color: transparent;
-
-                        animation-name: shrink_item_list;
-                        animation-duration: .15s;
-                        animation-iteration-count: 1;
-                        animation-fill-mode: both;
-                        animation-play-state: paused;
+                        animation: .15s linear 0s 1 normal both paused shrink_item_list;
                     }
                         @keyframes shrink_item_list {
-                            from {
-                                height: 50px;
-                                opacity: 1;
-                            } to { 
-                                opacity: 0;
-                                height: 0px;
-                            }
+                            from { height: 50px; opacity: 1; } 
+                            to   { height:  0px; opacity: 0; }
                         }
                         .item-list.input-type { grid-template-columns: 34px auto 24px; }
                         .item-list:first  { margin-top: 4px; }
@@ -263,46 +253,47 @@
 
                         background-color: transparent;
 
-                        animation-name: stretch_item_input;
                         animation-duration: .15s;
-                        animation-timing-function: ease-in;
+                        animation-timing-function: linear;
                         animation-delay: 0s;
-                        /* animation-iteration-count: 1; */
+                        animation-iteration-count: 1;
                         animation-direction: normal;
                         animation-fill-mode: both;
                         animation-play-state: paused;
+                        animation-name: stretch_item_input;
                     }
                         @keyframes stretch_item_input {
-                            0% {
-                                padding: 0;
-                                height: 0px;
-                            } 100% {
-                                padding: 10px;
-                                height: 110px;
-                            }
+                            from { padding:  0px; height:  50px; }
+                            to   { padding: 10px; height: 110px; }
                         }
-
+                        @keyframes stretch_item_inputs {
+                            from { padding:  0px; height:   0px; opacity: 0;}
+                            to   { padding: 10px; height: 110px; opacity: 1;}
+                        }
+                        @keyframes shrink_item_input {
+                            from { height: 110px; padding: 10px; opacity: 1; } 
+                            to   { height: 0px; opacity: 0; }
+                        }
                         .item-input > .item-input-block {
                             display: grid;
                             grid-template-columns: 34px auto;
                             grid-template-rows: 50px;
                         }
+                            .item-input-box {
+                                border-width: 2px;
+                                border-style: solid;
 
-                        .item-input-box {
-                            border-width: 2px;
-                            border-style: solid;
+                                color: var(--main-font-color-bold);
+                                padding: 0 10px 0 10px;
+                                height: 40px;
+                                border-radius: 8px;
+                                font-weight: 600;
+                                font-size: 18px;
+                                width: 100%;
+                                outline: none;
 
-                            color: var(--main-font-color-bold);
-                            padding: 0 10px 0 10px;
-                            height: 40px;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            font-size: 18px;
-                            width: 100%;
-                            outline: none;
-
-                            background-color: #fafafa;
-                        }
+                                background-color: #fafafa;
+                            }
         .simulate-content > .footer {
             transform: translate(79px, 9px);
 

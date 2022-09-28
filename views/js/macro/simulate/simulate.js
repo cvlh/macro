@@ -38,17 +38,21 @@ export default function Simulate(ctx) {
     _show_keyboard = function() { simulateKeyboard.style.height = '130px'; },
     _confirm_keyboard = function() {
         if (confirm.hasOwnProperty('_inputs_')) {
-            const firstInput = confirm['_inputs_']['list'].shift();
-            if (firstInput) {
-                if (confirm['_inputs_']['last']) 
-                    confirm['_inputs_']['last'].style.animationDirection = 'reverse';
+            let index = confirm['_inputs_']['last'];
+            const curr_input = confirm['_inputs_']['list'][index];
+            if (curr_input) {
+                curr_input.style.animationPlayState = 'running';
 
-                firstInput.style.animationPlayState = 'running';
-
-                confirm['_inputs_']['last'] = firstInput;
+                if (index > 0) {
+                    index--;
+                    confirm['_inputs_']['list'][index].style.animationName = 'shrink_item_input';
+                }
+                
                 _show_keyboard();
+                confirm['_inputs_']['last']++;
                 return;
-            } 
+            }
+
             delete this['_inputs_'];
         }
     },
@@ -152,7 +156,6 @@ export default function Simulate(ctx) {
         if (visiblesIDs.length === 1 && lastRootExecuted === visiblesIDs[0]) {
             simulateMain.removeChild(slide);
             queueViews.pop();
-            //slide.style.left = '0';
             
             _execute(lastRootExecuted, color, current_slide);
         } else {
@@ -161,15 +164,6 @@ export default function Simulate(ctx) {
                 slide.style.left = 0;
 
                 _confirm_keyboard();
-                // if (slide.hasOwnProperty('_inputs_')) {
-                //     const firstInput = slide['_inputs_'].shift();
-                //     // const [id, color] = firstElement['_props_'];
-
-                //     _show_keyboard();
-                //     firstElement.style.animationPlayState = 'running';
-
-                //     delete slide['_inputs_'];
-                // }
             }, 50);
         }
 
@@ -191,18 +185,18 @@ export default function Simulate(ctx) {
             target.removeChild(target.lastChild);
             
             const content = addElement(current_parent, 'div', 'item-input');
+            // content.style.animationName = 'stretch_item_input';
+
             current_parent.replaceChild(content, target);
             content.appendChild(target);
             
-            // content['_props_'] = target['_props_'];
-            
             const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
             for (const listItem of listItems)
-            listItem.style.animationPlayState = 'running';
+                listItem.style.animationPlayState = 'running';
             
             const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
-            divider.style.height = '0px';
+                divider.style.height = '0px';
             
             const input = addElement(content, 'input', 'item-input-box');
             input.style.borderColor = color;
@@ -265,9 +259,8 @@ export default function Simulate(ctx) {
         }
 
         if (all_inputs)
-            confirm['_inputs_'] = { last: null, list: [] };
+            confirm['_inputs_'] = { last: 0, list: [] };
 
-        // counter = 0;
         for (const id of ids) {
             shortcut = macro[id];
 
@@ -280,12 +273,16 @@ export default function Simulate(ctx) {
                     case _TYPES_.NUMBER:
                     case _TYPES_.TEXT:
                         item = addElement(slide, 'div', 'item-input');
+                        item.style.animationName = 'stretch_item_inputs';
 
                         block = addElement(item, 'div', 'item-input-block'); 
                         block.style.color = color;
                 
-                        addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
-                
+                        if (!shortcut.hasOwnProperty('icon'))
+                            block.style.gridTemplateColumns = 'auto';
+                        else
+                            addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
+
                         content = addElement(block, 'div', 'item-list-block');
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['text']);
@@ -294,10 +291,6 @@ export default function Simulate(ctx) {
                         input.style.borderColor = color;
 
                         item['_props_'] = [id, color];
-
-                        // if (counter !== 0) 
-                        //     item.style.display = 'none';
-
                         confirm['_inputs_']['list'].push(item);
                         break;
     
@@ -324,8 +317,6 @@ export default function Simulate(ctx) {
             if (divider)
                 addElement(slide, 'div', 'item-divider');
             divider = true;
-
-            // counter++;
         }
 
         queueViews.push(slide);

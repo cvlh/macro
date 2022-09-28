@@ -16,6 +16,7 @@ export default function Simulate(ctx) {
         macro,
         stackExecute, stackVisibility,
         queueViews,
+        structInputs, // { last: 0, list: [] }
         currentVisibleIDs, lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -37,23 +38,21 @@ export default function Simulate(ctx) {
     _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
     _show_keyboard = function() { simulateKeyboard.style.height = '130px'; },
     _confirm_keyboard = function() {
-        if (confirm.hasOwnProperty('_inputs_')) {
-            let index = confirm['_inputs_']['last'];
-            const curr_input = confirm['_inputs_']['list'][index];
-            if (curr_input) {
-                curr_input.style.animationPlayState = 'running';
+        let last = structInputs['last'],
+            list = structInputs['list'];
 
-                if (index > 0) {
-                    index--;
-                    confirm['_inputs_']['list'][index].style.animationName = 'shrink_item_input';
-                }
-                
+        if (list.length) {
+            if (last < list.length) {
+                list[last].style.animationPlayState = 'running';
+                if (last > 0) 
+                    list[last - 1].style.animationName = 'shrink_item_input';
+
                 _show_keyboard();
-                confirm['_inputs_']['last']++;
-                return;
+                structInputs['last'] += 1;
+            } else {
+                const [id, color] = list[last - 1]['_props_'];
+                _execute(id, color, queueViews[queueViews.length - 1]);
             }
-
-            delete this['_inputs_'];
         }
     },
 
@@ -178,15 +177,12 @@ export default function Simulate(ctx) {
 
         if (target.classList.contains('input-type')) {
             const [id, color] = target['_props_'];
-
             delete target['_props_'];
             
             target.className = 'item-input-block';
             target.removeChild(target.lastChild);
             
             const content = addElement(current_parent, 'div', 'item-input');
-            // content.style.animationName = 'stretch_item_input';
-
             current_parent.replaceChild(content, target);
             content.appendChild(target);
             
@@ -202,6 +198,10 @@ export default function Simulate(ctx) {
             input.style.borderColor = color;
 
             content.style.animationPlayState = 'running';
+
+            content['_props_'] = [id, color];
+            structInputs = { last: 1, list: [content] };
+            
             _show_keyboard();
             
         } else if (target.classList.contains('item-list')) {
@@ -258,8 +258,8 @@ export default function Simulate(ctx) {
             content.style.backgroundColor = color;
         }
 
-        if (all_inputs)
-            confirm['_inputs_'] = { last: 0, list: [] };
+        //if (all_inputs)
+            structInputs = { last: 0, list: [] };
 
         for (const id of ids) {
             shortcut = macro[id];
@@ -291,7 +291,7 @@ export default function Simulate(ctx) {
                         input.style.borderColor = color;
 
                         item['_props_'] = [id, color];
-                        confirm['_inputs_']['list'].push(item);
+                        structInputs['list'].push(item);
                         break;
     
                     case _TYPES_.DATE:
@@ -394,6 +394,7 @@ export default function Simulate(ctx) {
         stackVisibility = [];
         queueViews = [];
         stackExecute = [];
+        // structInputs = {};
         lastRootExecuted = null;
 
         const visiblesIDs = _filter_ids(currentVisibleIDs, 1);

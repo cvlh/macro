@@ -731,7 +731,7 @@ body {
             border-right: 6px solid #0000;
             position: absolute;
             right: -8px;
-            top: 21px;
+            top: calc(50% - 3px);
             border-bottom: 6px solid #37474f;
             transform: rotate(90deg);
         }
@@ -744,6 +744,11 @@ body {
             height: 20px;
             border-radius: 2px;
         }
+            .app-cards-item-visibility-toolbar .spacer { 
+                height: 1px;
+                background-color: rgb(0 0 0 / 10%);
+            }
+            .app-cards-item-visibility-toolbar > .button.none { color: red; }
             .app-cards-item-visibility-toolbar > .button > div { pointer-events: none; }
         .app-cards-item-visibility-toolbar > .button:hover { 
             background-color: var(--color-bg-design-hover); 

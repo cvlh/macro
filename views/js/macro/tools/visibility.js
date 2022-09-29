@@ -12,7 +12,7 @@ export default function VisibilityTool (ctx) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let content,
-        btnVisible, btnHidden,
+        btnVisible, btnHidden, btnNone,
         currentField = null,
     
     // PRIVATE /////////////////////////////////////////////////////////////////
@@ -30,8 +30,13 @@ export default function VisibilityTool (ctx) {
             const object = main.getSelectedObject(),
                   status = target['_action'];
 
-            currentField.selectedForVisibility(status);
-            object.addToVisibility(currentField, status);
+            object.removeFromVisibility(currentField);
+            currentField.unselectForVisibility();
+
+            if (status !== _STATUS_.NONE) {
+                currentField.selectedForVisibility(status);
+                object.addToVisibility(currentField, status);
+            }
         }
     };
 
@@ -55,16 +60,21 @@ export default function VisibilityTool (ctx) {
         content.className = 'app-cards-item-visibility-toolbar';
     
         btnVisible = addElement(content, 'div', 'button');
-            addElement(btnVisible, 'div', 'icon', _ICON_CHAR_.VISIBLE);
-            addElement(btnVisible, 'div', null, _I18N_.visible);
+        addElement(btnVisible, 'div', 'icon', _ICON_CHAR_.VISIBLE);
+        addElement(btnVisible, 'div', null, _I18N_.visible);
         btnVisible['_action'] = _STATUS_.VISIBLE;
-        // btnVisible.setAttribute('action', _STATUS_.VISIBLE);
 
         btnHidden = addElement(content, 'div', 'button');
-            addElement(btnHidden, 'div', 'icon', _ICON_CHAR_.HIDDEN);
-            addElement(btnHidden, 'div', null, _I18N_.hidden);
+        addElement(btnHidden, 'div', 'icon', _ICON_CHAR_.HIDDEN);
+        addElement(btnHidden, 'div', null, _I18N_.hidden);
         btnHidden['_action'] = _STATUS_.HIDDEN;
-        // btnHidden.setAttribute('action', _STATUS_.HIDDEN);
+
+        addElement(content, 'div', 'spacer');
+
+        btnNone = addElement(content, 'div', 'button none');
+        addElement(btnNone, 'div', 'icon', _ICON_CHAR_.EMPTY);
+        addElement(btnNone, 'div', null, _I18N_.none);
+        btnNone['_action'] = _STATUS_.NONE;
 
         content.addEventListener('click', _receive_events, { capture: true });
     })();

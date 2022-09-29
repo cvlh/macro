@@ -300,10 +300,8 @@ export default function Card(_ctx, _properties, tab) {
             current_field.setVisibilityMode();
     };
     this.addToVisibility = function(field, status) {
-        this.removeFromVisibility(field);
-
         props['visibility']['fields'][status].push(field);
-         _updateVisibilityCounter();
+        _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
         const removeId = field.getProps('id');
@@ -312,23 +310,8 @@ export default function Card(_ctx, _properties, tab) {
             if (result !== -1)
                 props['visibility']['fields'][status].splice(result, 1);
         }
-        // const removeId = field.getProps('id');
-        // for (const status in props['visibility']['fields']) {
-        //     let txt = status + ' antes -> ';
-        //     props['visibility']['fields'][status].map( element => txt += element.getProps('id') + ', ' );
-        //     console.log(txt);
-
-        //     let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
-        //     if (result !== -1) {
-        //         props['visibility']['fields'][status].splice(result, 1);
-
-        //         console.log(`removeu -> ${status} -> ${removeId} -> ${result}`);
-        //     }
-
-        //     txt = status + ' depois -> ';
-        //     props['visibility']['fields'][status].map( element => txt += element.getProps('id') + ', ' );
-        //     console.log(txt);
-        // }
+        
+        _updateVisibilityCounter();
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////

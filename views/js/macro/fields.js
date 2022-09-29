@@ -207,7 +207,7 @@ export default function Field(ctx, append, properties) {
     _selectedForVisibility = function(status) {
         const color = context.getColor() + 'CC';
 
-        _unselectForVisibility();
+        // _unselectForVisibility();
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
@@ -609,10 +609,8 @@ export default function Field(ctx, append, properties) {
         }
     };
     this.addToVisibility = function(field, status) {
-        this.removeFromVisibility(field);
-
         props['visibility']['fields'][status].push(field);
-         _updateVisibilityCounter();
+        _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
         const removeId = field.getProps('id');
@@ -621,6 +619,8 @@ export default function Field(ctx, append, properties) {
             if (result !== -1)
                 props['visibility']['fields'][status].splice(result, 1);
         }
+
+        _updateVisibilityCounter();
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -681,7 +681,6 @@ export default function Field(ctx, append, properties) {
     // this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
-    // this.getVisibilityStatus = function () { return currentVisibilityStatus; };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {

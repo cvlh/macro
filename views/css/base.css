@@ -707,7 +707,7 @@ body {
 
     .app-cards-item-visibility-toolbar {
         position: absolute;
-        left: -72px;
+        left: -77px;
         padding: 3px;
 
         display: flex;
@@ -721,6 +721,7 @@ body {
         background-color: #37474f;
         border-radius: 3px;
 
+        z-index: 999;
         box-shadow: var(--color-shadow);
     }
         .app-cards-item-visibility-toolbar:before {
@@ -741,7 +742,7 @@ body {
             flex-direction: row;
             align-items: center;
             cursor: pointer;
-            height: 20px;
+            height: 18px;
             border-radius: 2px;
         }
             .app-cards-item-visibility-toolbar .spacer { 
@@ -793,7 +794,7 @@ body {
                 position: relative;
                 color: var(--main-font-color-black);
                 outline-color: inherit;
-                transition: .15s background-color linear;
+                /* transition: .15s background-color linear; */
             }
                 .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }

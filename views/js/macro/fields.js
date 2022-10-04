@@ -543,7 +543,7 @@ export default function Field(ctx, append, properties) {
         } else {
             isCurrentSelectObject = false;
 
-            item.classList.remove('selected');
+            item.classList.remove('selected', 'border-radius');
 
             if (context.hasConnection())
                 output['_PATH_'].style.removeProperty('stroke-width');

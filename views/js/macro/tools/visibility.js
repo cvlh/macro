@@ -49,7 +49,7 @@ export default function VisibilityTool (ctx) {
     };
     this.hide = function(field) {
         const div = field.getDiv();
-        div.removeChild(content);
+        //div.removeChild(content);
 
         currentField = null;
     };

@@ -211,7 +211,7 @@ export default function Field(ctx, append, properties) {
 
         treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
-        treeviewRow.style.color = '#ffffff';
+        treeviewRow.style.color = 'var(--white)';
 
         const path = treeviewRow.querySelector('.field');
 
@@ -219,7 +219,7 @@ export default function Field(ctx, append, properties) {
         switch (status) {
             case _STATUS_.VISIBLE:
                 description.style.backgroundColor = color;
-                description.style.color = '#ffffff';
+                description.style.color = 'var(--white)';
                 break;
         
             case _STATUS_.HIDDEN:

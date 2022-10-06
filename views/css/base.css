@@ -54,62 +54,16 @@
     -webkit-tap-highlight-color: #0000001a;
 }
 
-html {
-
-    /* --main-border-color: #e6ebf1; */
-    /* --main-border-color: #eef2f8;
-    --main-border-color-high: #cfd7df;
-    --main-border-color-bold: #8898aa;
-
-    --main-font-color-low: #aab7c4;
-    --main-font-color-med: #6b7c93;
-    --main-font-color-high: #37474f;
-    --main-font-color-bold: #263238;
-    --main-font-color-black: #000000;
-
-    --main-green-low: #74e4a2;
-    --main-green-med: #3ecf8e;
-    --main-green-high: #24b47e;
-    --main-green-bold: #28a745;
-    --main-green-selected: #18662a;
-
-    --main-yellow-low: #ffeb3b;
-    --main-yellow-med: #FDD835;
-
-    --main-red-bold: #F44336;
-    --main-red-selected: #a32d24;
-
-    --color-bg-design: #0d99ff;
-    --color-bg-design-hover: #007be5;
-    --color-bg-design-pressed: #0768cf; */
-
-    /* --main-blue-med: #17a2b8; */
-    /* --main-blue-bold: #007bff; */
-
-    /* --main-blue-selected: #0056b2; */
-
-    /* --color-shadow: rgba(0, 0, 0, .15);
-    --bg-overlay-outline: var(--color-shadow, rgba(0, 0, 0, .1)); */
-
-    --color-shadow:  5px  5px 8px rgb(0 0 0 / 8%), 
-                    -5px  5px 8px rgb(0 0 0 / 8%), 
-                    -5px -5px 8px rgb(0 0 0 / 8%), 
-                     5px -5px 8px rgb(0 0 0 / 8%);
-}
-
-body {
-    overflow: hidden;
-    /*background-color: #F5F5F5;*/
-}
+body { overflow: hidden; }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background-color: #f0f0f0; }
+::-webkit-scrollbar-track { background-color: var(--neutral-200); }
 ::-webkit-scrollbar-thumb { 
     border-radius: 5px;
-    background-color: #cdcdcd;
+    background-color: var(--neutral-500);
 }
-::-webkit-scrollbar-thumb:hover { background-color: #a0a0a0; }
-::-webkit-scrollbar-thumb:active { background-color: #909090; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--neutral-600); }
+::-webkit-scrollbar-thumb:active { background-color: var(--neutral-700); }
 
 .main-app {
     position: relative;
@@ -147,7 +101,7 @@ body {
 
         border-radius: 4px;
 
-        color: var(--main-font-color-high);
+        color: var(--black);
         z-index: 2;
     }
         .main-app-builder-widget-holder .divider { background-color: var(--main-border-color-high); }
@@ -159,9 +113,9 @@ body {
         }
             .main-app-builder-widget-holder .button:hover { 
                 background-color: var(--gray-200);
-                color: var(--main-font-color-high); 
+                color: var(--black); 
             }
-            .main-app-builder-widget-holder .button:active { color: var(--main-font-color-black); }
+            .main-app-builder-widget-holder .button:active { color: var(--black); }
     .main-app-builder-toolbar {
         display: grid;
 
@@ -170,8 +124,8 @@ body {
         align-items: center;
         justify-items: center;
 
-        background-color: #fff;
-        border-bottom: 1px solid #e5e5e5;
+        background-color: var(--white);
+        border-bottom: 1px solid var(--gray-200);
         z-index: 5;
     }
         .main-app-builder-toolbar .holder { position: relative; }
@@ -211,7 +165,7 @@ body {
             outline-style: solid;
             outline-width: 4px;
             outline-offset: -1px;
-            outline-color: var(--main-font-color-high);
+            outline-color: var(--black);
             box-shadow: 0px 0px 15px 5px rgb(0 0 0 / 20%);
         }
     .main-app-svg {
@@ -293,7 +247,7 @@ body {
 
         font-size: 11px;
 
-        color: var(--main-font-color-bold);
+        color: var(--black);
     }
         /* .main-app-properties-row.spacer { padding: 5px 0; } */
         .main-app-properties-row.header {
@@ -322,7 +276,7 @@ body {
 
             font-size: 11px;
             font-weight: 300;
-            color: var(--main-font-color-bold);
+            color: var(--black);
         }
         .main-app-properties-row select { font-size: 12px; }
         .main-app-properties-row input { font-size: 11px; }
@@ -360,7 +314,7 @@ body {
         .main-app-properties-row input[type=button] {
             background-color: var(--gray-100);
             border: 1px solid var(--gray-200);
-            color: var(--main-font-color-high);
+            color: var(--black);
             cursor: pointer;
             outline: none;
             border-radius: 4px;
@@ -453,7 +407,7 @@ body {
             grid-column: 3 / span 2;
             text-align: center;
             font-size: 13px;
-            color: var(--main-font-color-bold);
+            color: var(--black);
         }
         .main-app-properties-checkbox-label { padding-left: 8px; }
 
@@ -470,7 +424,7 @@ body {
     scrollbar-width: thin;
 
     z-index: 2;
-    color: var(--main-font-color-bold);
+    color: var(--black);
 }
 .main-app-treeview-col-resize {
     background-color: #f0f0f0;
@@ -585,7 +539,7 @@ body {
     /*box-shadow: 0 8px 16px 0 rgba(0,0,0,.1);*/
     /*box-shadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025);*/
     border-radius: 6px;
-    background-color: #fff;
+    background-color: var(--white);
 
     border-width: 2px;
     border-style: solid;
@@ -598,7 +552,7 @@ body {
         outline-style: solid;
         outline-width: 4px;
         outline-offset: -1px;
-        outline-color: var(--main-font-color-high);
+        outline-color: var(--black);
 
         box-shadow: var(--color-shadow);
         /* background-attachment: scroll ; */
@@ -608,20 +562,18 @@ body {
     .app-cards-header {
         position: relative;
 
-        color: #cfd7df;
+        color: var(--neutral-800);
 
         cursor: grab;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
-        border-bottom: 1px solid var(--gray-300);
+        border-bottom: 1px solid var(--neutral-300);
 
         display: grid;
-        /*grid-template-columns: auto 25px 25px;*/
-        /* grid-template-columns: 250px 25px 25px; */
         grid-template-columns: 225px 25px 25px 25px;
 
         align-items: center;
-        background-color: var(--gray-100);
+        background-color: var(--neutral-100);
 
         min-height: 28px;
     }
@@ -630,14 +582,11 @@ body {
             font-size: 11px;
             font-weight: 600;
             padding: 0 10px;
-            /* line-height: 18px; */
-            /*overflow: hidden;*/
-            /*text-overflow: ellipsis;*/
             text-transform: uppercase;
         }
         .app-cards-header-visibility {
-            background-color: var(--main-yellow-med);
-            color: var(--main-font-color-black);
+            background-color: var(--gray-400);
+            color: var(--black);
             border-radius: 10%;
             text-align: center;
             font-size: 11px;
@@ -649,10 +598,10 @@ body {
             visibility: hidden;
             margin: auto;
         }
-            .app-cards-header-visibility:hover { background-color: var(--main-yellow-low); }
+            .app-cards-header-visibility:hover { background-color: var(--yellow-base); }
         .app-cards-header-dot.root,
         .app-cards-header-title.root {
-            color: var(--main-font-color-high);
+            color: var(--black);
             text-align: center;
         }
         .app-cards-header-button {
@@ -677,9 +626,9 @@ body {
         position: absolute;
         top: 6px;
         left: -61px;
-        height: 22px;
-        background-color: var(--main-yellow-med);
-        color: var(--main-font-color-bold);
+        height: 23px;
+        background-color: var(--yellow-100);
+        color: var(--yellow-base);
         line-height: 23px;
         font-size: 8px;
         font-weight: 600;
@@ -687,6 +636,7 @@ body {
         text-transform: uppercase;
         border-radius: 5px;
         pointer-events: none;
+        border: 1px solid var(--yellow-800);
     }
         .app-cards > .app-cards-item-highlight { 
             top: 2px;
@@ -696,44 +646,41 @@ body {
             content: "";
             width: 0;
             height: 0;
-            border-left: 6px solid #0000;
-            border-right: 6px solid #0000;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
             position: absolute;
             right: 2px;
             top: 7px;
-            border-bottom: 8px solid #ff9800;
+            border-bottom: 8px solid var(--yellow-700);
             transform: rotate(90deg);
         }
 
     .app-cards-item-visibility-toolbar {
         position: absolute;
-        left: -77px;
-        padding: 3px;
-
+        left: -81px;
+        padding: 4px;
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
-        /* gap: 2px; */
-
         font-size: 10px;
         font-weight: 400;
-        color: white;
-        background-color: #37474f;
-        border-radius: 3px;
-
+        color: var(--black);
+        background-color: var(--white);
+        border-radius: 5px;
         z-index: 999;
-        box-shadow: var(--color-shadow);
+        /* box-shadow: var(--color-shadow); */
+        border: 1px solid var(--neutral-500);
     }
         .app-cards-item-visibility-toolbar:before {
             content: "";
             width: 0;
             height: 0;
-            border-left: 6px solid #0000;
-            border-right: 6px solid #0000;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
             position: absolute;
-            right: -8px;
+            right: -9px;
             top: calc(50% - 3px);
-            border-bottom: 6px solid #37474f;
+            border-bottom: 6px solid var(--neutral-500);
             transform: rotate(90deg);
         }
 
@@ -747,15 +694,19 @@ body {
         }
             .app-cards-item-visibility-toolbar .spacer { 
                 height: 1px;
-                background-color: rgb(0 0 0 / 10%);
+                background-color: var(--neutral-300);
+                margin: 2px 0;
             }
-            .app-cards-item-visibility-toolbar > .button.none { color: red; }
+            .app-cards-item-visibility-toolbar > .button.none { color: var(--red-base); }
             .app-cards-item-visibility-toolbar > .button > div { pointer-events: none; }
         .app-cards-item-visibility-toolbar > .button:hover { 
-            background-color: var(--color-bg-design-hover); 
-            color: white;
+            color: var(--blue-base);
+            background-color: var(--blue-200);
         }
-        .app-cards-item-visibility-toolbar > .button:active { background-color: var(--color-bg-design-pressed); }
+        .app-cards-item-visibility-toolbar > .button:active { 
+            color: var(--blue-base);
+            background-color: var(--blue-300); 
+        }
             .app-cards-item-visibility-toolbar > .button > div:first-child { padding: 0 5px; }
             .app-cards-item-visibility-toolbar > .button > div:last-child { padding: 0 8px 0 2px; }
     .app-cards-content {
@@ -775,7 +726,7 @@ body {
 
             font-size: 11px;
             line-height: 29px;
-            color: #ffffff;            
+            color: var(--white);            
         }
         .app-cards-content-items {
             display: flex;
@@ -792,11 +743,11 @@ body {
                 grid-auto-rows: 34px;
                 font-size: 11px;
                 position: relative;
-                color: var(--main-font-color-black);
+                color: var(--black);
                 outline-color: inherit;
                 /* transition: .15s background-color linear; */
             }
-                .app-cards-content-item.selected { background-color: var(--gray-200) !important; }
+                .app-cards-content-item.selected { background-color: var(--neutral-200) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }
                 .app-cards-content-item.selected > div:nth-child(1) { 
                     outline-style: solid;
@@ -805,7 +756,7 @@ body {
                     outline-color: inherit;
                 }
                 .app-cards-content-item.visibility { cursor: pointer; }
-                    .app-cards-content-item.visibility:hover { background-color: var(--gray-200); }
+                    .app-cards-content-item.visibility:hover { background-color: var(--neutral-200); }
                     .app-cards-content-item.visibility > .app-cards-content-item-output {
                         pointer-events: none;
                         background-color: transparent;
@@ -825,15 +776,15 @@ body {
                 }
                     .app-cards-content-item-index {
                         position: absolute;
-                        background-color: var(--gray-100);
-                        color: var(--main-font-color-high);
-                        border-radius: 10% 0 0 10%;
+                        background-color: var(--neutral-200);
+                        color: var(--neutral-base);
+                        border-radius: 3px 0 0 3px;
                         font-size: 10px;
                         width: 20px;
-                        line-height: 20px;
-                        height: 20px;
-                        left: 2px;
-                        top: 2px;
+                        line-height: 22px;
+                        /* height: 20px; */
+                        left: 1px;
+                        top: 1px;
                         font-weight: 600;
                         text-align: center;
                         pointer-events: none;
@@ -842,8 +793,8 @@ body {
                     .app-cards-content-item-visibility {
                         visibility: hidden;
                         position: absolute;
-                        background-color: var(--main-yellow-med);
-                        color: var(--main-font-color-black);
+                        background-color: var(--gray-400);
+                        color: var(--black);
                         border-radius: 10%;
                         text-align: center;
                         font-size: 11px;
@@ -855,11 +806,11 @@ body {
                         top: 2px;
                         cursor: context-menu;
                     }
-                        .app-cards-content-item-visibility:hover { background-color: var(--main-yellow-low); }
+                        .app-cards-content-item-visibility:hover { background-color: var(--yellow-base); }
             
                     .app-cards-content-item input {
                         font-weight: 600;
-                        border: 1px solid var(--gray-200);
+                        border: 1px solid var(--neutral-200);
                         font-size: 11px;
                         border-radius: 4px;
                         height: 24px;
@@ -884,7 +835,7 @@ body {
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
         padding: 4px 12px;
-        border-top: 1px solid #0000000a;
+        border-top: 1px solid var(--black);
 
         display: flex;
         flex-direction: row;
@@ -919,7 +870,7 @@ body {
     height: 4px;
     width: 4px;
     border-radius: 50%;
-    background-color: #000;
+    background-color: var(--black);
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0.1;

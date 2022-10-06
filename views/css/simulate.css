@@ -5,10 +5,10 @@
     top: 40px;
 
     box-shadow: 0px 0px 8px 2px rgb(0 0 0 / 10%);
-    border: 2px solid #bdbdbd;
+    border: 2px solid var(--neutral-600);;
     border-radius: 35px;
 
-    background-color: #fafafa;
+    background-color: var(--white);
 
     box-sizing: content-box;
     display: none;
@@ -17,12 +17,12 @@
         content: "";
         width: 0;
         height: 0;
-        border-left: 10px solid #0000;
-        border-right: 10px solid #0000;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
         position: absolute;
         left: 73%;
         top: -13px;
-        border-bottom: 12px solid #bdbdbd;
+        border-bottom: 12px solid var(--neutral-600);
     }
 
     .simulate-content {
@@ -42,8 +42,8 @@
             height: 5px;
 
             border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            background-color: #eeeeee;
+            background-color: var(--neutral-200);
+            border: 1px solid var(--neutral-400);
         }
             .header:before {
                 content: "";
@@ -56,7 +56,7 @@
                 height: 6px;
 
                 border-radius: 50%;
-                background-color: #eeeeee;
+                background-color: var(--neutral-400);;
             }
             .header::after {
                 content: "";
@@ -68,7 +68,7 @@
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background-color: #eeeeee;
+                background-color: var(--neutral-400);;
             }
 
         .simulate-content > .container {
@@ -102,14 +102,12 @@
                         cursor: pointer;
                         color: var(--white);
                     }
-                    /* .controls-buttons > div:active { transform: scaleY(.99); } */
-
-                        .controls-buttons > div.confirm { background-color: var(--blue-900); }
-                        .controls-buttons > div.confirm:hover { background-color: var(--blue-1000); }
+                        .controls-buttons > div.confirm { background-color: var(--blue-800); }
+                        .controls-buttons > div.confirm:hover { background-color: var(--blue-900); }
                         .controls-buttons > div.confirm:active { background-color: var(--blue-base); }
 
-                        .controls-buttons > div.back { background-color: var(--yellow-900); }
-                        .controls-buttons > div.back:hover { background-color: var(--yellow-1000); }
+                        .controls-buttons > div.back { background-color: var(--yellow-800); }
+                        .controls-buttons > div.back:hover { background-color: var(--yellow-900); }
                         .controls-buttons > div.back:active { background-color: var(--yellow-base); }
 
                 .controls > .keyboard {
@@ -119,7 +117,6 @@
                     background-color: var(--neutral-200);
                 }
                     .keyboard-key {
-                        /* background-color: #f5f5f5; */
                         border-radius: 5px;
                         font-weight: 600;
                         color: var(--black);
@@ -148,7 +145,7 @@
                 scrollbar-width: thin;
 
                 background-color: var(--white);
-                /* color: var(--main-font-color-bold); */
+                /* color: var(--black */
             }
                 .container > .main.with-keyboard {
                     border-bottom: none;
@@ -166,7 +163,7 @@
                     transition: .15s left linear;
                 }
                     .container-main-slide > .navbar {
-                        background-color: #f5f5f5;
+                        background-color: var(--neutral-200);;
 
                         display: grid;
                         align-items: center;
@@ -192,7 +189,7 @@
                         display: block;
                         height: 1px;
                         width: 100%;
-                        background-color: #f5f5f5;
+                        background-color: var(--neutral-200);;
 
                         /* transition: .15s height; */
                     }
@@ -219,8 +216,8 @@
                         }
                         .item-list.input-type { grid-template-columns: 34px auto 24px; }
                         .item-list:first  { margin-top: 4px; }
-                        .item-list:hover  { background-color: #fafafa; }
-                        .item-list:active { background-color: #f5f5f5; }
+                        .item-list:hover  { background-color: var(--neutral-100); }
+                        .item-list:active { background-color: var(--neutral-200); }
 
                         .item-list-icon {
                             display: flex;
@@ -254,7 +251,7 @@
                                 pointer-events: none;
                             }
                             .item-list-subheader {
-                                color: #bdbdbd;
+                                color: var(--neutral-800);;
                                 font-size: 9px;
                                 font-weight: 400;
                                 overflow: hidden;
@@ -319,7 +316,6 @@
             height: 16px;
 
             border-radius: 8px;
-            background-color: #eeeeee;
-
-            border: 1px solid #e0e0e0;
+            background-color: var(--neutral-200);
+            border: 1px solid var(--neutral-400);
         }

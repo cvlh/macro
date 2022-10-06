@@ -12,7 +12,6 @@ export default function Simulate(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
-        confirm,
         macro,
         stackExecute, stackVisibility,
         queueViews,
@@ -23,11 +22,8 @@ export default function Simulate(ctx) {
     _create_keyboard = function() {
         const controls_buttons = addElement(simulateKeyboard, 'div', 'controls-buttons');
 
-        const back = addElement(controls_buttons, 'div', null, 'Voltar');
-        back.style.backgroundColor = 'var(--main-font-color-med)';
-
-        confirm = addElement(controls_buttons, 'div', null, 'Confirmar');
-        confirm.style.backgroundColor = 'var(--main-green-bold)';
+        const back = addElement(controls_buttons, 'div', 'back', 'Voltar');
+        const confirm = addElement(controls_buttons, 'div', 'confirm', 'Confirmar');
         confirm.addEventListener('click', _confirm_keyboard, { capture: false });
 
         const keyboard = addElement(simulateKeyboard, 'div', 'keyboard');
@@ -35,8 +31,14 @@ export default function Simulate(ctx) {
             addElement(keyboard, 'div', 'font-awesome keyboard-key', value);
         });
     },
-    _hide_keyboard = function() { simulateKeyboard.style.removeProperty('height'); },
-    _show_keyboard = function() { simulateKeyboard.style.height = '130px'; },
+    _hide_keyboard = function() {
+        simulateMain.classList.remove('with-keyboard');
+        simulateKeyboard.style.removeProperty('height'); 
+    },
+    _show_keyboard = function() {
+        simulateMain.classList.add('with-keyboard');
+        simulateKeyboard.style.height = '130px'; 
+    },
     _confirm_keyboard = function() {
         let last = structInputs['last'],
             list = structInputs['list'];

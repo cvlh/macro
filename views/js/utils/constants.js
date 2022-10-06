@@ -19,6 +19,22 @@ export const _ZOOM_ = {
     MIN: 0.1
 };
 
+// const root_style = getComputedStyle(document.body);
+// export const _COLORS_ = {
+//     RED:     root_style.getPropertyValue('--red-base'),
+//     PINK:    root_style.getPropertyValue('--pink-base'),
+//     PURPLE:  root_style.getPropertyValue('--purple-base'),
+//     BLUE:    root_style.getPropertyValue('--blue-base'),
+//     SKY:     root_style.getPropertyValue('--sky-base'),
+//     INDIGO:  root_style.getPropertyValue('--indigo-base'),
+//     CYAN:    root_style.getPropertyValue('--cyan-base'),
+//     LIME:    root_style.getPropertyValue('--lime-base'),
+//     GREEN:   root_style.getPropertyValue('--green-base'),
+//     ORANGE:  root_style.getPropertyValue('--orange-base'),
+//     YELLOW:  root_style.getPropertyValue('--yellow-base'),
+//     NEUTRAL: root_style.getPropertyValue('--neutral-base'),
+//     GRAY:    root_style.getPropertyValue('--gray-base')
+// };
 export const _COLORS_ = {
     RED:    '#ff0000',
     PURPLE: '#aa00ff',

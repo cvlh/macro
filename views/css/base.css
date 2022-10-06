@@ -1,3 +1,5 @@
+@import url('color.css');
+
 @font-face {
     font-family: 'VP-FONT';
     font-weight: 300;
@@ -53,9 +55,9 @@
 }
 
 html {
-    --main-background: #f6f9fc;
 
-    --main-border-color: #e6ebf1;
+    /* --main-border-color: #e6ebf1; */
+    /* --main-border-color: #eef2f8;
     --main-border-color-high: #cfd7df;
     --main-border-color-bold: #8898aa;
 
@@ -79,11 +81,12 @@ html {
 
     --color-bg-design: #0d99ff;
     --color-bg-design-hover: #007be5;
-    --color-bg-design-pressed: #0768cf;
+    --color-bg-design-pressed: #0768cf; */
 
     /* --main-blue-med: #17a2b8; */
     /* --main-blue-bold: #007bff; */
-    --main-blue-selected: #0056b2;
+
+    /* --main-blue-selected: #0056b2; */
 
     /* --color-shadow: rgba(0, 0, 0, .15);
     --bg-overlay-outline: var(--color-shadow, rgba(0, 0, 0, .1)); */
@@ -96,8 +99,6 @@ html {
 
 body {
     overflow: hidden;
-
-    /*background: var(--main-background);*/
     /*background-color: #F5F5F5;*/
 }
 
@@ -157,7 +158,7 @@ body {
             border-radius: 2px;
         }
             .main-app-builder-widget-holder .button:hover { 
-                background-color: var(--main-border-color);
+                background-color: var(--gray-200);
                 color: var(--main-font-color-high); 
             }
             .main-app-builder-widget-holder .button:active { color: var(--main-font-color-black); }
@@ -256,7 +257,7 @@ body {
 .main-app-properties {
    /* width: 240px;*/
     background-color: #ffffff;
-    border-left: 1px solid var(--main-border-color);
+    border-left: 1px solid var(--gray-200);
 
     position: relative;
 
@@ -273,7 +274,7 @@ body {
         /* height: 0; */
         padding-bottom: 10px;
         display: none;
-        border-bottom: 1px solid var(--main-border-color);
+        border-bottom: 1px solid var(--gray-200);
     }
         /* .main-app-properties-content:first-child { margin-top: 0; } */
         .main-app-properties-content.disabled,
@@ -298,10 +299,9 @@ body {
         .main-app-properties-row.header {
             grid-template-rows: 28px;
             margin-bottom: 5px;
-            /* background-color: var(--main-background); 
-            margin-top: 5px; 
-            border-top: 1px solid var(--main-border-color);
-            border-bottom: 1px solid var(--main-border-color); */
+            /* margin-top: 5px; 
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200); */
         }
         .main-app-properties-row textarea {
             grid-column-start: 2;
@@ -310,7 +310,7 @@ body {
             grid-row-start: 1;
             grid-row-end: 3;
 
-            border: 1px solid var(--main-border-color);
+            border: 1px solid var(--gray-200);
             border-radius: 4px;
             padding: 2px 5px;
 
@@ -328,7 +328,7 @@ body {
         .main-app-properties-row input { font-size: 11px; }
         .main-app-properties-row select,
         .main-app-properties-row input[type=text] {
-            border: 1px solid var(--main-border-color);
+            border: 1px solid var(--gray-200);
             border-radius: 4px;
             height: 24px;
             padding: 2px 5px;
@@ -358,8 +358,8 @@ body {
             color: var(--main-blue-selected);
         }
         .main-app-properties-row input[type=button] {
-            background-color: var(--main-background);
-            border: 1px solid var(--main-border-color);
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-200);
             color: var(--main-font-color-high);
             cursor: pointer;
             outline: none;
@@ -367,7 +367,7 @@ body {
             height: 24px;
         }
             .main-app-properties-row input[type=button]:hover { 
-                background-color: var(--main-border-color);
+                background-color: var(--gray-200);
                 border: 1px solid var(--main-border-color-high);
                 font-weight: 600;
             }
@@ -378,8 +378,8 @@ body {
             }
             .main-app-properties-row input[type=button]:disabled { 
                 color: var(--main-border-color-high);
-                background-color: var(--main-background);
-                border: 1px solid var(--main-border-color);
+                background-color: var(--gray-100);
+                border: 1px solid var(--gray-200);
                 cursor: default;
             }
         .main-app-properties-label {
@@ -398,7 +398,7 @@ body {
             .main-app-properties-label.sub-header { 
                 grid-column: 2 / span 26;
                 line-height: 21px;
-                background-color: var(--main-background);
+                background-color: var(--gray-100);
                 padding-left: 8px;
                 border-radius: 4px;
             }
@@ -435,7 +435,7 @@ body {
             color: #ffffff;
 
             border-radius: 50%;
-            opacity: 0.4;
+            opacity: 0.8;
 
             margin: 0 1px !important;
 
@@ -447,7 +447,7 @@ body {
             .main-app-properties-color:hover { opacity: 1; }
             .main-app-properties-color.selected { 
                 opacity: 1;
-                border-radius: 15%;
+                border-radius: 4px;
              }
         .main-app-properties-type-icon {
             grid-column: 3 / span 2;
@@ -506,8 +506,8 @@ body {
             transition: .15s height linear;
         }
             .main-app-treeview-row:hover {
-                background-color: var(--main-background);
-                outline: 1px solid var(--main-border-color);
+                background-color: var(--gray-100);
+                outline: 1px solid var(--gray-200);
             }
         .main-app-treeview-item {
             position: relative;
@@ -561,7 +561,7 @@ body {
             font-size: 11px;
             line-height: 14px;
 
-            background-color: var(--main-border-color);;
+            background-color: var(--gray-200);;
             border-radius: 2px;
             padding: 0 2px 0 1px;
             
@@ -613,7 +613,7 @@ body {
         cursor: grab;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
-        border-bottom: 1px solid var(--main-border-color);
+        border-bottom: 1px solid var(--gray-300);
 
         display: grid;
         /*grid-template-columns: auto 25px 25px;*/
@@ -621,7 +621,7 @@ body {
         grid-template-columns: 225px 25px 25px 25px;
 
         align-items: center;
-        background-color: var(--main-background);
+        background-color: var(--gray-100);
 
         min-height: 28px;
     }
@@ -664,7 +664,7 @@ body {
             border-radius: 4px;
             justify-self: center;
         }
-        .app-cards-header-button:hover  { background-color: var(--main-border-color); }
+        .app-cards-header-button:hover  { background-color: var(--gray-200); }
         .app-cards-header-button:active { 
             transform: scale(0.96);
             background-color: var(--main-border-color-high);
@@ -796,7 +796,7 @@ body {
                 outline-color: inherit;
                 /* transition: .15s background-color linear; */
             }
-                .app-cards-content-item.selected { background-color: var(--main-border-color) !important; }
+                .app-cards-content-item.selected { background-color: var(--gray-200) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }
                 .app-cards-content-item.selected > div:nth-child(1) { 
                     outline-style: solid;
@@ -805,7 +805,7 @@ body {
                     outline-color: inherit;
                 }
                 .app-cards-content-item.visibility { cursor: pointer; }
-                    .app-cards-content-item.visibility:hover { background-color: var(--main-border-color); }
+                    .app-cards-content-item.visibility:hover { background-color: var(--gray-200); }
                     .app-cards-content-item.visibility > .app-cards-content-item-output {
                         pointer-events: none;
                         background-color: transparent;
@@ -825,7 +825,7 @@ body {
                 }
                     .app-cards-content-item-index {
                         position: absolute;
-                        background-color: var(--main-background);
+                        background-color: var(--gray-100);
                         color: var(--main-font-color-high);
                         border-radius: 10% 0 0 10%;
                         font-size: 10px;
@@ -859,7 +859,7 @@ body {
             
                     .app-cards-content-item input {
                         font-weight: 600;
-                        border: 1px solid var(--main-border-color);
+                        border: 1px solid var(--gray-200);
                         font-size: 11px;
                         border-radius: 4px;
                         height: 24px;
@@ -871,7 +871,7 @@ body {
             
                 .app-cards-content-item-output {
                     cursor: pointer;
-                    background-color: var(--main-border-color);
+                    background-color: var(--gray-200);
                     border-radius: 6px 0 0 6px;
                     width: 16px;
                     line-height: 22px;
@@ -892,7 +892,7 @@ body {
         align-items: center;
         justify-content: space-between;
 
-        background-color: var(--main-background);
+        background-color: var(--gray-100);
     } */
 
 /*// AUX CSS /////////////////////////////////////////////////////////////////*/

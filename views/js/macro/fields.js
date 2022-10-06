@@ -51,14 +51,14 @@ export default function Field(ctx, append, properties) {
             if (!drag) {
                 if (context.hasConnection()) {
                     output.style.backgroundColor = color;
-                    output.style.color = 'var(--main-background)';
+                    output.style.color = 'var(--gray-100)';
                 } else {
                     output.style.removeProperty('background-color');
                     output.style.removeProperty('color');
                 }
             } else {
                 output.style.backgroundColor = color;
-                output.style.color = 'var(--main-background)';
+                output.style.color = 'var(--gray-100)';
             }
 
             if (output['_PATH_'] !== null) 

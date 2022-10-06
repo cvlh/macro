@@ -14,8 +14,9 @@ export default function Color (ctx) {
     let content, colors = {},
     
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _set = function(target) {        
-        let selected = target.parentElement.querySelector('.selected');
+    _set = function(target) {
+        const selected = content.querySelector('.selected');
+
         if (selected) {
             if (target.isSameNode(selected))
                 return;
@@ -68,7 +69,6 @@ export default function Color (ctx) {
               addElement(row, 'div', 'main-app-properties-label header bold', _I18N_.field_color_header);
               addElement(row, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-        // row = addElement(content, 'div', 'main-app-properties-row spacer');
         row = addElement(content, 'div', 'main-app-properties-row');
         for (const color_idx in _COLORS_) {
 
@@ -79,10 +79,14 @@ export default function Color (ctx) {
             color['_COLOR_'] = color_idx;
 
             count += 3;
+            // if (count % 27 == 0) {
+            //     row = addElement(content, 'div', 'main-app-properties-row');
+            //     count = 3;
+            // }
 
             colors[color_idx] = color;
         }
         
-        row.addEventListener('click', _receive_events, { capture: false });
+        content.addEventListener('click', _receive_events, { capture: false });
     })();
 }

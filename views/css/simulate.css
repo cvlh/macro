@@ -30,7 +30,7 @@
 
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 35px auto 35px;
+        grid-template-rows: 32px auto 32px;
         
         width: 208px;
         height: 410px;
@@ -77,7 +77,7 @@
             grid-template-rows: auto min-content;
             overflow: hidden;
 
-            margin: 8px;
+            margin: 0 8px;
             border-radius: 8px;
         }
             .container > .controls {
@@ -100,43 +100,61 @@
                         font-weight: 600;
 
                         cursor: pointer;
-                        color: white;
+                        color: var(--white);
                     }
-                    
+                    /* .controls-buttons > div:active { transform: scaleY(.99); } */
+
+                        .controls-buttons > div.confirm { background-color: var(--blue-900); }
+                        .controls-buttons > div.confirm:hover { background-color: var(--blue-1000); }
+                        .controls-buttons > div.confirm:active { background-color: var(--blue-base); }
+
+                        .controls-buttons > div.back { background-color: var(--yellow-900); }
+                        .controls-buttons > div.back:hover { background-color: var(--yellow-1000); }
+                        .controls-buttons > div.back:active { background-color: var(--yellow-base); }
+
                 .controls > .keyboard {
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr;
                     font-size: 12px;
-                    background-color: #f5f5f5;
+                    background-color: var(--neutral-200);
                 }
                     .keyboard-key {
                         /* background-color: #f5f5f5; */
                         border-radius: 5px;
                         font-weight: 600;
-                        color: var(--main-font-color-high);
+                        color: var(--black);
                         cursor: pointer;
                         text-align: center;
                         line-height: 25px;
                     }
-                        .keyboard-key:hover { background-color: #f0f0f0; }
+                        .keyboard-key:hover { background-color: var(--neutral-400); }
                         .keyboard-key:active { 
-                            transform: scale(.9);
-                            background-color: #e5e5e5;
+                            transform: scale(.94);
+                            background-color: var(--neutral-500);
                         }
 
             .container > .main {
                 position: relative;
 
-                border: 1px solid #f5f5f5;
-                border-radius: 2px;
+                border: 1px solid var(--neutral-300);
+
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
 
                 overflow-x: hidden;
                 overflow-y: scroll;
                 scrollbar-width: thin;
 
-                background-color: #ffffff;
-                color: var(--main-font-color-bold);
+                background-color: var(--white);
+                /* color: var(--main-font-color-bold); */
             }
+                .container > .main.with-keyboard {
+                    border-bottom: none;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
                 .container-main-slide {
                     position: absolute;
                     top: 0;
@@ -283,7 +301,7 @@
                                 border-width: 2px;
                                 border-style: solid;
 
-                                color: var(--main-font-color-bold);
+                                color: var(--black);
                                 padding: 0 10px 0 10px;
                                 height: 40px;
                                 border-radius: 8px;
@@ -292,10 +310,10 @@
                                 width: 100%;
                                 outline: none;
 
-                                background-color: #fafafa;
+                                background-color: var(--neutral-100);
                             }
         .simulate-content > .footer {
-            transform: translate(79px, 9px);
+            transform: translate(79px, 7px);
 
             width: 50px;
             height: 16px;

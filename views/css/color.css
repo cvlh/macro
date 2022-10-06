@@ -1,0 +1,186 @@
+:root {
+    --white: #FFFFFF;
+    --black: #000000;
+
+    --red-base:#FF3D00;
+    --red-1000:#FF5019;
+    --red-900: #FF6433;
+    --red-800: #FF774C;
+    --red-700: #FF8B66;
+    --red-600: #FF9E7F;
+    --red-500: #FFB199;
+    --red-400: #FFC4B2;
+    --red-300: #FFD8CC;
+    --red-200: #FFEBE5;
+    --red-100: #FFF5F2;
+
+    --pink-base:#F51F7E;
+    --pink-1000:#F6338A;
+    --pink-900: #F74A98;
+    --pink-800: #F860A4;
+    --pink-700: #F977B2;
+    --pink-600: #FA8EBE;
+    --pink-500: #FBA5CB;
+    --pink-400: #FCBBD8;
+    --pink-300: #FDD2E5;
+    --pink-200: #FEE8F2;
+    --pink-100: #FEF3F8;
+
+    --purple-base:#A200F2;
+    --purple-1000:#AB19F3;
+    --purple-900: #B533F5;
+    --purple-800: #BD4CF5;
+    --purple-700: #C766F7;
+    --purple-600: #D07FF8;
+    --purple-500: #DA99FA;
+    --purple-400: #E3B2FB;
+    --purple-300: #ECCCFC;
+    --purple-200: #F5E5FD;
+    --purple-100: #FAF2FE;
+
+    --indigo-base:#651DFF;
+    --indigo-1000:#7435FF;
+    --indigo-900: #844BFF;
+    --indigo-800: #9362FF;
+    --indigo-700: #A378FF;
+    --indigo-600: #B28FFF;
+    --indigo-500: #C1A5FF;
+    --indigo-400: #D0BCFF;
+    --indigo-300: #E0D2FF;
+    --indigo-200: #EFE8FF;
+    --indigo-100: #F7FAFF;
+
+    --blue-base:#2979FF;
+    --blue-1000:#3E86FF;
+    --blue-900: #5494FF;
+    --blue-800: #69A1FF;
+    --blue-700: #7FAFFF;
+    --blue-600: #94BCFF;
+    --blue-500: #A9C9FF;
+    --blue-400: #BED6FF;
+    --blue-300: #D4E4FF;
+    --blue-200: #E9F1FF;
+    --blue-100: #F4F8FF;
+
+    --sky-base:#009DFF;
+    --sky-1000:#19A6FF;
+    --sky-900: #33B1FF;
+    --sky-800: #4CBAFF;
+    --sky-700: #66C4FF;
+    --sky-600: #7FCEFF;
+    --sky-500: #99D8FF;
+    --sky-400: #B2E1FF;
+    --sky-300: #CCEBFF;
+    --sky-200: #E5F5FF;
+    --sky-100: #F2FAFF;
+
+    --cyan-base:#00BCD4;
+    --cyan-1000:#19C2D8;
+    --cyan-900: #33C9DD;
+    --cyan-800: #4CD0E0;
+    --cyan-700: #66D7E5;
+    --cyan-600: #7FDDE9;
+    --cyan-500: #99E4EE;
+    --cyan-400: #B2EAF2;
+    --cyan-300: #CCF2F6;
+    --cyan-200: #E5F8FA;
+    --cyan-100: #F2FBFD;
+
+    --green-base:#00BFA5;
+    --green-1000:#19C5AE;
+    --green-900: #33CCB7;
+    --green-800: #4CD2C0;
+    --green-700: #66D9C9;
+    --green-600: #7FDFD2;
+    --green-500: #99E5DB;
+    --green-400: #B2EBE4;
+    --green-300: #CCF2ED;
+    --green-200: #E5F8F6;
+    --green-100: #F2FCFA;
+
+    --lime-base:#64DD17;
+    --lime-1000:#73E02E;
+    --lime-900: #83E445;
+    --lime-800: #92E75C;
+    --lime-700: #A2EB74;
+    --lime-600: #B1EE8B;
+    --lime-500: #C1F1A2;
+    --lime-400: #D0F4B9;
+    --lime-300: #E0F8D1;
+    --lime-200: #EFFBE7;
+    --lime-100: #F7FDF3;
+
+    --yellow-base:#FFAB00;
+    --yellow-1000:#FFB319;
+    --yellow-900: #FFBC33;
+    --yellow-800: #FFC44C;
+    --yellow-700: #FFCD66;
+    --yellow-600: #FFD57F;
+    --yellow-500: #FFDD99;
+    --yellow-400: #FFE5B2;
+    --yellow-300: #FFEECC;
+    --yellow-200: #FFF6E5;
+    --yellow-100: #FFFBF2;
+
+    --orange-base:#FF6F00;
+    --orange-1000:#FF7D19;
+    --orange-900: #FF8C33;
+    --orange-800: #FF9A4C;
+    --orange-700: #FFA966;
+    --orange-600: #FFB77F;
+    --orange-500: #FFC599;
+    --orange-400: #FFD3B2;
+    --orange-300: #FFE2CC;
+    --orange-200: #FFF0E5;
+    --orange-100: #FFF8F2;
+
+    --gray-base:#6D7C87;
+    --gray-1000:#7F919E;
+    --gray-900: #92A5B3;
+    --gray-800: #A3B8C7;
+    --gray-700: #B3C8D7;
+    --gray-600: #C1D5E4;
+    --gray-500: #CFE0ED;
+    --gray-400: #DBEAF5;
+    --gray-300: #E8F2FA;
+    --gray-200: #EEF2F8;
+    --gray-100: #F9FCFE;
+
+    --neutral-base:#7A7A7A;
+    --neutral-1000:#8E8E8E;
+    --neutral-900: #A2A2A2;
+    --neutral-800: #B5B5B5;
+    --neutral-700: #C5C5C5;
+    --neutral-600: #D2D2D2;
+    --neutral-500: #DDDDDD;
+    --neutral-400: #E8E8E8;
+    --neutral-300: #EFF0F1;
+    --neutral-200: #F2F2F2;
+    --neutral-100: #FAFAFA;
+
+    /* --color-success: var(--green-base);
+    --color-danger: var(--red-base);
+    --color-info: var(--brand-base);
+    --color-warning: var(--orange-base);
+    --color-transparent: transparent;
+    --light-base: var(--white);
+    --light-1000: var(--gray-100);
+    --light-500: #eff0f1;
+    --dark-base: #263238;
+    --dark-1000: #1f2c33; */
+
+    /* --rgb-shadow-1: rgba(102, 102, 102, .09);
+    --rgb-shadow-2: rgba(102, 102, 102, .06);
+    --text-base: #101820;
+    --text-500: #48626f;
+    --text-100: #fff;
+    --brand-base: #0b66ff;
+    --brand-1000: #3c85ff;
+    --brand-900: #0952cc;
+    --icon-base: #7f949e; */
+
+    --cellphone: 600px;
+    --smallTablet: 900px;
+    --tablet: 1200px;
+    --desktop: 1600px;
+}

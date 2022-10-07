@@ -31,6 +31,8 @@ export default function Macro(_properties) {
         selectedArrow = null,
         visibilityTool = null,
 
+        currentZoomDiv,
+
         cardsArray = [],
         position = { offsetLeft: 0, offsetTop: 0 },
 
@@ -116,6 +118,8 @@ export default function Macro(_properties) {
             else if (targetClass.contains('zoom-reset')) _pan();
             else if (targetClass.contains('zoom-fit'))   _fit();
         }
+
+        _zoom_label();
     },
     _pan = function() {
         const builderRect = mainBuilder.getBoundingClientRect();
@@ -220,6 +224,11 @@ export default function Macro(_properties) {
             currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
 
         //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
+        _zoom_label();
+    },
+    _zoom_label = function() {
+        const zoom_scale = (props.transform.scale * 100);
+        currentZoomDiv.textContent = `${zoom_scale.toFixed(0)}%`;
     };
 
     // INTERFACE  //////////////////////////////////////////////////////////////
@@ -544,14 +553,18 @@ export default function Macro(_properties) {
         mainAppSVG.setAttribute('width',  props.size.width);
         mainAppSVG.setAttribute('height', props.size.height);
 
-        const bottomBar = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
-        bottomBar['buttons'] = [];
-        bottomBar['buttons']['in'] = addElement(bottomBar, 'div', 'icon button zoom-in', _ICON_CHAR_.ZOOM_IN);
-        bottomBar['buttons']['out'] = addElement(bottomBar, 'div', 'icon button zoom-out', _ICON_CHAR_.ZOOM_OUT);
-        bottomBar['buttons']['reset'] = addElement(bottomBar, 'div', 'icon button zoom-reset', _ICON_CHAR_.ZOOM);
-        addElement(bottomBar, 'div', 'divider');
-        bottomBar['buttons']['fit'] = addElement(bottomBar, 'div', 'icon button zoom-fit', _ICON_CHAR_.FIT);
+        const widget_holder = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
+        addElement(widget_holder, 'div', 'icon button zoom-in', _ICON_CHAR_.ZOOM_IN);
+        addElement(widget_holder, 'div', 'icon button zoom-out', _ICON_CHAR_.ZOOM_OUT);
+        addElement(widget_holder, 'div', 'icon button zoom-reset', _ICON_CHAR_.ZOOM);
+        addElement(widget_holder, 'div', 'divider');
+        currentZoomDiv = addElement(widget_holder, 'div', 'zoom-text');
+        addElement(widget_holder, 'div', 'divider');
+        addElement(widget_holder, 'div', 'icon button zoom-fit', _ICON_CHAR_.FIT);
 
+        widget_holder.addEventListener('click', _control_events, { capture: true });
+        _zoom_label();
+        
         document.body.appendChild(fragment);
         
         // EVNTS
@@ -559,7 +572,7 @@ export default function Macro(_properties) {
         mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
         mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
 
-        bottomBar.addEventListener('click', _control_events, { capture: true });
+        
         //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
         //window.addEventListener('resize', _resize, { capture: true });
 
@@ -610,6 +623,5 @@ export default function Macro(_properties) {
         let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
         builderCenterDiv.style.left = builderLeftCenter + 'px';
         builderCenterDiv.style.top = builderTopCenter + 'px';
-
     })();
 }

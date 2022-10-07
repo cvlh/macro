@@ -25,7 +25,6 @@ export default function VisibilityTool (ctx) {
         const target = evnt.target,
               targetClass = target.classList;
 
-        // console.log(targetClass);
         if (targetClass.contains('button')) {
             const object = main.getSelectedObject(),
                   status = target['_action'];
@@ -49,7 +48,7 @@ export default function VisibilityTool (ctx) {
     };
     this.hide = function(field) {
         const div = field.getDiv();
-        //div.removeChild(content);
+        div.removeChild(content);
 
         currentField = null;
     };
@@ -69,7 +68,7 @@ export default function VisibilityTool (ctx) {
         addElement(btnHidden, 'div', null, _I18N_.hidden);
         btnHidden['_action'] = _STATUS_.HIDDEN;
 
-        addElement(content, 'div', 'spacer');
+        // addElement(content, 'div', 'spacer');
 
         btnNone = addElement(content, 'div', 'button none');
         addElement(btnNone, 'div', 'icon', _ICON_CHAR_.EMPTY);

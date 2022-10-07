@@ -87,35 +87,33 @@ body { overflow: hidden; }
     .main-app-builder-widget-holder {
         position: absolute;
         box-sizing: border-box;
-        /* padding: 0;
-        margin: 0; */
         bottom: 5px;
         right: 5px;
-
-        background-color: #ffffff;
-        border: 1px solid var(--main-border-color-high);
+        background-color: var(--neutral-100);
+        border: 1px solid var(--neutral-500);
         display: grid;
-
-        grid-template-rows: 24px 24px 24px 1px 24px ;
-        grid-auto-columns: 24px;
-
+        grid-template-columns: 25px 25px 25px 1px 40px 1px 25px;
+        line-height: 25px;
         border-radius: 4px;
-
         color: var(--black);
+        overflow: hidden;
         z-index: 2;
     }
-        .main-app-builder-widget-holder .divider { background-color: var(--main-border-color-high); }
-        .main-app-builder-widget-holder .button {
-            font-size: 16px;
-            line-height: 24px;
+        .main-app-builder-widget-holder > .divider { background-color: var(--neutral-500); }
+        .main-app-builder-widget-holder > .button {
+            font-size: 15px;
             cursor: pointer;
-            border-radius: 2px;
         }
-            .main-app-builder-widget-holder .button:hover { 
-                background-color: var(--gray-200);
-                color: var(--black); 
-            }
+        .main-app-builder-widget-holder > .zoom-text {
+            font-size: 11px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--neutral-base);
+        }
+
+            .main-app-builder-widget-holder .button:hover { background-color: var(--neutral-400); }
             .main-app-builder-widget-holder .button:active { color: var(--black); }
+
     .main-app-builder-toolbar {
         display: grid;
 
@@ -622,6 +620,7 @@ body { overflow: hidden; }
         .app-cards-header-button.new   { color: var(--main-green-bold); }
         .app-cards-header-button.close { color: var(--main-red-bold); }
 
+    /*// HIGHLIGHT ITEM //////////////////////////////////////////////////////*/
     .app-cards-item-highlight {
         position: absolute;
         top: 6px;
@@ -655,6 +654,7 @@ body { overflow: hidden; }
             transform: rotate(90deg);
         }
 
+    /*// VISIBILITY MENU /////////////////////////////////////////////////////*/
     .app-cards-item-visibility-toolbar {
         position: absolute;
         left: -81px;
@@ -668,7 +668,6 @@ body { overflow: hidden; }
         background-color: var(--white);
         border-radius: 5px;
         z-index: 999;
-        /* box-shadow: var(--color-shadow); */
         border: 1px solid var(--neutral-500);
     }
         .app-cards-item-visibility-toolbar:before {
@@ -689,26 +688,31 @@ body { overflow: hidden; }
             flex-direction: row;
             align-items: center;
             cursor: pointer;
-            height: 18px;
-            border-radius: 2px;
+            height: 20px;
+            border-radius: 3px;
         }
-            .app-cards-item-visibility-toolbar .spacer { 
-                height: 1px;
-                background-color: var(--neutral-300);
-                margin: 2px 0;
+            .app-cards-item-visibility-toolbar > .button:hover { 
+                color: var(--blue-base);
+                background-color: var(--blue-200);
+            }
+            .app-cards-item-visibility-toolbar > .button:active { 
+                color: var(--blue-base);
+                background-color: var(--blue-300); 
             }
             .app-cards-item-visibility-toolbar > .button.none { color: var(--red-base); }
+            .app-cards-item-visibility-toolbar > .button.none:hover { background-color: var(--red-100); }
+            .app-cards-item-visibility-toolbar > .button.none:active { background-color: var(--red-200);  }
+
             .app-cards-item-visibility-toolbar > .button > div { pointer-events: none; }
-        .app-cards-item-visibility-toolbar > .button:hover { 
-            color: var(--blue-base);
-            background-color: var(--blue-200);
-        }
-        .app-cards-item-visibility-toolbar > .button:active { 
-            color: var(--blue-base);
-            background-color: var(--blue-300); 
-        }
             .app-cards-item-visibility-toolbar > .button > div:first-child { padding: 0 5px; }
             .app-cards-item-visibility-toolbar > .button > div:last-child { padding: 0 8px 0 2px; }
+
+        /* .app-cards-item-visibility-toolbar .spacer { 
+            height: 1px;
+            background-color: var(--neutral-200);
+            margin: 3px 0;
+        } */
+
     .app-cards-content {
         position: relative;
         display: grid;

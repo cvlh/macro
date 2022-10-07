@@ -15,7 +15,7 @@ export const _MOV_ = {
 };
 
 export const _ZOOM_ = {
-    MAX: 7,
+    MAX: 5,
     MIN: 0.1
 };
 

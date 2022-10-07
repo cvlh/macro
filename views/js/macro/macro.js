@@ -31,7 +31,7 @@ export default function Macro(_properties) {
         selectedArrow = null,
         visibilityTool = null,
 
-        currentZoomDiv,
+        currentZoomText,
 
         cardsArray = [],
         position = { offsetLeft: 0, offsetTop: 0 },
@@ -228,7 +228,7 @@ export default function Macro(_properties) {
     },
     _zoom_label = function() {
         const zoom_scale = (props.transform.scale * 100);
-        currentZoomDiv.textContent = `${zoom_scale.toFixed(0)}%`;
+        currentZoomText.textContent = `${zoom_scale.toFixed(0)}%`;
     };
 
     // INTERFACE  //////////////////////////////////////////////////////////////
@@ -554,17 +554,17 @@ export default function Macro(_properties) {
         mainAppSVG.setAttribute('height', props.size.height);
 
         const widget_holder = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
-        addElement(widget_holder, 'div', 'icon button zoom-in', _ICON_CHAR_.ZOOM_IN);
-        addElement(widget_holder, 'div', 'icon button zoom-out', _ICON_CHAR_.ZOOM_OUT);
+        addElement(widget_holder, 'div', 'icon button zoom-in', _ICON_CHAR_.PLUS);
+        addElement(widget_holder, 'div', 'icon button zoom-out', _ICON_CHAR_.EMPTY);
         addElement(widget_holder, 'div', 'icon button zoom-reset', _ICON_CHAR_.ZOOM);
         addElement(widget_holder, 'div', 'divider');
-        currentZoomDiv = addElement(widget_holder, 'div', 'zoom-text');
+        currentZoomText = addElement(widget_holder, 'div', 'zoom-text');
         addElement(widget_holder, 'div', 'divider');
         addElement(widget_holder, 'div', 'icon button zoom-fit', _ICON_CHAR_.FIT);
 
         widget_holder.addEventListener('click', _control_events, { capture: true });
         _zoom_label();
-        
+
         document.body.appendChild(fragment);
         
         // EVNTS

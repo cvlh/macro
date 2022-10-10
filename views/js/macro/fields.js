@@ -205,7 +205,11 @@ export default function Field(ctx, append, properties) {
 
     // },
     _selectedForVisibility = function(status) {
-        const color = context.getColor() + 'CC';
+        let color = context.getColor();
+        if (color !== null)
+            color += 'BB';
+        else
+            color = '#7A7A7A';
 
         // _unselectForVisibility();
 
@@ -225,7 +229,7 @@ export default function Field(ctx, append, properties) {
             case _STATUS_.HIDDEN:
                 description.style.backgroundColor = 'transparent';
                 description.style.color = color;
-                description.style.borderWidth = '2px';
+                // description.style.borderWidth = '1px';
                 description.style.borderStyle = 'solid';
                 description.style.fontStyle = 'italic';
                 description.style.textDecoration = 'line-through';

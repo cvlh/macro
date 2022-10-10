@@ -536,21 +536,17 @@ body { overflow: hidden; }
 
     border-width: 2px;
     border-style: solid;
-    border-color: var(--main-border-color-high);
+    border-color: var(--neutral-800);
     /* opacity: 0.9; */
 
-    outline-color: var(--main-border-color-high);
+    outline-color: var(--neutral-800);
 }
     .app-cards.selected {
         outline-style: solid;
         outline-width: 4px;
         outline-offset: -1px;
         outline-color: var(--black);
-
-        box-shadow: var(--color-shadow);
-        /* background-attachment: scroll ; */
-        /* box-shadow: 0px 0px 12px 4px rgb(0 0 0 / 20%); */
-        /* box-shadow: 0px 0px 15px 5px rgb(0 0 0 / 20%); */
+        border-color: var(--black);
      }
     .app-cards-header {
         position: relative;
@@ -716,11 +712,12 @@ body { overflow: hidden; }
         padding: 4px 0 4px 0;
         /* margin: 0; */
         outline-color: inherit;
+        border-color: inherit;
     }
         .app-cards-content-input {
             width: 16px;
 
-            background-color: var(--main-border-color-high);
+            background-color: var(--neutral-300);
             border-radius: 0 6px 6px 0;
 
             font-size: 11px;
@@ -731,6 +728,7 @@ body { overflow: hidden; }
             display: flex;
             flex-direction: column;
             outline-color: inherit;
+            border-color: inherit;
         }            
             .app-cards-content-items.root { padding: 4px 0 4px 0; }
 
@@ -744,6 +742,7 @@ body { overflow: hidden; }
                 position: relative;
                 color: var(--black);
                 outline-color: inherit;
+                border-color: inherit;
                 /* transition: .15s background-color linear; */
             }
                 .app-cards-content-item.selected { background-color: var(--neutral-200) !important; }
@@ -772,6 +771,9 @@ body { overflow: hidden; }
                     position: relative;
                     border-radius: 4px;
                     margin: 0 5px 0 5px;
+
+                    color: inherit;
+                    border-color: inherit;
                 }
                     .app-cards-content-item-index {
                         position: absolute;
@@ -791,25 +793,37 @@ body { overflow: hidden; }
 
                     .app-cards-content-item-visibility {
                         visibility: hidden;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
                         position: absolute;
-                        background-color: var(--gray-400);
+                        right: 3px;
+                        top: 3px;
+
+                        background-color: var(--white);
                         color: var(--black);
-                        border-radius: 10%;
+
+                        border-width: 1px;
+                        border-style: solid;
+                        border-color: inherit;
+                        border-radius: 3px;
+
                         text-align: center;
                         font-size: 11px;
                         font-weight: 600;
-                        width: 20px;
-                        line-height: 20px;
-                        height: 20px;
-                        right: 2px;
-                        top: 2px;
+
+                        width: 21px;
+                        height: 18px;
+
                         cursor: context-menu;
                     }
-                        .app-cards-content-item-visibility:hover { background-color: var(--yellow-base); }
-            
+                        .app-cards-content-item-visibility:hover { border-width: 2px; }
+                        
                     .app-cards-content-item input {
                         font-weight: 600;
-                        border: 1px solid var(--neutral-200);
+                        border: 1px solid var(--neutral-300);
                         font-size: 11px;
                         border-radius: 4px;
                         height: 24px;
@@ -821,7 +835,7 @@ body { overflow: hidden; }
             
                 .app-cards-content-item-output {
                     cursor: pointer;
-                    background-color: var(--gray-200);
+                    background-color: var(--neutral-300);
                     border-radius: 6px 0 0 6px;
                     width: 16px;
                     line-height: 22px;

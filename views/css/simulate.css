@@ -45,7 +45,7 @@
             background-color: var(--neutral-200);
             border: 1px solid var(--neutral-400);
         }
-            .header:before {
+            .simulate-content > .header:before {
                 content: "";
 
                 position: absolute;
@@ -58,7 +58,7 @@
                 border-radius: 50%;
                 background-color: var(--neutral-400);;
             }
-            .header::after {
+            .simulate-content > .header::after {
                 content: "";
 
                 position: absolute;

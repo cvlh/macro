@@ -43,7 +43,7 @@ export default function Size (ctx) {
         content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
 
         // SIZE
-        rowSizeLabel = addElement(content, 'div', 'main-app-properties-row ');
+        rowSizeLabel = addElement(content, 'div', 'main-app-properties-row header');
         addElement(rowSizeLabel, 'div', 'main-app-properties-label header bold', _I18N_.macro_size);
         addElement(rowSizeLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 

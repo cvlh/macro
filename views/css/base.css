@@ -309,8 +309,8 @@ body { overflow: hidden; }
             color: var(--main-blue-selected);
         }
         .main-app-properties-row input[type=button] {
-            background-color: var(--gray-100);
-            border: 1px solid var(--gray-200);
+            background-color: var(--neutral-100);
+            border: 1px solid var(--neutral-200);
             color: var(--black);
             cursor: pointer;
             outline: none;
@@ -318,20 +318,45 @@ body { overflow: hidden; }
             height: 24px;
         }
             .main-app-properties-row input[type=button]:hover { 
-                background-color: var(--gray-200);
-                border: 1px solid var(--main-border-color-high);
-                font-weight: 600;
+                background-color: var(--neutral-200);
+                border: 1px solid var(--neutral-300);
+                /* font-weight: 600; */
             }
             .main-app-properties-row input[type=button]:active { 
-                background-color: var(--main-border-color-high);
-                border: 1px solid var(--main-border-color-bold);
+                background-color: var(--neutral-300);
+                border: 1px solid var(--neutral-400);
                 transform: scale(0.96);
             }
-            .main-app-properties-row input[type=button]:disabled { 
-                color: var(--main-border-color-high);
-                background-color: var(--gray-100);
-                border: 1px solid var(--gray-200);
+            /* .main-app-properties-row input[type=button]:disabled { 
+                background-color: var(--neutral-100);
+                border: 1px solid var(--neutral-200);
                 cursor: default;
+                color: var(--neutral-900);
+            } */
+
+        .main-app-properties-row > .delete-button {
+            background-color: var(--red-100);
+            border: 1px solid var(--red-200);
+            color: var(--red-base);
+            cursor: pointer;
+            outline: none;
+            border-radius: 4px;
+            height: 28px;
+            grid-column: 5 / span 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 9px;
+        }
+            .main-app-properties-row > .delete-button:hover {
+                background-color: var(--red-200);
+                border: 1px solid var(--red-300);
+            }
+            .main-app-properties-row > .delete-button:active {
+                background-color: var(--red-300);
+                border: 1px solid var(--red-400);
             }
         .main-app-properties-label {
             align-self: center;
@@ -455,8 +480,8 @@ body { overflow: hidden; }
             transition: .15s height linear;
         }
             .main-app-treeview-row:hover {
-                background-color: var(--gray-100);
-                outline: 1px solid var(--gray-200);
+                background-color: var(--neutral-100);
+                outline: 1px solid var(--neutral-200);
             }
         .main-app-treeview-item {
             position: relative;
@@ -509,9 +534,9 @@ body { overflow: hidden; }
             font-size: 11px;
             line-height: 14px;
 
-            background-color: var(--gray-200);;
+            background-color: var(--neutral-200);;
             border-radius: 2px;
-            padding: 0 2px 0 1px;
+            padding: 0 3px 0 2px;
             
             font-weight: 300;
             font-style: italic;
@@ -602,14 +627,14 @@ body { overflow: hidden; }
             border-radius: 4px;
             justify-self: center;
         }
-        .app-cards-header-button:hover  { background-color: var(--gray-200); }
+        .app-cards-header-button:hover  { background-color: var(--neutral-300); }
         .app-cards-header-button:active { 
-            transform: scale(0.96);
-            background-color: var(--main-border-color-high);
+            transform: scale(0.92);
+            background-color: var(--neutral-400);
         }
         
-        .app-cards-header-button.new   { color: var(--main-green-bold); }
-        .app-cards-header-button.close { color: var(--main-red-bold); }
+        .app-cards-header-button.new   { color: var(--red); }
+        .app-cards-header-button.close { color: var(--green); }
 
     /*// HIGHLIGHT ITEM //////////////////////////////////////////////////////*/
     .app-cards-item-highlight {
@@ -745,11 +770,12 @@ body { overflow: hidden; }
                 border-color: inherit;
                 /* transition: .15s background-color linear; */
             }
-                .app-cards-content-item.selected { background-color: var(--neutral-200) !important; }
+                .app-cards-content-item.selected { background-color: var(--neutral-300) !important; }
                 .app-cards-content-item.border-radius { border-radius: 8px 0 0 8px; }
                 .app-cards-content-item.selected > div:nth-child(1) { 
                     outline-style: solid;
-                    outline-width: 3px;
+                    outline-width: 2px;
+                    /* outline-width: 3px; */
                     outline-offset: -1px;
                     outline-color: inherit;
                 }
@@ -772,12 +798,12 @@ body { overflow: hidden; }
                     border-radius: 4px;
                     margin: 0 5px 0 5px;
 
-                    color: inherit;
+                    /* color: inherit; */
                     border-color: inherit;
                 }
                     .app-cards-content-item-index {
                         position: absolute;
-                        background-color: var(--neutral-200);
+                        background-color: var(--neutral-100);
                         color: var(--neutral-base);
                         border-radius: 3px 0 0 3px;
                         font-size: 10px;

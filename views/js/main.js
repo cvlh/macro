@@ -31,7 +31,7 @@ function create_field (card, fields, allFields) {
     let counter, field;
 
     for (counter=0; counter<fields.length; counter++) {
-        field = card.addField(fields[counter]['properties']);
+        field = card.newField(fields[counter]['properties']);
         allFields[field.getProps('id')] = field;
 
         if (fields[counter].hasOwnProperty('output')) {

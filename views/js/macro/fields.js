@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _COLORS_, _TYPES_, _STATUS_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _QUADRATIC_CURVE_OFFSET_ } from '../utils/constants.js';
+import { _QUADRATIC_CURVE_OFFSET_, _DRAG_, _MOV_, _COLORS_, _TYPES_, _STATUS_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _KEY_CODE_ } from '../utils/constants.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 import { addElement } from '../utils/functions.js';
 
@@ -157,9 +157,27 @@ export default function Field(ctx, append, properties) {
             props.tail.y = endTop;
         }
     },
+    _keypress = function(evnt) {
+        let key = evnt.keyCode || evnt.which;
+
+        switch (key) {
+            case _KEY_CODE_.ENTER:
+                const value = description.value;
+                if (value !== '') {
+                    const next = item.nextElementSibling;
+                    if (next === null) 
+                        parent.addField();
+                    
+                }
+                break;
+        }
+        _refresh();
+    },
     _refresh = function() {
         const value = description.value;
-        if (context.hasConnection()) output['_CONNECTION_'].setHeader(value);
+
+        if (context.hasConnection())
+            output['_CONNECTION_'].setHeader(value);
 
         if (treeviewRow !== null) {
             const path = treeviewRow.querySelector('.field');
@@ -228,7 +246,7 @@ export default function Field(ctx, append, properties) {
         
             case _STATUS_.HIDDEN:
                 description.style.backgroundColor = 'transparent';
-                description.style.color = color;
+                // description.style.color = color;
                 // description.style.borderWidth = '1px';
                 description.style.borderStyle = 'solid';
                 description.style.fontStyle = 'italic';
@@ -486,7 +504,7 @@ export default function Field(ctx, append, properties) {
         addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', (props['type']['type'] ? props['type']['type'] : _ICON_CHAR_.NONE));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
-        addElement(treeviewRow, 'div');
+        //addElement(treeviewRow, 'div');
 
         if (hasChild) response['output'] = output['_CONNECTION_'].serialize(fragment, properties);
 
@@ -704,7 +722,7 @@ export default function Field(ctx, append, properties) {
         description.setAttribute('value', props.text);
         description.setAttribute('tabindex', props.tab);
         
-        description.addEventListener('keyup', _refresh, { capture: false });
+        description.addEventListener('keyup', _keypress, { capture: false });
         description.addEventListener('focus', _showProperties, { capture: false });
 
         delete props.tab;

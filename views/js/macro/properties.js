@@ -9,6 +9,7 @@ import Type from './properties/type.js';
 import Visibility from './properties/visibility.js';
 import Order from './properties/order.js';
 import Size from './properties/size.js';
+import Remove from './properties/remove.js';
 
 export default function Properties(ctx) {
 
@@ -47,7 +48,9 @@ export default function Properties(ctx) {
             new Type(context),
             new Order(context),
             new Visibility(context),
-            new Size(context)
+            new Size(context),
+
+            new Remove(context)
         );
 
     })();

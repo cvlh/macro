@@ -79,5 +79,6 @@ export const _I18N_ = {
     hidden: 'Invisível',
     none: 'Remover',
 
+    delete_item: 'Remover',
     simulate: 'Simular'
 }

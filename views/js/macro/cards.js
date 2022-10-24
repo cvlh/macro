@@ -38,17 +38,13 @@ export default function Card(_ctx, _properties, tab) {
               targetClass = target.classList;
               
         if (targetClass.contains('app-cards-header-button') ||
-            targetClass.contains('app-cards-header-visibility')) 
+            targetClass.contains('app-cards-header-visibility')) {
+            evnt.preventDefault();
             return;
+        }
 
         if (evnt.button === 0)
             parent.dragStart(evnt, context)
-    },
-    _add = function() {
-        const field = context.addField();
-
-        parent.redraw(context);
-        field.setFocus();
     },
     _remove = function(evnt) {
         evnt.stopPropagation();
@@ -316,7 +312,13 @@ export default function Card(_ctx, _properties, tab) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMain = function() { return parent; };
-    this.addField = function(properties) {
+    this.addField  = function() {
+        const field = context.newField();
+
+        parent.redraw(context);
+        field.setFocus();
+    },
+    this.newField = function(properties) {
         
         properties = { ...properties, 'tab': tabindex };
 
@@ -377,7 +379,7 @@ export default function Card(_ctx, _properties, tab) {
         visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
 
         add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
-        add.addEventListener('click', _add, { capture: false });
+        add.addEventListener('click', context.addField, { capture: false });
 
         if (!rootCard) {
             close = addElement(header, 'div', 'app-cards-header-button close icon', _ICON_CHAR_.CLOSE);

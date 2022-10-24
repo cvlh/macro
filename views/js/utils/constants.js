@@ -1,5 +1,7 @@
 'use strict';
 
+export const _QUADRATIC_CURVE_OFFSET_ = 30;
+
 export const _DRAG_ = {
     HEADER : 0,
     OUTPUT : 1,
@@ -105,4 +107,7 @@ export const _ORDER_ = {
     DOWN : 2
 };
 
-export const _QUADRATIC_CURVE_OFFSET_ = 30;
+export const _KEY_CODE_ = {
+    ENTER: 13,
+    ESC:   27
+}

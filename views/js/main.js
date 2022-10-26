@@ -30,7 +30,7 @@ function create_card (macro, props, allFields, output = null) {
 function create_field (card, fields, allFields) {
     let counter, field;
 
-    for (counter=0; counter<fields.length; counter++) {
+    for (counter = 0; counter < fields.length; counter++) {
         field = card.newField(fields[counter]['properties']);
         allFields[field.getProps('id')] = field;
 

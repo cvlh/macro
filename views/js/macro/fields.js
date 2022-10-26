@@ -162,12 +162,18 @@ export default function Field(ctx, append, properties) {
 
         switch (key) {
             case _KEY_CODE_.ENTER:
+                evnt.preventDefault();
+
                 const value = description.value;
                 if (value !== '') {
                     const next = item.nextElementSibling;
                     if (next === null) 
                         parent.addField();
-                    
+                    else {
+                        const el = next.querySelector('input');
+                        if (el !== null)
+                            el.focus();
+                    }
                 }
                 break;
         }
@@ -571,7 +577,7 @@ export default function Field(ctx, append, properties) {
                 output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
-    this.getProps = function (prop = null) {
+    this.getProps = function(prop = null) {
         if (prop === null) {
             return props;
         } else if (props.hasOwnProperty(prop)) {
@@ -580,6 +586,9 @@ export default function Field(ctx, append, properties) {
 
         return null;
     };
+    this.remove = function () {
+
+    }
 
     this.initVisibility = function(fields) {
         let sizeVisibility, counterVisibility, shortVisibility;
@@ -693,8 +702,10 @@ export default function Field(ctx, append, properties) {
             } else {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
             }
-        } else {
+        } else if (target.classList.contains('main-app-wrapper')) {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        } else {
+            output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
         }
     };
     this.getRect = function() { return item.getBoundingClientRect(); };

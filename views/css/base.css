@@ -180,15 +180,15 @@ body { overflow: hidden; }
                 filter: brightness(130%);
             } 
         .main-app-svg-path {
-            stroke: var(--main-border-color-high);
+            stroke: var(--neutral-800);
             stroke-width: 3px;
             fill: none;
             stroke-linejoin: round;
             stroke-linecap: round;
             stroke-dasharray: 0.2%; 
 
-            transition: .15s stroke-width linear,
-                        .15s stroke linear;
+            transition: .1s stroke-width linear,
+                        .1s stroke linear;
         }
         .main-app-svg-path.linked { 
             stroke-dasharray: none;
@@ -196,12 +196,9 @@ body { overflow: hidden; }
         }
         .main-app-svg-path.connected { 
             stroke-dasharray: none;
-            stroke-width: 5px;
+            stroke-width: 7px;
         }
-        .main-app-svg-path.error {
-            stroke-dasharray: 0.1%; 
-            stroke-width: 1px;
-        }
+        .main-app-svg-path.error { stroke: var(--neutral-800) !important; }
 
 /*// PROPERTIES CSS //////////////////////////////////////////////////////////*/
 .main-app-properties {
@@ -342,7 +339,7 @@ body { overflow: hidden; }
             outline: none;
             border-radius: 4px;
             height: 28px;
-            grid-column: 5 / span 20;
+            grid-column: 7 / span 16;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -867,7 +864,7 @@ body { overflow: hidden; }
                     line-height: 22px;
                     justify-self: right;
                 }
-                    .app-cards-content-item-output:hover { background-color: var(--main-border-color-high); }
+                    .app-cards-content-item-output:hover { background-color:  var(--neutral-500); }
     /* .app-cards-bottom {
         position: relative;
 

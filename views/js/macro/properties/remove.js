@@ -14,11 +14,14 @@ export default function Remove (ctx) {
     let content, index,
     
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _set = function(target) {        
-        index.textContent = target;
-    },
     _receive_events = function(evnt) {
+        switch (evnt.type) {
+            case 'click':
+                const selectObject = parent.getMain().getSelectedObject();
 
+                selectObject.
+                break;
+        }
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -44,6 +47,6 @@ export default function Remove (ctx) {
         const remove = addElement(row, 'div', 'delete-button', _I18N_.delete_item);
         remove.addEventListener('click', function() {  }, { capture: false });
         
-        row.addEventListener('click', _receive_events, { capture: false });
+        remove.addEventListener('click', _receive_events, { capture: false });
     })();
 }

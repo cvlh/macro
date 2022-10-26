@@ -324,7 +324,7 @@ export default function Macro(_properties) {
     this.redraw = function(element = null) {
         if (element === null) {
             const size = cardsArray.length;
-            for (let counter=0; counter<size; counter++) {
+            for (let counter = 0; counter < size; counter++) {
                 cardsArray[counter].redraw(props.transform);
             }
         } else {

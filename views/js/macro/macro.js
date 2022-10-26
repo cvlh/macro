@@ -62,11 +62,13 @@ export default function Macro(_properties) {
                         break;
 
                     case 'mouseenter':
-                        if (status) field.setBorderColor(false);
+                        if (status)
+                            field.setBorderColor(false);
                         break;
 
                     case 'mouseleave':
-                        if (status) field.setBorderColor(true);
+                        if (status)
+                            field.setBorderColor(true);
                         break;
                 }
             } else if (targetClass.contains('field')) {
@@ -284,15 +286,19 @@ export default function Macro(_properties) {
 
     this.createCard = function(cardPosition, cardProperties, connect = null) {
         const isRoot = (cardsArray.length === 0 ? true : false),
-              left = cardPosition[0], top = cardPosition[1];
+              left = cardPosition[0], 
+              top = cardPosition[1];
 
         const new_card = new Card(context, cardProperties, cardsArray.length);
         cardsArray.push(new_card); 
 
-        if (isRoot) rootCard = new_card;
+        if (isRoot)
+            rootCard = new_card;
+
         new_card.setPosition(left, top, props.transform, _MOV_.NEW);
 
-        if (connect !== null) connect.makeConnection(new_card);
+        if (connect !== null)
+            connect.makeConnection(new_card);
 
         return new_card;
     };
@@ -485,16 +491,22 @@ export default function Macro(_properties) {
                         if (!currentDrag.infiniteLoop(target)) {
                             context.connect(currentDrag, targetCtx);
                             use = true;
-
-                            context.serialize();
                         }
                     }
-                } 
+                } else if (target.classList.contains('main-app-wrapper')) {
+                    const card_left = (evnt.clientX - props.transform.left) / props.transform.scale,
+                          card_top = (evnt.clientY - props.transform.top) / props.transform.scale;
 
-                if (!use) {
-                    currentDrag.clearConnection();
+                    const new_card = context.createCard([card_left, card_top]);
+                    context.connect(currentDrag, new_card);
+                    use = true;
                 }
-                
+
+                if (!use)
+                    currentDrag.clearConnection();
+                else
+                    context.serialize();
+
                 break;
 
             case _DRAG_.LINE:

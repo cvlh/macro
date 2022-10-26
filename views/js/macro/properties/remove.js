@@ -19,7 +19,7 @@ export default function Remove (ctx) {
             case 'click':
                 const selectObject = parent.getMain().getSelectedObject();
 
-                selectObject.
+                selectObject.remove();
                 break;
         }
     };

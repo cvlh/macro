@@ -494,8 +494,10 @@ export default function Macro(_properties) {
                         }
                     }
                 } else if (target.classList.contains('main-app-wrapper')) {
+                    const offset = 50 * props.transform.scale;
+                    
                     const card_left = (evnt.clientX - props.transform.left) / props.transform.scale,
-                          card_top = (evnt.clientY - props.transform.top) / props.transform.scale;
+                          card_top = ((evnt.clientY - offset) - props.transform.top) / props.transform.scale;
 
                     const new_card = context.createCard([card_left, card_top]);
                     context.connect(currentDrag, new_card);
@@ -548,7 +550,9 @@ export default function Macro(_properties) {
 
         const simulateDiv = addElement(mainBuilderToolbar, 'div', 'holder');
         const simulateBtn = addElement(simulateDiv, 'div', 'button', _I18N_.simulate);
-        simulateBtn.addEventListener('click', function(evnt) { simulate.start(); }, { capture: false });
+        // simulateBtn.addEventListener('click', function(evnt) { simulate.start(); }, { capture: false });
+        simulateBtn.addEventListener('click', () => simulate.start(), { capture: false });
+
 
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
@@ -592,7 +596,8 @@ export default function Macro(_properties) {
         mainAppWrapper.addEventListener('mousedown', function (evnt) {
             if (evnt.button === 0) {
                 if (currentDrag !== null) {
-                    if (currentDrag.getDragType() !== _DRAG_.HEADER) context.dragEnd(evnt);
+                    if (currentDrag.getDragType() !== _DRAG_.HEADER) 
+                        context.dragEnd(evnt);
                     return;
                 }
 
@@ -609,6 +614,8 @@ export default function Macro(_properties) {
             }
         }, { capture: false });
         mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: false });
+        
+        // mainAppWrapper.addEventListener('click', (evnt) => console.log(`${evnt.clientX} - ${evnt.clientY}`), { capture: false });
 
         //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);

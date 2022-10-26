@@ -47,12 +47,27 @@ export default function Card(_ctx, _properties, tab) {
             parent.dragStart(evnt, context)
     },
     _remove = function(evnt) {
-        evnt.stopPropagation();
+        card.removeEventListener('focus', _showProperties, { capture: false });
+
+        header.removeEventListener('mousedown', _drag, { capture: false });
+
+        visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
+        visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
+
+        add.removeEventListener('click', context.addField, { capture: false });
+
+        close.removeEventListener('click', _remove, { capture: false });
+
+        for (const field of fieldsArray)
+            field.remove();
+
+        const parent_node = card.parentNode;
+        parent_node.removeChild(card);
     },
     _order = function() {
         const sizeFields = fieldsArray.length;
         
-        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+        for (let counterFields = 0; counterFields < sizeFields; counterFields++) {
             fieldsArray[counterFields].setOrder(counterFields+1);
         }
     },
@@ -90,6 +105,9 @@ export default function Card(_ctx, _properties, tab) {
 
         context.setHeader('');
         context.setColor(null);
+
+        if (fieldsArray.length === 0) 
+            _remove();
     };
     this.redraw = function(transform) {
         let counter;
@@ -213,7 +231,7 @@ export default function Card(_ctx, _properties, tab) {
     this.setExpand = function(status) {
         const sizeFields = fieldsArray.length;
 
-        for (let counterFields=0; counterFields<sizeFields; counterFields++) {
+        for (let counterFields = 0; counterFields < sizeFields; counterFields++) {
             fieldsArray[counterFields].setExpand(status);
         }
     };

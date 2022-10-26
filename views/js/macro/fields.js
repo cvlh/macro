@@ -587,7 +587,25 @@ export default function Field(ctx, append, properties) {
         return null;
     };
     this.remove = function () {
+        description.removeEventListener('keyup', _keypress, { capture: false });
+        description.removeEventListener('focus', _showProperties, { capture: false });
 
+        visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
+        visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
+
+        if (props.type.type === _TYPES_.LIST)
+            output.removeEventListener('mousedown', _drag, { capture: false });
+
+        if (main.getVisibilityMode()) {
+            item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
+            item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
+        }
+
+        if (context.hasConnection())
+            context.clearConnection();
+
+        const parent_node = item.parentNode;
+        parent_node.removeChild(item);
     }
 
     this.initVisibility = function(fields) {

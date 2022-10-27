@@ -58,18 +58,21 @@ export default function Card(_ctx, _properties, tab) {
 
         close.removeEventListener('click', _remove, { capture: false });
 
-        for (const field of fieldsArray)
-            field.remove();
+        if (context.hasConnection())
+            input['_CONNECTION_'].clearConnection();
 
-        const parent_node = card.parentNode;
-        parent_node.removeChild(card);
+        while (fieldsArray.length) {
+            const field = fieldsArray.pop();
+            field.remove();
+        }
+        
+        card.parentNode.removeChild(card);
     },
     _order = function() {
         const sizeFields = fieldsArray.length;
         
-        for (let counterFields = 0; counterFields < sizeFields; counterFields++) {
+        for (let counterFields = 0; counterFields < sizeFields; counterFields++)
             fieldsArray[counterFields].setOrder(counterFields+1);
-        }
     },
     _showProperties = function() { parent.showProperties(context); },
     _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
@@ -88,19 +91,16 @@ export default function Card(_ctx, _properties, tab) {
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
     this.hasConnection = function() { 
-        if (rootCard) return false;
+        if (rootCard)
+            return false;
         
-        if (input['_CONNECTION_'] !== null) {
+        if (input['_CONNECTION_'] !== null)
             return true;
-        }
+        
         return false;
     };
-    this.makeConnection = function(output) {
-        //input.classList.add('linked');
-        input['_CONNECTION_'] = output;
-    };
+    this.makeConnection = function(output) { input['_CONNECTION_'] = output; };
     this.clearConnection = function() {
-        //input.classList.remove('linked');
         input['_CONNECTION_'] = null; 
 
         context.setHeader('');
@@ -345,6 +345,9 @@ export default function Card(_ctx, _properties, tab) {
         _order();
         
         return new_field;
+    };
+    this.removeField = function(field) {
+
     };
     this.isRoot = function() { return rootCard; };
     this.removeField = function() { };

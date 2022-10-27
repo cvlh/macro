@@ -604,8 +604,7 @@ export default function Field(ctx, append, properties) {
         if (context.hasConnection())
             context.clearConnection();
 
-        const parent_node = item.parentNode;
-        parent_node.removeChild(item);
+        item.parentNode.removeChild(item);
     }
 
     this.initVisibility = function(fields) {

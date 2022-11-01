@@ -630,8 +630,8 @@ body { overflow: hidden; }
             background-color: var(--neutral-400);
         }
         
-        .app-cards-header-button.new   { color: var(--red); }
-        .app-cards-header-button.close { color: var(--green); }
+        .app-cards-header-button.new   { color: var(--green); }
+        .app-cards-header-button.close { color: var(--red); }
 
     /*// HIGHLIGHT ITEM //////////////////////////////////////////////////////*/
     .app-cards-item-highlight {

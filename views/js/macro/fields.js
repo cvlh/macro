@@ -4,13 +4,14 @@ import { _QUADRATIC_CURVE_OFFSET_, _DRAG_, _MOV_, _COLORS_, _TYPES_, _STATUS_, _
 import { _I18N_ } from './../i18n/pt-br.js';
 import { addElement } from '../utils/functions.js';
 
-export default function Field(ctx, append, properties) {
+export default function Field(__context, __append, __properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const main = ctx.getMain(), 
-          parent = ctx, 
-          context = this, 
-          rootField = ctx.isRoot();
+    const MacroContext = __context.getMain(), 
+          CardContext = __context, 
+          Context = this,
+
+          RootField = __context.isRoot();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let item, container, index, description, visibility, output, 
@@ -40,16 +41,17 @@ export default function Field(ctx, append, properties) {
     // PRIVATE /////////////////////////////////////////////////////////////////
     _deep = function(tab) {
         let counter, result = '';
-        for (counter=0; counter<tab.length; counter++) {
+        for (counter = 0; counter < tab.length; counter++) {
             result += tab[counter];
             if (counter < tab.length-1) result += '.';
         }
+
         return result;
     },
     _color = function(drag, color = null) {
         if (color !== null) {
             if (!drag) {
-                if (context.hasConnection()) {
+                if (Context.hasConnection()) {
                     output.style.backgroundColor = color;
                     output.style.color = 'var(--gray-100)';
                 } else {
@@ -77,25 +79,24 @@ export default function Field(ctx, append, properties) {
         if (evnt.button !== 0) 
             return;
 
-        if (main.getVisibilityMode())
+        if (MacroContext.getVisibilityMode())
             return;
 
-        if (context.hasConnection()) {
-            context.clearConnection();
-            main.serialize();
+        if (Context.hasConnection()) {
+            Context.clearConnection();
+            MacroContext.serialize();
         }
 
         if (output['_PATH_'] === null) 
-            output['_PATH_'] = main.newSVG(context);
+            output['_PATH_'] = MacroContext.newSVG(Context);
         
         output['_PATH_'].setAttribute('visibility', 'visible');
 
-        context.setDragType(_DRAG_.OUTPUT);
-        main.dragStart(evnt, context); 
+        Context.setDragType(_DRAG_.OUTPUT);
+        MacroContext.dragStart(evnt, Context); 
     },
     //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
-    _render = function (endLeft, endTop, mov) {
-
+    _render = function (left, top, action) {
         let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
         const elements = output['_PATH_'].children,
@@ -104,23 +105,25 @@ export default function Field(ctx, append, properties) {
         
         if (dragType !== _DRAG_.LINE) {
             if (props.line === undefined) {
-                offsetLine = ((endLeft - position.left) / 2) - 17/2;
+                offsetLine = ((left - position.left) / 2) - 17/2;
             } else {
                 offsetLine = props.line;
             }
 
-            if (mov === _MOV_.END) endTop += 15;
+            if (action === _MOV_.END)
+                top += 15;
         } else {
-            offsetLine = endLeft - startX;
-            endLeft = props.tail.x;
-            endTop  = props.tail.y;
+            offsetLine = left - startX;
+            left = props.tail.x;
+            top  = props.tail.y;
 
-            if (mov === _MOV_.END) props.line = offsetLine;
+            if (action === _MOV_.END)
+                props.line = offsetLine;
         }
 
         const startXEnd = startX + offsetLine,
-                  diffY = Math.abs(startY - endTop),
-                  diffX = Math.abs(startXEnd - endLeft),
+                  diffY = Math.abs(startY - top),
+                  diffX = Math.abs(startXEnd - left),
                   diffZ = Math.abs(startX - startXEnd);
 
         if (diffY < (_QUADRATIC_CURVE_OFFSET_ * 2) || 
@@ -131,8 +134,8 @@ export default function Field(ctx, append, properties) {
             offset /= 2;
         }
 
-        const y1 = (startY > endTop) ? startY - offset : startY + offset,
-              y2 = (startY > endTop) ? endTop + offset : endTop - offset;
+        const y1 = (startY > top) ? startY - offset : startY + offset,
+              y2 = (startY > top) ? top + offset : top - offset;
 
         const d = {
             M0: { x: startX, y: startY },                                        //  MOVE TO - M x y
@@ -140,8 +143,8 @@ export default function Field(ctx, append, properties) {
             Q0: { x1: startXEnd, y1: startY, x: startXEnd, y: y1 },              //  QUADRATIC CURVE - Q x1 y1, x y
 
             M1: { x: startXEnd, y: y2 },
-            Q1: { x1: startXEnd, y1: endTop, x: startXEnd + (startXEnd > endLeft ? offset * -1 : offset), y: endTop },
-            H1: { x: endLeft }
+            Q1: { x1: startXEnd, y1: top, x: startXEnd + (startXEnd > left ? offset * -1 : offset), y: top },
+            H1: { x: left }
         };
 
         elements[0].setAttribute('d', 'M ' +d.M0.x+ ' ' +d.M0.y+ ' H ' +d.H0.x+ ' Q ' +d.Q0.x1+ ' ' +d.Q0.y1+ ', ' +d.Q0.x+ ' ' +d.Q0.y+ 
@@ -152,9 +155,9 @@ export default function Field(ctx, append, properties) {
         elements[1].setAttribute('x2', startXEnd);
         elements[1].setAttribute('y2', y2);
 
-        if (mov === _MOV_.END) {
-            props.tail.x = endLeft;
-            props.tail.y = endTop;
+        if (action === _MOV_.END) {
+            props.tail.x = left;
+            props.tail.y = top;
         }
     },
     _keypress = function(evnt) {
@@ -168,7 +171,7 @@ export default function Field(ctx, append, properties) {
                 if (value !== '') {
                     const next = item.nextElementSibling;
                     if (next === null) 
-                        parent.addField();
+                        CardContext.addField();
                     else {
                         const el = next.querySelector('input');
                         if (el !== null)
@@ -182,7 +185,7 @@ export default function Field(ctx, append, properties) {
     _refresh = function() {
         const value = description.value;
 
-        if (context.hasConnection())
+        if (Context.hasConnection())
             output['_CONNECTION_'].setHeader(value);
 
         if (treeviewRow !== null) {
@@ -200,36 +203,36 @@ export default function Field(ctx, append, properties) {
 
         //props['prefix']['text'] = value;
     },
-    _showProperties = function() { main.showProperties(context); },
+    _showProperties = function() { MacroContext.showProperties(Context); },
     _showVisibilityTools = function(evnt) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              tool = main.getVisibilityTool();
+              tool = MacroContext.getVisibilityTool();
 
         switch (evnt.type) {
             case 'mouseenter':
-                tool.show(context);
+                tool.show(Context);
                 break;
 
             case 'mouseleave':
-                tool.hide(context);
+                tool.hide(Context);
                 break;
         }
     },
-    _previewVisibility = function(evnt) { main.previewVisibility(props['visibility']['fields'], evnt.type); },
+    _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
     // _toggleVisibility = function() {
-    //     const object = main.getSelectedObject();
+    //     const object = MacroContext.getSelectedObject();
 
     //     _selectedForVisibility();
-    //     object.addToVisibility(context);
+    //     object.addToVisibility(Context);
 
     //     _unselectForVisibility();
-    //     object.removeFromVisibility(context);
+    //     object.removeFromVisibility(Context);
 
     // },
     _selectedForVisibility = function(status) {
-        let color = context.getColor();
+        let color = Context.getColor();
         if (color !== null)
             color += 'BB';
         else
@@ -271,10 +274,10 @@ export default function Field(ctx, append, properties) {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
 
-        if (!rootField)
+        if (RootField)
             treeviewRow.style.removeProperty('color');
         else 
-            treeviewRow.style.color = context.getColor();
+            treeviewRow.style.color = Context.getColor();
 
         description.style.removeProperty('border-color');
         description.style.removeProperty('background-color');
@@ -319,18 +322,18 @@ export default function Field(ctx, append, properties) {
         //output.classList.add('linked');
 
         //output['_PATH_'].setAttribute('class', 'linked');
-        if (output['_PATH_'] === null) output['_PATH_'] = main.newSVG(context);
+        if (output['_PATH_'] === null) output['_PATH_'] = MacroContext.newSVG(Context);
 
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
         output['_CONNECTION_'] = card;
 
-        card.makeConnection(context);
+        card.makeConnection(Context);
         _refresh();
 
         //expanded = true;
 
-        const color = context.getColor();
-        context.setColor(color);
+        const color = Context.getColor();
+        Context.setColor(color);
     };
     this.clearConnection = function() {
         const elements = output['_PATH_'].children;
@@ -352,31 +355,32 @@ export default function Field(ctx, append, properties) {
         props.tail.x = 0;
         props.tail.y = 0;
 
-        if (context.hasConnection()) {
+        if (Context.hasConnection()) {
             output['_CONNECTION_'].clearConnection();
             output['_CONNECTION_'] = null;
         }
-        context.setColor(null);
+
+        Context.setColor(null);
     };
     this.redraw = function(transform) {
-        if (context.hasConnection()) {
+        if (Context.hasConnection()) {
             const rect = output['_CONNECTION_'].getInputBounding();
-            context.setPosition(rect.left, rect.top, transform, _MOV_.END);
+            Context.setPosition(rect.left, rect.top, transform, _MOV_.END);
         }
     };
-    this.setPosition = function(left, top, transform, mov) {
+    this.setPosition = function(left, top, transform, action) {
         if (dragType === _DRAG_.OUTPUT) {
-            if (mov === _MOV_.START) {
-                /*if (context.hasConnection()) {
-                    context.clearConnection();
-                    main.serialize();
+            if (action === _MOV_.START) {
+                /*if (Context.hasConnection()) {
+                    Context.clearConnection();
+                    MacroContext.serialize();
                 }*/
-                const color = context.getColor();
+                const color = Context.getColor();
                 _color(true, color);
             }
         }
 
-        if (mov === _MOV_.START || mov === _MOV_.END) {
+        if (action === _MOV_.START || action === _MOV_.END) {
             const rect = output.getBoundingClientRect();
             position.left = (rect.left - transform.left) / transform.scale;
             position.top = (rect.top - transform.top) / transform.scale;
@@ -385,10 +389,10 @@ export default function Field(ctx, append, properties) {
         const endLeft = (left - transform.left) / transform.scale,
               endTop = (top - transform.top) / transform.scale;
 
-        _render(endLeft, endTop, mov);
+        _render(endLeft, endTop, action);
     };
     this.setColor = function(color) { 
-        if (rootField && color !== null) {
+        if (RootField && color !== null) {
             for (const color_idx in _COLORS_) {
                 if (_COLORS_[color_idx] === color) {
                     props.color = color_idx;
@@ -401,21 +405,21 @@ export default function Field(ctx, append, properties) {
 
         _color(false, color);
 
-        if (context.hasConnection())
+        if (Context.hasConnection())
             output['_CONNECTION_'].setColor(color);
     };
     this.getColor = function() {
-        if (rootField /*&& props.color != null*/) {
+        if (RootField /*&& props.color != null*/) {
             return _COLORS_[props.color];
         } else {
-            return parent.getColor();
+            return CardContext.getColor();
         }
     };
     this.infiniteLoop = function(target) {
-        if (rootField) {
+        if (RootField) {
             return false;
         } else {
-            return parent.infiniteLoop(target);
+            return CardContext.infiniteLoop(target);
         }
     };
     this.serialize = function (fragment, properties) {
@@ -442,13 +446,13 @@ export default function Field(ctx, append, properties) {
         props.text = description.value;
         response['properties'] = { ...props, ...visibilityFields };
 
-        if (rootField) properties.color = props.color;
+        if (RootField) properties.color = props.color;
         treeviewDeep = properties.tab.length;
 
-        hasChild = context.hasConnection();
+        hasChild = Context.hasConnection();
 
         deepSize = properties.tab.length;
-        if (hasChild || rootField) deepSize++;
+        if (hasChild || RootField) deepSize++;
 
         //fragment.appendChild(treeviewRow);
         //treeviewRow.classList = deep+ ' main-app-treeview-row';
@@ -459,7 +463,7 @@ export default function Field(ctx, append, properties) {
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
         if (!properties.expand) treeviewRow.style.height = '0';
         
-        treeviewRow['field_ctx'] = context;
+        treeviewRow['field_ctx'] = Context;
 
         isExpand = true;
         if (hasChild && !props.expanded && properties.expand) {
@@ -472,7 +476,7 @@ export default function Field(ctx, append, properties) {
             if (counterOffset > 0) 
                 fieldOffset.style.borderLeftColor = _COLORS_[properties.color] + '40';
         }
-        if (hasChild || rootField) {
+        if (hasChild || RootField) {
             if (hasChild) {
                 fieldOffset.classList.add('expand');
                 fieldOffset = addElement(fieldOffset, 'div', 'icon', _ICON_CHAR_.ARROW);
@@ -492,15 +496,15 @@ export default function Field(ctx, append, properties) {
         }
 
         //fieldDiv.textContent = description.value;
-        //if (rootField) fieldDiv.style.color = properties.color;
+        //if (RootField) fieldDiv.style.color = properties.color;
 
-        if (rootField) treeviewRow.style.color = properties.color;
-        if (hasChild || rootField) fieldDiv.style.fontWeight = '600';
-        /*if ( hasChild ||  rootField) {
+        if (RootField) treeviewRow.style.color = properties.color;
+        if (hasChild || RootField) fieldDiv.style.fontWeight = '600';
+        /*if ( hasChild ||  RootField) {
             fieldDiv.style.fontWeight = '600';
             treeviewRow.style.color = properties.color;
         }*/
-        if (!hasChild && !rootField) fieldDiv.style.fontSize = '10px';
+        if (!hasChild && !RootField) fieldDiv.style.fontSize = '10px';
 
         //fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
         fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['id']);
@@ -519,7 +523,7 @@ export default function Field(ctx, append, properties) {
         return response;
     };
     this.setExpand = function(status) {
-        const hasChild = context.hasConnection();
+        const hasChild = Context.hasConnection();
 
         if (!status) {
             treeviewRow.style.height = 0;
@@ -528,12 +532,12 @@ export default function Field(ctx, append, properties) {
         } else {
             treeviewRow.style.removeProperty('height');
             if (hasChild)
-                output['_CONNECTION_'].setExpand(context.getProps('expanded'));
+                output['_CONNECTION_'].setExpand(Context.getProps('expanded'));
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {
         if (color === null && index === null) {
-            color = (light ? context.getColor() + '40' : context.getColor());
+            color = (light ? Context.getColor() + '40' : Context.getColor());
             //if (currentVisibilityStatus && !light) color = 'white';
             index = treeviewDeep;
         } else {
@@ -541,7 +545,7 @@ export default function Field(ctx, append, properties) {
             child.style.borderLeftColor = color;
         }
 
-        if (context.hasConnection())
+        if (Context.hasConnection())
             output['_CONNECTION_'].setBorderColor(light, index, color);
 
         //return color;
@@ -553,27 +557,27 @@ export default function Field(ctx, append, properties) {
         if (sibling !== null) { 
             parentNode.insertBefore(item, sibling);
 
-            parent.swap(props.order-1, _ORDER_.UP);
-            main.redraw(parent);
+            CardContext.swap(props.order-1, _ORDER_.UP);
+            MacroContext.redraw(parent);
         }
     };
-    this.setSelected = function(isSelected) { 
-        if (isSelected) {
+    this.setSelected = function(status) { 
+        if (status) {
             isCurrentSelectObject = true;
 
             item.classList.add('selected');
 
-            if (!rootField) 
+            if (!RootField) 
                 item.classList.add('border-radius');
 
-            if (context.hasConnection()) 
+            if (Context.hasConnection()) 
                 output['_PATH_'].style.strokeWidth = '7px';
         } else {
             isCurrentSelectObject = false;
 
             item.classList.remove('selected', 'border-radius');
 
-            if (context.hasConnection())
+            if (Context.hasConnection())
                 output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
@@ -586,7 +590,7 @@ export default function Field(ctx, append, properties) {
 
         return null;
     };
-    this.remove = function () {
+    this.remove = function (remove = true) {
         description.removeEventListener('keyup', _keypress, { capture: false });
         description.removeEventListener('focus', _showProperties, { capture: false });
 
@@ -596,13 +600,16 @@ export default function Field(ctx, append, properties) {
         if (props.type.type === _TYPES_.LIST)
             output.removeEventListener('mousedown', _drag, { capture: false });
 
-        if (main.getVisibilityMode()) {
+        if (MacroContext.getVisibilityMode()) {
             item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
             item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
         }
 
-        if (context.hasConnection())
-            context.clearConnection();
+        if (Context.hasConnection())
+            Context.clearConnection();
+
+        if (remove)
+            CardContext.removeFieldFromArray(props.order);
 
         item.parentNode.removeChild(item);
     }
@@ -619,13 +626,13 @@ export default function Field(ctx, append, properties) {
             }
         }
         
-        if (context.hasConnection())
+        if (Context.hasConnection())
             output['_CONNECTION_'].initVisibility(fields);
 
         _updateVisibilityCounter();
     };
     this.setVisibilityMode = function() {
-        if (main.getVisibilityMode()) {
+        if (MacroContext.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('readonly', true);
             // container.style.pointerEvents = 'none';
@@ -633,7 +640,7 @@ export default function Field(ctx, append, properties) {
             if (!isCurrentSelectObject)
                 visibility.style.visibility = 'hidden';
             else
-                item.appendChild(main.getSelectedArrow());
+                item.appendChild(MacroContext.getSelectedArrow());
 
             // item.addEventListener('click', _toggleVisibility, { capture: false });
 
@@ -645,7 +652,7 @@ export default function Field(ctx, append, properties) {
             // container.style.removeProperty('pointer-events');
 
             if (isCurrentSelectObject)
-                item.removeChild(main.getSelectedArrow());
+                item.removeChild(MacroContext.getSelectedArrow());
 
             _updateVisibilityCounter();
             _unselectForVisibility();
@@ -686,15 +693,15 @@ export default function Field(ctx, append, properties) {
             icon.style.removeProperty('transform');
         }
 
-        if (context.hasConnection())
+        if (Context.hasConnection())
             output['_CONNECTION_'].setExpand(props.expanded);
     };
     this.setType = function(fieldType = props.type.type) { 
         const numFieldType = parseInt(fieldType);
 
         if (numFieldType !== _TYPES_.LIST) {
-            if (context.hasConnection())
-                context.clearConnection();
+            if (Context.hasConnection())
+                Context.clearConnection();
 
             output.classList.remove('app-cards-content-item-output');
             output.textContent = fieldType;
@@ -736,7 +743,8 @@ export default function Field(ctx, append, properties) {
     (function() {
         const fragment = document.createDocumentFragment();
 
-        if (properties !== null) props = {...props, ...properties};
+        if (__properties !== null)
+            props = {...props, ...__properties};
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
 
@@ -764,12 +772,11 @@ export default function Field(ctx, append, properties) {
         output['_PATH_'] = null;
         output['_CONNECTION_'] = null;
 
-        append.appendChild(fragment);
+        __append.appendChild(fragment);
         
-        context.setType();
+        Context.setType();
 
-        if (rootField)
-            context.setColor(props.color ?? _COLORS_.BLACK);
-            // context.setColor((props.color !== undefined ? props.color : _COLORS_.BLACK));
+        if (RootField)
+            Context.setColor(props.color ?? _COLORS_.BLACK);
     })();
 }

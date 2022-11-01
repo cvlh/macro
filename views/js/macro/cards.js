@@ -6,13 +6,13 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
-export default function Card(_ctx, _properties, tab) {
+export default function Card(__context, __properties, __tab) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = _ctx, 
-          context = this, 
-          rootCard = (tab === 0 ? true : false),
-          tabindex = ++tab;
+    const MacroContext = __context,
+          Context = this,
+          RootField = (__tab === 0 ? true : false),
+          TabIndex = ++__tab;
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
@@ -44,7 +44,7 @@ export default function Card(_ctx, _properties, tab) {
         }
 
         if (evnt.button === 0)
-            parent.dragStart(evnt, context)
+            MacroContext.dragStart(evnt, Context)
     },
     _remove = function(evnt) {
         card.removeEventListener('focus', _showProperties, { capture: false });
@@ -54,16 +54,16 @@ export default function Card(_ctx, _properties, tab) {
         visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
         visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
 
-        add.removeEventListener('click', context.addField, { capture: false });
+        add.removeEventListener('click', Context.addField, { capture: false });
 
         close.removeEventListener('click', _remove, { capture: false });
 
-        if (context.hasConnection())
+        if (Context.hasConnection())
             input['_CONNECTION_'].clearConnection();
 
         while (fieldsArray.length) {
             const field = fieldsArray.pop();
-            field.remove();
+            field.remove(false);
         }
         
         card.parentNode.removeChild(card);
@@ -72,10 +72,10 @@ export default function Card(_ctx, _properties, tab) {
         const sizeFields = fieldsArray.length;
         
         for (let counterFields = 0; counterFields < sizeFields; counterFields++)
-            fieldsArray[counterFields].setOrder(counterFields+1);
+            fieldsArray[counterFields].setOrder(counterFields + 1);
     },
-    _showProperties = function() { parent.showProperties(context); },
-    _previewVisibility = function(evnt) { parent.previewVisibility(props['visibility']['fields'], evnt.type); },
+    _showProperties = function() { MacroContext.showProperties(Context); },
+    _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
     _updateVisibilityCounter = function() {
         const visibilityFields = props['visibility']['fields'],
               visibilitySize   = visibilityFields['visible'].length + visibilityFields['hidden'].length;
@@ -91,7 +91,7 @@ export default function Card(_ctx, _properties, tab) {
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
     this.hasConnection = function() { 
-        if (rootCard)
+        if (RootField)
             return false;
         
         if (input['_CONNECTION_'] !== null)
@@ -103,20 +103,17 @@ export default function Card(_ctx, _properties, tab) {
     this.clearConnection = function() {
         input['_CONNECTION_'] = null; 
 
-        context.setHeader('');
-        context.setColor(null);
+        Context.setHeader('');
+        Context.setColor(null);
 
-        if (fieldsArray.length === 0) 
+        if (fieldsArray.length === 0)
             _remove();
     };
     this.redraw = function(transform) {
-        let counter;
+        for (const field of fieldsArray)
+            field.redraw(transform);
 
-        for (counter=0; counter<fieldsArray.length; counter++) {
-            fieldsArray[counter].redraw(transform);
-        }
-
-        if (context.hasConnection()) {
+        if (Context.hasConnection()) {
             const viewport = input.getBoundingClientRect();
             input['_CONNECTION_'].setPosition(viewport.left, viewport.top, transform, _MOV_.END);
         }
@@ -159,7 +156,7 @@ export default function Card(_ctx, _properties, tab) {
         card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
     };
     this.setColor = function(color) {
-        if (!rootCard) {   
+        if (!RootField) {   
             const size = fieldsArray.length;
             for (let counter=0; counter<size; counter++) {
                 fieldsArray[counter].setColor(color);
@@ -183,19 +180,18 @@ export default function Card(_ctx, _properties, tab) {
         }
     };
     this.getColor = function() {
-        if (!rootCard && context.hasConnection()) {
+        if (!RootField && Context.hasConnection())
             return input['_CONNECTION_'].getColor();
-        }
+        
         return null;
     };
     this.infiniteLoop = function(target) {
-        if (!rootCard) {
-            if (target.isSameNode(input)) {
+        if (!RootField) {
+            if (target.isSameNode(input))
                 return true;
-            }
-            if (context.hasConnection()) {
+            
+            if (Context.hasConnection())
                 return input['_CONNECTION_'].infiniteLoop(target);
-            }
         }
         return false;
     };
@@ -229,26 +225,19 @@ export default function Card(_ctx, _properties, tab) {
         return response;
     };
     this.setExpand = function(status) {
-        const sizeFields = fieldsArray.length;
-
-        for (let counterFields = 0; counterFields < sizeFields; counterFields++) {
-            fieldsArray[counterFields].setExpand(status);
-        }
+        for (const field of fieldsArray)
+            field.setExpand(status);
     };
     this.setBorderColor = function(light, index, color) {
-        const sizeFields = fieldsArray.length;
-        let counterFields;
-
-        for (counterFields=0; counterFields<sizeFields; counterFields++) {
-            fieldsArray[counterFields].setBorderColor(light, index, color);
-        }
+        for (const field of fieldsArray)
+            field.setBorderColor(light, index, color);
     };
     this.swap = function(position, order) { 
         fieldsArray.swap(position, order); 
         _order();
     };
-    this.setSelected = function(isSelected) { 
-        if (isSelected) {
+    this.setSelected = function(status) { 
+        if (status) {
             isCurrentSelectObject = true;
             card.classList.add('selected');
         } else {
@@ -278,40 +267,40 @@ export default function Card(_ctx, _properties, tab) {
             }
         }
 
-        for (const current_field of fieldsArray)
-            current_field.initVisibility(fields);
+        for (const field of fieldsArray)
+            field.initVisibility(fields);
 
         _updateVisibilityCounter();
     };      
     this.setVisibilityMode = function() {
-        if (parent.getVisibilityMode()) {
+        if (MacroContext.getVisibilityMode()) {
             card.removeAttribute('tabindex');
 
             if (!isCurrentSelectObject)
                 visibility.style.visibility = 'hidden';
             else
-                card.appendChild(parent.getSelectedArrow());
+                card.appendChild(MacroContext.getSelectedArrow());
 
             add.style.visibility = 'hidden';
 
-            if (!rootCard) 
+            if (!RootField) 
                 close.style.visibility = 'hidden';
         } else {
-            card.setAttribute('tabindex',  tabindex);
+            card.setAttribute('tabindex',  TabIndex);
 
             if (isCurrentSelectObject)
-            card.removeChild(parent.getSelectedArrow());
+            card.removeChild(MacroContext.getSelectedArrow());
             
             add.style.removeProperty('visibility');
             
-            if (!rootCard) 
+            if (!RootField) 
                 close.style.removeProperty('visibility');
             
             _updateVisibilityCounter();
         }
 
-        for (const current_field of fieldsArray)
-            current_field.setVisibilityMode();
+        for (const field of fieldsArray)
+            field.setVisibilityMode();
     };
     this.addToVisibility = function(field, status) {
         props['visibility']['fields'][status].push(field);
@@ -329,32 +318,29 @@ export default function Card(_ctx, _properties, tab) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
-    this.getMain = function() { return parent; };
+    this.getMain = function() { return MacroContext; };
     this.addField  = function() {
-        const field = context.newField();
-
-        parent.redraw(context);
+        const field = Context.newField();
+        MacroContext.redraw(Context);
         field.setFocus();
     },
     this.newField = function(properties) {
-        
-        properties = { ...properties, 'tab': tabindex };
+        properties = { ...properties, 'tab': TabIndex };
 
-        let new_field = new Field(this, items, properties);
+        let new_field = new Field(Context, items, properties);
         fieldsArray.push(new_field); 
         _order();
         
         return new_field;
     };
-    this.removeField = function(field) {
-
+    this.removeFieldFromArray = function(position) {
+        fieldsArray.splice(position - 1, 1);
+        _order();
     };
-    this.isRoot = function() { return rootCard; };
-    this.removeField = function() { };
-
+    this.isRoot = function() { return RootField; };
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
-    if (!rootCard) {
+    if (!RootField) {
         this.setHeader = function(text) {
             title.textContent = text;
         };
@@ -374,20 +360,20 @@ export default function Card(_ctx, _properties, tab) {
         const fragment = document.createDocumentFragment();
 
         card = addElement(fragment, 'div', 'app-cards');
-        card.setAttribute('tabindex', tabindex);
-        if (rootCard) { 
+        card.setAttribute('tabindex', TabIndex);
+        if (RootField) { 
             card.classList.add('root'); 
             //props.visibility['autoExecute'] = false;
         }
 
-        props = {...props, ..._properties};
+        props = {...props, ...__properties};
 
         card.addEventListener('focus', _showProperties, { capture: false });
 
         header = addElement(card, 'div', 'app-cards-header');
         header.addEventListener('mousedown', _drag, { capture: false });
         
-        if (rootCard) {
+        if (RootField) {
             header.style.gridTemplateColumns = '25px 225px 25px 25px';
             icon = addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
@@ -400,25 +386,25 @@ export default function Card(_ctx, _properties, tab) {
         visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
 
         add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
-        add.addEventListener('click', context.addField, { capture: false });
+        add.addEventListener('click', Context.addField, { capture: false });
 
-        if (!rootCard) {
+        if (!RootField) {
             close = addElement(header, 'div', 'app-cards-header-button close icon', _ICON_CHAR_.CLOSE);
             close.addEventListener('click', _remove, { capture: false });
         }
 
-        if (rootCard) {
+        if (RootField) {
             items = addElement(card, 'div', 'app-cards-content-items root');
         } else {
             let content = addElement(card, 'div', 'app-cards-content');
 
             input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
             input['_CONNECTION_'] = null;
-            input['_CONTEXT_'] = context;
+            input['_CONTEXT_'] = Context;
 
             items = addElement(content, 'div', 'app-cards-content-items');
         }
 
-        parent.appendAt().appendChild(fragment);
+        MacroContext.appendAt().appendChild(fragment);
     })();
 }

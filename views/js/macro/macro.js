@@ -494,8 +494,8 @@ export default function Macro(_properties) {
                         }
                     }
                 } else if (target.classList.contains('main-app-wrapper')) {
-                    const offset = 50 * props.transform.scale;
-                    
+                    const offset = 49 * props.transform.scale;
+
                     const card_left = (evnt.clientX - props.transform.left) / props.transform.scale,
                           card_top = ((evnt.clientY - offset) - props.transform.top) / props.transform.scale;
 

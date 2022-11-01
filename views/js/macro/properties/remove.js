@@ -17,7 +17,7 @@ export default function Remove (ctx) {
     _receive_events = function(evnt) {
         switch (evnt.type) {
             case 'click':
-                const selectObject = parent.getMain().getSelectedObject();
+                const selectObject = parent.getMacro().getSelectedObject();
 
                 selectObject.remove(true);
                 break;
@@ -27,7 +27,7 @@ export default function Remove (ctx) {
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
         content.style.display = 'block';
-        // const objectOrder = parent.getMain().getSelectedObject().getProps('order');
+        // const objectOrder = parent.getMacro().getSelectedObject().getProps('order');
         
         // if (objectOrder !== null) {
         //     _set(objectOrder);

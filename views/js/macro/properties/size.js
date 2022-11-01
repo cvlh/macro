@@ -25,7 +25,7 @@ export default function Size (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectSize = parent.getMain().getSelectedObject().getProps('size');
+        const objectSize = parent.getMacro().getSelectedObject().getProps('size');
 
         if (objectSize !== null) {
             _set(objectSize);

@@ -1,0 +1,100 @@
+{
+	"status": true,
+	"name": "Macro",
+	"version": 1,
+	"properties": {
+		"size": {
+			"width": 4096,
+			"height": 3072
+		},
+		"transform": {
+			"scale": 0.3739683658239443,
+			"left": 220.18594261169434,
+			"top": -12.808204014301301,
+			"index": 161
+		}
+	},
+	"root": {
+		"position": [
+			97.02816718273584,
+			829.0574623166306
+		],
+		"fields": [
+			{
+				"properties": {
+					"id": "1",
+					"text": "MOTORISTA",
+					"type": {
+						"type": 0
+					},
+					"order": 1,
+					"visibility": {
+						"fields": {
+							"visible": ["1", "1.1"],
+							"hidden": []
+						},
+						"flags": 1
+					},
+					"expanded": false,
+					"tail": {
+						"x": 589.4979833860078,
+						"y": 293.5098528319864
+					},
+					"description": "",
+					"icon": "",
+					"line": 93.4208198426519,
+					"color": "PURPLE"
+				},
+				"output": {
+					"position": [
+						587.4980085426737,
+						242.0098546964693
+					],
+					"fields": [
+						{
+							"properties": {
+								"id": "1.1",
+								"text": "CÓDIGO",
+								"type": {
+									"type": 2
+								},
+								"order": 1,
+								"visibility": {
+									"fields": {
+										"visible": [],
+										"hidden": []
+									},
+									"flags": 1
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								},
+								"icon": ""
+							}
+						}
+					],
+					"properties": {
+						"visibility": {
+							"fields": {
+								"visible": [],
+								"hidden": []
+							},
+							"flags": 1
+						}
+					}
+				}
+			}
+		],
+		"properties": {
+			"visibility": {
+				"fields": {
+					"visible": ["1"],
+					"hidden": []
+				},
+				"flags": 1
+			}
+		}
+	}
+}

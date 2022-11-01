@@ -20,9 +20,9 @@ export default function Visibility (ctx) {
         backup,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _backup  = function() { backup = parent.getMain().getSelectedObject().getProps('visibility'); },
+    _backup  = function() { backup = parent.getMacro().getSelectedObject().getProps('visibility'); },
     _restore = function() { 
-        let objectProp = parent.getMain().getSelectedObject().getProps('visibility');
+        let objectProp = parent.getMacro().getSelectedObject().getProps('visibility');
         objectProp = backup; 
 
         return objectProp;
@@ -31,7 +31,7 @@ export default function Visibility (ctx) {
     _add = function() {
         _backup();
 
-        // const object = parent.getMain().getSelectedObject();
+        // const object = parent.getMacro().getSelectedObject();
               //props = object.getProps('visibility');
 
         // if (object instanceof Card) {
@@ -59,12 +59,12 @@ export default function Visibility (ctx) {
         // executionGroup.style.display = 'block'; 
         // _set_flags(props);
 
-        parent.getMain().setVisibilityMode();
+        parent.getMacro().setVisibilityMode();
     },
     _edit = function() {
 
-        if (parent.getMain().getVisibilityMode()) {
-            const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
+        if (parent.getMacro().getVisibilityMode()) {
+            const objectProp = parent.getMacro().getSelectedObject().getProps('visibility');
             //const fieldsSize = objectProp['fields'].length;
 
             btnEdit.setAttribute('value', _I18N_.button_visibility_edit);
@@ -87,7 +87,7 @@ export default function Visibility (ctx) {
             btnDelete.style.visibility = 'visible';
         }
 
-        parent.getMain().setVisibilityMode();
+        parent.getMacro().setVisibilityMode();
     },
     _cancel = function() {
         const objectFields = _restore(),
@@ -111,21 +111,21 @@ export default function Visibility (ctx) {
             btnDelete.style.visibility = 'hidden';
         }
 
-        parent.getMain().setVisibilityMode();
+        parent.getMacro().setVisibilityMode();
     },
     _delete = function() {
-        const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
+        const objectProp = parent.getMacro().getSelectedObject().getProps('visibility');
 
         status.textContent = _I18N_.without_visibility;
         status.style.removeProperty('color');
 
-        parent.getMain().deleteVisibility();
+        parent.getMacro().deleteVisibility();
 
         _set_status(objectProp);
     },
 
     _update_flags = function() {
-        const objectProp = parent.getMain().getSelectedObject().getProps('visibility');
+        const objectProp = parent.getMacro().getSelectedObject().getProps('visibility');
 
         objectProp['flags'] = (fresh.checked   ? fresh.value   : _VISIBILITY_.NONE) | 
                               (extra.checked   ? extra.value   : _VISIBILITY_.NONE) | 
@@ -188,8 +188,8 @@ export default function Visibility (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function(object) {
-        //const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
-        const objectVisibility = parent.getMain().getSelectedObject().getProps('visibility');
+        //const objectType = parent.getMacro().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectVisibility = parent.getMacro().getSelectedObject().getProps('visibility');
 
         if (objectVisibility !== null) {
             _set_flags(objectVisibility);

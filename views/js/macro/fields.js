@@ -7,7 +7,7 @@ import { addElement } from '../utils/functions.js';
 export default function Field(__context, __append, __properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const MacroContext = __context.getMain(), 
+    const MacroContext = __context.getMacro(), 
           CardContext = __context, 
           Context = this,
 
@@ -29,8 +29,8 @@ export default function Field(__context, __append, __properties) {
             visibility: {
                 flags: _VISIBILITY_.FRESH,
                 fields: {
-                    visible: [],
-                    hidden:  []
+                    visible: null,
+                    hidden:  null
                 }
             },
             expanded: true,
@@ -274,7 +274,7 @@ export default function Field(__context, __append, __properties) {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
 
-        if (RootField)
+        if (!RootField)
             treeviewRow.style.removeProperty('color');
         else 
             treeviewRow.style.color = Context.getColor();
@@ -463,7 +463,7 @@ export default function Field(__context, __append, __properties) {
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
         if (!properties.expand) treeviewRow.style.height = '0';
         
-        treeviewRow['field_ctx'] = Context;
+        treeviewRow['_CONTEXT_'] = new WeakRef(Context);
 
         isExpand = true;
         if (hasChild && !props.expanded && properties.expand) {
@@ -608,24 +608,26 @@ export default function Field(__context, __append, __properties) {
         if (Context.hasConnection())
             Context.clearConnection();
 
+        output['_PATH_'] = null;
+
+        treeviewRow['_CONTEXT_'] = null;
+        treeviewRow.parentNode.removeChild(treeviewRow);
+
         if (remove)
             CardContext.removeFieldFromArray(props.order);
 
         item.parentNode.removeChild(item);
     }
 
-    this.initVisibility = function(fields) {
-        let sizeVisibility, counterVisibility, shortVisibility;
-
+    this.initVisibility = function(fields) {        
         for (const status in props['visibility']['fields']) {
-            shortVisibility = props['visibility']['fields'][status];
-            sizeVisibility = shortVisibility.length;
-            for (counterVisibility = 0; counterVisibility < sizeVisibility; counterVisibility++) {
-                if (typeof shortVisibility[counterVisibility] === 'string')
-                shortVisibility[counterVisibility] = fields[shortVisibility[counterVisibility]];
-            }
+            const clone = [...props['visibility']['fields'][status]];
+
+            props['visibility']['fields'][status] = [];
+            for (const id of clone) 
+                props['visibility']['fields'][status].push(fields[id]);
         }
-        
+
         if (Context.hasConnection())
             output['_CONNECTION_'].initVisibility(fields);
 
@@ -664,17 +666,21 @@ export default function Field(__context, __append, __properties) {
         }
     };
     this.addToVisibility = function(field, status) {
-        props['visibility']['fields'][status].push(field);
+        //props['visibility']['fields'][status].push(field);
+        props['visibility']['fields'][status].add(field);
         _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
-        const removeId = field.getProps('id');
+        // const removeId = field.getProps('id');
+        // for (const status in props['visibility']['fields']) {
+        //     let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
+        //     if (result !== -1)
+        //         props['visibility']['fields'][status].splice(result, 1);
+        // }
         for (const status in props['visibility']['fields']) {
-            let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
-            if (result !== -1)
-                props['visibility']['fields'][status].splice(result, 1);
+            if (props['visibility']['fields'][status].has(field))
+                props['visibility']['fields'][status].delete(field);
         }
-
         _updateVisibilityCounter();
     };
 

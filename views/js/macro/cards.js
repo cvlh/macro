@@ -11,6 +11,7 @@ export default function Card(__context, __properties, __tab) {
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const MacroContext = __context,
           Context = this,
+
           RootField = (__tab === 0 ? true : false),
           TabIndex = ++__tab;
 
@@ -318,7 +319,7 @@ export default function Card(__context, __properties, __tab) {
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
-    this.getMain = function() { return MacroContext; };
+    this.getMacro = function() { return MacroContext; };
     this.addField  = function() {
         const field = Context.newField();
         MacroContext.redraw(Context);
@@ -400,7 +401,7 @@ export default function Card(__context, __properties, __tab) {
 
             input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
             input['_CONNECTION_'] = null;
-            input['_CONTEXT_'] = Context;
+            input['_CONTEXT_'] = new WeakRef(Context);
 
             items = addElement(content, 'div', 'app-cards-content-items');
         }

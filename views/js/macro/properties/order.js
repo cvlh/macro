@@ -23,7 +23,7 @@ export default function Order (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectOrder = parent.getMain().getSelectedObject().getProps('order');
+        const objectOrder = parent.getMacro().getSelectedObject().getProps('order');
         
         if (objectOrder !== null) {
             _set(objectOrder);
@@ -52,8 +52,8 @@ export default function Order (ctx) {
         up.setAttribute('title', _I18N_.field_position_up);
         up.style.gridColumn = '8 / span 4';
         up.addEventListener('click', function() {
-            //const object = parent.getMain().getSelectedObject();
-            parent.getMain().getSelectedObject().swap();
+            //const object = parent.getMacro().getSelectedObject();
+            parent.getMacro().getSelectedObject().swap();
         }, { capture: false });
 
         index = addElement(row, 'div', 'main-app-properties-label');

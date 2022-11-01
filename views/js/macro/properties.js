@@ -29,7 +29,7 @@ export default function Properties(ctx) {
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
-    this.getMain = function() { return parent; };
+    this.getMacro = function() { return parent; };
 
     this.refresh = function() {
         const size = propertiesArray.length;

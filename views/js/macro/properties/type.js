@@ -73,24 +73,24 @@ export default function Type (ctx) {
         }
     },
     _type = function(evnt) {
-        const object = parent.getMain().getSelectedObject(),
+        const object = parent.getMacro().getSelectedObject(),
               value = evnt.target.value;
 
         _set(object.setType(value));
     },
     _mask = function(evnt) {
-        const objectType = parent.getMain().getSelectedObject().getProps('type');
+        const objectType = parent.getMacro().getSelectedObject().getProps('type');
         objectType['mask'] = evnt.target.value;
     },
     _optional = function(evnt) {
-        const objectType = parent.getMain().getSelectedObject().getProps('type');
+        const objectType = parent.getMacro().getSelectedObject().getProps('type');
         objectType['optional'] = evnt.target.checked;
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        //const objectType = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
-        const objectType = parent.getMain().getSelectedObject().getProps('type');
+        //const objectType = parent.getMacro().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = parent.getMacro().getSelectedObject().getProps('type');
 
         if (objectType !== null) {
             _set(objectType);

@@ -47,10 +47,13 @@ export default function Macro(_properties) {
 
         const target = evnt.target,
               targetClass = target.classList,
-              parent = target.parentElement,
-              field = parent['field_ctx'];
+              parent = target.parentElement;
 
         if (targetClass.contains('main-app-treeview-item')) {
+            const field = parent['_CONTEXT_'].deref();
+            if (field === undefined)
+                return;
+            
             if (targetClass.contains('expand')) {
  
                 const status = field.getProps('expanded');
@@ -310,15 +313,8 @@ export default function Macro(_properties) {
         
         const moveableLine = svgGroup.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'line'));
         moveableLine.setAttribute('class', 'moveable');
-        moveableLine['_FIELD_'] = field;
+        moveableLine['_OWNER_'] = new WeakRef(field);
 
-        //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        
-        //svg_g.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        //let new_path = new_group.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'path'));
-        //new_path.setAttribute('class', 'main-app-svg-path');
-
-        //return new_path;
         return svgGroup;
     };
     this.connect = function(fromOutput, toInput) {
@@ -351,8 +347,8 @@ export default function Macro(_properties) {
         if (currentSelectedObject.hasOwnProperty('getProps'))
             properties.refresh();
     };
-    this.setSelected = function(isSelected) { 
-        if (isSelected) {
+    this.setSelected = function(status) { 
+        if (status) {
             isCurrentSelectObject = true;
             mainAppWrapper.classList.add('selected');
         } else {
@@ -486,11 +482,13 @@ export default function Macro(_properties) {
                 const target = evnt.target;
 
                 if (target.classList.contains('app-cards-content-input')) {
-                    const targetCtx = target['_CONTEXT_'];
-                    if (!currentDrag.hasConnection() && !targetCtx.hasConnection()) {
-                        if (!currentDrag.infiniteLoop(target)) {
-                            context.connect(currentDrag, targetCtx);
-                            use = true;
+                    const targetCtx = target['_CONTEXT_'].deref();
+                    if (targetCtx !== undefined) {
+                        if (!currentDrag.hasConnection() && !targetCtx.hasConnection()) {
+                            if (!currentDrag.infiniteLoop(target)) {
+                                context.connect(currentDrag, targetCtx);
+                                use = true;
+                            }
                         }
                     }
                 } else if (target.classList.contains('main-app-wrapper')) {
@@ -606,10 +604,12 @@ export default function Macro(_properties) {
 
                 } else if (evnt.target.classList.contains('moveable')) {
                     evnt.preventDefault();
-                    const field = evnt.target['_FIELD_'];
 
-                    field.setDragType(_DRAG_.LINE);
-                    context.dragStart(evnt, field);
+                    const field = evnt.target['_OWNER_'].deref();
+                    if (field !== undefined) {
+                        field.setDragType(_DRAG_.LINE);
+                        context.dragStart(evnt, field);
+                    }
                 }
             }
         }, { capture: false });

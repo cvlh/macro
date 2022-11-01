@@ -40,14 +40,14 @@ export default function Color (ctx) {
             _set(target);
 
             const newColor = _COLORS_[target['_COLOR_']];
-            parent.getMain().getSelectedObject().setColor(newColor);
+            parent.getMacro().getSelectedObject().setColor(newColor);
         }
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        //const objectColor = parent.getMain().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
-        const objectColor = parent.getMain().getSelectedObject().getProps('color');
+        //const objectColor = parent.getMacro().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectColor = parent.getMacro().getSelectedObject().getProps('color');
 
         if (objectColor !== null) {
             if (colors.hasOwnProperty(objectColor)) {

@@ -2,7 +2,7 @@
 
 import Macro from './macro/macro.js';
 
-fetch('macro_simple.json')
+fetch('memory.json')
     .then(function(response) {
         if(response.ok) {
             response.json().then(data => { create_macro(data); });
@@ -15,27 +15,23 @@ fetch('macro_simple.json')
     }
 );
 
-function create_macro (data) {
-    let macro, allFields = {};
-    
-    macro = new Macro(data.properties);
+function create_macro (data) {    
+    const macro = new Macro(data['properties']),
+          fields_map = {};
 
-    create_card(macro, data['root'], allFields);
-    macro.initVisibility(allFields);
+    create_card(macro, data['root'], fields_map);
+    macro.initVisibility(fields_map);
 }
-function create_card (macro, props, allFields, output = null) {
+function create_card (macro, props, fields_map, output = null) {
     let card = macro.createCard(props['position'], props['properties'], output);
-    create_field(card, props['fields'], allFields);
+    create_field(card, props['fields'], fields_map);
 }
-function create_field (card, fields, allFields) {
-    let counter, field;
+function create_field (card, fields, fields_map) {
+    for (const field of fields) {
+        const new_field = card.newField(field['properties']);
+        fields_map[new_field.getProps('id')] = new_field;
 
-    for (counter = 0; counter < fields.length; counter++) {
-        field = card.newField(fields[counter]['properties']);
-        allFields[field.getProps('id')] = field;
-
-        if (fields[counter].hasOwnProperty('output')) {
-            create_card(card.getMain(), fields[counter]['output'], allFields, field);
-        }
+        if (field.hasOwnProperty('output'))
+            create_card(card.getMacro(), field['output'], fields_map, new_field);
     }
 }

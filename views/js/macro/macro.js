@@ -10,7 +10,7 @@ import Simulate from './simulate/simulate.js';
 import VisibilityTool from './tools/visibility.js';
 
 ////////////////////////////////////////////////////////////////////////////////
-export default function Macro(_properties) {
+export default function Macro(__properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const context = this;
@@ -287,12 +287,12 @@ export default function Macro(_properties) {
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.appendAt = function () { return mainAppWrapper; }
 
-    this.createCard = function(cardPosition, cardProperties, connect = null) {
+    this.createCard = function(card_position, card_properties, connect = null) {
         const isRoot = (cardsArray.length === 0 ? true : false),
-              left = cardPosition[0], 
-              top = cardPosition[1];
+              left = card_position[0], 
+              top = card_position[1];
 
-        const new_card = new Card(context, cardProperties, cardsArray.length);
+        const new_card = new Card(context, card_properties, cardsArray.length);
         cardsArray.push(new_card); 
 
         if (isRoot)
@@ -317,10 +317,10 @@ export default function Macro(_properties) {
 
         return svgGroup;
     };
-    this.connect = function(fromOutput, toInput) {
-        const viewportInput = toInput.getInputBounding();
-        fromOutput.setPosition(viewportInput.left, viewportInput.top, props.transform, _MOV_.END);
-        fromOutput.makeConnection(toInput);
+    this.connect = function(from_output, to_input) {
+        const viewportInput = to_input.getInputBounding();
+        from_output.setPosition(viewportInput.left, viewportInput.top, props.transform, _MOV_.END);
+        from_output.makeConnection(to_input);
     };
 
     this.redraw = function(element = null) {
@@ -356,7 +356,7 @@ export default function Macro(_properties) {
             mainAppWrapper.classList.remove('selected');
         }
     };
-    this.getProps = function (prop = null) {
+    this.getProps = function(prop = null) {
         if (prop === null) {
             return props;
         } else {
@@ -366,8 +366,8 @@ export default function Macro(_properties) {
         return null;
     };
 
-    this.initVisibility = function(fields) { 
-        rootCard.initVisibility(fields);
+    this.initVisibility = function(fields_map) { 
+        rootCard.initVisibility(fields_map);
 
         context.redraw();
     };
@@ -387,22 +387,22 @@ export default function Macro(_properties) {
         visibilityMode = !visibilityMode;
 
         for (const status in visibility['fields']) {
-            for (const field_status of visibility['fields'][status]) 
-                field_status.selectedForVisibility(status);
+            for (const field of visibility['fields'][status].values()) 
+                field.selectedForVisibility(status);
         }
 
         for (const current_card of cardsArray)
             current_card.setVisibilityMode();
     };
-    this.previewVisibility = function (fields, evntType) {
+    this.previewVisibility = function (fields, evnt_type) {
         if (visibilityMode) return;
 
         for (const status in fields) {
-            for (const field_status of fields[status]) {
-                if (evntType === 'mouseenter')
-                    field_status.selectedForVisibility(status);
+            for (const field of fields[status].values()) {
+                if (evnt_type === 'mouseenter')
+                    field.selectedForVisibility(status);
                 else
-                    field_status.unselectForVisibility();
+                    field.unselectForVisibility();
             }
         }
     };
@@ -417,9 +417,9 @@ export default function Macro(_properties) {
         }
     };
 
-    this.getSelectedArrow = function () { return selectedArrow; }
-    this.getVisibilityTool = function () { return visibilityTool; }
-    this.getSelectedObject = function () { return currentSelectedObject; }
+    this.getSelectedArrow = function() { return selectedArrow; }
+    this.getVisibilityTool = function() { return visibilityTool; }
+    this.getSelectedObject = function() { return currentSelectedObject; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
@@ -522,7 +522,7 @@ export default function Macro(_properties) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        props = {...props, ..._properties};
+        props = {...props, ...__properties};
 
         const fragment = document.createDocumentFragment();
 

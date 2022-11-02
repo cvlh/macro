@@ -27,3 +27,17 @@ export function addElement (parent, type, className = null, content = null) {
 
     return new_element;
 }
+
+export function UUIDv4() {
+    let uuid_format = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
+        millisecond = new Date().getTime();
+
+    return uuid_format.replace(/[xy]/g, letter => {
+        let random = Math.random() * 16 | 0;
+        if (millisecond > 0) {
+            random = (millisecond + random) % 16 | 0;
+            millisecond = Math.floor(millisecond / 16);
+        }
+        return (letter === 'x' ? random : (random & 0x3 | 0x8)).toString(16);
+    });
+};

@@ -2,7 +2,7 @@
 
 import { _QUADRATIC_CURVE_OFFSET_, _DRAG_, _MOV_, _COLORS_, _TYPES_, _STATUS_, _VISIBILITY_, _ICON_CHAR_, _ORDER_, _KEY_CODE_ } from '../utils/constants.js';
 import { _I18N_ } from './../i18n/pt-br.js';
-import { addElement } from '../utils/functions.js';
+import { addElement, UUIDv4 } from '../utils/functions.js';
 
 export default function Field(__context, __append, __properties) {
 
@@ -22,6 +22,8 @@ export default function Field(__context, __append, __properties) {
 
         position = { top: 0, left: 0 },
         props = {
+            uuid: null,
+
             id: null,
             text: '',
             type: { type: _TYPES_.LIST },
@@ -95,7 +97,6 @@ export default function Field(__context, __append, __properties) {
         Context.setDragType(_DRAG_.OUTPUT);
         MacroContext.dragStart(evnt, Context); 
     },
-    //_remove = function () { output.removeEventListener('mousedown', _drag, { capture: false }); },
     _render = function (left, top, action) {
         let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
@@ -297,8 +298,11 @@ export default function Field(__context, __append, __properties) {
         item.style.removeProperty('color');
     },
     _updateVisibilityCounter = function() {
-        const visibilityFields = props['visibility']['fields'],
-              visibilitySize   = visibilityFields['visible'].length + visibilityFields['hidden'].length;
+        const visibilityFields = props['visibility']['fields'];
+        
+        let visibilitySize = 0;
+        for (const status in visibilityFields)
+            visibilitySize += visibilityFields[status].size;
 
         if (visibilitySize) 
             visibility.style.visibility = 'visible';
@@ -428,7 +432,7 @@ export default function Field(__context, __append, __properties) {
             hasChild, isExpand, deepSize, text, 
             response = {  };
 
-        let visibilityFields = {
+        const responseVisibility = {
             visibility: {
                 fields: {
                     visible: [],
@@ -438,13 +442,14 @@ export default function Field(__context, __append, __properties) {
             }
         };
 
-        for (const status in props['visibility']['fields']) {
-            for (counterVisibility = 0; counterVisibility < props['visibility']['fields'][status].length; counterVisibility++)
-                visibilityFields['visibility']['fields'][status].push(props['visibility']['fields'][status][counterVisibility].getProps('id'));
+        const visibilityFields = props['visibility']['fields'];
+        for (const status in visibilityFields) {
+            const keysUUID = visibilityFields[status].keys();
+            responseVisibility['visibility']['fields'][status] = [...keysUUID];
         }
 
         props.text = description.value;
-        response['properties'] = { ...props, ...visibilityFields };
+        response['properties'] = { ...props, ...responseVisibility };
 
         if (RootField) properties.color = props.color;
         treeviewDeep = properties.tab.length;
@@ -614,22 +619,30 @@ export default function Field(__context, __append, __properties) {
         treeviewRow.parentNode.removeChild(treeviewRow);
 
         if (remove)
-            CardContext.removeFieldFromArray(props.order);
+            CardContext.removeFieldFromArray(props.uuid);
+
+        const visibilityFields = props['visibility']['fields'];
+        for (const status in visibilityFields) 
+            visibilityFields[status].clear();
 
         item.parentNode.removeChild(item);
     }
 
-    this.initVisibility = function(fields) {        
+    this.initVisibility = function(fields_map) {        
         for (const status in props['visibility']['fields']) {
             const clone = [...props['visibility']['fields'][status]];
 
-            props['visibility']['fields'][status] = [];
-            for (const id of clone) 
-                props['visibility']['fields'][status].push(fields[id]);
+            props['visibility']['fields'][status] = new Map();
+            for (const id of clone) {
+                if (fields_map.has(id))
+                    props['visibility']['fields'][status].set(id, fields_map.get(id));
+                else 
+                    console.log(`Field initVisibility error: not found id: ${id}`);
+            }   
         }
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].initVisibility(fields);
+            output['_CONNECTION_'].initVisibility(fields_map);
 
         _updateVisibilityCounter();
     };
@@ -666,21 +679,16 @@ export default function Field(__context, __append, __properties) {
         }
     };
     this.addToVisibility = function(field, status) {
-        //props['visibility']['fields'][status].push(field);
-        props['visibility']['fields'][status].add(field);
+        props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
     this.removeFromVisibility = function(field) {
-        // const removeId = field.getProps('id');
-        // for (const status in props['visibility']['fields']) {
-        //     let result = props['visibility']['fields'][status].findIndex( element => element.getProps('id') === removeId);
-        //     if (result !== -1)
-        //         props['visibility']['fields'][status].splice(result, 1);
-        // }
-        for (const status in props['visibility']['fields']) {
-            if (props['visibility']['fields'][status].has(field))
-                props['visibility']['fields'][status].delete(field);
-        }
+        const visibilityFields = props['visibility']['fields'],
+              fieldUUID = field.getProps('uuid');
+
+        for (const status in visibilityFields) 
+            visibilityFields[status].delete(fieldUUID);
+
         _updateVisibilityCounter();
     };
 
@@ -751,6 +759,9 @@ export default function Field(__context, __append, __properties) {
 
         if (__properties !== null)
             props = {...props, ...__properties};
+
+        if (props.uuid === null)
+            props.uuid = UUIDv4();
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
 

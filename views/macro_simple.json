@@ -8,20 +8,21 @@
 			"height": 3072
 		},
 		"transform": {
-			"scale": 0.3739683658239443,
-			"left": 220.18594261169434,
-			"top": -12.808204014301301,
-			"index": 161
+			"scale": 0.8757744480432776,
+			"left": 260.1802516555786,
+			"top": -483.3011340332031,
+			"index": 162
 		}
 	},
 	"root": {
 		"position": [
-			97.02816718273584,
-			829.0574623166306
+			97.02815357442039,
+			829.0574245136343
 		],
 		"fields": [
 			{
 				"properties": {
+					"uuid": "344c3cf5-86bb-4617-b8b2-aeb266e68bc8",
 					"id": "1",
 					"text": "MOTORISTA",
 					"type": {
@@ -30,18 +31,15 @@
 					"order": 1,
 					"visibility": {
 						"fields": {
-							"visible": [
-								"1",
-								"1.1"
-							],
+							"visible": [],
 							"hidden": []
 						},
 						"flags": 1
 					},
 					"expanded": false,
 					"tail": {
-						"x": 589.4979833860078,
-						"y": 293.5098528319864
+						"x": 589.4979686419606,
+						"y": 293.5098452863518
 					},
 					"description": "",
 					"icon": "",
@@ -56,6 +54,7 @@
 					"fields": [
 						{
 							"properties": {
+								"uuid": "5a875934-e06c-45e3-8311-b6ed4e488563",
 								"id": "1.1",
 								"text": "CÓDIGO",
 								"type": {
@@ -81,12 +80,8 @@
 					"properties": {
 						"visibility": {
 							"fields": {
-								"visible": [
-									"3"
-								],
-								"hidden": [
-									"2"
-								]
+								"visible": [],
+								"hidden": []
 							},
 							"flags": 1
 						}
@@ -95,6 +90,7 @@
 			},
 			{
 				"properties": {
+					"uuid": "fc1ecb2b-e56e-472b-9ea8-c32c951e2266",
 					"id": "2",
 					"text": "CHECKLIST",
 					"type": {
@@ -103,18 +99,15 @@
 					"order": 2,
 					"visibility": {
 						"fields": {
-							"visible": [
-								"2",
-								"2.1"
-							],
+							"visible": [],
 							"hidden": []
 						},
 						"flags": 1
 					},
 					"expanded": true,
 					"tail": {
-						"x": 1306.005547293659,
-						"y": 358.84289935317986
+						"x": 1306.0055406994766,
+						"y": 358.84287180601837
 					},
 					"icon": "",
 					"line": 143.5830075357349,
@@ -128,6 +121,7 @@
 					"fields": [
 						{
 							"properties": {
+								"uuid": "d039a50d-22fa-4fbf-9a19-7179b2a41b58",
 								"id": "2.1",
 								"text": "COMBUSTÍVEL",
 								"type": {
@@ -136,27 +130,15 @@
 								"order": 1,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3.5",
-											"2",
-											"2.1",
-											"2.1.2",
-											"2.1.5",
-											"3.5.2",
-											"2.1.1",
-											"3.5.1",
-											"2.1.3",
-											"2.1.4",
-											"3"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2501.6952506270973,
-									"y": 137.22513244134166
+									"x": 2501.695297284332,
+									"y": 137.22512811874682
 								},
 								"icon": "",
 								"line": 482.99455611587337
@@ -169,6 +151,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "5179ae70-a6fc-48d8-846f-ccbc7f11b847",
 											"id": "2.1.1",
 											"text": "COMPLETO",
 											"type": {
@@ -192,6 +175,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "4620bb38-5737-44c3-bae9-c72cc56fd589",
 											"id": "2.1.2",
 											"text": "3/4 DE TANQUE",
 											"type": {
@@ -215,6 +199,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "9d3d8a29-b8d7-4b69-a192-e364a48d8021",
 											"id": "2.1.3",
 											"text": "MEIO TANQUE",
 											"type": {
@@ -238,6 +223,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "b3cb129a-56a1-4ba2-bb5d-4b7dacaff5a3",
 											"id": "2.1.4",
 											"text": "1/4 DE TANQUE",
 											"type": {
@@ -261,6 +247,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "2d834968-da10-4435-8a2c-8652f1e7b62e",
 											"id": "2.1.5",
 											"text": "RESERVA",
 											"type": {
@@ -286,10 +273,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.2"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -299,6 +283,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "3ac14db4-b432-443e-aef9-a36e77534819",
 								"id": "2.2",
 								"text": "DIFERENCIAL",
 								"type": {
@@ -307,21 +292,15 @@
 								"order": 2,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.2",
-											"2.2.1",
-											"2.2.2",
-											"2.2.3"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": true,
 								"tail": {
-									"x": 2501.53577934323,
-									"y": 326.5257473077861
+									"x": 2501.536004900419,
+									"y": 326.52575513970197
 								},
 								"line": 481.76026946796514
 							},
@@ -333,6 +312,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "15b2d723-65f9-46ad-b4fc-6011be6ef23b",
 											"id": "2.2.1",
 											"text": "OK",
 											"type": {
@@ -355,6 +335,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "21a1dc0c-5772-46cf-a0c2-1eb1c232ee8b",
 											"id": "2.2.2",
 											"text": "FAZENDO BARULHO",
 											"type": {
@@ -377,6 +358,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "fe3dcfc0-d9b1-45ec-9fa7-a6f843af8c9b",
 											"id": "2.2.3",
 											"text": "VAZAMENTO DE ÓLEO",
 											"type": {
@@ -401,10 +383,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.3"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -414,6 +393,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "93791e19-9479-40ea-beec-9a07cb329529",
 								"id": "2.3",
 								"text": "CAIXA DE CÂMBIO",
 								"type": {
@@ -422,26 +402,18 @@
 								"order": 3,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.3",
-											"2.3.1",
-											"2.3.2",
-											"2.3.3",
-											"2.3.4",
-											"2.3.5"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2501.7007720361107,
-									"y": 513.4688626204551
+									"x": 2501.7008464042633,
+									"y": 513.468852838633
 								},
 								"line": 449.72121078338864,
-								"icon": "\uf085"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -451,6 +423,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "64618a65-f4f9-483c-8538-07cbc41dacbc",
 											"id": "2.3.1",
 											"text": "OK",
 											"type": {
@@ -473,6 +446,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "942d2f6a-8351-4307-9045-5d63cc081b3f",
 											"id": "2.3.2",
 											"text": "FAZENDO BARULHO",
 											"type": {
@@ -495,6 +469,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "ce8576ab-1a2e-4a2d-b636-ea89e124718d",
 											"id": "2.3.3",
 											"text": "ESCAPANDO MARCHA",
 											"type": {
@@ -517,6 +492,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "b0800bc0-b2b7-4b9d-a9a7-c02a592fffc6",
 											"id": "2.3.4",
 											"text": "NAO ENTRA MARCHA",
 											"type": {
@@ -539,6 +515,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "cd1c4bb6-d83d-47be-b42c-de9a3533ce2c",
 											"id": "2.3.5",
 											"text": "VAZAMENTO",
 											"type": {
@@ -563,10 +540,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.4"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -576,6 +550,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "3b269aab-0080-46c5-9018-1ca0aed204e7",
 								"id": "2.4",
 								"text": "ÓLEO DO MOTOR",
 								"type": {
@@ -584,23 +559,18 @@
 								"order": 4,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.4",
-											"2.4.1",
-											"2.4.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": true,
 								"tail": {
-									"x": 2501.707917388952,
-									"y": 684.1028521679629
+									"x": 2501.7077011994725,
+									"y": 684.1028626462937
 								},
 								"line": 414.67691723624944,
-								"icon": "\uf613"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -610,6 +580,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "6b2ea81f-f640-47cf-8ca5-704998db4aec",
 											"id": "2.4.1",
 											"text": "OK",
 											"type": {
@@ -632,6 +603,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "13ff49bc-89ea-4185-925b-d4667fb016c7",
 											"id": "2.4.2",
 											"text": "NÍVEL BAIXO",
 											"type": {
@@ -656,10 +628,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.5"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -669,6 +638,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "2faf8d60-1db2-4c72-84ca-417479448062",
 								"id": "2.5",
 								"text": "ÓLEO HIDRÁULICO",
 								"type": {
@@ -677,23 +647,18 @@
 								"order": 5,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.5",
-											"2.5.1",
-											"2.5.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2501.4708215901273,
-									"y": 803.013337638386
+									"x": 2501.47104755534,
+									"y": 803.0133215617808
 								},
 								"line": 381.31549838483875,
-								"icon": "\uf613"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -703,6 +668,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "c20cd867-b194-4fdd-abce-c31688be7f42",
 											"id": "2.5.1",
 											"text": "OK",
 											"type": {
@@ -725,6 +691,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "1ba61839-b403-4b3b-a005-180abd087ecb",
 											"id": "2.5.2",
 											"text": "NÍVEL BAIXO",
 											"type": {
@@ -749,10 +716,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.6"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -762,6 +726,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "37593b30-910b-47fc-9756-5096a51c0d8c",
 								"id": "2.6",
 								"text": "GRAXA SAPATAS",
 								"type": {
@@ -770,20 +735,15 @@
 								"order": 6,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.6",
-											"2.6.1",
-											"2.6.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": true,
 								"tail": {
-									"x": 2500.395121198748,
-									"y": 923.7963521377799
+									"x": 2500.3951711262907,
+									"y": 923.7963636399948
 								},
 								"line": 349.53704926539035
 							},
@@ -795,6 +755,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "cdf66718-37b8-4737-bb48-df461d0bfda3",
 											"id": "2.6.1",
 											"text": "ENGRAXADO",
 											"type": {
@@ -817,6 +778,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "ab5df85f-d7d2-4708-b92f-dba8be458dca",
 											"id": "2.6.2",
 											"text": "RUIM",
 											"type": {
@@ -841,10 +803,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.7"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -854,6 +813,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "dab422d5-6342-4f51-894c-19696d5f8cbf",
 								"id": "2.7",
 								"text": "CAMERA DE RÉ",
 								"type": {
@@ -862,23 +822,18 @@
 								"order": 7,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.7",
-											"2.7.1",
-											"2.7.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2500.4279248640646,
-									"y": 1044.9439420264623
+									"x": 2500.4281394270597,
+									"y": 1044.9439339348776
 								},
 								"line": 319.87716342057183,
-								"icon": "\uf03d"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -888,6 +843,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "cff0f563-4d48-454e-9600-58c6043d66cc",
 											"id": "2.7.1",
 											"text": "FUNCIONANDO",
 											"type": {
@@ -910,6 +866,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "3bf6aa0b-d2e2-4389-a0a1-44b7f735ff07",
 											"id": "2.7.2",
 											"text": "COM PROBLEMAS",
 											"type": {
@@ -934,10 +891,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.8"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -947,6 +901,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "6f6bc8b1-39d4-420c-922f-a0ad13e3cd0b",
 								"id": "2.8",
 								"text": "ÁGUA DO RADIADOR",
 								"type": {
@@ -955,24 +910,18 @@
 								"order": 8,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.8",
-											"2.8.1",
-											"2.8.2",
-											"2.8.3"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2500.8602187109627,
-									"y": 1186.333342148225
+									"x": 2500.8603179440684,
+									"y": 1186.333388064164
 								},
 								"line": 285.98015102649333,
-								"icon": "\uf773"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -982,6 +931,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "28a74073-d4d0-4061-9c68-ccd40dc4b830",
 											"id": "2.8.1",
 											"text": "OK",
 											"type": {
@@ -1004,6 +954,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "55e50edb-36f3-4899-b677-c62bc5705f4a",
 											"id": "2.8.2",
 											"text": "NÍVEL BAIXO",
 											"type": {
@@ -1026,6 +977,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "927bd984-f03e-4c60-a00d-23a572c9b955",
 											"id": "2.8.3",
 											"text": "VAZAMENTO",
 											"type": {
@@ -1050,10 +1002,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.9"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1063,6 +1012,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "ba0508b8-b9a0-4a93-a26e-1a604e628559",
 								"id": "2.9",
 								"text": "FARÓIS E LANTERNAS",
 								"type": {
@@ -1071,23 +1021,18 @@
 								"order": 9,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.9",
-											"2.9.1",
-											"2.9.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2501.341880450219,
-									"y": 1327.9919109594066
+									"x": 2501.34211212164,
+									"y": 1327.9919745101224
 								},
 								"line": 254.20170190704494,
-								"icon": "\uf0eb"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -1097,6 +1042,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "751bdab6-974d-4fc0-ad85-d79b9517ebb4",
 											"id": "2.9.1",
 											"text": "FUNCIONANDO",
 											"type": {
@@ -1119,6 +1065,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "8bb1cec2-239c-437b-9ac3-6d509f9d54b9",
 											"id": "2.9.2",
 											"text": "COM PROBLEMAS",
 											"type": {
@@ -1143,10 +1090,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.10"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1156,6 +1100,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "d427abfc-82b8-4d1e-b786-780f46367fd4",
 								"id": "2.10",
 								"text": "PRESSÃO PNEU",
 								"type": {
@@ -1164,20 +1109,15 @@
 								"order": 10,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.10",
-											"2.10.1",
-											"2.10.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2501.1850074764757,
-									"y": 1452.1685620724568
+									"x": 2501.185104669464,
+									"y": 1452.168629845196
 								},
 								"line": 222.4232527875963
 							},
@@ -1189,6 +1129,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "2e4d29b4-b697-4801-924c-f1afd764f06b",
 											"id": "2.10.1",
 											"text": "OK",
 											"type": {
@@ -1211,6 +1152,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "740c3736-dcfa-4df8-9cea-9ceb6ed2f480",
 											"id": "2.10.2",
 											"text": "IRREGULAR",
 											"type": {
@@ -1235,10 +1177,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.11"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1248,6 +1187,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "38de7342-ea43-4513-af56-3d4e7387c659",
 								"id": "2.11",
 								"text": "MOLAS",
 								"type": {
@@ -1256,20 +1196,15 @@
 								"order": 11,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.11",
-											"2.11.1",
-											"2.11.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2500.1226234244823,
-									"y": 1575.070742069633
+									"x": 2500.122611412014,
+									"y": 1575.070701294854
 								},
 								"line": 190.64480366814792
 							},
@@ -1281,6 +1216,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "fc6db9f2-80f4-4e31-b268-263db316c911",
 											"id": "2.11.1",
 											"text": "OK",
 											"type": {
@@ -1303,6 +1239,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "067f6a86-585f-42a6-8925-cbd621872fdd",
 											"id": "2.11.2",
 											"text": "COM PROBLEMAS",
 											"type": {
@@ -1327,10 +1264,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.12"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1340,6 +1274,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "42c8d4a8-ae00-4eb0-877e-a4f7db8c5358",
 								"id": "2.12",
 								"text": "EXTINTOR",
 								"type": {
@@ -1348,25 +1283,18 @@
 								"order": 12,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.12",
-											"2.12.1",
-											"2.12.2",
-											"2.12.3",
-											"2.12.4"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2499.8286895916926,
-									"y": 1734.6371890449168
+									"x": 2499.828508055651,
+									"y": 1734.6372770158405
 								},
 								"line": 158.48222619513376,
-								"icon": "\uf134"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -1376,6 +1304,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "73bdc0fe-75ce-49b7-92ea-a7f5fb056bfd",
 											"id": "2.12.1",
 											"text": "OK",
 											"type": {
@@ -1398,6 +1327,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "fb46787b-bbbf-41fe-b7c7-f524fa94c5df",
 											"id": "2.12.2",
 											"text": "VENCIDO",
 											"type": {
@@ -1420,6 +1350,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "3d9c99fe-59b6-4480-a738-6bb6b0f60ad9",
 											"id": "2.12.3",
 											"text": "VAZIO",
 											"type": {
@@ -1442,6 +1373,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "891aa805-424a-427c-b0bd-849915a12632",
 											"id": "2.12.4",
 											"text": "SEM LACRE",
 											"type": {
@@ -1466,10 +1398,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.13"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1479,6 +1408,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "ea36bb28-7cc4-4185-ae75-c092d335e83e",
 								"id": "2.13",
 								"text": "DOCUMENTOS DO VEÍCULO",
 								"type": {
@@ -1487,24 +1417,18 @@
 								"order": 13,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.13",
-											"2.13.1",
-											"2.13.2",
-											"2.13.3"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2499.4889605429657,
-									"y": 1910.3602531606555
+									"x": 2499.489032483378,
+									"y": 1910.3602786264553
 								},
 								"line": 123.34503347920258,
-								"icon": "\uf15c"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -1514,6 +1438,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "70dae2d4-c825-4139-8341-0f66afedab40",
 											"id": "2.13.1",
 											"text": "OK",
 											"type": {
@@ -1536,6 +1461,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "5889b64a-659a-48ec-8dfe-a637a4d37d69",
 											"id": "2.13.2",
 											"text": "VENCIDO",
 											"type": {
@@ -1558,6 +1484,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "db99cc62-93d4-46fd-957b-ec7def0fd884",
 											"id": "2.13.3",
 											"text": "NÃO ENCONTRADO",
 											"type": {
@@ -1582,10 +1509,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"2",
-												"2.14"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1595,6 +1519,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "2be0a2c5-77ad-461b-a5f5-e052f39525e1",
 								"id": "2.14",
 								"text": "TEMPERATURA DO MOTOR",
 								"type": {
@@ -1603,23 +1528,18 @@
 								"order": 14,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"2",
-											"2.14",
-											"2.14.1",
-											"2.14.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 2497.806879526373,
-									"y": 2053.486055220043
+									"x": 2497.8069963065304,
+									"y": 2053.486117666035
 								},
 								"line": 88.2078407632714,
-								"icon": "\uf76b"
+								"icon": ""
 							},
 							"output": {
 								"position": [
@@ -1629,6 +1549,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "09682d15-2d3a-4c43-b053-e07a65b4f478",
 											"id": "2.14.1",
 											"text": "OK",
 											"type": {
@@ -1651,6 +1572,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "0e7cc075-1585-415a-b671-9f1c0ed22eda",
 											"id": "2.14.2",
 											"text": "ESQUENTANDO",
 											"type": {
@@ -1675,9 +1597,7 @@
 								"properties": {
 									"visibility": {
 										"fields": {
-											"visible": [
-												"3"
-											],
+											"visible": [],
 											"hidden": []
 										},
 										"flags": 1
@@ -1699,6 +1619,7 @@
 			},
 			{
 				"properties": {
+					"uuid": "1ecbc5d9-38a6-40c8-839f-534515b5a088",
 					"id": "3",
 					"text": "EM TRABALHO",
 					"type": {
@@ -1707,22 +1628,15 @@
 					"order": 3,
 					"visibility": {
 						"fields": {
-							"visible": [
-								"3",
-								"3.1",
-								"3.10",
-								"3.14",
-								"3.6",
-								"3.7"
-							],
+							"visible": [],
 							"hidden": []
 						},
 						"flags": 1
 					},
 					"expanded": true,
 					"tail": {
-						"x": 638.8954315216781,
-						"y": 1237.7111897816121
+						"x": 638.8954447386182,
+						"y": 1237.711170475411
 					},
 					"icon": "",
 					"line": 145.0077885084151,
@@ -1736,6 +1650,7 @@
 					"fields": [
 						{
 							"properties": {
+								"uuid": "1fc3b807-f45c-4ae1-a2a9-7e9f267efc29",
 								"id": "3.1",
 								"text": "INÍCIO COLETA",
 								"type": {
@@ -1744,13 +1659,7 @@
 								"order": 1,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.14",
-											"3.19",
-											"3.2",
-											"3.7"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -1765,6 +1674,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "f4621d7b-21f3-4ab2-8745-1e31e52a361b",
 								"id": "3.2",
 								"text": "FIM COLETA",
 								"type": {
@@ -1773,13 +1683,7 @@
 								"order": 2,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.14",
-											"3.18",
-											"3.3",
-											"3.7"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -1794,6 +1698,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "5d49fa4c-9cf6-4bee-b8fe-ccbce9ffea71",
 								"id": "3.3",
 								"text": "TRÂNSITO PARA DESCARGA",
 								"type": {
@@ -1802,13 +1707,7 @@
 								"order": 3,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.10",
-											"3.14",
-											"3.4",
-											"3.7"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -1823,6 +1722,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "5b2f2cdc-738b-400c-8f1b-c45a10db77aa",
 								"id": "3.4",
 								"text": "INÍCIO DESCARGA",
 								"type": {
@@ -1831,13 +1731,7 @@
 								"order": 4,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.10",
-											"3.14",
-											"3.5",
-											"3.7"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -1852,6 +1746,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "ae67d88d-6166-4073-b984-e8fccca055c9",
 								"id": "3.5",
 								"text": "FIM DESCARGA",
 								"type": {
@@ -1860,25 +1755,15 @@
 								"order": 5,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.1",
-											"3.10",
-											"3.13",
-											"3.15",
-											"3.20",
-											"3.5.1",
-											"3.5.2",
-											"3.7"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": true,
 								"tail": {
-									"x": 1143.659070879965,
-									"y": 788.8501115462685
+									"x": 1143.6590132678082,
+									"y": 788.850090588682
 								},
 								"line": 73.71159528410772
 							},
@@ -1890,6 +1775,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "0f6163f5-5566-43c4-9193-35cd06a45237",
 											"id": "3.5.1",
 											"text": "NR TICKET",
 											"type": {
@@ -1913,6 +1799,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "41fff2e5-4f28-48f2-b43c-f7b1fc2d39db",
 											"id": "3.5.2",
 											"text": "PESO KG",
 											"type": {
@@ -1948,6 +1835,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "7d581297-f05f-47ff-b1dd-ddc4e1b2deb4",
 								"id": "3.6",
 								"text": "TRÂNSITO LOCAL",
 								"type": {
@@ -1971,6 +1859,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "fca6c4b0-3b3b-49d1-986a-208f34c7017d",
 								"id": "3.7",
 								"text": "INÍCIO ABASTECIMENTO",
 								"type": {
@@ -1979,12 +1868,7 @@
 								"order": 7,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.14",
-											"3.19",
-											"3.8"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -1999,6 +1883,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "9606663c-920a-4769-9069-62ae2f55e0f0",
 								"id": "3.8",
 								"text": "FIM ABASTECIMENTO",
 								"type": {
@@ -2007,21 +1892,15 @@
 								"order": 8,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.1",
-											"3.10",
-											"3.14",
-											"3.8.1"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": true,
 								"tail": {
-									"x": 1144.2464513623956,
-									"y": 908.5927464325322
+									"x": 1144.246403933486,
+									"y": 908.5926726797618
 								},
 								"line": 134.7019977201934
 							},
@@ -2033,6 +1912,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "2c699402-6de3-420b-baa7-e3fa52e5262f",
 											"id": "3.8.1",
 											"text": "LITROS",
 											"type": {
@@ -2068,6 +1948,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "bdfab096-6ee8-4815-8e59-793d5794bf1b",
 								"id": "3.9",
 								"text": "COND LOCAIS",
 								"type": {
@@ -2090,6 +1971,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "59d4b3af-c2d0-4905-8858-6a9edaaaf21d",
 								"id": "3.10",
 								"text": "INÍCIO REFEIÇÃO",
 								"type": {
@@ -2098,24 +1980,15 @@
 								"order": 10,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.11",
-											"3.14",
-											"3.10.1",
-											"3.10.2",
-											"3.10.3",
-											"3.10.4",
-											"3.10.5"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1161.8993703455699,
-									"y": 1372.5069719774997
+									"x": 1161.8992969010803,
+									"y": 1372.5069329949638
 								},
 								"line": 142.79535751422168,
 								"icon": ""
@@ -2128,6 +2001,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "28ef23ed-477f-4b61-a1db-a0f708bb3144",
 											"id": "3.10.1",
 											"text": "CÓDIGO MOTORISTA",
 											"type": {
@@ -2146,11 +2020,12 @@
 												"x": 0,
 												"y": 0
 											},
-											"icon": "\ue552"
+											"icon": ""
 										}
 									},
 									{
 										"properties": {
+											"uuid": "d37372dd-4f5a-4ab4-8e07-7c3cc140a69c",
 											"id": "3.10.2",
 											"text": "CÓDIGO COLETOR 1",
 											"type": {
@@ -2173,6 +2048,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "425eaa7a-4a6d-4a7c-a590-ebf505ab35c7",
 											"id": "3.10.3",
 											"text": "CÓDIGO COLETOR 2",
 											"type": {
@@ -2191,11 +2067,12 @@
 												"x": 0,
 												"y": 0
 											},
-											"icon": "\ue552"
+											"icon": ""
 										}
 									},
 									{
 										"properties": {
+											"uuid": "63c14772-7135-4b42-bdb4-3c97aaa201c8",
 											"id": "3.10.4",
 											"text": "CÓDIGO COLETOR 3",
 											"type": {
@@ -2218,6 +2095,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "d696459e-47e9-4636-b98d-4f46d67004b8",
 											"id": "3.10.5",
 											"text": "CÓDIGO COLETOR 4",
 											"type": {
@@ -2252,6 +2130,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "595e6bdd-bce0-4951-953c-39b31c43eeca",
 								"id": "3.11",
 								"text": "FIM REFEIÇÃO",
 								"type": {
@@ -2260,23 +2139,15 @@
 								"order": 11,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.11.1",
-											"3.11.2",
-											"3.11.3",
-											"3.11.4",
-											"3.11.5",
-											"3.11"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1162.2632961573274,
-									"y": 1599.666832887566
+									"x": 1162.263253884815,
+									"y": 1599.666848971885
 								},
 								"line": 101.81186248807148
 							},
@@ -2288,6 +2159,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "7932892c-65de-43e6-8261-212f23f813e1",
 											"id": "3.11.1",
 											"text": "CÓDIGO PONTO MOTORISTA",
 											"type": {
@@ -2310,6 +2182,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "4ebb6643-18f3-40d0-aeaa-415578a12795",
 											"id": "3.11.2",
 											"text": "CÓDIGO PONTO COLETOR 1",
 											"type": {
@@ -2332,6 +2205,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "392d8057-1112-47e0-bf76-d7ff8ecd4b88",
 											"id": "3.11.3",
 											"text": "CÓDIGO PONTO COLETOR 2",
 											"type": {
@@ -2354,6 +2228,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "ba046f04-972a-4a1e-85a1-6c1a13761bd0",
 											"id": "3.11.4",
 											"text": "CÓDIGO PONTO COLETOR 3",
 											"type": {
@@ -2376,6 +2251,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "28024f50-e594-4369-830d-e6f7064c3ef4",
 											"id": "3.11.5",
 											"text": "CÓDIGO PONTO COLETOR 4",
 											"type": {
@@ -2410,6 +2286,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "69f6c024-e57d-4bc4-855e-e8a738e61a35",
 								"id": "3.12",
 								"text": "CAFÉ",
 								"type": {
@@ -2433,6 +2310,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "948a3848-42d4-4df9-91c8-6b5a1173c02b",
 								"id": "3.13",
 								"text": "A DISPOSIÇÃO",
 								"type": {
@@ -2456,6 +2334,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "a1d7a64d-e5ed-4b36-8b4a-5135cc604870",
 								"id": "3.14",
 								"text": "PEDIDO DE SOS",
 								"type": {
@@ -2464,10 +2343,7 @@
 								"order": 14,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.15"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 5
@@ -2482,6 +2358,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "0d18dbc9-463b-4e2e-8b19-ce1777a40f2a",
 								"id": "3.15",
 								"text": "INÍCIO SOS",
 								"type": {
@@ -2490,10 +2367,7 @@
 								"order": 15,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"3",
-											"3.16"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
@@ -2507,6 +2381,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "99cc51b6-78ed-4c23-8710-2cbbec5c2695",
 								"id": "3.16",
 								"text": "FIM SOS",
 								"type": {
@@ -2516,10 +2391,7 @@
 								"visibility": {
 									"fields": {
 										"visible": [],
-										"hidden": [
-											"3.14",
-											"3.21"
-										]
+										"hidden": []
 									},
 									"flags": 10
 								},
@@ -2532,6 +2404,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "0da1c7b5-29e2-4b18-a7aa-4df13889b4c9",
 								"id": "3.17",
 								"text": "FISCALIZAÇÃO",
 								"type": {
@@ -2547,8 +2420,8 @@
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1164.514082302334,
-									"y": 1782.6260283045563
+									"x": 1164.5140748546294,
+									"y": 1782.625902973022
 								},
 								"line": 64.70344747410661,
 								"icon": ""
@@ -2561,6 +2434,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "0f2838b8-ecdc-43a0-b3b8-df465ef90542",
 											"id": "3.17.1",
 											"text": "CÓDIGO FISCAL",
 											"type": {
@@ -2583,6 +2457,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "8830c1c5-560a-4178-80a4-a447481c37c1",
 											"id": "3.17.2",
 											"text": "OBSERVAÇÕES",
 											"type": {
@@ -2618,6 +2493,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "030b4e4a-4148-4745-91c6-799c188891d7",
 								"id": "3.18",
 								"text": "OBSERVAÇÕES",
 								"type": {
@@ -2641,6 +2517,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "00d90936-f834-4acc-88f1-146887046b81",
 								"id": "3.19",
 								"text": "TROCA MOTORISTA",
 								"type": {
@@ -2664,6 +2541,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "e1f38dd3-d9b0-4ef1-8e0c-a31e8b51c4c7",
 								"id": "3.20",
 								"text": "SAIR TRABALHO",
 								"type": {
@@ -2686,6 +2564,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "dabab525-e9d9-4bd4-a187-66fc5282144a",
 								"id": "3.21",
 								"text": "VERIFICA COLETA",
 								"type": {
@@ -2720,6 +2599,7 @@
 			},
 			{
 				"properties": {
+					"uuid": "24b9c500-cf8b-40c0-a9f1-2434f40c33f8",
 					"id": "4",
 					"text": "FINALIZAR",
 					"type": {
@@ -2728,19 +2608,15 @@
 					"order": 4,
 					"visibility": {
 						"fields": {
-							"visible": [
-								"4",
-								"4.1",
-								"4.2"
-							],
+							"visible": [],
 							"hidden": []
 						},
 						"flags": 1
 					},
 					"expanded": false,
 					"tail": {
-						"x": 622.4243376590151,
-						"y": 1917.4362636005092
+						"x": 622.4243924145388,
+						"y": 1917.4362869159609
 					},
 					"icon": "",
 					"line": 92.29089251924654,
@@ -2754,6 +2630,7 @@
 					"fields": [
 						{
 							"properties": {
+								"uuid": "42772359-4f63-4d52-95c7-c1f22faeb7a7",
 								"id": "4.1",
 								"text": "SIM",
 								"type": {
@@ -2762,20 +2639,15 @@
 								"order": 1,
 								"visibility": {
 									"fields": {
-										"visible": [
-											"4",
-											"4.1",
-											"4.1.1",
-											"4.1.2"
-										],
+										"visible": [],
 										"hidden": []
 									},
 									"flags": 1
 								},
 								"expanded": false,
 								"tail": {
-									"x": 1072.4944420739816,
-									"y": 1985.5840919580228
+									"x": 1072.4944879172097,
+									"y": 1985.5841484162695
 								},
 								"icon": ""
 							},
@@ -2787,6 +2659,7 @@
 								"fields": [
 									{
 										"properties": {
+											"uuid": "597030bf-41e0-4d7d-acff-a511c9a39eae",
 											"id": "4.1.1",
 											"text": "ODÔMETRO FINAL",
 											"type": {
@@ -2809,6 +2682,7 @@
 									},
 									{
 										"properties": {
+											"uuid": "024d2830-ba7d-402e-a0dc-293fa872f381",
 											"id": "4.1.2",
 											"text": "HORÍMETRO FINAL",
 											"type": {
@@ -2843,6 +2717,7 @@
 						},
 						{
 							"properties": {
+								"uuid": "3efd7de8-a6e4-4607-ac57-08c5847a31fe",
 								"id": "4.2",
 								"text": "NÃO",
 								"type": {
@@ -2881,11 +2756,9 @@
 			"visibility": {
 				"fields": {
 					"visible": [
-						"3"
+						"344c3cf5-86bb-4617-b8b2-aeb266e68bc8"
 					],
-					"hidden": [
-						"1"
-					]
+					"hidden": []
 				},
 				"flags": 1
 			}

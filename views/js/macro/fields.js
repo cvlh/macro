@@ -596,6 +596,8 @@ export default function Field(__context, __append, __properties) {
         return null;
     };
     this.remove = function (remove = true) {
+        console.log(props.uuid);
+        
         description.removeEventListener('keyup', _keypress, { capture: false });
         description.removeEventListener('focus', _showProperties, { capture: false });
 
@@ -629,7 +631,8 @@ export default function Field(__context, __append, __properties) {
 
         item.parentNode.removeChild(item);
 
-        MacroContext.redraw(CardContext);
+        if (remove)
+            MacroContext.redraw(CardContext);
     }
 
     this.initVisibility = function(fields_map) {        

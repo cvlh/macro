@@ -54,14 +54,10 @@ export default function Card(__context, __properties, __tab) {
     },
     _remove = function(evnt) {
         card.removeEventListener('focus', _showProperties, { capture: false });
-
         header.removeEventListener('mousedown', _drag, { capture: false });
-
         visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
         visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
-
         add.removeEventListener('click', Context.addField, { capture: false });
-
         close.removeEventListener('click', _remove, { capture: false });
 
         if (Context.hasConnection())
@@ -69,10 +65,12 @@ export default function Card(__context, __properties, __tab) {
 
         for (const field of FieldsMap.values()) 
             field.remove(false);
-        
+
         FieldsMap.clear();
-        
+
         card.parentNode.removeChild(card);
+
+        MacroContext.serialize();
     },
     _order = function() {
         const sizeFields = FieldsMap.length;

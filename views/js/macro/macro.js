@@ -13,7 +13,8 @@ import VisibilityTool from './tools/visibility.js';
 export default function Macro(__properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const context = this;
+    const Context = this,
+          CardsArray = new Map();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp,
@@ -33,7 +34,6 @@ export default function Macro(__properties) {
 
         currentZoomText,
 
-        cardsArray = [],
         position = { offsetLeft: 0, offsetTop: 0 },
 
         props = { 
@@ -102,9 +102,9 @@ export default function Macro(__properties) {
                     let cardLeft = (evnt.clientX - props.transform.left) / props.transform.scale,
                         cardRight = (evnt.clientY - props.transform.top) / props.transform.scale;
 
-                    context.createCard([cardLeft, cardRight]);
+                    Context.createCard([cardLeft, cardRight]);
 
-                    //var x = context.serialize();
+                    //var x = Context.serialize();
                     //console.log(JSON.stringify(x));
 
                     break;
@@ -263,7 +263,6 @@ export default function Macro(__properties) {
     };
     this.getDragType = function() { return _DRAG_.AREA; };
     this.serialize = function() {
-
         while (mainTreeViewItems.hasChildNodes()) 
             mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
 
@@ -288,12 +287,12 @@ export default function Macro(__properties) {
     this.appendAt = function () { return mainAppWrapper; }
 
     this.createCard = function(card_position, card_properties, connect = null) {
-        const isRoot = (cardsArray.length === 0 ? true : false),
+        const isRoot = (CardsArray.size === 0 ? true : false),
               left = card_position[0], 
               top = card_position[1];
 
-        const new_card = new Card(context, card_properties, cardsArray.length);
-        cardsArray.push(new_card); 
+        const new_card = new Card(Context, card_properties, CardsArray.size);
+        CardsArray.set(new_card.getProps('uuid'), new_card); 
 
         if (isRoot)
             rootCard = new_card;
@@ -325,15 +324,13 @@ export default function Macro(__properties) {
 
     this.redraw = function(element = null) {
         if (element === null) {
-            const size = cardsArray.length;
-            for (let counter = 0; counter < size; counter++) {
-                cardsArray[counter].redraw(props.transform);
-            }
+            for (const card of CardsArray.values())
+                card.redraw(props.transform);
         } else {
             element.redraw(props.transform);
         }
 
-        context.serialize();
+        Context.serialize();
     };
     this.showProperties = function(object) {
         if (visibilityMode) return;
@@ -369,7 +366,7 @@ export default function Macro(__properties) {
     this.initVisibility = function(fields_map) { 
         rootCard.initVisibility(fields_map);
 
-        context.redraw();
+        Context.redraw();
     };
     this.getVisibilityMode = function() { return visibilityMode; };
     this.setVisibilityMode = function() {
@@ -382,7 +379,7 @@ export default function Macro(__properties) {
         }
 
         if (visibilityTool === null)
-            visibilityTool = new VisibilityTool(context);
+            visibilityTool = new VisibilityTool(Context);
 
         visibilityMode = !visibilityMode;
 
@@ -391,8 +388,8 @@ export default function Macro(__properties) {
                 field.selectedForVisibility(status);
         }
 
-        for (const current_card of cardsArray)
-            current_card.setVisibilityMode();
+        for (const card of CardsArray.values())
+            card.setVisibilityMode();
     };
     this.previewVisibility = function (fields, evnt_type) {
         if (visibilityMode) return;
@@ -408,15 +405,19 @@ export default function Macro(__properties) {
     };
     this.deleteVisibility = function() {
         if (visibilityMode) {
-            const visibility = currentSelectedObject.getProps('visibility');
+            const visibilityFields = currentSelectedObject.getProps('visibility');
 
-            while (visibility['fields'].length)
-                currentSelectedObject.removeFromVisibility(visibility['fields'][0]);
+            for (const status in visibilityFields)
+                visibilityFields[status].clear();
 
-            context.setVisibilityMode();
+            Context.setVisibilityMode();
         }
     };
-
+    this.removeFromVisibilityMap = function(uuid) {
+        for (const card of CardsArray.values())
+            card.removeFromVisibilityMap(uuid);
+    };
+    
     this.getSelectedArrow = function() { return selectedArrow; }
     this.getVisibilityTool = function() { return visibilityTool; }
     this.getSelectedObject = function() { return currentSelectedObject; }
@@ -445,8 +446,8 @@ export default function Macro(__properties) {
 
         currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
 
-        document.addEventListener('mousemove', context.drag,    { capture: true });
-        document.addEventListener('mouseup',   context.dragEnd, { capture: true });
+        document.addEventListener('mousemove', Context.drag,    { capture: true });
+        document.addEventListener('mouseup',   Context.dragEnd, { capture: true });
     };
     this.drag = function(evnt) {
         evnt.stopPropagation();
@@ -486,7 +487,7 @@ export default function Macro(__properties) {
                     if (targetCtx !== undefined) {
                         if (!currentDrag.hasConnection() && !targetCtx.hasConnection()) {
                             if (!currentDrag.infiniteLoop(target)) {
-                                context.connect(currentDrag, targetCtx);
+                                Context.connect(currentDrag, targetCtx);
                                 use = true;
                             }
                         }
@@ -497,15 +498,15 @@ export default function Macro(__properties) {
                     const card_left = (evnt.clientX - props.transform.left) / props.transform.scale,
                           card_top = ((evnt.clientY - offset) - props.transform.top) / props.transform.scale;
 
-                    const new_card = context.createCard([card_left, card_top]);
-                    context.connect(currentDrag, new_card);
+                    const new_card = Context.createCard([card_left, card_top]);
+                    Context.connect(currentDrag, new_card);
                     use = true;
                 }
 
                 if (!use)
                     currentDrag.clearConnection();
                 else
-                    context.serialize();
+                    Context.serialize();
 
                 break;
 
@@ -514,8 +515,8 @@ export default function Macro(__properties) {
                 break;
         }
 
-        document.removeEventListener('mousemove', context.drag, { capture: true });
-        document.removeEventListener('mouseup',   context.dragEnd, { capture: true });
+        document.removeEventListener('mousemove', Context.drag, { capture: true });
+        document.removeEventListener('mouseup',   Context.dragEnd, { capture: true });
 
         currentDrag = null;
     };
@@ -539,7 +540,7 @@ export default function Macro(__properties) {
         mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
         const serializeBtn = addElement(mainBuilderToolbar, 'div', 'icon', _ICON_CHAR_.OUTPUT);
         serializeBtn.addEventListener('click', () => {
-            var x = context.serialize();
+            var x = Context.serialize();
             console.log(JSON.stringify(x));
         }, { capture: false });
         
@@ -555,7 +556,7 @@ export default function Macro(__properties) {
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');
         mainAppWrapper.setAttribute('tabindex',  0);
 
-        mainAppWrapper.addEventListener('focus', () => context.showProperties(context), { capture: false });
+        mainAppWrapper.addEventListener('focus', () => Context.showProperties(Context), { capture: false });
 
         // if (props.hasOwnProperty('size')) {
         //     size.width = props.size[0];
@@ -595,12 +596,12 @@ export default function Macro(__properties) {
             if (evnt.button === 0) {
                 if (currentDrag !== null) {
                     if (currentDrag.getDragType() !== _DRAG_.HEADER) 
-                        context.dragEnd(evnt);
+                        Context.dragEnd(evnt);
                     return;
                 }
 
                 if (evnt.target.classList.contains('main-app-wrapper')) {
-                    context.dragStart(evnt, context);
+                    Context.dragStart(evnt, Context);
 
                 } else if (evnt.target.classList.contains('moveable')) {
                     evnt.preventDefault();
@@ -608,7 +609,7 @@ export default function Macro(__properties) {
                     const field = evnt.target['_OWNER_'].deref();
                     if (field !== undefined) {
                         field.setDragType(_DRAG_.LINE);
-                        context.dragStart(evnt, field);
+                        Context.dragStart(evnt, field);
                     }
                 }
             }
@@ -622,17 +623,17 @@ export default function Macro(__properties) {
         //mainAppWrapper.addEventListener('touchcancel', (evnt) => console.log(evnt) , false);
         //mainAppWrapper.addEventListener('touchend', (evnt) => console.log(evnt) , false);
 
-        properties = new Properties(context);
+        properties = new Properties(Context);
         mainProperties.appendChild(properties.getFragment());
 
-        simulate = new Simulate(context);
+        simulate = new Simulate(Context);
         simulateDiv.appendChild(simulate.getFragment());
 
         // if (props.hasOwnProperty('transform')) {
         //     transform.scale = props.transform[2];
-        //     context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
+        //     Context.setPosition(props.transform[0], props.transform[1], transform, _MOV_.END);
         // }
-        context.setPosition(props.transform.left, props.transform.top, props.transform, _MOV_.END);
+        Context.setPosition(props.transform.left, props.transform.top, props.transform, _MOV_.END);
 
         const builderRect = mainBuilder.getBoundingClientRect();
   

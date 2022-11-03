@@ -619,13 +619,17 @@ export default function Field(__context, __append, __properties) {
         treeviewRow.parentNode.removeChild(treeviewRow);
 
         if (remove)
-            CardContext.removeFieldFromArray(props.uuid);
+            CardContext.removeFromFieldMap(props.uuid);
 
         const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
             visibilityFields[status].clear();
 
+        MacroContext.removeFromVisibilityMap(props.uuid);
+
         item.parentNode.removeChild(item);
+
+        MacroContext.redraw(CardContext);
     }
 
     this.initVisibility = function(fields_map) {        
@@ -690,6 +694,16 @@ export default function Field(__context, __append, __properties) {
             visibilityFields[status].delete(fieldUUID);
 
         _updateVisibilityCounter();
+    };
+    this.removeFromVisibilityMap = function(uuid) {
+        const visibilityFields = props['visibility']['fields'];
+        for (const status in visibilityFields) {
+            if (visibilityFields[status].delete(uuid))
+                console.log(`status: ${status} remove: ${uuid} from : ${props.uuid}`)
+        }
+
+        if (Context.hasConnection())
+            output['_CONNECTION_'].removeFromVisibilityMap(uuid);
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -760,8 +774,13 @@ export default function Field(__context, __append, __properties) {
         if (__properties !== null)
             props = {...props, ...__properties};
 
-        if (props.uuid === null)
+        if (props.uuid === null) {
             props.uuid = UUIDv4();
+
+            const visibilityFields = props['visibility']['fields'];
+            for (const status in visibilityFields) 
+                visibilityFields[status] = new Map();
+        }
 
         item = addElement(fragment, 'div', 'app-cards-content-item');
 

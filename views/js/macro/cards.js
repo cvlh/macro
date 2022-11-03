@@ -1,7 +1,7 @@
 'use strict';
 
 import { _DRAG_, _MOV_, _TYPES_, _ICON_CHAR_, _VISIBILITY_ } from '../utils/constants.js';
-import { addElement } from '../utils/functions.js';
+import { addElement, UUIDv4 } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
@@ -13,21 +13,26 @@ export default function Card(__context, __properties, __tab) {
           Context = this,
 
           RootField = (__tab === 0 ? true : false),
-          TabIndex = ++__tab;
+          TabIndex = __tab + 1,
+
+          FieldsMap = new Map();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let card, header, title, items, input,
         add, visibility, close,
+
         isCurrentSelectObject = false,
-        fieldsArray = new Map(),
+
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
 
         props = {
+            uuid: null,
+
             visibility: { 
                 flags: _VISIBILITY_.FRESH,
                 fields: {
-                    visible: [],
-                    hidden:  []
+                    visible: null,
+                    hidden:  null
                 }
             }
         },
@@ -62,18 +67,18 @@ export default function Card(__context, __properties, __tab) {
         if (Context.hasConnection())
             input['_CONNECTION_'].clearConnection();
 
-        for (const field of fieldsArray.values()) 
+        for (const field of FieldsMap.values()) 
             field.remove(false);
         
-        fieldsArray.clear();
+        FieldsMap.clear();
         
         card.parentNode.removeChild(card);
     },
     _order = function() {
-        const sizeFields = fieldsArray.length;
+        const sizeFields = FieldsMap.length;
         
         for (let counterFields = 0; counterFields < sizeFields; counterFields++)
-            fieldsArray[counterFields].setOrder(counterFields + 1);
+            FieldsMap[counterFields].setOrder(counterFields + 1);
     },
     _showProperties = function() { MacroContext.showProperties(Context); },
     _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
@@ -110,11 +115,11 @@ export default function Card(__context, __properties, __tab) {
         Context.setHeader('');
         Context.setColor(null);
 
-        if (fieldsArray.size === 0)
+        if (FieldsMap.size === 0)
             _remove();
     };
     this.redraw = function(transform) {
-        for (const field of fieldsArray.values())
+        for (const field of FieldsMap.values())
             field.redraw(transform);
 
         if (Context.hasConnection()) {
@@ -161,7 +166,7 @@ export default function Card(__context, __properties, __tab) {
     };
     this.setColor = function(color) {
         if (!RootField) {   
-            for (const field of fieldsArray.values())
+            for (const field of FieldsMap.values())
                 field.setColor(color);
 
             if (color == null) {
@@ -203,6 +208,8 @@ export default function Card(__context, __properties, __tab) {
             position: [ position.left, position.top ],
             fields: [],
             properties : {
+                uuid : props['uuid'],
+
                 visibility: {
                     fields: { }, 
                     flags: props['visibility']['flags']
@@ -217,7 +224,7 @@ export default function Card(__context, __properties, __tab) {
         }
 
         let counterFields = 0
-        for (const field of fieldsArray.values()) {
+        for (const field of FieldsMap.values()) {
             properties.tab.push(counterFields + 1);
             response['fields'].push(field.serialize(fragment, properties));
             properties.tab.pop();
@@ -226,15 +233,15 @@ export default function Card(__context, __properties, __tab) {
         return response;
     };
     this.setExpand = function(status) {
-        for (const field of fieldsArray.values())
+        for (const field of FieldsMap.values())
             field.setExpand(status);
     };
     this.setBorderColor = function(light, index, color) {
-        for (const field of fieldsArray.values())
+        for (const field of FieldsMap.values())
             field.setBorderColor(light, index, color);
     };
     this.swap = function(position, order) { 
-        //fieldsArray.swap(position, order); 
+        //FieldsMap.swap(position, order); 
         _order();
     };
     this.setSelected = function(status) { 
@@ -270,7 +277,7 @@ export default function Card(__context, __properties, __tab) {
             }   
         }
 
-        for (const field of fieldsArray.values())
+        for (const field of FieldsMap.values())
             field.initVisibility(fields_map);
 
         _updateVisibilityCounter();
@@ -302,7 +309,7 @@ export default function Card(__context, __properties, __tab) {
             _updateVisibilityCounter();
         }
 
-        for (const field of fieldsArray.values())
+        for (const field of FieldsMap.values())
             field.setVisibilityMode();
     };
     this.addToVisibility = function(field, status) {        
@@ -318,6 +325,15 @@ export default function Card(__context, __properties, __tab) {
     
         _updateVisibilityCounter();
     };
+    this.removeFromVisibilityMap = function(uuid) {
+        for (const status in props['visibility']['fields']) {
+            if (props['visibility']['fields'][status].delete(uuid))
+                console.log(`remove: ${uuid} from : ${props.uuid}`)
+        }
+
+        for (const field of FieldsMap.values())
+            field.removeFromVisibilityMap(uuid);
+    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.getMacro = function() { return MacroContext; };
@@ -330,13 +346,14 @@ export default function Card(__context, __properties, __tab) {
         properties = { ...properties, 'tab': TabIndex };
 
         let new_field = new Field(Context, items, properties);
-        fieldsArray.set(new_field.getProps('uuid'), new_field); 
+        FieldsMap.set(new_field.getProps('uuid'), new_field); 
         _order();
         
         return new_field;
     };
-    this.removeFieldFromArray = function(uuid) {
-        fieldsArray.delete(uuid);
+    this.removeFromFieldMap = function(uuid) {
+        FieldsMap.delete(uuid);
+
         _order();
     };
     this.isRoot = function() { return RootField; };
@@ -363,12 +380,18 @@ export default function Card(__context, __properties, __tab) {
 
         card = addElement(fragment, 'div', 'app-cards');
         card.setAttribute('tabindex', TabIndex);
-        if (RootField) { 
-            card.classList.add('root'); 
-            //props.visibility['autoExecute'] = false;
-        }
+        if (RootField)
+            card.classList.add('root');
 
         props = {...props, ...__properties};
+
+        if (props.uuid === null) {
+            props.uuid = UUIDv4();
+        
+            const visibilityFields = props['visibility']['fields'];
+            for (const status in visibilityFields) 
+                visibilityFields[status] = new Map();
+        }
 
         card.addEventListener('focus', _showProperties, { capture: false });
 

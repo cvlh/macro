@@ -6,16 +6,27 @@ import { addElement, UUIDv4 } from '../utils/functions.js';
 
 export default function Field(__context, __append, __properties) {
 
+    if (!new.target) 
+        throw new Error("Field() must be called with new");
+
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const MacroContext = __context.getMacro(), 
-          CardContext = __context, 
-          Context = this,
+          CardContext = __context.getProps('uuid'),
+        //CardContext = __context,
+        //Context = this,
+          RootField = __context.isRoot(),
 
-          RootField = __context.isRoot();
+          DOMElement = {
+            item:        null,
+            container:   null,
+            index:       null,
+            description: null,
+            visibility:  null,
+            output:      null,
+          };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let item, container, index, description, visibility, output, 
-        dragType,
+    let dragType,
         treeviewRow = null, treeviewDeep,
 
         isCurrentSelectObject = false,
@@ -39,10 +50,13 @@ export default function Field(__context, __append, __properties) {
             expanded: true,
 
             tail: { x: 0, y: 0 }
-        },
+        };
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _deep = function(tab) {
+    const
+
+    // _deep = function(tab) {
+    _deep = (tab) => {
         let counter, result = '';
         for (counter = 0; counter < tab.length; counter++) {
             result += tab[counter];
@@ -51,10 +65,15 @@ export default function Field(__context, __append, __properties) {
 
         return result;
     },
-    _color = function(drag, color = null) {
+
+    // _color = function(drag, color = null) {
+    _color = (drag, color = null) => {
+        const output = DOMElement.output;
+
         if (color !== null) {
             if (!drag) {
-                if (Context.hasConnection()) {
+                //if (Context.hasConnection()) {
+                if (this.hasConnection()) {
                     output.style.backgroundColor = color;
                     output.style.color = 'var(--gray-100)';
                 } else {
@@ -76,7 +95,9 @@ export default function Field(__context, __append, __properties) {
                 output['_PATH_'].style.removeProperty('stroke');
         }
     },
-    _drag = function (evnt) {
+
+    // _drag = function (evnt) {
+    _drag = (evnt) => {
         evnt.preventDefault();
 
         if (evnt.button !== 0) 
@@ -85,23 +106,31 @@ export default function Field(__context, __append, __properties) {
         if (MacroContext.getVisibilityMode())
             return;
 
-        if (Context.hasConnection()) {
-            Context.clearConnection();
+        // if (Context.hasConnection()) {
+        if (this.hasConnection()) {
+            // Context.clearConnection();
+            this.clearConnection();
             MacroContext.serialize();
         }
 
+        const output = DOMElement.output;
         if (output['_PATH_'] === null) 
-            output['_PATH_'] = MacroContext.newSVG(Context);
+            output['_PATH_'] = MacroContext.newSVG(this);
+            // output['_PATH_'] = MacroContext.newSVG(Context);
         
         output['_PATH_'].setAttribute('visibility', 'visible');
 
-        Context.setDragType(_DRAG_.OUTPUT);
-        MacroContext.dragStart(evnt, Context); 
+        // Context.setDragType(_DRAG_.OUTPUT);
+        this.setDragType(_DRAG_.OUTPUT);
+        // MacroContext.dragStart(evnt, Context); 
+        MacroContext.dragStart(evnt, this); 
     },
-    _render = function (left, top, action) {
+
+    // _render = function (left, top, action) {
+    _render = (left, top, action) => {
         let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
-        const elements = output['_PATH_'].children,
+        const elements = DOMElement.output['_PATH_'].children,
               startX   = position.left + 17,
               startY   = position.top  + 11;
         
@@ -162,19 +191,25 @@ export default function Field(__context, __append, __properties) {
             props.tail.y = top;
         }
     },
-    _keypress = function(evnt) {
+
+    // _keypress = function(evnt) {
+    _keypress = (evnt) => {
         let key = evnt.keyCode || evnt.which;
 
         switch (key) {
             case _KEY_CODE_.ENTER:
                 evnt.preventDefault();
 
-                const value = description.value;
+                const value = DOMElement.description.value;
                 if (value !== '') {
-                    const next = item.nextElementSibling;
-                    if (next === null) 
-                        CardContext.addField();
-                    else {
+                    const next = DOMElement.item.nextElementSibling;
+                    if (next === null) {
+                        // CardContext.addField();
+                        // const card = MacroContext.getFromCardsMap(CardContext);
+                        // if (card !== undefined)
+                        //     card.addField();
+                        MacroContext.getFromCardsMap(CardContext)?.addField();
+                    } else {
                         const el = next.querySelector('input');
                         if (el !== null)
                             el.focus();
@@ -184,10 +219,13 @@ export default function Field(__context, __append, __properties) {
         }
         _refresh();
     },
-    _refresh = function() {
-        const value = description.value;
 
-        if (Context.hasConnection())
+    // _refresh = function() {
+    _refresh = () => {
+        const value = DOMElement.description.value;
+
+        // if (Context.hasConnection())
+        if (this.hasConnection())
             outputConnection.setHeader(value);
             // output['_CONNECTION_'].setHeader(value);
 
@@ -206,8 +244,12 @@ export default function Field(__context, __append, __properties) {
 
         //props['prefix']['text'] = value;
     },
-    _showProperties = function() { MacroContext.showProperties(Context); },
-    _showVisibilityTools = function(evnt) {
+
+    // _showProperties = function() { MacroContext.showProperties(Context); },
+    _showProperties = () => { MacroContext.showProperties(this); },
+
+    // _showVisibilityTools = function(evnt) {
+    _showVisibilityTools = (evnt) => {
         evnt.stopPropagation();
 
         const target = evnt.target,
@@ -215,27 +257,21 @@ export default function Field(__context, __append, __properties) {
 
         switch (evnt.type) {
             case 'mouseenter':
-                tool.show(Context);
+                tool.show(this);
                 break;
 
             case 'mouseleave':
-                tool.hide(Context);
+                tool.hide(this);
                 break;
         }
     },
-    _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
-    // _toggleVisibility = function() {
-    //     const object = MacroContext.getSelectedObject();
 
-    //     _selectedForVisibility();
-    //     object.addToVisibility(Context);
+    // _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
+    _previewVisibility = (evnt) => { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
 
-    //     _unselectForVisibility();
-    //     object.removeFromVisibility(Context);
-
-    // },
-    _selectedForVisibility = function(status) {
-        let color = Context.getColor();
+    // _selectedForVisibility = function(status) {
+    _selectedForVisibility = (status) => {
+        let color = this.getColor();
         if (color !== null)
             color += 'BB';
         else
@@ -248,6 +284,7 @@ export default function Field(__context, __append, __properties) {
         treeviewRow.style.color = 'var(--white)';
 
         const path = treeviewRow.querySelector('.field');
+        const description = DOMElement.description;
 
         description.style.borderColor = color;
         switch (status) {
@@ -271,17 +308,21 @@ export default function Field(__context, __append, __properties) {
                 break;
         }
         
-        item.style.color = color;
+        DOMElement.item.style.color = color;
     },
-    _unselectForVisibility = function() {
+
+    // _unselectForVisibility = function() {
+    _unselectForVisibility = () => {
         treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
 
         if (!RootField)
             treeviewRow.style.removeProperty('color');
         else 
-            treeviewRow.style.color = Context.getColor();
+            treeviewRow.style.color = this.getColor();
 
+        const description = DOMElement.description;
+        
         description.style.removeProperty('border-color');
         description.style.removeProperty('background-color');
         description.style.removeProperty('color');
@@ -297,9 +338,11 @@ export default function Field(__context, __append, __properties) {
             path.style.removeProperty('text-decoration');
         }
 
-        item.style.removeProperty('color');
+        DOMElement.item.style.removeProperty('color');
     },
-    _updateVisibilityCounter = function() {
+
+    // _updateVisibilityCounter = function() {
+    _updateVisibilityCounter = () => {
         let visibilitySize = 0;
 
         const visibilityFields = props['visibility']['fields'];
@@ -307,11 +350,11 @@ export default function Field(__context, __append, __properties) {
             visibilitySize += visibilityFields[status].size;
 
         if (visibilitySize) 
-            visibility.style.visibility = 'visible';
+            DOMElement.visibility.style.visibility = 'visible';
         else 
-            visibility.style.removeProperty('visibility');
+            DOMElement.visibility.style.removeProperty('visibility');
         
-        visibility.textContent = visibilitySize;
+        DOMElement.visibility.textContent = visibilitySize;
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -325,25 +368,33 @@ export default function Field(__context, __append, __properties) {
         return false;
     };
     this.makeConnection = function(card) {
+        const output = DOMElement.output;
+
         output.classList.remove('connected');
         //output.classList.add('linked');
 
         //output['_PATH_'].setAttribute('class', 'linked');
-        if (output['_PATH_'] === null) output['_PATH_'] = MacroContext.newSVG(Context);
+        if (output['_PATH_'] === null)
+            output['_PATH_'] = MacroContext.newSVG(this);
+            // output['_PATH_'] = MacroContext.newSVG(Context);
 
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
         outputConnection = card;
         // output['_CONNECTION_'] = card;
 
-        card.makeConnection(Context);
+        // card.makeConnection(Context);
+        card.makeConnection(this);
         _refresh();
 
         //expanded = true;
 
-        const color = Context.getColor();
-        Context.setColor(color);
+        // const color = Context.getColor();
+        const color = this.getColor();
+        // Context.setColor(color);
+        this.setColor(color);
     };
     this.clearConnection = function() {
+        const output = DOMElement.output;
         const elements = output['_PATH_'].children;
 
         output.classList.remove('linked', 'error');
@@ -363,20 +414,24 @@ export default function Field(__context, __append, __properties) {
         props.tail.x = 0;
         props.tail.y = 0;
 
-        if (Context.hasConnection()) {
+        // if (Context.hasConnection()) {
+        if (this.hasConnection()) {
             // output['_CONNECTION_'].clearConnection();
             outputConnection.clearConnection();
             // output['_CONNECTION_'] = null;
             outputConnection = null;
         }
 
-        Context.setColor(null);
+        // Context.setColor(null);
+        this.setColor(null);
     };
     this.redraw = function(transform) {
-        if (Context.hasConnection()) {
+        // if (Context.hasConnection()) {
+        if (this.hasConnection()) {
             // const rect = output['_CONNECTION_'].getInputBounding();
             const rect = outputConnection.getInputBounding();
-            Context.setPosition(rect.left, rect.top, transform, _MOV_.END);
+            // Context.setPosition(rect.left, rect.top, transform, _MOV_.END);
+            this.setPosition(rect.left, rect.top, transform, _MOV_.END);
         }
     };
     this.setPosition = function(left, top, transform, action) {
@@ -386,13 +441,14 @@ export default function Field(__context, __append, __properties) {
                     Context.clearConnection();
                     MacroContext.serialize();
                 }*/
-                const color = Context.getColor();
+                // const color = Context.getColor();
+                const color = this.getColor();
                 _color(true, color);
             }
         }
 
         if (action === _MOV_.START || action === _MOV_.END) {
-            const rect = output.getBoundingClientRect();
+            const rect = DOMElement.output.getBoundingClientRect();
             position.left = (rect.left - transform.left) / transform.scale;
             position.top = (rect.top - transform.top) / transform.scale;
         }
@@ -411,12 +467,14 @@ export default function Field(__context, __append, __properties) {
                 }
             }
 
-            item.style.outlineColor = color;
+            DOMElement.item.style.outlineColor = color;
         }
 
+        // _color(false, color);
         _color(false, color);
-
-        if (Context.hasConnection())
+        
+        // if (Context.hasConnection())
+        if (this.hasConnection())
             outputConnection.setColor(color);
             // output['_CONNECTION_'].setColor(color);
     };
@@ -424,14 +482,22 @@ export default function Field(__context, __append, __properties) {
         if (RootField /*&& props.color != null*/) {
             return _COLORS_[props.color];
         } else {
-            return CardContext.getColor();
+            const card = MacroContext.getFromCardsMap(CardContext);
+            if (card !== undefined)
+                return card.getColor();
+
+            // return CardContext.getColor();
         }
     };
     this.infiniteLoop = function(target) {
         if (RootField) {
             return false;
         } else {
-            return CardContext.infiniteLoop(target);
+            const card = MacroContext.getFromCardsMap(CardContext);
+            if (card !== undefined)
+                return card.infiniteLoop(target);
+
+            // return CardContext.infiniteLoop(target);
         }
     };
     this.serialize = function (fragment, properties) {
@@ -439,7 +505,8 @@ export default function Field(__context, __append, __properties) {
             isExpand, deepSize, 
             response = {  };
 
-        const hasChild = Context.hasConnection();
+        // const hasChild = Context.hasConnection();
+        const hasChild = this.hasConnection();
         const responseVisibility = {
             visibility: {
                 fields: {
@@ -456,7 +523,7 @@ export default function Field(__context, __append, __properties) {
             responseVisibility['visibility']['fields'][status] = [...keysUUID];
         }
 
-        props.text = description.value;
+        props.text = DOMElement.description.value;
         response['properties'] = { ...props, ...responseVisibility };
 
         if (RootField)
@@ -475,7 +542,8 @@ export default function Field(__context, __append, __properties) {
         if (!properties.expand)
             treeviewRow.style.height = '0';
         
-        treeviewRow['_CONTEXT_'] = new WeakRef(Context);
+        // treeviewRow['_CONTEXT_'] = new WeakRef(Context);
+        treeviewRow['_CONTEXT_'] = new WeakRef(this);
 
         isExpand = true;
         if (hasChild && !props.expanded && properties.expand) {
@@ -500,7 +568,8 @@ export default function Field(__context, __append, __properties) {
             }
         }
 
-        const text = description.value;
+        // const text = description.value;
+        const text = props.text;
         const fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', text);
         if (text === '') {
             fieldDiv.textContent =  _I18N_.field_empty;
@@ -532,7 +601,8 @@ export default function Field(__context, __append, __properties) {
         return response;
     };
     this.setExpand = function(status) {
-        const hasChild = Context.hasConnection();
+        // const hasChild = Context.hasConnection();
+        const hasChild = this.hasConnection();
 
         if (!status) {
             treeviewRow.style.height = 0;
@@ -542,13 +612,15 @@ export default function Field(__context, __append, __properties) {
         } else {
             treeviewRow.style.removeProperty('height');
             if (hasChild)
-                outputConnection.setExpand(Context.getProps('expanded'));
+                outputConnection.setExpand(this.getProps('expanded'));
+                // outputConnection.setExpand(Context.getProps('expanded'));
                 // output['_CONNECTION_'].setExpand(Context.getProps('expanded'));
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {
         if (color === null && index === null) {
-            color = (light ? Context.getColor() + '40' : Context.getColor());
+            // color = (light ? Context.getColor() + '40' : Context.getColor());
+            color = (light ? this.getColor() + '40' : this.getColor());
             //if (currentVisibilityStatus && !light) color = 'white';
             index = treeviewDeep;
         } else {
@@ -556,24 +628,29 @@ export default function Field(__context, __append, __properties) {
             child.style.borderLeftColor = color;
         }
 
-        if (Context.hasConnection())
+        // if (Context.hasConnection())
+        if (this.hasConnection())
             outputConnection.setBorderColor(light, index, color);
             // output['_CONNECTION_'].setBorderColor(light, index, color);
 
         //return color;
     };
-    this.swap = function() {
-        let sibling = item.previousElementSibling,
-            parentNode = item.parentNode;
+    this.swap = function() { 
+        // TODO
+        // let sibling = item.previousElementSibling,
+        //     parentNode = item.parentNode;
 
-        if (sibling !== null) { 
-            parentNode.insertBefore(item, sibling);
+        // if (sibling !== null) { 
+        //     parentNode.insertBefore(item, sibling);
 
-            CardContext.swap(props.order-1, _ORDER_.UP);
-            MacroContext.redraw(parent);
-        }
+        //     CardContext.swap(props.order-1, _ORDER_.UP);
+        //     MacroContext.redraw(parent);
+        // }
     };
     this.setSelected = function(status) { 
+        const item = DOMElement.item;
+        const output = DOMElement.output;
+
         if (status) {
             isCurrentSelectObject = true;
 
@@ -582,14 +659,16 @@ export default function Field(__context, __append, __properties) {
             if (!RootField) 
                 item.classList.add('border-radius');
 
-            if (Context.hasConnection()) 
+            // if (Context.hasConnection()) 
+            if (this.hasConnection()) 
                 output['_PATH_'].style.strokeWidth = '7px';
         } else {
             isCurrentSelectObject = false;
 
             item.classList.remove('selected', 'border-radius');
 
-            if (Context.hasConnection())
+            // if (Context.hasConnection())
+            if (this.hasConnection())
                 output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
@@ -603,40 +682,50 @@ export default function Field(__context, __append, __properties) {
         return null;
     };
     this.remove = function (remove = true) {        
-        description.removeEventListener('keyup', _keypress, { capture: false });
-        description.removeEventListener('focus', _showProperties, { capture: false });
+        DOMElement.description.removeEventListener('keyup', _keypress, { capture: false });
+        DOMElement.description.removeEventListener('focus', _showProperties, { capture: false });
 
-        visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
-        visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
+        DOMElement.visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
+        DOMElement.visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
 
         if (props.type.type === _TYPES_.LIST)
-            output.removeEventListener('mousedown', _drag, { capture: false });
+            DOMElement.output.removeEventListener('mousedown', _drag, { capture: false });
 
         if (MacroContext.getVisibilityMode()) {
-            item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
-            item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
+            DOMElement.item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
+            DOMElement.item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
         }
 
-        if (Context.hasConnection())
-            Context.clearConnection();
+        // if (Context.hasConnection())
+        if (this.hasConnection())
+            this.clearConnection();
+            // Context.clearConnection();
 
-        output['_PATH_'] = null;
+        DOMElement.output['_PATH_'] = null;
         treeviewRow['_CONTEXT_'] = null;
         //treeviewRow.parentNode.removeChild(treeviewRow);
 
+        const card = MacroContext.getFromCardsMap(CardContext);
         if (remove)
-            CardContext.removeFromFieldMap(props.uuid);
+            card.removeFromFieldMap(props.uuid);
+            // CardContext.removeFromFieldMap(props.uuid);
 
         const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
             visibilityFields[status].clear();
 
-        MacroContext.deleteFromVisibility(Context);
+        // MacroContext.deleteFromVisibility(Context);
+        MacroContext.deleteFromVisibility(this);
 
-        item.parentNode.removeChild(item);
+        for (const element in DOMElement) {
+            DOMElement[element].parentNode.removeChild(DOMElement[element]);
+            DOMElement[element] = null;
+        }
+        // DOMElement.item.parentNode.removeChild(DOMElement.item);
 
         if (remove)
-            MacroContext.redraw(CardContext);
+            MacroContext.redraw(card);
+            // MacroContext.redraw(CardContext);
     }
 
     this.initVisibility = function(fields_map) {        
@@ -652,20 +741,24 @@ export default function Field(__context, __append, __properties) {
             }   
         }
 
-        if (Context.hasConnection())
+        // if (Context.hasConnection())
+        if (this.hasConnection())
             outputConnection.initVisibility(fields_map);
             // output['_CONNECTION_'].initVisibility(fields_map);
 
         _updateVisibilityCounter();
     };
     this.setVisibilityMode = function() {
+        const description = DOMElement.description,
+              item = DOMElement.item;
+
         if (MacroContext.getVisibilityMode()) {
             item.classList.add('visibility');
             description.setAttribute('readonly', true);
             // container.style.pointerEvents = 'none';
 
             if (!isCurrentSelectObject)
-                visibility.style.visibility = 'hidden';
+                DOMElement.visibility.style.visibility = 'hidden';
             else
                 item.appendChild(MacroContext.getSelectedArrow());
 
@@ -694,13 +787,16 @@ export default function Field(__context, __append, __properties) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
-    this.deleteFromVisibility = function(uuid) {
+    this.deleteFromVisibility = function(uuid, recursive) {
         const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
             visibilityFields[status].delete(uuid);
 
         // if (recursive && Context.hasConnection())
         //     output['_CONNECTION_'].deleteFromVisibility(uuid);
+
+        // if (recursive && uuid === props.uuid)
+        //     return;
 
         _updateVisibilityCounter();
     };
@@ -709,9 +805,9 @@ export default function Field(__context, __append, __properties) {
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setOrder = function(order) {
         props.order = order;
-        index.textContent = order;
+        DOMElement.index.textContent = order;
     };
-    this.setFocus = function() { description.focus(); };
+    this.setFocus = function() { DOMElement.description.focus(); };
     this.toggleExpand = function(icon) { 
         props.expanded = !props.expanded;
 
@@ -721,19 +817,23 @@ export default function Field(__context, __append, __properties) {
             icon.style.removeProperty('transform');
         }
 
-        if (Context.hasConnection())
+        // if (Context.hasConnection())
+        if (this.hasConnection())
             outputConnection.setExpand(props.expanded);
             // output['_CONNECTION_'].setExpand(props.expanded);
     };
-    this.setType = function(fieldType = props.type.type) { 
-        const numFieldType = parseInt(fieldType);
+    this.setType = function(field_type = props.type.type) { 
+        const numFieldType = parseInt(field_type);
+        const output = DOMElement.output;
 
         if (numFieldType !== _TYPES_.LIST) {
-            if (Context.hasConnection())
-                Context.clearConnection();
+            // if (Context.hasConnection())
+            if (this.hasConnection())
+                this.clearConnection();
+                // Context.clearConnection();
 
             output.classList.remove('app-cards-content-item-output');
-            output.textContent = fieldType;
+            output.textContent = field_type;
             //output.style.display = 'none';
             output.removeEventListener('mousedown', _drag, { capture: false });
         } else {
@@ -744,11 +844,13 @@ export default function Field(__context, __append, __properties) {
         }
         
         props['type']['type'] = numFieldType;
-        //type.textContent = fieldType;
+        //type.textContent = field_type;
 
         return props['type'];
     };
     this.check = function(target) {
+        const output = DOMElement.output;
+
         if (target.classList.contains('app-cards-content-input')) {
             if (target['_CONNECTION_'] !== null) {
                 output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
@@ -761,15 +863,15 @@ export default function Field(__context, __append, __properties) {
             output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
         }
     };
-    this.getRect = function() { return item.getBoundingClientRect(); };
-    this.getDiv = function() { return item; };
+    this.getRect = function() { return DOMElement.item.getBoundingClientRect(); };
+    this.getDiv = function() { return DOMElement.item; };
 
     // this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
-    (function() {
+    (function init () {
         const fragment = document.createDocumentFragment();
 
         if (__properties !== null)
@@ -783,37 +885,37 @@ export default function Field(__context, __append, __properties) {
                 visibilityFields[status] = new Map();
         }
 
-        item = addElement(fragment, 'div', 'app-cards-content-item');
+        DOMElement.item = addElement(fragment, 'div', 'app-cards-content-item');
+        DOMElement.container = addElement(DOMElement.item, 'div', 'app-cards-content-item-container');
+        DOMElement.index = addElement(DOMElement.container, 'div', 'app-cards-content-item-index', props.order);
 
-        container = addElement(item, 'div', 'app-cards-content-item-container');
-
-        index = addElement(container, 'div', 'app-cards-content-item-index', props.order);
-
-        description = addElement(container, 'input');
-        description.setAttribute('type', 'text');
-        description.setAttribute('maxlength', '64');
-        description.setAttribute('value', props.text);
-        description.setAttribute('tabindex', props.tab);
+        DOMElement.description = addElement(DOMElement.container, 'input');
+        DOMElement.description.setAttribute('type', 'text');
+        DOMElement.description.setAttribute('maxlength', '64');
+        DOMElement.description.setAttribute('value', props.text);
+        DOMElement.description.setAttribute('tabindex', props.tab);
         
-        description.addEventListener('keyup', _keypress, { capture: false });
-        description.addEventListener('focus', _showProperties, { capture: false });
+        DOMElement.description.addEventListener('keyup', _keypress, { capture: false });
+        DOMElement.description.addEventListener('focus', _showProperties, { capture: false });
 
         delete props.tab;
 
-        visibility = addElement(container, 'div', 'app-cards-content-item-visibility');
+        DOMElement.visibility = addElement(DOMElement.container, 'div', 'app-cards-content-item-visibility');
 
-        visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
-        visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
+        DOMElement.visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
+        DOMElement.visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
         
-        output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
-        output['_PATH_'] = null;
+        DOMElement.output = addElement(DOMElement.item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
+        DOMElement.output['_PATH_'] = null;
         // output['_CONNECTION_'] = null;
 
         __append.appendChild(fragment);
         
-        Context.setType();
+        // Context.setType();
+        this.setType();
 
         if (RootField)
-            Context.setColor(props.color ?? _COLORS_.BLACK);
-    })();
+            this.setColor(props.color ?? _COLORS_.BLACK);
+            // Context.setColor(props.color ?? _COLORS_.BLACK);
+    }).call(this);
 }

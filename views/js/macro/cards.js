@@ -63,9 +63,12 @@ export default function Card(__context, __properties, __tab) {
         if (Context.hasConnection())
             inputConnection.clearConnection();
 
-        for (const field of FieldsMap.values()) 
+        // for (const field of FieldsMap.values()) {
+        for (const [uuid, field] of FieldsMap.entries()) {
             field.remove(false);
-        FieldsMap.clear();
+            FieldsMap.delete(uuid);
+        }
+        // FieldsMap.clear();
 
         card.parentNode.removeChild(card);
 

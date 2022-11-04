@@ -421,6 +421,8 @@ export default function Macro(__properties) {
     };
 
     this.removeFromCardsMap = function(uuid) { return CardsMap.delete(uuid); };
+    this.getFromCardsMap = function(uuid) { return CardsMap.get(uuid); };
+
     this.getSelectedArrow = function() { return selectedArrow; }
     this.getVisibilityTool = function() { return visibilityTool; }
     this.getSelectedObject = function() { return currentSelectedObject; }

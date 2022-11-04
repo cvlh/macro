@@ -119,7 +119,7 @@ export default function Visibility (ctx) {
         status.textContent = _I18N_.without_visibility;
         status.style.removeProperty('color');
 
-        parent.getMacro().deleteVisibility();
+        parent.getMacro().clearVisibilityMap();
 
         _set_status(objectProp);
     },

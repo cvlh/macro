@@ -14,7 +14,7 @@ export default function Macro(__properties) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const Context = this,
-          CardsArray = new Map();
+          CardsMap = new Map();
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp,
@@ -287,12 +287,12 @@ export default function Macro(__properties) {
     this.appendAt = function () { return mainAppWrapper; }
 
     this.createCard = function(card_position, card_properties, connect = null) {
-        const isRoot = (CardsArray.size === 0 ? true : false),
+        const isRoot = (CardsMap.size === 0 ? true : false),
               left = card_position[0], 
               top = card_position[1];
 
-        const new_card = new Card(Context, card_properties, CardsArray.size);
-        CardsArray.set(new_card.getProps('uuid'), new_card); 
+        const new_card = new Card(Context, card_properties, CardsMap.size);
+        CardsMap.set(new_card.getProps('uuid'), new_card); 
 
         if (isRoot)
             rootCard = new_card;
@@ -324,7 +324,7 @@ export default function Macro(__properties) {
 
     this.redraw = function(element = null) {
         if (element === null) {
-            for (const card of CardsArray.values())
+            for (const card of CardsMap.values())
                 card.redraw(props.transform);
         } else {
             element.redraw(props.transform);
@@ -388,7 +388,7 @@ export default function Macro(__properties) {
                 field.selectedForVisibility(status);
         }
 
-        for (const card of CardsArray.values())
+        for (const card of CardsMap.values())
             card.setVisibilityMode();
     };
     this.previewVisibility = function (fields, evnt_type) {
@@ -403,7 +403,13 @@ export default function Macro(__properties) {
             }
         }
     };
-    this.deleteVisibility = function() {
+    this.deleteFromVisibility = function(field, recursive = true) {
+        const uuid = field.getProps('uuid');
+
+        for (const card of CardsMap.values())
+            card.deleteFromVisibility(uuid, recursive);
+    };
+    this.clearVisibilityMap = function() {
         if (visibilityMode) {
             const visibilityFields = currentSelectedObject.getProps('visibility');
 
@@ -413,11 +419,8 @@ export default function Macro(__properties) {
             Context.setVisibilityMode();
         }
     };
-    this.removeFromVisibilityMap = function(uuid) {
-        for (const card of CardsArray.values())
-            card.removeFromVisibilityMap(uuid);
-    };
-    
+
+    this.removeFromCardsMap = function(uuid) { return CardsMap.delete(uuid); };
     this.getSelectedArrow = function() { return selectedArrow; }
     this.getVisibilityTool = function() { return visibilityTool; }
     this.getSelectedObject = function() { return currentSelectedObject; }
@@ -483,8 +486,11 @@ export default function Macro(__properties) {
                 const target = evnt.target;
 
                 if (target.classList.contains('app-cards-content-input')) {
-                    const targetCtx = target['_CONTEXT_'].deref();
-                    if (targetCtx !== undefined) {
+                    // const targetCtx = target['_CONTEXT_'].deref();
+                    // const uuid = target['_UUID_'];
+                    if (CardsMap.has(target['_UUID_'])) {
+                        const targetCtx = CardsMap.get(target['_UUID_']);
+                    // if (targetCtx !== undefined) {
                         if (!currentDrag.hasConnection() && !targetCtx.hasConnection()) {
                             if (!currentDrag.infiniteLoop(target)) {
                                 Context.connect(currentDrag, targetCtx);
@@ -492,6 +498,7 @@ export default function Macro(__properties) {
                             }
                         }
                     }
+                    // }
                 } else if (target.classList.contains('main-app-wrapper')) {
                     const offset = 49 * props.transform.scale;
 

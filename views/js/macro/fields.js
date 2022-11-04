@@ -19,6 +19,7 @@ export default function Field(__context, __append, __properties) {
         treeviewRow = null, treeviewDeep,
 
         isCurrentSelectObject = false,
+        outputConnection = null,
 
         position = { top: 0, left: 0 },
         props = {
@@ -187,7 +188,8 @@ export default function Field(__context, __append, __properties) {
         const value = description.value;
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].setHeader(value);
+            outputConnection.setHeader(value);
+            // output['_CONNECTION_'].setHeader(value);
 
         if (treeviewRow !== null) {
             const path = treeviewRow.querySelector('.field');
@@ -298,9 +300,9 @@ export default function Field(__context, __append, __properties) {
         item.style.removeProperty('color');
     },
     _updateVisibilityCounter = function() {
-        const visibilityFields = props['visibility']['fields'];
-        
         let visibilitySize = 0;
+
+        const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields)
             visibilitySize += visibilityFields[status].size;
 
@@ -316,7 +318,8 @@ export default function Field(__context, __append, __properties) {
     this.setDragType = function(type) { dragType = type; };
     this.getDragType = function() { return dragType; };
     this.hasConnection = function() { 
-        if (output['_CONNECTION_'] !== null)
+        // if (output['_CONNECTION_'] !== null)
+        if (outputConnection !== null)
             return true;
     
         return false;
@@ -329,7 +332,8 @@ export default function Field(__context, __append, __properties) {
         if (output['_PATH_'] === null) output['_PATH_'] = MacroContext.newSVG(Context);
 
         output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
-        output['_CONNECTION_'] = card;
+        outputConnection = card;
+        // output['_CONNECTION_'] = card;
 
         card.makeConnection(Context);
         _refresh();
@@ -360,15 +364,18 @@ export default function Field(__context, __append, __properties) {
         props.tail.y = 0;
 
         if (Context.hasConnection()) {
-            output['_CONNECTION_'].clearConnection();
-            output['_CONNECTION_'] = null;
+            // output['_CONNECTION_'].clearConnection();
+            outputConnection.clearConnection();
+            // output['_CONNECTION_'] = null;
+            outputConnection = null;
         }
 
         Context.setColor(null);
     };
     this.redraw = function(transform) {
         if (Context.hasConnection()) {
-            const rect = output['_CONNECTION_'].getInputBounding();
+            // const rect = output['_CONNECTION_'].getInputBounding();
+            const rect = outputConnection.getInputBounding();
             Context.setPosition(rect.left, rect.top, transform, _MOV_.END);
         }
     };
@@ -410,7 +417,8 @@ export default function Field(__context, __append, __properties) {
         _color(false, color);
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].setColor(color);
+            outputConnection.setColor(color);
+            // output['_CONNECTION_'].setColor(color);
     };
     this.getColor = function() {
         if (RootField /*&& props.color != null*/) {
@@ -427,11 +435,11 @@ export default function Field(__context, __append, __properties) {
         }
     };
     this.serialize = function (fragment, properties) {
-        let counterOffset, counterVisibility,
-            fieldOffset, fieldDiv, fieldPath, 
-            hasChild, isExpand, deepSize, text, 
+        let counterOffset, fieldOffset, 
+            isExpand, deepSize, 
             response = {  };
 
+        const hasChild = Context.hasConnection();
         const responseVisibility = {
             visibility: {
                 fields: {
@@ -451,22 +459,21 @@ export default function Field(__context, __append, __properties) {
         props.text = description.value;
         response['properties'] = { ...props, ...responseVisibility };
 
-        if (RootField) properties.color = props.color;
+        if (RootField)
+            properties.color = props.color;
+
         treeviewDeep = properties.tab.length;
 
-        hasChild = Context.hasConnection();
-
         deepSize = properties.tab.length;
-        if (hasChild || RootField) deepSize++;
+        if (hasChild || RootField)
+            deepSize++;
 
-        //fragment.appendChild(treeviewRow);
-        //treeviewRow.classList = deep+ ' main-app-treeview-row';
-        //props['prefix']['id'] = _deep(properties.tab);
         props['id'] = _deep(properties.tab);
 
         treeviewRow = addElement(fragment, 'div', 'main-app-treeview-row');
         treeviewRow.style.gridTemplateColumns = 'repeat(' +deepSize+ ', 12px) auto 15px 15px';
-        if (!properties.expand) treeviewRow.style.height = '0';
+        if (!properties.expand)
+            treeviewRow.style.height = '0';
         
         treeviewRow['_CONTEXT_'] = new WeakRef(Context);
 
@@ -493,37 +500,34 @@ export default function Field(__context, __append, __properties) {
             }
         }
 
-        text = description.value;
-        fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', text);
+        const text = description.value;
+        const fieldDiv = addElement(treeviewRow, 'div', 'main-app-treeview-item field', text);
         if (text === '') {
             fieldDiv.textContent =  _I18N_.field_empty;
             fieldDiv.classList.add('empty');
         }
 
-        //fieldDiv.textContent = description.value;
-        //if (RootField) fieldDiv.style.color = properties.color;
-
-        if (RootField) treeviewRow.style.color = properties.color;
-        if (hasChild || RootField) fieldDiv.style.fontWeight = '600';
-        /*if ( hasChild ||  RootField) {
-            fieldDiv.style.fontWeight = '600';
+        if (RootField)
             treeviewRow.style.color = properties.color;
-        }*/
-        if (!hasChild && !RootField) fieldDiv.style.fontSize = '10px';
 
-        //fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['prefix']['id']);
-        fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['id']);
+        if (hasChild || RootField)
+            fieldDiv.style.fontWeight = '600';
+
+        if (!hasChild && !RootField)
+            fieldDiv.style.fontSize = '10px';
+
+        const fieldPath = addElement(fieldDiv, 'div', 'main-app-treeview-item-path', props['id']);
         fieldPath.style.color = properties.color;
 
-        //addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', type.textContent);
         addElement(treeviewRow, 'div', 'icon main-app-treeview-item type', (props['type']['type'] ? props['type']['type'] : _ICON_CHAR_.NONE));
         addElement(treeviewRow, 'div', 'main-app-treeview-item');
 
-        //addElement(treeviewRow, 'div');
+        if (hasChild)
+            response['output'] = outputConnection.serialize(fragment, properties);
+            // response['output'] = output['_CONNECTION_'].serialize(fragment, properties);
 
-        if (hasChild) response['output'] = output['_CONNECTION_'].serialize(fragment, properties);
-
-        if (!isExpand) properties.expand = true;
+        if (!isExpand)
+            properties.expand = true;
 
         return response;
     };
@@ -533,11 +537,13 @@ export default function Field(__context, __append, __properties) {
         if (!status) {
             treeviewRow.style.height = 0;
             if (hasChild)
-                output['_CONNECTION_'].setExpand(status);
+                outputConnection.setExpand(status);
+                // output['_CONNECTION_'].setExpand(status);
         } else {
             treeviewRow.style.removeProperty('height');
             if (hasChild)
-                output['_CONNECTION_'].setExpand(Context.getProps('expanded'));
+                outputConnection.setExpand(Context.getProps('expanded'));
+                // output['_CONNECTION_'].setExpand(Context.getProps('expanded'));
         }
     };
     this.setBorderColor = function(light, index = null, color = null) {
@@ -551,7 +557,8 @@ export default function Field(__context, __append, __properties) {
         }
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].setBorderColor(light, index, color);
+            outputConnection.setBorderColor(light, index, color);
+            // output['_CONNECTION_'].setBorderColor(light, index, color);
 
         //return color;
     };
@@ -595,9 +602,7 @@ export default function Field(__context, __append, __properties) {
 
         return null;
     };
-    this.remove = function (remove = true) {
-        console.log(props.uuid);
-        
+    this.remove = function (remove = true) {        
         description.removeEventListener('keyup', _keypress, { capture: false });
         description.removeEventListener('focus', _showProperties, { capture: false });
 
@@ -616,9 +621,8 @@ export default function Field(__context, __append, __properties) {
             Context.clearConnection();
 
         output['_PATH_'] = null;
-
         treeviewRow['_CONTEXT_'] = null;
-        treeviewRow.parentNode.removeChild(treeviewRow);
+        //treeviewRow.parentNode.removeChild(treeviewRow);
 
         if (remove)
             CardContext.removeFromFieldMap(props.uuid);
@@ -627,7 +631,7 @@ export default function Field(__context, __append, __properties) {
         for (const status in visibilityFields) 
             visibilityFields[status].clear();
 
-        MacroContext.removeFromVisibilityMap(props.uuid);
+        MacroContext.deleteFromVisibility(Context);
 
         item.parentNode.removeChild(item);
 
@@ -649,7 +653,8 @@ export default function Field(__context, __append, __properties) {
         }
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].initVisibility(fields_map);
+            outputConnection.initVisibility(fields_map);
+            // output['_CONNECTION_'].initVisibility(fields_map);
 
         _updateVisibilityCounter();
     };
@@ -689,25 +694,17 @@ export default function Field(__context, __append, __properties) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field) {
-        const visibilityFields = props['visibility']['fields'],
-              fieldUUID = field.getProps('uuid');
-
+    this.deleteFromVisibility = function(uuid) {
+        const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
-            visibilityFields[status].delete(fieldUUID);
+            visibilityFields[status].delete(uuid);
+
+        // if (recursive && Context.hasConnection())
+        //     output['_CONNECTION_'].deleteFromVisibility(uuid);
 
         _updateVisibilityCounter();
     };
-    this.removeFromVisibilityMap = function(uuid) {
-        const visibilityFields = props['visibility']['fields'];
-        for (const status in visibilityFields) {
-            if (visibilityFields[status].delete(uuid))
-                console.log(`status: ${status} remove: ${uuid} from : ${props.uuid}`)
-        }
 
-        if (Context.hasConnection())
-            output['_CONNECTION_'].removeFromVisibilityMap(uuid);
-    };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setOrder = function(order) {
@@ -725,7 +722,8 @@ export default function Field(__context, __append, __properties) {
         }
 
         if (Context.hasConnection())
-            output['_CONNECTION_'].setExpand(props.expanded);
+            outputConnection.setExpand(props.expanded);
+            // output['_CONNECTION_'].setExpand(props.expanded);
     };
     this.setType = function(fieldType = props.type.type) { 
         const numFieldType = parseInt(fieldType);
@@ -809,7 +807,7 @@ export default function Field(__context, __append, __properties) {
         
         output = addElement(item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
         output['_PATH_'] = null;
-        output['_CONNECTION_'] = null;
+        // output['_CONNECTION_'] = null;
 
         __append.appendChild(fragment);
         

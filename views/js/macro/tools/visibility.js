@@ -27,9 +27,10 @@ export default function VisibilityTool (ctx) {
 
         if (targetClass.contains('button')) {
             const object = main.getSelectedObject(),
-                  status = target['_action'];
+                  status = target['_action'],
+                  uuid = currentField.getProps('uuid');
 
-            object.removeFromVisibility(currentField);
+            object.deleteFromVisibility(uuid);
             currentField.unselectForVisibility();
 
             if (status !== _STATUS_.NONE) {

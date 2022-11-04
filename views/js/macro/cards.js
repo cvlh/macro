@@ -22,9 +22,9 @@ export default function Card(__context, __properties, __tab) {
         add, visibility, close,
 
         isCurrentSelectObject = false,
+        inputConnection = null,
 
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
-
         props = {
             uuid: null,
 
@@ -61,15 +61,15 @@ export default function Card(__context, __properties, __tab) {
         close.removeEventListener('click', _remove, { capture: false });
 
         if (Context.hasConnection())
-            input['_CONNECTION_'].clearConnection();
+            inputConnection.clearConnection();
 
         for (const field of FieldsMap.values()) 
             field.remove(false);
-
         FieldsMap.clear();
 
         card.parentNode.removeChild(card);
 
+        MacroContext.removeFromCardsMap(props.uuid);
         MacroContext.serialize();
     },
     _order = function() {
@@ -101,14 +101,14 @@ export default function Card(__context, __properties, __tab) {
         if (RootField)
             return false;
         
-        if (input['_CONNECTION_'] !== null)
+        if (inputConnection !== null)
             return true;
         
         return false;
     };
-    this.makeConnection = function(output) { input['_CONNECTION_'] = output; };
+    this.makeConnection = function(output) { inputConnection = output; };
     this.clearConnection = function() {
-        input['_CONNECTION_'] = null; 
+        inputConnection = null;
 
         Context.setHeader('');
         Context.setColor(null);
@@ -122,7 +122,7 @@ export default function Card(__context, __properties, __tab) {
 
         if (Context.hasConnection()) {
             const viewport = input.getBoundingClientRect();
-            input['_CONNECTION_'].setPosition(viewport.left, viewport.top, transform, _MOV_.END);
+            inputConnection.setPosition(viewport.left, viewport.top, transform, _MOV_.END);
         }
     };
     this.setPosition = function(left, top, transform, mov) {
@@ -187,7 +187,7 @@ export default function Card(__context, __properties, __tab) {
     };
     this.getColor = function() {
         if (!RootField && Context.hasConnection())
-            return input['_CONNECTION_'].getColor();
+            inputConnection.getColor();
         
         return null;
     };
@@ -197,7 +197,7 @@ export default function Card(__context, __properties, __tab) {
                 return true;
             
             if (Context.hasConnection())
-                return input['_CONNECTION_'].infiniteLoop(target);
+                inputConnection.infiniteLoop(target);
         }
         return false;
     };
@@ -314,23 +314,17 @@ export default function Card(__context, __properties, __tab) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
-    this.removeFromVisibility = function(field) {
-        const visibilityFields = props['visibility']['fields'],
-              fieldUUID = field.getProps('uuid');
-
+    this.deleteFromVisibility = function(uuid, recursive = false) {
+        const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
-            visibilityFields[status].delete(fieldUUID);
+            visibilityFields[status].delete(uuid);
     
-        _updateVisibilityCounter();
-    };
-    this.removeFromVisibilityMap = function(uuid) {
-        for (const status in props['visibility']['fields']) {
-            if (props['visibility']['fields'][status].delete(uuid))
-                console.log(`remove: ${uuid} from : ${props.uuid}`)
+        if (recursive) {
+            for (const field of FieldsMap.values())
+                field.deleteFromVisibility(uuid, recursive);
         }
 
-        for (const field of FieldsMap.values())
-            field.removeFromVisibilityMap(uuid);
+        _updateVisibilityCounter();
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
@@ -351,7 +345,6 @@ export default function Card(__context, __properties, __tab) {
     };
     this.removeFromFieldMap = function(uuid) {
         FieldsMap.delete(uuid);
-
         _order();
     };
     this.isRoot = function() { return RootField; };
@@ -422,8 +415,8 @@ export default function Card(__context, __properties, __tab) {
             let content = addElement(card, 'div', 'app-cards-content');
 
             input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
-            input['_CONNECTION_'] = null;
-            input['_CONTEXT_'] = new WeakRef(Context);
+            input['_UUID_'] = props.uuid;
+            // input['_CONTEXT_'] = new WeakRef(Context);
 
             items = addElement(content, 'div', 'app-cards-content-items');
         }

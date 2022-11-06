@@ -424,6 +424,6 @@ export default function Card(__context, __properties, __tab) {
             items = addElement(content, 'div', 'app-cards-content-items');
         }
 
-        MacroContext.appendAt().appendChild(fragment);
+        MacroContext.getBuilderDiv().appendChild(fragment);
     })();
 }

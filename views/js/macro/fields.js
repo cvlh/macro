@@ -7,7 +7,7 @@ import { addElement, UUIDv4 } from '../utils/functions.js';
 export default function Field(__context, __append, __properties) {
 
     if (!new.target) 
-        throw new Error("Field() must be called with new");
+        throw new Error('Field() must be called with new');
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const MacroContext = __context.getMacro(), 
@@ -30,7 +30,9 @@ export default function Field(__context, __append, __properties) {
         treeviewRow = null, treeviewDeep,
 
         isCurrentSelectObject = false,
+    
         outputConnection = null,
+        outputPath = null,
 
         position = { top: 0, left: 0 },
         props = {
@@ -85,14 +87,18 @@ export default function Field(__context, __append, __properties) {
                 output.style.color = 'var(--gray-100)';
             }
 
-            if (output['_PATH_'] !== null) 
-                output['_PATH_'].style.stroke = color;
+            // if (output['_PATH_'] !== null) 
+            //     output['_PATH_'].style.stroke = color;
+            if (outputPath !== null) 
+                outputPath.style.stroke = color;
         } else {
             output.style.removeProperty('background-color');
             output.style.removeProperty('color');
 
-            if (output['_PATH_'] !== null)
-                output['_PATH_'].style.removeProperty('stroke');
+            // if (output['_PATH_'] !== null)
+            //     output['_PATH_'].style.removeProperty('stroke');
+            if (outputPath !== null)
+                outputPath.style.removeProperty('stroke');
         }
     },
 
@@ -113,12 +119,15 @@ export default function Field(__context, __append, __properties) {
             MacroContext.serialize();
         }
 
-        const output = DOMElement.output;
-        if (output['_PATH_'] === null) 
-            output['_PATH_'] = MacroContext.newSVG(this);
+        // const output = DOMElement.output;
+        // if (output['_PATH_'] === null) 
+        //     output['_PATH_'] = MacroContext.newSVG(this);
             // output['_PATH_'] = MacroContext.newSVG(Context);
-        
-        output['_PATH_'].setAttribute('visibility', 'visible');
+        if (outputPath === null) 
+            outputPath = MacroContext.newSVG(this);
+
+        outputPath.setAttribute('visibility', 'visible');
+        // output['_PATH_'].setAttribute('visibility', 'visible');
 
         // Context.setDragType(_DRAG_.OUTPUT);
         this.setDragType(_DRAG_.OUTPUT);
@@ -130,7 +139,8 @@ export default function Field(__context, __append, __properties) {
     _render = (left, top, action) => {
         let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
-        const elements = DOMElement.output['_PATH_'].children,
+        // const elements = DOMElement.output['_PATH_'].children,
+        const elements = outputPath.children,
               startX   = position.left + 17,
               startY   = position.top  + 11;
         
@@ -368,17 +378,21 @@ export default function Field(__context, __append, __properties) {
         return false;
     };
     this.makeConnection = function(card) {
-        const output = DOMElement.output;
+        // const output = DOMElement.output;
 
-        output.classList.remove('connected');
+        DOMElement.output.classList.remove('connected');
         //output.classList.add('linked');
 
         //output['_PATH_'].setAttribute('class', 'linked');
-        if (output['_PATH_'] === null)
-            output['_PATH_'] = MacroContext.newSVG(this);
+        // if (output['_PATH_'] === null)
+        //     output['_PATH_'] = MacroContext.newSVG(this);
             // output['_PATH_'] = MacroContext.newSVG(Context);
 
-        output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
+        if (outputPath === null)
+            outputPath = MacroContext.newSVG(this);
+
+        // output['_PATH_'].setAttribute('class', 'main-app-svg-path linked');
+        outputPath.setAttribute('class', 'main-app-svg-path linked');
         outputConnection = card;
         // output['_CONNECTION_'] = card;
 
@@ -394,14 +408,18 @@ export default function Field(__context, __append, __properties) {
         this.setColor(color);
     };
     this.clearConnection = function() {
-        const output = DOMElement.output;
-        const elements = output['_PATH_'].children;
+        // const output = DOMElement.output;
+        // const elements = output['_PATH_'].children;
+        const elements = outputPath.children;
 
-        output.classList.remove('linked', 'error');
-        output['_PATH_'].setAttribute('class', 'main-app-svg-path');
-        output['_PATH_'].setAttribute('visibility', 'hidden');
-        output['_PATH_'].removeAttribute('style');
-        
+        DOMElement.output.classList.remove('linked', 'error');
+        // output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+        // output['_PATH_'].setAttribute('visibility', 'hidden');
+        // output['_PATH_'].removeAttribute('style');
+        outputPath.setAttribute('class', 'main-app-svg-path');
+        outputPath.setAttribute('visibility', 'hidden');
+        outputPath.removeAttribute('style');
+
         elements[0].removeAttribute('d');
 
         elements[1].removeAttribute('x1');
@@ -649,7 +667,7 @@ export default function Field(__context, __append, __properties) {
     };
     this.setSelected = function(status) { 
         const item = DOMElement.item;
-        const output = DOMElement.output;
+        // const output = DOMElement.output;
 
         if (status) {
             isCurrentSelectObject = true;
@@ -661,7 +679,8 @@ export default function Field(__context, __append, __properties) {
 
             // if (Context.hasConnection()) 
             if (this.hasConnection()) 
-                output['_PATH_'].style.strokeWidth = '7px';
+                outputPath.style.strokeWidth = '7px';
+                // output['_PATH_'].style.strokeWidth = '7px';
         } else {
             isCurrentSelectObject = false;
 
@@ -669,7 +688,8 @@ export default function Field(__context, __append, __properties) {
 
             // if (Context.hasConnection())
             if (this.hasConnection())
-                output['_PATH_'].style.removeProperty('stroke-width');
+                outputPath.style.removeProperty('stroke-width');
+                // output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
     this.getProps = function(prop = null) {
@@ -681,7 +701,9 @@ export default function Field(__context, __append, __properties) {
 
         return null;
     };
-    this.remove = function (remove = true) {        
+    this.remove = function (remove = true) {
+        MacroContext.getBuilderDiv().focus();
+
         DOMElement.description.removeEventListener('keyup', _keypress, { capture: false });
         DOMElement.description.removeEventListener('focus', _showProperties, { capture: false });
 
@@ -701,7 +723,8 @@ export default function Field(__context, __append, __properties) {
             this.clearConnection();
             // Context.clearConnection();
 
-        DOMElement.output['_PATH_'] = null;
+        // DOMElement.output['_PATH_'] = null;
+        outputPath = null;
         treeviewRow['_CONTEXT_'] = null;
         //treeviewRow.parentNode.removeChild(treeviewRow);
 
@@ -720,12 +743,16 @@ export default function Field(__context, __append, __properties) {
         for (const element in DOMElement) {
             DOMElement[element].parentNode.removeChild(DOMElement[element]);
             DOMElement[element] = null;
+
+            delete DOMElement[element];
         }
         // DOMElement.item.parentNode.removeChild(DOMElement.item);
 
         if (remove)
             MacroContext.redraw(card);
             // MacroContext.redraw(CardContext);
+        
+        
     }
 
     this.initVisibility = function(fields_map) {        
@@ -848,19 +875,17 @@ export default function Field(__context, __append, __properties) {
 
         return props['type'];
     };
-    this.check = function(target) {
-        const output = DOMElement.output;
-
+    this.check = function(target, connection) {
         if (target.classList.contains('app-cards-content-input')) {
-            if (target['_CONNECTION_'] !== null) {
-                output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
+            if (connection) {
+                outputPath.setAttribute('class', 'main-app-svg-path error');
             } else {
-                output['_PATH_'].setAttribute('class', 'main-app-svg-path connected');
+                outputPath.setAttribute('class', 'main-app-svg-path connected');
             }
         } else if (target.classList.contains('main-app-wrapper')) {
-            output['_PATH_'].setAttribute('class', 'main-app-svg-path');
+            outputPath.setAttribute('class', 'main-app-svg-path');
         } else {
-            output['_PATH_'].setAttribute('class', 'main-app-svg-path error');
+            outputPath.setAttribute('class', 'main-app-svg-path error');
         }
     };
     this.getRect = function() { return DOMElement.item.getBoundingClientRect(); };
@@ -906,7 +931,7 @@ export default function Field(__context, __append, __properties) {
         DOMElement.visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
         
         DOMElement.output = addElement(DOMElement.item, 'div', 'icon app-cards-content-item-output', _ICON_CHAR_.OUTPUT);
-        DOMElement.output['_PATH_'] = null;
+        // DOMElement.output['_PATH_'] = null;
         // output['_CONNECTION_'] = null;
 
         __append.appendChild(fragment);

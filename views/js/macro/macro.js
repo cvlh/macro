@@ -284,8 +284,6 @@ export default function Macro(__properties) {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.appendAt = function () { return mainAppWrapper; }
-
     this.createCard = function(card_position, card_properties, connect = null) {
         const isRoot = (CardsMap.size === 0 ? true : false),
               left = card_position[0], 
@@ -333,15 +331,16 @@ export default function Macro(__properties) {
         Context.serialize();
     };
     this.showProperties = function(object) {
-        if (visibilityMode) return;
+        if (visibilityMode)
+            return;
         
         if (currentSelectedObject !== null)
             currentSelectedObject.setSelected(false);
-        
+
         currentSelectedObject = object;
         currentSelectedObject.setSelected(true);
 
-        if (currentSelectedObject.hasOwnProperty('getProps'))
+        // if (currentSelectedObject.hasOwnProperty('getProps'))
             properties.refresh();
     };
     this.setSelected = function(status) { 
@@ -423,9 +422,10 @@ export default function Macro(__properties) {
     this.removeFromCardsMap = function(uuid) { return CardsMap.delete(uuid); };
     this.getFromCardsMap = function(uuid) { return CardsMap.get(uuid); };
 
-    this.getSelectedArrow = function() { return selectedArrow; }
+    this.getSelectedArrow  = function() { return selectedArrow; }
     this.getVisibilityTool = function() { return visibilityTool; }
     this.getSelectedObject = function() { return currentSelectedObject; }
+    this.getBuilderDiv = function () { return mainAppWrapper; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = function(evnt, ctx) { 
@@ -467,7 +467,16 @@ export default function Macro(__properties) {
                 break;
 
             case _DRAG_.OUTPUT:
-                currentDrag.check(evnt.target);
+                let connection = false;
+                const target = evnt.target;
+
+                if (target.hasOwnProperty('_UUID_')) {
+                    if (CardsMap.has(target['_UUID_'])) {
+                        const targetCtx = CardsMap.get(target['_UUID_']);
+                        connection = targetCtx.hasConnection();
+                    }
+                }
+                currentDrag.check(target, connection);
                 break;
         }
     };

@@ -10,20 +10,20 @@ export default function Field(__context, __append, __properties) {
         throw new Error('Field() must be called with new');
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const MacroContext = __context.getMacro(), 
-          CardContext = __context.getProps('uuid'),
-        //CardContext = __context,
-        //Context = this,
-          RootField = __context.isRoot(),
+    const
+        MacroContext = __context.getMacro(), 
+        CardContext = __context.getProps('uuid'),
 
-          DOMElement = {
+        RootField = __context.isRoot(),
+
+        DOMElement = {
             item:        null,
             container:   null,
             index:       null,
             description: null,
             visibility:  null,
             output:      null,
-          };
+        };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let dragType,
@@ -35,6 +35,7 @@ export default function Field(__context, __append, __properties) {
         outputPath = null,
 
         position = { top: 0, left: 0 },
+
         props = {
             uuid: null,
 
@@ -370,7 +371,7 @@ export default function Field(__context, __append, __properties) {
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.setDragType = function(type) { dragType = type; };
     this.getDragType = function() { return dragType; };
-    this.hasConnection = function() { 
+    this.hasConnection = function() {
         // if (output['_CONNECTION_'] !== null)
         if (outputConnection !== null)
             return true;
@@ -497,26 +498,28 @@ export default function Field(__context, __append, __properties) {
             // output['_CONNECTION_'].setColor(color);
     };
     this.getColor = function() {
-        if (RootField /*&& props.color != null*/) {
+        if (RootField)
             return _COLORS_[props.color];
-        } else {
-            const card = MacroContext.getFromCardsMap(CardContext);
-            if (card !== undefined)
-                return card.getColor();
 
-            // return CardContext.getColor();
-        }
+        const card = MacroContext.getFromCardsMap(CardContext);
+        return card.getColor();
+
+        // if (RootField /*&& props.color != null*/) {
+        //     return _COLORS_[props.color];
+        // } else {
+        //     const card = MacroContext.getFromCardsMap(CardContext);
+        //     if (card !== undefined)
+        //         return card.getColor();
+
+        //     // return CardContext.getColor();
+        // }
     };
     this.infiniteLoop = function(target) {
-        if (RootField) {
+        if (RootField) 
             return false;
-        } else {
-            const card = MacroContext.getFromCardsMap(CardContext);
-            if (card !== undefined)
-                return card.infiniteLoop(target);
 
-            // return CardContext.infiniteLoop(target);
-        }
+        const card = MacroContext.getFromCardsMap(CardContext);
+        return card.infiniteLoop(target);
     };
     this.serialize = function (fragment, properties) {
         let counterOffset, fieldOffset, 
@@ -653,7 +656,7 @@ export default function Field(__context, __append, __properties) {
 
         //return color;
     };
-    this.swap = function() { 
+    this.swap = function() {
         // TODO
         // let sibling = item.previousElementSibling,
         //     parentNode = item.parentNode;
@@ -665,7 +668,7 @@ export default function Field(__context, __append, __properties) {
         //     MacroContext.redraw(parent);
         // }
     };
-    this.setSelected = function(status) { 
+    this.setSelected = function(status) {
         const item = DOMElement.item;
         // const output = DOMElement.output;
 
@@ -755,7 +758,7 @@ export default function Field(__context, __append, __properties) {
         
     }
 
-    this.initVisibility = function(fields_map) {        
+    this.initVisibility = function(fields_map) {
         for (const status in props['visibility']['fields']) {
             const clone = [...props['visibility']['fields'][status]];
 
@@ -835,7 +838,7 @@ export default function Field(__context, __append, __properties) {
         DOMElement.index.textContent = order;
     };
     this.setFocus = function() { DOMElement.description.focus(); };
-    this.toggleExpand = function(icon) { 
+    this.toggleExpand = function(icon) {
         props.expanded = !props.expanded;
 
         if (props.expanded) {
@@ -849,7 +852,7 @@ export default function Field(__context, __append, __properties) {
             outputConnection.setExpand(props.expanded);
             // output['_CONNECTION_'].setExpand(props.expanded);
     };
-    this.setType = function(field_type = props.type.type) { 
+    this.setType = function(field_type = props.type.type) {
         const numFieldType = parseInt(field_type);
         const output = DOMElement.output;
 

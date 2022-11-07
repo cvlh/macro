@@ -76,10 +76,12 @@ export default function Card(__context, __properties, __tab) {
         MacroContext.serialize();
     },
     _order = function() {
-        const sizeFields = FieldsMap.length;
+        let counter = 1;
         
-        for (let counterFields = 0; counterFields < sizeFields; counterFields++)
-            FieldsMap[counterFields].setOrder(counterFields + 1);
+        for (const field of FieldsMap.values()) {
+            field.setOrder(counter);
+            counter++;
+        }
     },
     _showProperties = function() { MacroContext.showProperties(Context); },
     _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
@@ -190,7 +192,7 @@ export default function Card(__context, __properties, __tab) {
     };
     this.getColor = function() {
         if (!RootField && Context.hasConnection())
-            inputConnection.getColor();
+            return inputConnection.getColor();
         
         return null;
     };
@@ -354,9 +356,7 @@ export default function Card(__context, __properties, __tab) {
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!RootField) {
-        this.setHeader = function(text) {
-            title.textContent = text;
-        };
+        this.setHeader = function(text) { title.textContent = text; };
         this.getInputBounding = function() {
             const rect = input.getBoundingClientRect();
             return { left: rect.left, top: rect.top }; 

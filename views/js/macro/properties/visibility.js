@@ -62,7 +62,6 @@ export default function Visibility (ctx) {
         parent.getMacro().setVisibilityMode();
     },
     _edit = function() {
-
         if (parent.getMacro().getVisibilityMode()) {
             const objectProp = parent.getMacro().getSelectedObject().getProps('visibility');
             //const fieldsSize = objectProp['fields'].length;
@@ -76,7 +75,6 @@ export default function Visibility (ctx) {
             //status.textContent = fieldsSize +' '+ (fieldsSize === 1 ? _I18N_.item_selected[0] : _I18N_.item_selected[1]);
             //status.style.color = 'var(--main-blue-selected)'; 
             _set_flags(objectProp);
-
         } else {
             _backup();
 
@@ -160,7 +158,7 @@ export default function Visibility (ctx) {
         let visibilitySize = 0;
         
         for (const status in prop['fields']) 
-            visibilitySize += prop['fields'][status].length;
+            visibilitySize += prop['fields'][status].size;
 
         if (!visibilitySize) {
             status.textContent = _I18N_.without_visibility;

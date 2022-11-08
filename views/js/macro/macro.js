@@ -26,8 +26,10 @@ export default function Macro(__properties) {
 
         rootCard, 
         currentDrag = null,
+
         isCurrentSelectObject = false,
         currentSelectedObject = null, // Field | Card | Workspace
+
         visibilityMode = false,       // Boolean
         selectedArrow = null,
         visibilityTool = null,
@@ -55,7 +57,6 @@ export default function Macro(__properties) {
                 return;
             
             if (targetClass.contains('expand')) {
- 
                 const status = field.getProps('expanded');
                 switch (evnt.type) {
                     case 'click':
@@ -263,22 +264,49 @@ export default function Macro(__properties) {
     };
     this.getDragType = function() { return _DRAG_.AREA; };
     this.serialize = function() {
-        while (mainTreeViewItems.hasChildNodes()) 
-            mainTreeViewItems.removeChild(mainTreeViewItems.firstChild);
+
+        // REMOVE EVNTS
+        mainTreeViewItems.removeEventListener('click', _receive_events, { capture: true });
+        mainTreeViewItems.removeEventListener('mouseenter', _receive_events, { capture: true });
+        mainTreeViewItems.removeEventListener('mouseleave', _receive_events, { capture: true });
+        
+        while (mainTreeViewItems.hasChildNodes()) {
+            const child = mainTreeViewItems.firstChild;
+            if (child.hasOwnProperty('_CONTEXT_')) {
+                const field = child['_CONTEXT_'].deref();
+                if (field !== undefined)
+                    field.evictTreeviewRow();
+
+                child['_CONTEXT_'] = null;
+                delete child['_CONTEXT_'];
+            }
+            
+            mainTreeViewItems.removeChild(child);
+        }
+
+        const initial_properties = { 
+            expand: true, 
+            color: null,
+            tab: []
+        };
 
         const fragment = document.createDocumentFragment();
-
-        let response = {
+        const response = {
             status:  true,
             name:    'Macro',
             version: 1,
             
             properties: props,
 
-            root: rootCard.serialize(fragment)
+            root: rootCard.serialize(fragment, initial_properties)
         };
         
         mainTreeViewItems.appendChild(fragment);
+
+        // ADD EVNTS
+        mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
+        mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
+        mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
 
         return response;
     };
@@ -344,11 +372,11 @@ export default function Macro(__properties) {
             properties.refresh();
     };
     this.setSelected = function(status) { 
+        isCurrentSelectObject = status;
+
         if (status) {
-            isCurrentSelectObject = true;
             mainAppWrapper.classList.add('selected');
         } else {
-            isCurrentSelectObject = false;
             mainAppWrapper.classList.remove('selected');
         }
     };
@@ -599,12 +627,6 @@ export default function Macro(__properties) {
         _zoom_label();
 
         document.body.appendChild(fragment);
-        
-        // EVNTS
-        mainTreeViewItems.addEventListener('click', _receive_events, { capture: true });
-        mainTreeViewItems.addEventListener('mouseenter', _receive_events, { capture: true });
-        mainTreeViewItems.addEventListener('mouseleave', _receive_events, { capture: true });
-
         
         //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
         //window.addEventListener('resize', _resize, { capture: true });

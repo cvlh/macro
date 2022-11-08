@@ -515,7 +515,10 @@ body { overflow: hidden; }
             grid-column-end: span 2;
             color: #B0BEC5;
         }
-        .main-app-treeview-item.field { padding: 0; }
+        .main-app-treeview-item.field { 
+            cursor: pointer;
+            padding: 0; 
+        }
         .main-app-treeview-item.field.empty {
             color: #9E9E9E !important;
             font-style: italic;

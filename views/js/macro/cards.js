@@ -77,7 +77,7 @@ export default function Card(__context, __properties, __tab) {
     },
     _order = function() {
         let counter = 1;
-        
+
         for (const field of FieldsMap.values()) {
             field.setOrder(counter);
             counter++;
@@ -206,7 +206,8 @@ export default function Card(__context, __properties, __tab) {
         }
         return false;
     };
-    this.serialize = function (fragment, properties = {tab: [], expand: true, color: null}) {
+    // this.serialize = function (fragment, properties = {tab: [], expand: true, color: null}) {
+    this.serialize = function (fragment, properties) {
         const response = { 
             position: [ position.left, position.top ],
             fields: [],
@@ -228,7 +229,9 @@ export default function Card(__context, __properties, __tab) {
 
         let counterFields = 0
         for (const field of FieldsMap.values()) {
-            properties.tab.push(counterFields + 1);
+            counterFields++;
+
+            properties.tab.push(counterFields);
             response['fields'].push(field.serialize(fragment, properties));
             properties.tab.pop();
         }
@@ -369,7 +372,6 @@ export default function Card(__context, __properties, __tab) {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let icon;
         const fragment = document.createDocumentFragment();
 
         card = addElement(fragment, 'div', 'app-cards');
@@ -394,7 +396,7 @@ export default function Card(__context, __properties, __tab) {
         
         if (RootField) {
             header.style.gridTemplateColumns = '25px 225px 25px 25px';
-            icon = addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
+            addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
             title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
             title = addElement(header, 'div', 'app-cards-header-title');

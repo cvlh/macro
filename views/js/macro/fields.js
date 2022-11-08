@@ -728,7 +728,14 @@ export default function Field(__context, __append, __properties) {
 
         // DOMElement.output['_PATH_'] = null;
         outputPath = null;
-        treeviewRow['_CONTEXT_'] = null;
+
+        if (treeviewRow !== null) {
+            if (treeviewRow.hasOwnProperty('_CONTEXT_')) {
+                treeviewRow['_CONTEXT_'] = null;
+                delete treeviewRow['_CONTEXT_'];
+            }
+            treeviewRow = null;
+        }
         //treeviewRow.parentNode.removeChild(treeviewRow);
 
         const card = MacroContext.getFromCardsMap(CardContext);
@@ -831,7 +838,6 @@ export default function Field(__context, __append, __properties) {
         _updateVisibilityCounter();
     };
 
-
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.setOrder = function(order) {
         props.order = order;
@@ -897,6 +903,8 @@ export default function Field(__context, __append, __properties) {
     // this.toggleVisibility = function() { _toggleVisibility(); };
     this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
     this.unselectForVisibility = function() { _unselectForVisibility(); };
+
+    this.evictTreeviewRow = function() { treeviewRow = null; };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function init () {

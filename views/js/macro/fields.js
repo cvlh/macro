@@ -257,14 +257,17 @@ export default function Field(__context, __append, __properties) {
     },
 
     // _showProperties = function() { MacroContext.showProperties(Context); },
-    _showProperties = () => { MacroContext.showProperties(this); },
+    _showProperties = () => {
+        if (!isCurrentSelectObject)
+            MacroContext.showProperties(this); 
+    },
 
     // _showVisibilityTools = function(evnt) {
     _showVisibilityTools = (evnt) => {
         evnt.stopPropagation();
 
-        const target = evnt.target,
-              tool = MacroContext.getVisibilityTool();
+        const tool = MacroContext.getVisibilityTool();
+        //const target = evnt.target,
 
         switch (evnt.type) {
             case 'mouseenter':
@@ -280,23 +283,38 @@ export default function Field(__context, __append, __properties) {
     // _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
     _previewVisibility = (evnt) => { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
 
-    // _selectedForVisibility = function(status) {
-    _selectedForVisibility = (status) => {
+    _toggleVisibility = () => {
+        const selectedObject = MacroContext.getSelectedObject();
+        const visibilityFields = selectedObject.getProps('visibility', 'fields');
+
+        for (const status in visibilityFields) {
+            if (visibilityFields[status].has(props.uuid)) {
+                selectedObject.deleteFromVisibility(props.uuid);
+                _removeVisibilityStyle();
+                return;
+            }
+        }
+
+        selectedObject.addToVisibility(this, _STATUS_.VISIBLE);
+        _addVisibilityStyle(_STATUS_.VISIBLE);
+    },
+
+    // _addVisibilityStyle = function(status) {
+    _addVisibilityStyle = (status) => {
         let color = this.getColor();
         if (color !== null)
             color += 'BB';
         else
             color = '#7A7A7A';
 
-        // _unselectForVisibility();
+        // _removeVisibilityStyle();
 
-        treeviewRow.style.outline = 'none';
+        // treeviewRow.style.outline = 'none';
         treeviewRow.style.backgroundColor = color;
         treeviewRow.style.color = 'var(--white)';
 
         const path = treeviewRow.querySelector('.field');
         const description = DOMElement.description;
-
         description.style.borderColor = color;
         switch (status) {
             case _STATUS_.VISIBLE:
@@ -322,9 +340,9 @@ export default function Field(__context, __append, __properties) {
         DOMElement.item.style.color = color;
     },
 
-    // _unselectForVisibility = function() {
-    _unselectForVisibility = () => {
-        treeviewRow.style.removeProperty('outline');
+    // _removeVisibilityStyle = function() {
+    _removeVisibilityStyle = () => {
+        // treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
 
         if (!RootField)
@@ -333,11 +351,9 @@ export default function Field(__context, __append, __properties) {
             treeviewRow.style.color = this.getColor();
 
         const description = DOMElement.description;
-        
         description.style.removeProperty('border-color');
         description.style.removeProperty('background-color');
         description.style.removeProperty('color');
-
         description.style.removeProperty('border-width');
         description.style.removeProperty('border-style');
         description.style.removeProperty('font-style');
@@ -695,14 +711,19 @@ export default function Field(__context, __append, __properties) {
                 // output['_PATH_'].style.removeProperty('stroke-width');
         }
     };
-    this.getProps = function(prop = null) {
-        if (prop === null) {
+    this.getProps = function(...prop) {
+        if (prop === undefined)
             return props;
-        } else if (props.hasOwnProperty(prop)) {
-            return props[prop];
+
+        let shortcut = props;
+        for (const arg of prop) {
+            if (!shortcut.hasOwnProperty(arg))
+                return null;
+
+            shortcut = shortcut[arg];
         }
 
-        return null;
+        return shortcut;
     };
     this.remove = function (remove = true) {
         MacroContext.getBuilderDiv().focus();
@@ -761,8 +782,7 @@ export default function Field(__context, __append, __properties) {
         if (remove)
             MacroContext.redraw(card);
             // MacroContext.redraw(CardContext);
-        
-        
+
     }
 
     this.initVisibility = function(fields_map) {
@@ -799,7 +819,7 @@ export default function Field(__context, __append, __properties) {
             else
                 item.appendChild(MacroContext.getSelectedArrow());
 
-            // item.addEventListener('click', _toggleVisibility, { capture: false });
+            item.addEventListener('click', _toggleVisibility, { capture: false });
 
             item.addEventListener('mouseenter', _showVisibilityTools, { capture: false });
             item.addEventListener('mouseleave',  _showVisibilityTools, { capture: false });
@@ -812,9 +832,9 @@ export default function Field(__context, __append, __properties) {
                 item.removeChild(MacroContext.getSelectedArrow());
 
             _updateVisibilityCounter();
-            _unselectForVisibility();
+            _removeVisibilityStyle();
 
-            // item.removeEventListener('click', _toggleVisibility, { capture: false });
+            item.removeEventListener('click', _toggleVisibility, { capture: false });
 
             item.removeEventListener('mouseenter', _showVisibilityTools, { capture: false });
             item.removeEventListener('mouseleave',  _showVisibilityTools, { capture: false });
@@ -824,16 +844,10 @@ export default function Field(__context, __append, __properties) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
-    this.deleteFromVisibility = function(uuid, recursive) {
+    this.deleteFromVisibility = function(uuid) {
         const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
             visibilityFields[status].delete(uuid);
-
-        // if (recursive && Context.hasConnection())
-        //     output['_CONNECTION_'].deleteFromVisibility(uuid);
-
-        // if (recursive && uuid === props.uuid)
-        //     return;
 
         _updateVisibilityCounter();
     };
@@ -900,9 +914,9 @@ export default function Field(__context, __append, __properties) {
     this.getRect = function() { return DOMElement.item.getBoundingClientRect(); };
     this.getDiv = function() { return DOMElement.item; };
 
-    // this.toggleVisibility = function() { _toggleVisibility(); };
-    this.selectedForVisibility = function(status) { _selectedForVisibility(status); };
-    this.unselectForVisibility = function() { _unselectForVisibility(); };
+    this.toggleVisibility = function() { _toggleVisibility(); };
+    this.selectedForVisibility = function(status) { _addVisibilityStyle(status); };
+    this.unselectForVisibility = function() { _removeVisibilityStyle(); };
 
     this.evictTreeviewRow = function() { treeviewRow = null; };
 

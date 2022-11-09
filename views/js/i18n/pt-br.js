@@ -77,7 +77,7 @@ export const _I18N_ = {
     selected_visibility: 'Edição',
     visible: 'Visível',
     hidden: 'Invisível',
-    none: 'Remover',
+    none: 'Limpar',
 
     delete_item: 'Remover',
     simulate: 'Simular'

@@ -300,7 +300,7 @@ export default function Macro(__properties) {
 
             root: rootCard.serialize(fragment, initial_properties)
         };
-        
+
         mainTreeViewItems.appendChild(fragment);
 
         // ADD EVNTS
@@ -430,11 +430,11 @@ export default function Macro(__properties) {
             }
         }
     };
-    this.deleteFromVisibility = function(field, recursive = true) {
+    this.deleteFromVisibility = function(field, forward = true) {
         const uuid = field.getProps('uuid');
 
         for (const card of CardsMap.values())
-            card.deleteFromVisibility(uuid, recursive);
+            card.deleteFromVisibility(uuid, forward);
     };
     this.clearVisibilityMap = function() {
         if (visibilityMode) {
@@ -675,13 +675,13 @@ export default function Macro(__properties) {
         // }
         Context.setPosition(props.transform.left, props.transform.top, props.transform, _MOV_.END);
 
-        const builderRect = mainBuilder.getBoundingClientRect();
+        // const builderRect = mainBuilder.getBoundingClientRect();
   
-        const builderLeftCenter = builderRect.width / 2,
-              builderTopCenter = builderRect.height / 2;
+        // const builderLeftCenter = builderRect.width / 2,
+        //       builderTopCenter = builderRect.height / 2;
 
-        let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
-        builderCenterDiv.style.left = builderLeftCenter + 'px';
-        builderCenterDiv.style.top = builderTopCenter + 'px';
+        // let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
+        // builderCenterDiv.style.left = builderLeftCenter + 'px';
+        // builderCenterDiv.style.top = builderTopCenter + 'px';
     })();
 }

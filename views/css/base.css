@@ -673,7 +673,8 @@ body { overflow: hidden; }
     /*// VISIBILITY MENU /////////////////////////////////////////////////////*/
     .app-cards-item-visibility-toolbar {
         position: absolute;
-        left: -81px;
+        width: 80px;
+        left: -80px;
         padding: 4px;
         display: flex;
         flex-direction: column;
@@ -706,6 +707,7 @@ body { overflow: hidden; }
             cursor: pointer;
             height: 20px;
             border-radius: 3px;
+            overflow: hidden;
         }
             .app-cards-item-visibility-toolbar > .button:hover { 
                 color: var(--blue-base);
@@ -904,7 +906,7 @@ body { overflow: hidden; }
     margin: 0;
     border: 0; */
 }
-.crosshair {
+/* .crosshair {
     position: absolute;
     height: 4px;
     width: 4px;
@@ -913,7 +915,7 @@ body { overflow: hidden; }
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0.1;
-}
+} */
 .font-awesome {
     font-family: 'Font Awesome';
     font-weight: 900; 

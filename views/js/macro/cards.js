@@ -259,15 +259,19 @@ export default function Card(__context, __properties, __tab) {
             card.classList.remove('selected');
         }
     };
-    this.getProps = function (prop = null) {
-        if (prop === null) {
+    this.getProps = function(...prop) {
+        if (prop === undefined)
             return props;
-        } else {
-            if (props.hasOwnProperty(prop)) {
-                return props[prop];
-            }
+
+        let shortcut = props;
+        for (const arg of prop) {
+            if (!shortcut.hasOwnProperty(arg))
+                return null;
+
+            shortcut = shortcut[arg];
         }
-        return null;
+
+        return shortcut;
     };
 
     this.initVisibility = function(fields_map) {
@@ -322,14 +326,14 @@ export default function Card(__context, __properties, __tab) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };
-    this.deleteFromVisibility = function(uuid, recursive = false) {
+    this.deleteFromVisibility = function(uuid, forward = false) {
         const visibilityFields = props['visibility']['fields'];
         for (const status in visibilityFields) 
             visibilityFields[status].delete(uuid);
     
-        if (recursive) {
+        if (forward) {
             for (const field of FieldsMap.values())
-                field.deleteFromVisibility(uuid, recursive);
+                field.deleteFromVisibility(uuid);
         }
 
         _updateVisibilityCounter();

@@ -577,6 +577,7 @@ body { overflow: hidden; }
         position: relative;
 
         color: var(--neutral-800);
+        outline-color: inherit;
 
         cursor: grab;
         border-top-left-radius: 4px;
@@ -599,20 +600,23 @@ body { overflow: hidden; }
             text-transform: uppercase;
         }
         .app-cards-header-visibility {
-            background-color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
             color: var(--black);
-            border-radius: 10%;
-            text-align: center;
+            border-radius: 3px;
+            outline-color: inherit;
+            outline-width: 1px;
+            outline-style: solid;
+            outline-offset: -1px;
             font-size: 11px;
             font-weight: 600;
-            width: 20px;
-            line-height: 20px;
-            height: 20px;
+            width: 21px;
+            height: 18px;
             cursor: context-menu;
-            visibility: hidden;
-            margin: auto;
         }
-            .app-cards-header-visibility:hover { background-color: var(--yellow-base); }
+            .app-cards-header-visibility:hover { outline-width: 2px; }
         .app-cards-header-dot.root,
         .app-cards-header-title.root {
             color: var(--black);

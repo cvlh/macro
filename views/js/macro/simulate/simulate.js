@@ -16,7 +16,8 @@ export default function Simulate(ctx) {
         stackExecute, stackVisibility,
         queueViews,
         structInputs, // { last: 0, list: [] }
-        currentVisibleIDs, lastRootExecuted,
+        currentVisibleIDs = new Set(), 
+        lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _create_keyboard = function() {
@@ -72,37 +73,48 @@ export default function Simulate(ctx) {
         const visibility_flags  = visibility['flags'],
               visibility_fields = visibility['fields'];
 
-        if (visibility_flags & _VISIBILITY_.SAVE)
-            stackVisibility.push(currentVisibleIDs);
+        if (visibility_flags & _VISIBILITY_.SAVE) {
+            const save_array = [];
+            for (const id of currentVisibleIDs.values())
+                save_array.push(id);
+    
+            stackVisibility.push(save_array);
+        }
 
-        if (visibility_flags & _VISIBILITY_.RESTORE)
-            currentVisibleIDs = stackVisibility.pop();
+        if (visibility_flags & _VISIBILITY_.RESTORE) {
+            currentVisibleIDs.clear();
+
+            const current_stack = stackVisibility.pop();
+            for (const id of current_stack)
+                currentVisibleIDs.add(id);
+        }
 
         if (visibility_flags & _VISIBILITY_.EXTRA)
             _additional_visibility(visibility_fields);
 
-        if (visibility_flags & _VISIBILITY_.FRESH && visibility_fields.hasOwnProperty('visible'))
-            currentVisibleIDs = visibility_fields['visible'];
+        if (visibility_flags & _VISIBILITY_.FRESH) {
+            currentVisibleIDs.clear();
+            for (const id of visibility_fields['visible'])
+                currentVisibleIDs.add(id);
+        }
     },
     _additional_visibility = function(visibility_fields) {
         if (visibility_fields.hasOwnProperty('visible')) {
             for (const id of visibility_fields['visible']) 
-                currentVisibleIDs.push(id);
-            
-            // TODO: order ids
+                currentVisibleIDs.add(id);
         }
         
         if (visibility_fields.hasOwnProperty('hidden')) {
-            for (const id of visibility_fields['hidden']) {
-                let result = currentVisibleIDs.findIndex( element => element === id);
-
-                if (result !== -1)
-                    currentVisibleIDs.splice(result, 1);
-            }
+            for (const id of visibility_fields['hidden'])
+                currentVisibleIDs.delete(id);
         }
     },
     _filter_ids = function(visibility, level, origin_level = null) {
-        return visibility.filter( element => {
+        const visibility_array = [];
+        for (const id of visibility.values())
+            visibility_array.push(id);
+
+        return visibility_array.filter( element => {
             const current_level = macro[element]['level'];
             
             if (current_level.length !== level) 
@@ -227,7 +239,7 @@ export default function Simulate(ctx) {
         const content = addElement(item, 'div', 'item-list-block');
         addElement(content, 'div', 'item-list-header', data['text']);
 
-        addElement(content, 'div', 'item-list-subheader', data['text']);
+        addElement(content, 'div', 'item-list-subheader', data['id']);
 
         if (input) 
             addElement(item, 'div', 'icon item-list-icon small', data['type']['type']);
@@ -287,7 +299,7 @@ export default function Simulate(ctx) {
 
                         content = addElement(block, 'div', 'item-list-block');
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
-                        addElement(content, 'div', 'item-list-subheader', shortcut['text']);
+                        addElement(content, 'div', 'item-list-subheader', shortcut['id']);
                 
                         input = addElement(item, 'input', 'item-input-box');
                         input.style.borderColor = color;
@@ -324,29 +336,45 @@ export default function Simulate(ctx) {
         queueViews.push(slide);
         return slide;
     },
-    _order_visibility = function (visibility) {
-        for (const status in visibility['fields']) {
-            let sort_array = visibility['fields'][status].map( element => {
-                return element.split('.').map( item => { return parseInt(item, 10); });
-            }).sort();
+    _order_ids = visibilityarray => {
+        return visibilityarray
+            .map(id => id.replace(/\d+/g, level => +level + 1000000))
+            .sort()
+            .map(id => id.replace(/\d+/g, level => +level - 1000000));
+    },
+    _order_visibility = function (uuid_hash) {
+        let visibility_counter;
+        for (const item in macro) {
+            visibility_counter = 0;
+            const visibilityFields = macro[item]['visibility']['fields'];
+            for (const status in visibilityFields) {
 
-            // console.log(sort_array);
+                if (!visibilityFields[status].length) {
+                    delete visibilityFields[status];
+                    continue;
+                }
 
-            delete visibility['fields'][status];
+                const visibilityIds = visibilityFields[status].map( element => uuid_hash.get(element));
+                macro[item]['visibility']['fields'][status] = _order_ids(visibilityIds);
 
-            if (sort_array.length) {
-                visibility['fields'][status] = sort_array.map( element => {
-                    return element.join('.');
-                });
+                visibility_counter += macro[item]['visibility']['fields'][status].length;
             }
 
-            // console.log(visibility['fields'][status]);
+            const visibilityFlags = macro[item]['visibility']['flags'];
+            if (visibility_counter === 0) {
+                if (visibilityFlags & _VISIBILITY_.FRESH)
+                    macro[item]['visibility']['flags'] ^= _VISIBILITY_.FRESH;
+                else if (visibilityFlags & _VISIBILITY_.EXTRA)
+                    macro[item]['visibility']['flags'] ^= _VISIBILITY_.EXTRA;
+            }
         }
     },
-    _create_hash = function (fields, hashs = { }) {
+    _create_hash = function (fields, macro, uuid_hash) {
         let id, levels, visibilitySize = 0;
 
         for (const field of fields) {
+            uuid_hash.set(field['properties']['uuid'], field['properties']['id']);
+
             id = field['properties']['id'];
 
             levels = id.split('.');
@@ -354,29 +382,29 @@ export default function Simulate(ctx) {
                 return parseInt(element, 10);
             });
 
-            delete field['properties']['id'];
+            delete field['properties']['uuid'];
+            // delete field['properties']['id'];
             delete field['properties']['expanded'];
             delete field['properties']['tail'];
             delete field['properties']['line'];
             delete field['properties']['order'];
 
-            _order_visibility(field['properties']['visibility']);
+            // _order_visibility(field['properties']['visibility']);
 
-            hashs[id] = field['properties'];
+            macro[id] = field['properties'];
 
             if (field.hasOwnProperty('output')) {
                 for (const status in field['output']['properties']['visibility']['fields']) 
                     visibilitySize += field['output']['properties']['visibility']['fields'][status].length;
 
-                if (visibilitySize) {
-                    _order_visibility(field['output']['properties']['visibility']);
-                    hashs[id + '.x'] = field['output']['properties'];
-                }
+                if (visibilitySize)
+                    macro[id + '.x'] = field['output']['properties'];
+                    // _order_visibility(field['output']['properties']['visibility']);
 
-                _create_hash(field['output']['fields'], hashs);
+                _create_hash(field['output']['fields'], macro, uuid_hash);
             }
         }
-        return hashs;
+        //return hashs;
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
@@ -387,11 +415,23 @@ export default function Simulate(ctx) {
         while (simulateMain.hasChildNodes())
             simulateMain.removeChild(simulateMain.firstChild);
 
-        macro = _create_hash(serialize['root']['fields']);
-        console.log(macro);
+        currentVisibleIDs.clear();
 
-        _order_visibility(serialize['root']['properties']['visibility']);
-        currentVisibleIDs = serialize['root']['properties']['visibility']['fields']['visible'];
+        const uuid_hash = new Map();
+        macro = { };
+
+        _create_hash(serialize['root']['fields'], macro, uuid_hash);
+        _order_visibility(uuid_hash);
+
+        const initial_visibility = serialize['root']['properties']['visibility']['fields']['visible'];
+        for (let counter = 0; counter < initial_visibility.length; counter++)
+            initial_visibility[counter] = uuid_hash.get(initial_visibility[counter]);
+    
+        const order_initial_visibility = _order_ids(initial_visibility);
+        for (const id of order_initial_visibility)
+            currentVisibleIDs.add(id);
+        
+        uuid_hash.clear();
 
         stackVisibility = [];
         queueViews = [];

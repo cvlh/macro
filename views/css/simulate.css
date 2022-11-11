@@ -155,13 +155,29 @@
                 .container-main-slide {
                     position: absolute;
                     top: 0;
-                    left: 100%;
+                    /* left: 100%; */
 
                     width: 100%;
                     height: 100%;
 
-                    transition: .15s left linear;
+                    /* transition: .15s left linear; */
+                    animation-duration: .15s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: 1;
+                    animation-direction: normal;
+                    animation-fill-mode: both;
+                    animation-play-state: running;
+                    /* animation-name: main_slide_show; */
                 }
+                    @keyframes main_slide_show {
+                        from { left: 100%; } 
+                        to   { left: 0; }
+                    }
+                    @keyframes main_slide_hide {
+                        from { left: 0; top: 0 } 
+                        to   { left: -100%; }
+                    }
                     .container-main-slide > .navbar {
                         background-color: var(--neutral-200);;
 

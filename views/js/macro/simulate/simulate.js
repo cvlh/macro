@@ -166,17 +166,11 @@ export default function Simulate(ctx) {
             visiblesIDs = _filter_ids(currentVisibleIDs, level, origin_level);
         }
 
-        slide = _create_view(visiblesIDs, color);
-
         if (visiblesIDs.length === 1) {
             const visiblesIDsLevel = macro[visiblesIDs[0]]['level'].length;
             if (visiblesIDsLevel === 1) {
-                simulateMain.removeChild(slide);
-                queueViews.pop();
-
                 if (lastRootExecuted === visiblesIDs[0]) {
                     _execute(lastRootExecuted, color, current_slide);
-
                 } else if (lastRootExecuted !== visiblesIDs[0]) {
                     const visibility_flags = macro[id]['visibility']['flags'];
                     color = macro[visiblesIDs[0]]['color'];
@@ -186,7 +180,7 @@ export default function Simulate(ctx) {
                         _execute(lastRootExecuted, color, current_slide);
                     } else {
                         _execute(visiblesIDs[0], color, current_slide);
-                        lastRootExecuted = visiblesIDs[0];
+                        // lastRootExecuted = visiblesIDs[0];
                     }
                 }
                 return;
@@ -196,14 +190,16 @@ export default function Simulate(ctx) {
         if (origin_level.length === 1) 
             lastRootExecuted = id;
 
-        setTimeout(() => {
-            if (current_slide !== null)
-                current_slide.style.left = '-100%';
-    
+        slide = _create_view(visiblesIDs, color);            
+        if (current_slide !== null) {
+            current_slide.style.animationName = 'main_slide_hide';
+            slide.style.animationName = 'main_slide_show';
+        } else {
             slide.style.left = 0;
+        }
+        simulateMain.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
-            _confirm_keyboard();
-        }, 50);
+        _confirm_keyboard();
     },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
@@ -352,6 +348,7 @@ export default function Simulate(ctx) {
 
             if (divider)
                 addElement(slide, 'div', 'item-divider');
+
             divider = true;
         }
 

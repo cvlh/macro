@@ -82,11 +82,13 @@ export default function Simulate(ctx) {
         }
 
         if (visibility_flags & _VISIBILITY_.RESTORE) {
-            currentVisibleIDs.clear();
+            if (stackVisibility.length) {
+                currentVisibleIDs.clear();
 
-            const current_stack = stackVisibility.pop();
-            for (const id of current_stack)
-                currentVisibleIDs.add(id);
+                const current_stack = stackVisibility.pop();
+                for (const id of current_stack)
+                    currentVisibleIDs.add(id);
+            }
         }
 
         if (visibility_flags & _VISIBILITY_.EXTRA)
@@ -166,22 +168,42 @@ export default function Simulate(ctx) {
 
         slide = _create_view(visiblesIDs, color);
 
-        if (visiblesIDs.length === 1 && lastRootExecuted === visiblesIDs[0]) {
-            simulateMain.removeChild(slide);
-            queueViews.pop();
-            
-            _execute(lastRootExecuted, color, current_slide);
-        } else {
-            setTimeout(() => {
-                current_slide.style.left = '-100%';
-                slide.style.left = 0;
+        if (visiblesIDs.length === 1) {
+            const visiblesIDsLevel = macro[visiblesIDs[0]]['level'].length;
+            if (visiblesIDsLevel === 1) {
+                simulateMain.removeChild(slide);
+                queueViews.pop();
 
-                _confirm_keyboard();
-            }, 50);
+                if (lastRootExecuted === visiblesIDs[0]) {
+                    _execute(lastRootExecuted, color, current_slide);
+
+                } else if (lastRootExecuted !== visiblesIDs[0]) {
+                    const visibility_flags = macro[id]['visibility']['flags'];
+                    color = macro[visiblesIDs[0]]['color'];
+
+                    if (visibility_flags & _VISIBILITY_.RESTORE && !(visibility_flags & _VISIBILITY_.FRESH) && !(visibility_flags & _VISIBILITY_.EXTRA)) {
+                        lastRootExecuted = visiblesIDs[0];
+                        _execute(lastRootExecuted, color, current_slide);
+                    } else {
+                        _execute(visiblesIDs[0], color, current_slide);
+                        lastRootExecuted = visiblesIDs[0];
+                    }
+                }
+                return;
+            }
         }
 
-        if (origin_level.length === 1)
+        if (origin_level.length === 1) 
             lastRootExecuted = id;
+
+        setTimeout(() => {
+            if (current_slide !== null)
+                current_slide.style.left = '-100%';
+    
+            slide.style.left = 0;
+
+            _confirm_keyboard();
+        }, 50);
     },
     _receive_events = function(evnt) {
         evnt.stopPropagation();
@@ -440,8 +462,18 @@ export default function Simulate(ctx) {
         lastRootExecuted = null;
 
         const visiblesIDs = _filter_ids(currentVisibleIDs, 1);
-        const new_slide = _create_view(visiblesIDs);
-        new_slide.style.left = '0';
+        if (visiblesIDs.length === 1) {
+            const visiblesIDsLevel = macro[visiblesIDs[0]]['level'].length;
+            if (visiblesIDsLevel === 1) {
+                const color = macro[visiblesIDs[0]]['color'];
+                _execute(visiblesIDs[0], color, null);
+            }
+        }
+        
+        if (queueViews.length === 0)
+            _create_view(visiblesIDs);
+
+        queueViews[0].style.left = '0';
 
         simulatePopup.style.display = 'block';
     };

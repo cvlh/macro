@@ -180,7 +180,6 @@ export default function Simulate(ctx) {
                         _execute(lastRootExecuted, color, current_slide);
                     } else {
                         _execute(visiblesIDs[0], color, current_slide);
-                        // lastRootExecuted = visiblesIDs[0];
                     }
                 }
                 return;

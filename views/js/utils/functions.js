@@ -17,7 +17,6 @@ Array.prototype.swap = function (position, order) {
     }
     return this;
 }
-
 export function addElement (parent, type, className = null, content = null) {
     let new_element;
 
@@ -27,7 +26,6 @@ export function addElement (parent, type, className = null, content = null) {
 
     return new_element;
 }
-
 export function UUIDv4() {
     let uuid_format = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
         millisecond = new Date().getTime();

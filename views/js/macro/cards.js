@@ -9,19 +9,28 @@ import Field from './fields.js';
 export default function Card(__context, __properties, __tab) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const MacroContext = __context,
-          Context = this,
+    const 
+        MacroContext = __context,
+        Context = this,
 
-          RootField = (__tab === 0 ? true : false),
-          TabIndex = __tab + 1,
+        RootField = (__tab === 0 ? true : false),
+        TabIndex = __tab + 1,
 
-          FieldsMap = new Map();
+        FieldsMap = new Map(),
+
+        DOMElement = {
+            card:       null,
+            header:     null,
+            title:      null,
+            items:      null,
+            input:      null,
+            visibility: null,
+            add:        null,
+            close:      null
+        };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let card, header, title, items, input,
-        add, visibility, close,
-
-        isCurrentSelectObject = false,
+    let isCurrentSelectObject = false,
         inputConnection = null,
 
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
@@ -53,24 +62,31 @@ export default function Card(__context, __properties, __tab) {
             MacroContext.dragStart(evnt, Context)
     },
     _remove = function(evnt) {
-        card.removeEventListener('focus', _showProperties, { capture: false });
-        header.removeEventListener('mousedown', _drag, { capture: false });
-        visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
-        visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
-        add.removeEventListener('click', Context.addField, { capture: false });
-        close.removeEventListener('click', _remove, { capture: false });
+        DOMElement.card.removeEventListener('focus', _showProperties, { capture: false });
+        
+        DOMElement.header.removeEventListener('mousedown', _drag, { capture: false });
+        
+        DOMElement.visibility.removeEventListener('mouseenter', _previewVisibility, { capture: false });
+        DOMElement.visibility.removeEventListener('mouseleave',  _previewVisibility, { capture: false });
+        
+        DOMElement.add.removeEventListener('click', Context.addField, { capture: false });
+        
+        DOMElement.close.removeEventListener('click', _remove, { capture: false });
 
         if (Context.hasConnection())
             inputConnection.clearConnection();
 
-        // for (const field of FieldsMap.values()) {
         for (const [uuid, field] of FieldsMap.entries()) {
             field.remove(false);
             FieldsMap.delete(uuid);
         }
-        // FieldsMap.clear();
 
-        card.parentNode.removeChild(card);
+        for (const element in DOMElement) {
+            DOMElement[element].parentNode.removeChild(DOMElement[element]);
+            DOMElement[element] = null;
+
+            delete DOMElement[element];
+        }
 
         MacroContext.removeFromCardsMap(props.uuid);
         MacroContext.serialize();
@@ -93,11 +109,11 @@ export default function Card(__context, __properties, __tab) {
             visibilitySize += visibilityFields[status].size;
 
         if (visibilitySize) 
-            visibility.style.visibility = 'visible';
+            DOMElement.visibility.style.visibility = 'visible';
         else 
-            visibility.style.removeProperty('visibility');
+            DOMElement.visibility.style.removeProperty('visibility');
         
-        visibility.textContent = visibilitySize;
+        DOMElement.visibility.textContent = visibilitySize;
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -126,7 +142,7 @@ export default function Card(__context, __properties, __tab) {
             field.redraw(transform);
 
         if (Context.hasConnection()) {
-            const viewport = input.getBoundingClientRect();
+            const viewport = DOMElement.input.getBoundingClientRect();
             inputConnection.setPosition(viewport.left, viewport.top, transform, _MOV_.END);
         }
     };
@@ -135,14 +151,14 @@ export default function Card(__context, __properties, __tab) {
             case _MOV_.NEW:
                 position.left = left;
                 position.top  = top;
-                card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
+                DOMElement.card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
                 return;
                 
             case _MOV_.START:
-                const rect = card.getBoundingClientRect();
+                const rect = DOMElement.card.getBoundingClientRect();
 
-                card.style.zIndex = transform.index;
-                header.style.cursor = 'grabbing';
+                DOMElement.card.style.zIndex = transform.index;
+                DOMElement.header.style.cursor = 'grabbing';
 
                 position.left = (rect.left - transform.left);
                 position.top = (rect.top - transform.top);
@@ -152,7 +168,7 @@ export default function Card(__context, __properties, __tab) {
                 break;
 
             case _MOV_.END:
-                header.style.removeProperty('cursor');
+                DOMElement.header.style.removeProperty('cursor');
                 break;
         }
 
@@ -165,28 +181,27 @@ export default function Card(__context, __properties, __tab) {
         position.left /= transform.scale;
         position.top /= transform.scale;
 
-        card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
+        DOMElement.card.style.transform = 'translate(' +position.left+ 'px, ' +position.top+ 'px)';
     };
     this.setColor = function(color) {
-        if (!RootField) {   
+        if (!RootField) {
             for (const field of FieldsMap.values())
                 field.setColor(color);
 
             if (color == null) {
-                input.style.removeProperty('background-color');
-                card.style.removeProperty('border-color');
-                card.style.removeProperty('outline-color');
-                header.style.removeProperty('color');
-                //title.style.removeProperty('color');
-                //items.style.removeProperty('outline-color');
+                DOMElement.input.style.removeProperty('background-color');
 
+                DOMElement.card.style.removeProperty('border-color');
+                DOMElement.card.style.removeProperty('outline-color');
+
+                DOMElement.header.style.removeProperty('color');
             } else {
-                input.style.backgroundColor = color;
-                card.style.borderColor = color;
-                header.style.color = color;
-                //title.style.color = color;
-                //items.style.outlineColor = color;
-                card.style.outlineColor = color;
+                DOMElement.input.style.backgroundColor = color;
+
+                DOMElement.card.style.borderColor = color;
+                DOMElement.card.style.outlineColor = color;
+
+                DOMElement.header.style.color = color;
             }
         }
     };
@@ -198,7 +213,7 @@ export default function Card(__context, __properties, __tab) {
     };
     this.infiniteLoop = function(target) {
         if (!RootField) {
-            if (target.isSameNode(input))
+            if (target.isSameNode(DOMElement.input))
                 return true;
             
             if (Context.hasConnection())
@@ -253,10 +268,10 @@ export default function Card(__context, __properties, __tab) {
     this.setSelected = function(status) { 
         if (status) {
             isCurrentSelectObject = true;
-            card.classList.add('selected');
+            DOMElement.card.classList.add('selected');
         } else {
             isCurrentSelectObject = false;
-            card.classList.remove('selected');
+            DOMElement.card.classList.remove('selected');
         }
     };
     this.getProps = function(...prop) {
@@ -294,27 +309,27 @@ export default function Card(__context, __properties, __tab) {
     };      
     this.setVisibilityMode = function() {
         if (MacroContext.getVisibilityMode()) {
-            card.removeAttribute('tabindex');
+            DOMElement.card.removeAttribute('tabindex');
 
             if (!isCurrentSelectObject)
-                visibility.style.visibility = 'hidden';
+                DOMElement.visibility.style.visibility = 'hidden';
             else
-                card.appendChild(MacroContext.getSelectedArrow());
+                DOMElement.card.appendChild(MacroContext.getSelectedArrow());
 
-            add.style.visibility = 'hidden';
+            DOMElement.add.style.visibility = 'hidden';
 
             if (!RootField) 
-                close.style.visibility = 'hidden';
+                DOMElement.close.style.visibility = 'hidden';
         } else {
-            card.setAttribute('tabindex',  TabIndex);
+            DOMElement.card.setAttribute('tabindex',  TabIndex);
 
             if (isCurrentSelectObject)
-            card.removeChild(MacroContext.getSelectedArrow());
+                DOMElement.card.removeChild(MacroContext.getSelectedArrow());
             
-            add.style.removeProperty('visibility');
+            DOMElement.add.style.removeProperty('visibility');
             
             if (!RootField) 
-                close.style.removeProperty('visibility');
+                DOMElement.close.style.removeProperty('visibility');
             
             _updateVisibilityCounter();
         }
@@ -349,7 +364,7 @@ export default function Card(__context, __properties, __tab) {
     this.newField = function(properties) {
         properties = { ...properties, 'tab': TabIndex };
 
-        let new_field = new Field(Context, items, properties);
+        let new_field = new Field(Context, DOMElement.items, properties);
         FieldsMap.set(new_field.getProps('uuid'), new_field); 
         _order();
         
@@ -363,14 +378,10 @@ export default function Card(__context, __properties, __tab) {
 
     // PUBLIC NO ROOT  /////////////////////////////////////////////////////////
     if (!RootField) {
-        this.setHeader = function(text) { title.textContent = text; };
+        this.setHeader = function(text) { DOMElement.title.textContent = text; };
         this.getInputBounding = function() {
-            const rect = input.getBoundingClientRect();
+            const rect = DOMElement.input.getBoundingClientRect();
             return { left: rect.left, top: rect.top }; 
-            
-            /*const top = position.top + header.offsetHeight + input.offsetTop;
-            const left = position.left + input.offsetLeft;
-            return { left: left, top: top }; */
         };
     }
 
@@ -378,10 +389,10 @@ export default function Card(__context, __properties, __tab) {
     (function() {
         const fragment = document.createDocumentFragment();
 
-        card = addElement(fragment, 'div', 'app-cards');
-        card.setAttribute('tabindex', TabIndex);
+        DOMElement.card = addElement(fragment, 'div', 'app-cards');
+        DOMElement.card.setAttribute('tabindex', TabIndex);
         if (RootField)
-            card.classList.add('root');
+            DOMElement.card.classList.add('root');
 
         props = {...props, ...__properties};
 
@@ -393,41 +404,40 @@ export default function Card(__context, __properties, __tab) {
                 visibilityFields[status] = new Map();
         }
 
-        card.addEventListener('focus', _showProperties, { capture: false });
+        DOMElement.card.addEventListener('focus', _showProperties, { capture: false });
 
-        header = addElement(card, 'div', 'app-cards-header');
-        header.addEventListener('mousedown', _drag, { capture: false });
+        DOMElement.header = addElement(DOMElement.card, 'div', 'app-cards-header');
+        DOMElement.header.addEventListener('mousedown', _drag, { capture: false });
         
         if (RootField) {
-            header.style.gridTemplateColumns = '25px 225px 25px 25px';
-            addElement(header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
-            title = addElement(header, 'div', 'app-cards-header-title root', _I18N_.root_header);
+            DOMElement.header.style.gridTemplateColumns = '25px 225px 25px 25px';
+            addElement(DOMElement.header, 'div', 'icon app-cards-header-dot root', _ICON_CHAR_.HOME);
+            DOMElement.title = addElement(DOMElement.header, 'div', 'app-cards-header-title root', _I18N_.root_header);
         } else {
-            title = addElement(header, 'div', 'app-cards-header-title');
+            DOMElement.title = addElement(DOMElement.header, 'div', 'app-cards-header-title');
         }
         
-        visibility = addElement(header, 'div', 'app-cards-header-visibility');
-        visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
-        visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
+        DOMElement.visibility = addElement(DOMElement.header, 'div', 'app-cards-header-visibility');
+        DOMElement.visibility.addEventListener('mouseenter', _previewVisibility, { capture: false });
+        DOMElement.visibility.addEventListener('mouseleave',  _previewVisibility, { capture: false });
 
-        add = addElement(header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
-        add.addEventListener('click', Context.addField, { capture: false });
+        DOMElement.add = addElement(DOMElement.header, 'div', 'app-cards-header-button new icon', _ICON_CHAR_.PLUS);
+        DOMElement.add.addEventListener('click', Context.addField, { capture: false });
 
         if (!RootField) {
-            close = addElement(header, 'div', 'app-cards-header-button close icon', _ICON_CHAR_.CLOSE);
-            close.addEventListener('click', _remove, { capture: false });
+            DOMElement.close = addElement(DOMElement.header, 'div', 'app-cards-header-button close icon', _ICON_CHAR_.CLOSE);
+            DOMElement.close.addEventListener('click', _remove, { capture: false });
         }
 
         if (RootField) {
-            items = addElement(card, 'div', 'app-cards-content-items root');
+            DOMElement.items = addElement(DOMElement.card, 'div', 'app-cards-content-items root');
         } else {
-            let content = addElement(card, 'div', 'app-cards-content');
+            let content = addElement(DOMElement.card, 'div', 'app-cards-content');
 
-            input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
-            input['_UUID_'] = props.uuid;
-            // input['_CONTEXT_'] = new WeakRef(Context);
+            DOMElement.input = addElement(content, 'div', 'app-cards-content-input icon', _ICON_CHAR_.INPUT);
+            DOMElement.input['_UUID_'] = props.uuid;
 
-            items = addElement(content, 'div', 'app-cards-content-items');
+            DOMElement.items = addElement(content, 'div', 'app-cards-content-items');
         }
 
         MacroContext.getBuilderDiv().appendChild(fragment);

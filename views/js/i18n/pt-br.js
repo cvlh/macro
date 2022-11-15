@@ -19,9 +19,14 @@ export const _I18N_ = {
         SCAN:      'Leitor'
     },
     field_optional: 'Preenchimento opcional',
-    field_size: 'Tamanho',
-    field_size_max: 'Máximo',
-    field_size_min: 'Mínimo',
+
+    field_length: 'Quantidade de números',
+    field_length_max: 'Máximo',
+    field_length_min: 'Mínimo',
+
+    field_float: 'Permitir números decimais',
+    field_float_precision: 'Precisão',
+
     field_mask: 'Máscara',
     
     macro_size: 'Tamanho da área',

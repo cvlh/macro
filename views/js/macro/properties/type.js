@@ -5,41 +5,60 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _TYPES_, _ICON_CHAR_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-export default function Type (ctx) {
+export default function Type (__context) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx;
+    const 
+        MacroContext = __context,
+        DOMElement = {
+            content:         null,
+
+            rowTypeHeader:   null, 
+            rowType:         null,
+            typeIcon:        null,
+            typeSelect:      null,
+
+            rowLengthHeader: null,
+            rowLength:       null, 
+            lengthMaximum:   null, 
+            lengthMinimum:   null,
+
+            rowFloatHeader:  null,
+            rowFloat:        null, 
+            floatPrecision:  null, 
+
+            rowOptional:    null,
+            optional:       null
+        }
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let content, 
-
-        rowTypeLabel, rowType, icon, type, 
-        rowSizeLabel, rowSize, maximum, minimum,
+    let
+        
         rowMaskLabel, rowMask, mask, 
-        rowOptional, optional, 
+        
     
     // PRIVATE /////////////////////////////////////////////////////////////////
     _clear = function() {
         //rowTypeLabel.style.display = 'none';
         //rowType.style.display = 'none';
 
-        rowSizeLabel.style.display = 'none';
-        rowSize.style.display = 'none';
-        maximum.value = '';
-        minimum.value = '';
+        DOMElement.rowLengthHeader.style.display = 'none';
+        DOMElement.rowLength.style.display = 'none';
+        DOMElement.lengthMaximum.value = '';
+        DOMElement.lengthMinimum.value = '';
 
         rowMaskLabel.style.display = 'none';
         rowMask.style.display = 'none';
         mask.value = '';
 
-        rowOptional.style.display = 'none';
-        optional.checked = false;
+        DOMElement.rowOptional.style.display = 'none';
+        DOMElement.optional.checked = false;
     },
     _set = function(properties) {        
         if (properties.hasOwnProperty('type')) {
             
-            icon.textContent = properties['type'];
-            type.value = properties['type'];
+            DOMElement.typeIcon.textContent = properties['type'];
+            DOMElement.typeSelect.value = properties['type'];
 
             _clear();
 
@@ -54,13 +73,19 @@ export default function Type (ctx) {
                     if (properties.hasOwnProperty('mask')) mask.value = properties['mask'];
                     
                 case _TYPES_.NUMBER:
-                    rowSizeLabel.style.display = 'grid';
-                    rowSize.style.display = 'grid';
-                    if (properties.hasOwnProperty('minimum')) minimum.value = properties['minimum'];
-                    if (properties.hasOwnProperty('maximum')) maximum.value = properties['maximum'];
+                    DOMElement.rowLengthHeader.style.display = 'grid';
+                    DOMElement.rowLength.style.display = 'grid';
 
-                    rowOptional.style.display = 'grid';
-                    if (properties.hasOwnProperty('optional')) optional.checked = properties['optional'];
+                    if (properties.hasOwnProperty('minimum')) 
+                        DOMElement.lengthMinimum.value = properties['minimum'];
+
+                    if (properties.hasOwnProperty('maximum')) 
+                        DOMElement.lengthMaximum.value = properties['maximum'];
+
+                    DOMElement.rowOptional.style.display = 'grid';
+                    if (properties.hasOwnProperty('optional')) 
+                        DOMElement.optional.checked = properties['optional'];
+
                     break;
 
                 case _TYPES_.DATE:
@@ -73,90 +98,128 @@ export default function Type (ctx) {
         }
     },
     _type = function(evnt) {
-        const object = parent.getMacro().getSelectedObject(),
+        const object = MacroContext.getMacro().getSelectedObject(),
               value = evnt.target.value;
 
         _set(object.setType(value));
     },
     _mask = function(evnt) {
-        const objectType = parent.getMacro().getSelectedObject().getProps('type');
+        const objectType = MacroContext.getMacro().getSelectedObject().getProps('type');
         objectType['mask'] = evnt.target.value;
     },
     _optional = function(evnt) {
-        const objectType = parent.getMacro().getSelectedObject().getProps('type');
+        const objectType = MacroContext.getMacro().getSelectedObject().getProps('type');
         objectType['optional'] = evnt.target.checked;
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        //const objectType = parent.getMacro().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
-        const objectType = parent.getMacro().getSelectedObject().getProps('type');
+        //const objectType = MacroContext.getMacro().getSelectedObject().getProps(this.constructor.name.toLocaleLowerCase());
+        const objectType = MacroContext.getMacro().getSelectedObject().getProps('type');
 
         if (objectType !== null) {
             _set(objectType);
-            content.style.display = 'block';
+            DOMElement.content.style.display = 'block';
             return;
         }
 
-        content.style.removeProperty('display');
+        DOMElement.content.style.removeProperty('display');
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        let option, label;
+        let option, checkbox, label, subHeader;
         
-        content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
+        DOMElement.content = addElement(MacroContext.getFragment(), 'div', 'main-app-properties-content');
 
         // TYPE SELECT
-        rowTypeLabel = addElement(content, 'div', 'main-app-properties-row header');
-        addElement(rowTypeLabel, 'div', 'main-app-properties-label header bold', _I18N_.field_type);
-        addElement(rowTypeLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
+        DOMElement.rowTypeHeader = addElement(DOMElement.content, 'div', 'main-app-properties-row header');
+        addElement(DOMElement.rowTypeHeader, 'div', 'main-app-properties-label header bold', _I18N_.field_type);
+        addElement(DOMElement.rowTypeHeader, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-            // rowType = addElement(content, 'div', 'main-app-properties-row spacer');
-            rowType = addElement(content, 'div', 'main-app-properties-row');
-            icon = addElement(rowType, 'div', 'icon main-app-properties-type-icon');
-
-            type = addElement(rowType, 'select');
-            type.style.gridColumn = '7 / span 21';
-            for (const type_idx in _I18N_.field_type_text) {
-                if (_TYPES_.hasOwnProperty(type_idx)) {
-                    option = addElement(type, 'option', null, _I18N_.field_type_text[type_idx]);
+            DOMElement.rowType = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+                DOMElement.typeIcon = addElement(DOMElement.rowType, 'div', 'icon main-app-properties-type-icon');
+                
+                DOMElement.typeSelect = addElement(DOMElement.rowType, 'select');
+                DOMElement.typeSelect.style.gridColumn = '7 / span 21';
+                for (const type_idx in _TYPES_) {
+                    option = addElement(DOMElement.typeSelect, 'option', null, _I18N_.field_type_text[type_idx]);
                     option.setAttribute('value', _TYPES_[type_idx]);
                 }
-            }
-            type.addEventListener('change', _type, { capture: false });
+                DOMElement.typeSelect.addEventListener('change', _type, { capture: false });
 
-        // SIZE
-        rowSizeLabel = addElement(content, 'div', 'main-app-properties-row ');
-        addElement(rowSizeLabel, 'div', 'main-app-properties-label header', _I18N_.field_size);
-        addElement(rowSizeLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
+        // LENGHT
+        DOMElement.rowLengthHeader = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+        subHeader = addElement(DOMElement.rowLengthHeader, 'div', 'main-app-properties-label sub-header');
+        checkbox = addElement(subHeader, 'input', 'checkbox');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('id', 'length_checkbox');
 
-            rowSize = addElement(content, 'div', 'main-app-properties-row');
+        label = addElement(subHeader, 'label', 'label', _I18N_.field_length);
+        label.setAttribute('for', 'length_checkbox');
 
-            label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_.field_size_min);
+        checkbox.addEventListener('change', function () {
+            if (this.checked)
+                DOMElement.rowLength.style.removeProperty('height');
+            else
+                DOMElement.rowLength.style.height = '0';
+        });
+
+            DOMElement.rowLength = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+            DOMElement.rowLength.style.height = '0';
+
+            label = addElement(DOMElement.rowLength, 'label', 'main-app-properties-label', _I18N_.field_length_min);
+            label.style.gridColumn = '3 / span 6';
+            label.style.fontWeight = '300';
+
+            DOMElement.lengthMinimum = addElement(DOMElement.rowLength, 'input', 'number');
+            DOMElement.lengthMinimum .setAttribute('type', 'text');
+            DOMElement.lengthMinimum .style.gridColumn = '9 / span 5';
+            //minimum.addEventListener('change', () => console.log('mudou minimum'), { capture: false });
+
+            label = addElement(DOMElement.rowLength, 'label', 'main-app-properties-label', _I18N_.field_length_max);
+            label.style.gridColumn = '16 / span 6';
+            label.style.fontWeight = '300';
+            
+            DOMElement.lengthMaximum  = addElement(DOMElement.rowLength, 'input', 'number');
+            DOMElement.lengthMaximum.setAttribute('type', 'text');
+            DOMElement.lengthMaximum.style.gridColumn = '22 / span 5';
+            //maximum.addEventListener('change', () => console.log('mudou maximum'), { capture: false });
+
+        // FLOAT
+        DOMElement.rowFloatHeader = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+        subHeader = addElement(DOMElement.rowFloatHeader, 'div', 'main-app-properties-label sub-header');
+        checkbox = addElement(subHeader, 'input', 'checkbox');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('id', 'float_checkbox');
+
+        label = addElement(subHeader, 'label', 'label', _I18N_.field_float);
+        label.setAttribute('for', 'float_checkbox');
+
+        checkbox.addEventListener('change', function () {
+            if (this.checked)
+                DOMElement.rowFloat.style.removeProperty('height');
+            else
+                DOMElement.rowFloat.style.height = '0';
+        });
+
+            DOMElement.rowFloat = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+            DOMElement.rowFloat.style.height = '0';
+
+            label = addElement(DOMElement.rowFloat, 'label', 'main-app-properties-label', _I18N_.field_float_precision);
             label.style.gridColumn = '2 / span 7';
             label.style.fontWeight = '300';
 
-            minimum = addElement(rowSize, 'input', 'number');
-            minimum.setAttribute('type', 'text');
-            minimum.style.gridColumn = '9 / span 5';
-            //minimum.addEventListener('change', () => console.log('mudou minimum'), { capture: false });
-
-            label = addElement(rowSize, 'label', 'main-app-properties-label', _I18N_.field_size_max);
-            label.style.gridColumn = '16 / span 7';
-            label.style.fontWeight = '300';
-            
-            maximum = addElement(rowSize, 'input', 'number');
-            maximum.setAttribute('type', 'text');
-            maximum.style.gridColumn = '23 / span 5';
-            //maximum.addEventListener('change', () => console.log('mudou maximum'), { capture: false });
+            DOMElement.lengthMinimum = addElement(DOMElement.rowFloat, 'input', 'number');
+            DOMElement.lengthMinimum .setAttribute('type', 'text');
+            DOMElement.lengthMinimum .style.gridColumn = '9 / span 5';
 
         // MASK        
-        rowMaskLabel = addElement(content, 'div', 'main-app-properties-row');
+        rowMaskLabel = addElement(DOMElement.content, 'div', 'main-app-properties-row');
         addElement(rowMaskLabel, 'div', 'main-app-properties-label header bold', _I18N_.field_mask);
         addElement(rowMaskLabel, 'div', 'icon main-app-properties-label help', _ICON_CHAR_.HELP);
 
-            rowMask = addElement(content, 'div', 'main-app-properties-row');
+            rowMask = addElement(DOMElement.content, 'div', 'main-app-properties-row');
 
             mask = addElement(rowMask, 'input');
             mask.setAttribute('type', 'text');
@@ -165,15 +228,16 @@ export default function Type (ctx) {
             mask.addEventListener('keyup', _mask, { capture: false });
 
         // REQUIRE
-        rowOptional = addElement(content, 'div', 'main-app-properties-row');
-        optional = addElement(rowOptional, 'input');
-        optional.setAttribute('id', 'require_checkbox');
-        optional.setAttribute('type', 'checkbox');
-        optional.style.gridColumn = '2 / span 2';
-        optional.addEventListener('change', _optional, { capture: false });
+        DOMElement.rowOptional = addElement(DOMElement.content, 'div', 'main-app-properties-row');
+        subHeader = addElement(DOMElement.rowOptional, 'div', 'main-app-properties-label sub-header');
+        DOMElement.optional = addElement(subHeader, 'input', 'checkbox');
+        DOMElement.optional.setAttribute('type', 'checkbox');
+        DOMElement.optional.setAttribute('id', 'optional_checkbox');
 
-        label = addElement(rowOptional, 'label', 'main-app-properties-checkbox-label', _I18N_.field_optional);
-        label.setAttribute('for', 'require_checkbox');
-        label.style.gridColumn = '4 / span 24';
+        label = addElement(subHeader, 'label', 'label', _I18N_.field_optional);
+        label.setAttribute('for', 'optional_checkbox');
+        checkbox.addEventListener('change', _optional, { capture: false });
+
+
     })();
 }

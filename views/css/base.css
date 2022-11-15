@@ -233,7 +233,8 @@ body { overflow: hidden; }
     .main-app-properties-row {
         display: grid;
         grid-template-columns: repeat(28, 8px);
-        grid-template-rows: 30px;
+        height: 30px;
+        /* grid-template-rows: 30px; */
 
         align-items: center;
         overflow: hidden;
@@ -241,12 +242,14 @@ body { overflow: hidden; }
         font-size: 11px;
 
         color: var(--black);
+
+        transition: .15s height linear;
     }
         /* .main-app-properties-row.spacer { padding: 5px 0; } */
         .main-app-properties-row.header {
             grid-template-rows: 28px;
             margin-bottom: 5px;
-            background-color: var(--neutral-100);
+            background-color: var(--neutral-200);
             /* margin-top: 5px; 
             border-top: 1px solid var(--gray-200);
             border-bottom: 1px solid var(--gray-200); */
@@ -290,7 +293,7 @@ body { overflow: hidden; }
         }
         .main-app-properties-row input[type=checkbox] + label,
         .main-app-properties-row input[type=radio] + label {
-            font-weight: 300;
+            font-weight: 400;
             align-self: center;
 
             text-align: left;
@@ -302,8 +305,8 @@ body { overflow: hidden; }
         }
         .main-app-properties-row input[type=checkbox]:checked + label,
         .main-app-properties-row input[type=radio]:checked + label { 
-            font-weight: 600;
-            color: var(--main-blue-selected);
+            /* font-weight: 600; */
+            color: var(--blue-base);
         }
         .main-app-properties-row input[type=button] {
             background-color: var(--neutral-100);
@@ -368,13 +371,17 @@ body { overflow: hidden; }
             }
             .main-app-properties-label.bold { font-weight: 600; }
             .main-app-properties-label.header { grid-column: 2 / span 23; }
-            .main-app-properties-label.sub-header { 
+            .main-app-properties-label.sub-header {
+                display: flex;
+                align-items: center;
+
                 grid-column: 2 / span 26;
-                line-height: 21px;
+                line-height: 23px;
                 background-color: var(--neutral-100);
-                padding-left: 8px;
                 border-radius: 4px;
             }
+                .sub-header > .checkbox { flex: 0 0 28px; }
+                .sub-header > .label { flex: 1 1 0; }
             .main-app-properties-label.row { grid-column: 2 / span 26; }
             /* .main-app-properties-label.counter { 
                 grid-column: 2 / span 8;

@@ -12,6 +12,7 @@ export default function Simulate(ctx) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
         simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
+        
         macro,
         stackExecute, stackVisibility,
         queueViews,

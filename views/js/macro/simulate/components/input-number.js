@@ -43,6 +43,7 @@ export default function InputNumber(__append, __properties) {
         });
 
         const value = parseFloat(text.replace(',', '.'));
+        console.log(value);
         if (value === 0 || value < minimum || value > maximum) {
             DOMElement.container.setAttribute('data-info', '* valor deve ser maior que 1.98');
             DOMElement.item.style.color = 'var(--neutral-700)';
@@ -75,6 +76,8 @@ export default function InputNumber(__append, __properties) {
         const fragment = document.createDocumentFragment();
 
         DOMElement.container = addElement(fragment, 'div', 'item-input-box');
+        DOMElement.container.setAttribute('data-info', '');
+
         DOMElement.item = addElement(DOMElement.container, 'div', '');
 
         __append.appendChild(fragment);

@@ -318,14 +318,14 @@
                     }
                         @keyframes stretch_item_input {
                             from { height:  50px; }
-                            to   { height: 120px; }
+                            to   { height: 122px; }
                         }
                         @keyframes stretch_item_inputs {
                             from { height:   0px; opacity: 0; }
-                            to   { height: 120px; opacity: 1; }
+                            to   { height: 122px; opacity: 1; }
                         }
                         @keyframes shrink_item_inputs {
-                            from { height: 120px; opacity: 1; } 
+                            from { height: 122px; opacity: 1; } 
                             to   { height:   0px; opacity: 0; }
                         }
                         .item-input > .item-input-block {
@@ -359,7 +359,6 @@
                                 outline: none;
                             }
                             .item-input-box::after {
-                                
                                 content: attr(data-info);
                                 position: absolute;
                                 bottom: -12px;

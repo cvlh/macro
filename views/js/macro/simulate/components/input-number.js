@@ -43,10 +43,13 @@ export default function InputNumber(__append, __properties) {
         });
 
         const value = parseFloat(text.replace(',', '.'));
-        if (value === 0 || value < minimum || value > maximum) 
+        if (value === 0 || value < minimum || value > maximum) {
+            DOMElement.container.setAttribute('data-info', '* valor deve ser maior que 1.98');
             DOMElement.item.style.color = 'var(--neutral-700)';
-        else
+        } else {
+            DOMElement.container.removeAttribute('data-info');
             DOMElement.item.style.removeProperty('color');
+        }
 
         DOMElement.item.textContent = text;
     };

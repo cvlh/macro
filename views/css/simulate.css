@@ -336,6 +336,7 @@
                             grid-template-rows: 38px;
                         }
                             .item-input-box {
+                                position: relative;
                                 background-color: var(--neutral-100);
                                 display: flex;
                                 align-items: center;
@@ -356,6 +357,18 @@
                                 font-size: 28px;
 
                                 outline: none;
+                            }
+                            .item-input-box::after {
+                                
+                                content: attr(data-info);
+                                position: absolute;
+                                bottom: -12px;
+                                left: 0;
+                                width: 100%;
+                                text-align: center;
+                                font-size: 10px;
+                                font-weight: 400;
+                                color: var(--red-base);
                             }
         .simulate-content > .footer {
             transform: translate(79px, 7px);

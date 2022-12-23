@@ -51,8 +51,9 @@
     --indigo-300: #E0D2FF;
     --indigo-200: #EFE8FF;
     --indigo-100: #F7FAFF;
-
-    --blue-base:#2979FF;
+    
+    --blue-1100: #0054e6;
+    --blue-base: #2979FF;
     --blue-1000:#3E86FF;
     --blue-900: #5494FF;
     --blue-800: #69A1FF;
@@ -112,6 +113,7 @@
     --lime-200: #EFFBE7;
     --lime-100: #F7FDF3;
 
+    --yellow-1100:#f3a200;
     --yellow-base:#FFAB00;
     --yellow-1000:#FFB319;
     --yellow-900: #FFBC33;

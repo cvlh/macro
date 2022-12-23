@@ -1,17 +1,26 @@
 'use strict';
 
-import { _COLORS_, _TYPES_, _VISIBILITY_ } from '../../utils/constants.js';
+import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_ } from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
+import InputNumber from './components/input-number.js'
+
 ////////////////////////////////////////////////////////////////////////////////
-export default function Simulate(ctx) {
+export default function Simulate() {
+
+    if (!new.target) 
+        throw new Error('Simulate() must be called with new');
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx, context = this;
+    const
+        DOMElement = {
+            popup:    null,
+            main:     null,
+            keyboard: null
+        };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let fragment, 
-        simulatePopup, simulateContainer, simulateMain, simulateKeyboard,
         
         macro,
         stackExecute, stackVisibility,
@@ -21,35 +30,57 @@ export default function Simulate(ctx) {
         lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _create_keyboard = function() {
-        const controls_buttons = addElement(simulateKeyboard, 'div', 'controls-buttons');
+    _create_keyboard = () => {
+        const controls_buttons = addElement(DOMElement.keyboard, 'div', 'controls-buttons');
 
-        const back = addElement(controls_buttons, 'div', 'back', 'Voltar');
-        const confirm = addElement(controls_buttons, 'div', 'confirm', 'Confirmar');
+        const back = addElement(controls_buttons, 'button', 'back', 'Voltar');
+        // back.style.backgroundColor = 'var(--yellow-base)';
+        
+        const confirm = addElement(controls_buttons, 'button', 'confirm', 'Confirmar');
+        // confirm.style.backgroundColor = 'var(--blue-base)';
+        
         confirm.addEventListener('click', _confirm_keyboard, { capture: false });
 
-        const keyboard = addElement(simulateKeyboard, 'div', 'keyboard');
-        ['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', '\uf55a'].forEach( value => {
-            addElement(keyboard, 'div', 'font-awesome keyboard-key', value);
+        const keyboard = addElement(DOMElement.keyboard, 'div', 'keyboard');
+
+        [_KEY_CODE_.KEY1, _KEY_CODE_.KEY2, _KEY_CODE_.KEY3, _KEY_CODE_.KEY4, 
+         _KEY_CODE_.KEY5, _KEY_CODE_.KEY6, _KEY_CODE_.KEY7, _KEY_CODE_.KEY8, 
+         _KEY_CODE_.KEY9, _KEY_CODE_.COMMA, _KEY_CODE_.KEY0, _KEY_CODE_.BACKSPACE].forEach( ({code, key} = element) => {
+            const button = addElement(keyboard, 'button', 'font-awesome', key);
+            button['_code_'] = code;
         });
+
+        keyboard.addEventListener('click', evnt => {
+            const last = structInputs['last'],
+                  list = structInputs['list'],
+                  target = evnt.target,
+                  code = target['_code_'],
+                  input = list[last - 1]['_props_'][2];
+                  
+            input.add(code);
+        }, { capture: false });
+
     },
-    _hide_keyboard = function() {
-        simulateMain.classList.remove('with-keyboard');
-        simulateKeyboard.style.removeProperty('height'); 
+    _hide_keyboard = () => {
+        DOMElement.main.classList.remove('with-keyboard');
+        DOMElement.keyboard.style.removeProperty('height'); 
     },
-    _show_keyboard = function() {
-        simulateMain.classList.add('with-keyboard');
-        simulateKeyboard.style.height = '130px'; 
+    _show_keyboard = () => {
+        DOMElement.main.classList.add('with-keyboard');
+        DOMElement.keyboard.style.height = '131px'; 
     },
-    _confirm_keyboard = function() {
-        let last = structInputs['last'],
-            list = structInputs['list'];
+    _confirm_keyboard = () => {
+        const last = structInputs['last'],
+              list = structInputs['list'];
 
         if (list.length) {
             if (last < list.length) {
                 list[last].style.animationPlayState = 'running';
-                if (last > 0) 
-                    list[last - 1].style.animationName = 'shrink_item_input';
+
+                if (last > 0) {
+                    list[last - 1].style.animationName = 'shrink_item_inputs';
+                    list[last - 1].addEventListener('animationend', (evnt) => evnt.target.style.display = 'none', { capture: false, once: true });
+                }
 
                 _show_keyboard();
                 structInputs['last'] += 1;
@@ -60,7 +91,7 @@ export default function Simulate(ctx) {
         }
     },
 
-    _wildcard = function(id) {
+    _wildcard = (id) => {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
 
@@ -70,7 +101,7 @@ export default function Simulate(ctx) {
 
         return wildcard;
     },   
-    _apply_visibility = function(visibility) {
+    _apply_visibility = (visibility) => {
         const visibility_flags  = visibility['flags'],
               visibility_fields = visibility['fields'];
 
@@ -101,7 +132,7 @@ export default function Simulate(ctx) {
                 currentVisibleIDs.add(id);
         }
     },
-    _additional_visibility = function(visibility_fields) {
+    _additional_visibility = (visibility_fields) => {
         if (visibility_fields.hasOwnProperty('visible')) {
             for (const id of visibility_fields['visible']) 
                 currentVisibleIDs.add(id);
@@ -112,7 +143,7 @@ export default function Simulate(ctx) {
                 currentVisibleIDs.delete(id);
         }
     },
-    _filter_ids = function(visibility, level, origin_level = null) {
+    _filter_ids = (visibility, level, origin_level = null) => {
         const visibility_array = [];
         for (const id of visibility.values())
             visibility_array.push(id);
@@ -133,13 +164,14 @@ export default function Simulate(ctx) {
             return true;
         });
     },
-    _clear_stack_view = function() {
+    _clear_stack_view = () => {
         while (queueViews.length > 1) {
             let view = queueViews.shift();
-            simulateMain.removeChild(view);
+
+            DOMElement.main.removeChild(view);
         }
     },
-    _execute = function(id, color, current_slide) {
+    _execute = (id, color, current_slide) => {
         const origin_level = macro[id]['level'];
 
         let slide, visiblesIDs,
@@ -197,11 +229,12 @@ export default function Simulate(ctx) {
         } else {
             slide.style.left = 0;
         }
-        simulateMain.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+
+        DOMElement.main.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
         _confirm_keyboard();
     },
-    _receive_events = function(evnt) {
+    _receive_events = (evnt) => {
         evnt.stopPropagation();
 
         const target = evnt.target,
@@ -217,8 +250,12 @@ export default function Simulate(ctx) {
             const content = addElement(current_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
             content.appendChild(target);
-            
-            const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
+
+            content.style.animationName = 'stretch_item_input';
+            content.style.animationPlayState = 'running';
+
+            // const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
+            const listItems = current_parent.querySelectorAll('.item-list');
             for (const listItem of listItems)
                 listItem.style.animationPlayState = 'running';
             
@@ -226,22 +263,18 @@ export default function Simulate(ctx) {
             for (const divider of dividers)
                 divider.style.height = '0px';
             
-            const input = addElement(content, 'input', 'item-input-box');
-            input.style.borderColor = color;
+            const input = new InputNumber(content, { color, ...macro[id]['type'] });
 
-            content.style.animationPlayState = 'running';
-
-            content['_props_'] = [id, color];
+            content['_props_'] = [id, color, input];
             structInputs = { last: 1, list: [content] };
             
             _show_keyboard();
-            
         } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
             _execute(id, color, current_parent);
         }
     },
-    _create_list_item = function(id, color, input = false) {
+    _create_list_item = (id, color, input = false) => {
         const item_fragment = document.createDocumentFragment();
         const data = macro[id];
 
@@ -264,13 +297,13 @@ export default function Simulate(ctx) {
 
         return item_fragment;
     },
-    _create_view = function (ids, color = null) {
+    _create_view =  (ids, color = null) => {
         let navbar, shortcut, type,
             item, block, content, input,
             // counter,
             divider = true;
 
-        const slide = addElement(simulateMain, 'div', 'container-main-slide');
+        const slide = addElement(DOMElement.main, 'div', 'container-main-slide');
         const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
         _hide_keyboard();
@@ -302,8 +335,8 @@ export default function Simulate(ctx) {
 
             if (all_inputs) {
                 switch(type) {
-                    case _TYPES_.NUMBER:
                     case _TYPES_.TEXT:
+                    case _TYPES_.NUMBER:
                         item = addElement(slide, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
 
@@ -314,15 +347,15 @@ export default function Simulate(ctx) {
                             block.style.gridTemplateColumns = 'auto';
                         else
                             addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
-
+                        
                         content = addElement(block, 'div', 'item-list-block');
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['id']);
-                
-                        input = addElement(item, 'input', 'item-input-box');
-                        input.style.borderColor = color;
 
-                        item['_props_'] = [id, color];
+                        const input = new InputNumber(item, { color, ...macro[id]['type'] });
+
+                        item['_props_'] = [id, color, input];
+
                         structInputs['list'].push(item);
                         break;
     
@@ -361,7 +394,7 @@ export default function Simulate(ctx) {
             .sort()
             .map(id => id.replace(/\d+/g, level => +level - 1000000));
     },
-    _order_visibility = function (uuid_hash) {
+    _order_visibility = (uuid_hash) => {
         let visibility_counter;
         for (const item in macro) {
             visibility_counter = 0;
@@ -388,7 +421,7 @@ export default function Simulate(ctx) {
             }
         }
     },
-    _create_hash = function (fields, macro, uuid_hash) {
+    _create_hash = (fields, macro, uuid_hash)  => {
         let id, levels, visibilitySize = 0;
 
         for (const field of fields) {
@@ -428,11 +461,9 @@ export default function Simulate(ctx) {
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.getFragment = function() { return fragment; };
-    this.start = function() {
-        const serialize = parent.serialize();
-
-        while (simulateMain.hasChildNodes())
-            simulateMain.removeChild(simulateMain.firstChild);
+    this.start = function(serialize) {
+        while (DOMElement.main.hasChildNodes())
+            DOMElement.main.removeChild(DOMElement.main.firstChild);
 
         currentVisibleIDs.clear();
 
@@ -462,7 +493,9 @@ export default function Simulate(ctx) {
         if (visiblesIDs.length === 1) {
             const visiblesIDsLevel = macro[visiblesIDs[0]]['level'].length;
             if (visiblesIDsLevel === 1) {
-                const color = macro[visiblesIDs[0]]['color'];
+                const color_idx = macro[visiblesIDs[0]]['color'];
+                const color = _COLORS_[color_idx];
+
                 _execute(visiblesIDs[0], color, null);
             }
         }
@@ -472,26 +505,25 @@ export default function Simulate(ctx) {
 
         queueViews[0].style.left = '0';
 
-        simulatePopup.style.display = 'block';
+        DOMElement.popup.style.display = 'block';
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         fragment = document.createDocumentFragment();
 
-        simulatePopup = addElement(fragment, 'div', 'simulate-app');
-        const simulateContent = addElement(simulatePopup, 'div', 'simulate-content');
-
+        DOMElement.popup = addElement(fragment, 'div', 'simulate-app');
+        
+        const simulateContent = addElement(DOMElement.popup, 'div', 'simulate-content');
         addElement(simulateContent, 'div', 'header');
 
-        simulateContainer = addElement(simulateContent, 'div', 'container');
-
-        simulateMain = addElement(simulateContainer, 'div', 'main');
-        simulateKeyboard = addElement(simulateContainer, 'div', 'controls');
+        const simulateContainer = addElement(simulateContent, 'div', 'container');
+        DOMElement.main = addElement(simulateContainer, 'div', 'main');
+        DOMElement.keyboard = addElement(simulateContainer, 'div', 'controls');
         _create_keyboard();
 
         addElement(simulateContent, 'div', 'footer');
 
-        simulateMain.addEventListener('click', _receive_events, { capture: false });
+        DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();
 }

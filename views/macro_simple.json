@@ -24,7 +24,7 @@
 				"properties": {
 					"uuid": "344c3cf5-86bb-4617-b8b2-aeb266e68bc8",
 					"id": "1",
-					"text": "PONTO",
+					"text": "CÓDIGO PONTO",
 					"type": {
 						"type": 0
 					},
@@ -42,10 +42,7 @@
 						"flags": 1
 					},
 					"expanded": true,
-					"tail": {
-						"x": 594.8998859791978,
-						"y": 251.8840055320006
-					},
+					"tail": { "x": 594.8998859791978, "y": 251.8840055320006 },
 					"description": "",
 					"icon": "",
 					"line": 93.4208198426519,
@@ -63,7 +60,13 @@
 								"id": "1.1",
 								"text": "MOTORISTA",
 								"type": {
-									"type": 2
+									"type": 2,
+									"align": "flex-end",
+									"decimal" : true,
+									"precision": 2,
+									"maximum": 1999.99,
+									"minimum": 1.99,
+									"optional": false
 								},
 								"order": 1,
 								"visibility": {
@@ -74,10 +77,7 @@
 									"flags": 1
 								},
 								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								},
+								"tail": { "x": 0, "y": 0 },
 								"icon": ""
 							}
 						},
@@ -98,10 +98,7 @@
 									"flags": 1
 								},
 								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
+								"tail": { "x": 0, "y": 0 }
 							}
 						},
 						{
@@ -121,10 +118,7 @@
 									"flags": 1
 								},
 								"expanded": true,
-								"tail": {
-									"x": 0,
-									"y": 0
-								}
+								"tail": { "x": 0,"y": 0 }
 							}
 						}
 					],
@@ -2894,7 +2888,7 @@
 					},
 					"icon": "",
 					"line": 92.29089251924654,
-					"color": "BROWN"
+					"color": "BLACK"
 				},
 				"output": {
 					"position": [

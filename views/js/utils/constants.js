@@ -39,11 +39,13 @@ export const _ZOOM_ = {
 // };
 export const _COLORS_ = {
     RED:    '#ff0000',
-    PURPLE: '#aa00ff',
+    PURPLE: '#a200f2',
+    // PURPLE: '#aa00ff',
     BLUE:   '#304ffe',
     TEAL:   '#008080',
     GREEN:  '#43a047',
-    ORANGE: '#ff6d00',
+    ORANGE: '#ff6f00',
+    // ORANGE: '#ff6d00',
     BROWN:  '#795548',
     BLACK:  '#000000'
 };
@@ -108,6 +110,26 @@ export const _ORDER_ = {
 };
 
 export const _KEY_CODE_ = {
-    ENTER: 13,
-    ESC:   27
+    BACKSPACE: { code: 8, key: '\uf55a' },
+    ENTER: { code: 13, key: '\uf2f6' },
+    ESC: { code: 27, key: '0' },
+
+    KEY0: { code: 48, key: '0' },
+    KEY1: { code: 49, key: '1' },
+    KEY2: { code: 50, key: '2' },
+    KEY3: { code: 51, key: '3' },
+    KEY4: { code: 52, key: '4' },
+    KEY5: { code: 53, key: '5' },
+    KEY6: { code: 54, key: '6' },
+    KEY7: { code: 55, key: '7' },
+    KEY8: { code: 56, key: '8' },
+    KEY9: { code: 57, key: '9' },
+
+    COMMA: { code: 188, key: ',' },
 }
+
+export const _FLEX_ALIGN_ = {
+    RIGHT  : 'flex-start',
+    CENTER : 'center',
+    LEFT   : 'flex-end'
+};

@@ -1,5 +1,7 @@
 @import url('color.css');
 
+@import url('properties.css');
+
 @font-face {
     font-family: 'VP-FONT';
     font-weight: 300;
@@ -57,10 +59,10 @@
 body { overflow: hidden; }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background-color: var(--neutral-200); }
+::-webkit-scrollbar-track { background-color: var(--neutral-100); }
 ::-webkit-scrollbar-thumb { 
     border-radius: 5px;
-    background-color: var(--neutral-500);
+    background-color: var(--neutral-400);
 }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--neutral-600); }
 ::-webkit-scrollbar-thumb:active { background-color: var(--neutral-700); }
@@ -101,9 +103,7 @@ body { overflow: hidden; }
         z-index: 2;
     }
         .main-app-builder-widget-holder > .divider { background-color: var(--neutral-400); }
-        .main-app-builder-widget-holder > .button {
-            cursor: pointer;
-        }
+        .main-app-builder-widget-holder > .button { cursor: pointer; }
         .main-app-builder-widget-holder > .zoom-text {
             text-align: center;
             font-weight: 600;
@@ -200,243 +200,6 @@ body { overflow: hidden; }
         }
         .main-app-svg-path.error { stroke: var(--neutral-800) !important; }
 
-/*// PROPERTIES CSS //////////////////////////////////////////////////////////*/
-.main-app-properties {
-   /* width: 240px;*/
-    background-color: #ffffff;
-    border-left: 1px solid var(--neutral-300);
-
-    position: relative;
-
-    overflow-x: hidden;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-
-    z-index: 3;
-}
-    .main-app-properties-content {
-        /* overflow: hidden;
-        max-height: 0;*/
-
-        /* height: 0; */
-        padding-bottom: 10px;
-        display: none;
-        border-bottom: 1px solid var(--neutral-300);
-    }
-        /* .main-app-properties-content:first-child { margin-top: 0; } */
-        .main-app-properties-content.disabled,
-        .main-app-properties-content.disabled input {
-            background-color: #FAFAFA;
-            color: #9E9E9E;
-            pointer-events: none;
-        }
-    .main-app-properties-row {
-        display: grid;
-        grid-template-columns: repeat(28, 8px);
-        height: 30px;
-        /* grid-template-rows: 30px; */
-
-        align-items: center;
-        overflow: hidden;
-
-        font-size: 11px;
-
-        color: var(--black);
-
-        transition: .15s height linear;
-    }
-        /* .main-app-properties-row.spacer { padding: 5px 0; } */
-        .main-app-properties-row.header {
-            grid-template-rows: 28px;
-            margin-bottom: 5px;
-            background-color: var(--neutral-200);
-            /* margin-top: 5px; 
-            border-top: 1px solid var(--gray-200);
-            border-bottom: 1px solid var(--gray-200); */
-        }
-        .main-app-properties-row textarea {
-            grid-column-start: 2;
-            grid-column-end: span 26;
-
-            grid-row-start: 1;
-            grid-row-end: 3;
-
-            border: 1px solid var(--gray-200);
-            border-radius: 4px;
-            padding: 2px 5px;
-
-            width: 208px;
-            height: 48px;
-            resize: none;
-            
-            scrollbar-width: thin;
-
-            font-size: 11px;
-            font-weight: 300;
-            color: var(--black);
-        }
-        .main-app-properties-row select { font-size: 12px; }
-        .main-app-properties-row input { font-size: 11px; }
-        .main-app-properties-row select,
-        .main-app-properties-row input[type=text] {
-            border: 1px solid var(--neutral-400);
-            border-radius: 4px;
-            height: 24px;
-            padding: 2px 5px;
-        }
-        .main-app-properties-row input[type=text].number { text-align: center; }
-        .main-app-properties-row input[type=checkbox], 
-        .main-app-properties-row input[type=radio] {
-            margin: auto;
-            padding: 0;
-            cursor: pointer;
-        }
-        .main-app-properties-row input[type=checkbox] + label,
-        .main-app-properties-row input[type=radio] + label {
-            font-weight: 400;
-            align-self: center;
-
-            text-align: left;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-
-            cursor: pointer;
-        }
-        .main-app-properties-row input[type=checkbox]:checked + label,
-        .main-app-properties-row input[type=radio]:checked + label { 
-            /* font-weight: 600; */
-            color: var(--blue-base);
-        }
-        .main-app-properties-row input[type=button] {
-            background-color: var(--neutral-100);
-            border: 1px solid var(--neutral-200);
-            color: var(--black);
-            cursor: pointer;
-            outline: none;
-            border-radius: 4px;
-            height: 24px;
-        }
-            .main-app-properties-row input[type=button]:hover { 
-                background-color: var(--neutral-200);
-                border: 1px solid var(--neutral-300);
-                /* font-weight: 600; */
-            }
-            .main-app-properties-row input[type=button]:active { 
-                background-color: var(--neutral-300);
-                border: 1px solid var(--neutral-400);
-                transform: scale(0.96);
-            }
-            /* .main-app-properties-row input[type=button]:disabled { 
-                background-color: var(--neutral-100);
-                border: 1px solid var(--neutral-200);
-                cursor: default;
-                color: var(--neutral-900);
-            } */
-
-        .main-app-properties-row > .delete-button {
-            background-color: var(--red-100);
-            border: 1px solid var(--red-200);
-            color: var(--red-base);
-            cursor: pointer;
-            outline: none;
-            border-radius: 4px;
-            height: 28px;
-            grid-column: 7 / span 16;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 9px;
-        }
-            .main-app-properties-row > .delete-button:hover {
-                background-color: var(--red-200);
-                border: 1px solid var(--red-300);
-            }
-            .main-app-properties-row > .delete-button:active {
-                background-color: var(--red-300);
-                border: 1px solid var(--red-400);
-            }
-        .main-app-properties-label {
-            align-self: center;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-            .main-app-properties-label.status {
-                grid-column: 2 / span 26;
-                color: var(--main-blue-selected); 
-                /* text-align: center; */
-            }
-            .main-app-properties-label.bold { font-weight: 600; }
-            .main-app-properties-label.header { grid-column: 2 / span 23; }
-            .main-app-properties-label.sub-header {
-                display: flex;
-                align-items: center;
-
-                grid-column: 2 / span 26;
-                line-height: 23px;
-                background-color: var(--neutral-100);
-                border-radius: 4px;
-            }
-                .sub-header > .checkbox { flex: 0 0 28px; }
-                .sub-header > .label { flex: 1 1 0; }
-            .main-app-properties-label.row { grid-column: 2 / span 26; }
-            /* .main-app-properties-label.counter { 
-                grid-column: 2 / span 8;
-                text-align: center;
-                color: var(--main-green-selected);
-            } */
-            .main-app-properties-label.help { 
-                grid-column: 26 / span 2; 
-                font-weight: 100;
-                color: var(--neutral-800);
-                cursor: pointer;
-            }
-                .main-app-properties-label.help:hover { color: var(--neutral-base); }
-        .main-app-properties-text {
-            font-weight: 400;
-            text-transform: capitalize;
-
-            align-self: center;            
-
-            text-align: right;
-            overflow: hidden;
-            text-overflow: ellipsis;
-
-            max-height: 28px;
-        }
-        .main-app-properties-color {
-            width: 22px;
-            height: 22px;
-
-            line-height: 23px;
-            color: #ffffff;
-
-            border-radius: 50%;
-            opacity: 0.8;
-
-            margin: 0 1px !important;
-
-            transition: .15s opacity linear,
-                        .15s border-radius linear;
-
-            cursor: pointer;
-        }
-            .main-app-properties-color:hover { opacity: 1; }
-            .main-app-properties-color.selected { 
-                opacity: 1;
-                border-radius: 4px;
-             }
-        .main-app-properties-type-icon {
-            grid-column: 3 / span 2;
-            text-align: center;
-            font-size: 13px;
-            color: var(--neutral-base);
-        }
-        .main-app-properties-checkbox-label { padding-left: 8px; }
-
 /*// TREEVIEW CSS ////////////////////////////////////////////////////////////*/
 .main-app-treeview {
     background-color: var(--white);
@@ -451,17 +214,12 @@ body { overflow: hidden; }
     color: var(--black);
 }
 .main-app-treeview-col-resize {
-    background-color: #f0f0f0;
-    border-right: 1px solid #e0e0e0;
-    border-left: 1px solid #f0f0f0;
+    background-color: var(--neutral-200);
+
     cursor: col-resize;
     z-index: 4;
 }
-    .main-app-treeview-col-resize:hover {
-        background-color: #e0e0e0;
-        border-right-color: #e0e0e0;
-        border-left-color: #e0e0e0;
-    }
+    .main-app-treeview-col-resize:hover { background-color: var(--neutral-500); }
     .main-app-treeview-items {
         padding: 0 0 0 0;
 
@@ -541,7 +299,7 @@ body { overflow: hidden; }
             font-size: 11px;
             line-height: 14px;
 
-            background-color: var(--neutral-200);;
+            background-color: var(--neutral-200);
             border-radius: 2px;
             padding: 0 3px 0 2px;
             
@@ -909,7 +667,7 @@ body { overflow: hidden; }
 .icon {
     font-family: 'VP-ICON' !important;
     font-weight: 100 !important;
-    text-transform: none !important;;
+    text-transform: none !important;
 
     text-align: center;
     

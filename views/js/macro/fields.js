@@ -58,7 +58,6 @@ export default function Field(__context, __append, __properties) {
     // PRIVATE /////////////////////////////////////////////////////////////////
     const
 
-    // _deep = function(tab) {
     _deep = (tab) => {
         let counter, result = '';
         for (counter = 0; counter < tab.length; counter++) {
@@ -68,8 +67,6 @@ export default function Field(__context, __append, __properties) {
 
         return result;
     },
-
-    // _color = function(drag, color = null) {
     _color = (drag, color = null) => {
         const output = DOMElement.output;
 
@@ -102,8 +99,6 @@ export default function Field(__context, __append, __properties) {
                 outputPath.style.removeProperty('stroke');
         }
     },
-
-    // _drag = function (evnt) {
     _drag = (evnt) => {
         evnt.preventDefault();
 
@@ -135,8 +130,6 @@ export default function Field(__context, __append, __properties) {
         // MacroContext.dragStart(evnt, Context); 
         MacroContext.dragStart(evnt, this); 
     },
-
-    // _render = function (left, top, action) {
     _render = (left, top, action) => {
         let offsetLine, offset = _QUADRATIC_CURVE_OFFSET_;
 
@@ -202,13 +195,11 @@ export default function Field(__context, __append, __properties) {
             props.tail.y = top;
         }
     },
-
-    // _keypress = function(evnt) {
     _keypress = (evnt) => {
         let key = evnt.keyCode || evnt.which;
 
         switch (key) {
-            case _KEY_CODE_.ENTER:
+            case _KEY_CODE_.ENTER.code:
                 evnt.preventDefault();
 
                 const value = DOMElement.description.value;
@@ -230,8 +221,6 @@ export default function Field(__context, __append, __properties) {
         }
         _refresh();
     },
-
-    // _refresh = function() {
     _refresh = () => {
         const value = DOMElement.description.value;
 
@@ -255,14 +244,10 @@ export default function Field(__context, __append, __properties) {
 
         //props['prefix']['text'] = value;
     },
-
-    // _showProperties = function() { MacroContext.showProperties(Context); },
     _showProperties = () => {
         if (!isCurrentSelectObject)
             MacroContext.showProperties(this); 
     },
-
-    // _showVisibilityTools = function(evnt) {
     _showVisibilityTools = (evnt) => {
         evnt.stopPropagation();
 
@@ -279,10 +264,9 @@ export default function Field(__context, __append, __properties) {
                 break;
         }
     },
-
-    // _previewVisibility = function(evnt) { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
-    _previewVisibility = (evnt) => { MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); },
-
+    _previewVisibility = (evnt) => { 
+        MacroContext.previewVisibility(props['visibility']['fields'], evnt.type); 
+    },
     _toggleVisibility = () => {
         const selectedObject = MacroContext.getSelectedObject();
         const visibilityFields = selectedObject.getProps('visibility', 'fields');
@@ -298,8 +282,6 @@ export default function Field(__context, __append, __properties) {
         selectedObject.addToVisibility(this, _STATUS_.VISIBLE);
         _addVisibilityStyle(_STATUS_.VISIBLE);
     },
-
-    // _addVisibilityStyle = function(status) {
     _addVisibilityStyle = (status) => {
         let color = this.getColor();
         if (color !== null)
@@ -339,8 +321,6 @@ export default function Field(__context, __append, __properties) {
         
         DOMElement.item.style.color = color;
     },
-
-    // _removeVisibilityStyle = function() {
     _removeVisibilityStyle = () => {
         // treeviewRow.style.removeProperty('outline');
         treeviewRow.style.removeProperty('background-color');
@@ -367,8 +347,6 @@ export default function Field(__context, __append, __properties) {
 
         DOMElement.item.style.removeProperty('color');
     },
-
-    // _updateVisibilityCounter = function() {
     _updateVisibilityCounter = () => {
         let visibilitySize = 0;
 

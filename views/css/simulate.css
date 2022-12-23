@@ -5,7 +5,7 @@
     top: 40px;
 
     box-shadow: 0px 0px 8px 2px rgb(0 0 0 / 10%);
-    border: 2px solid var(--neutral-600);;
+    border: 2px solid var(--neutral-600);
     border-radius: 35px;
 
     background-color: var(--white);
@@ -56,7 +56,7 @@
                 height: 6px;
 
                 border-radius: 50%;
-                background-color: var(--neutral-400);;
+                background-color: var(--neutral-400);
             }
             .simulate-content > .header::after {
                 content: "";
@@ -68,7 +68,7 @@
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background-color: var(--neutral-400);;
+                background-color: var(--neutral-400);
             }
 
         .simulate-content > .container {
@@ -85,50 +85,71 @@
                 flex-direction: column;
 
                 height: 0;
-                transition: .15s height linear;
+                transition: .15s height ease;
             }
+                .controls button:focus-visible { 
+                    outline-offset: -2px;
+                    outline-width: 1px;
+                    outline-style: dashed;
+                }
+
                 .controls > .controls-buttons {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     grid-template-rows: 30px;
+
+                    border-left: 1px solid var(--neutral-200);
+                    border-right: 1px solid var(--neutral-200);
                 }
-                    .controls-buttons > div {
+                    .controls-buttons > button {
+                        font-size: 11px;
                         text-align: center;
                         line-height: 30px;
-                        font-size: 11px;
                         text-transform: uppercase;
                         font-weight: 600;
 
                         cursor: pointer;
                         color: var(--white);
                     }
-                        .controls-buttons > div.confirm { background-color: var(--blue-800); }
-                        .controls-buttons > div.confirm:hover { background-color: var(--blue-900); }
-                        .controls-buttons > div.confirm:active { background-color: var(--blue-base); }
 
-                        .controls-buttons > div.back { background-color: var(--yellow-800); }
-                        .controls-buttons > div.back:hover { background-color: var(--yellow-900); }
-                        .controls-buttons > div.back:active { background-color: var(--yellow-base); }
+                        .controls-buttons > button.confirm { background-color: var(--blue-base); }
+                        .controls-buttons > button.confirm:hover { background-color: var(--blue-1100); }
+
+                        .controls-buttons > button.back { background-color: var(--yellow-base); }
+                        .controls-buttons > button.back:hover { background-color: var(--yellow-1100); }
+
+                        .controls-buttons > button:active { 
+                            border-radius: 2px;
+                            transform: scale(.97); 
+                        } 
+                        .controls-buttons > button:focus-visible { outline-color: var(--white); }
 
                 .controls > .keyboard {
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr;
-                    font-size: 12px;
-                    background-color: var(--neutral-200);
+                    grid-template-columns: repeat(3, 1fr);
+                    
+                    background-color: var(--neutral-100);
+
+                    border-left: 1px solid rgb(0 0 0 / 3%);
+                    border-right: 1px solid rgb(0 0 0 / 3%);
+                    border-bottom: 1px solid rgb(0 0 0 / 3%);
+
+                    border-bottom-left-radius: 8px;
+                    border-bottom-right-radius: 8px;
                 }
-                    .keyboard-key {
-                        border-radius: 5px;
+                    .keyboard > button {
+                        background-color: transparent;
+                        font-size: 12px;
+                        text-align: center;
+                        border-radius: 2px;
                         font-weight: 600;
                         color: var(--black);
                         cursor: pointer;
-                        text-align: center;
                         line-height: 25px;
                     }
-                        .keyboard-key:hover { background-color: var(--neutral-400); }
-                        .keyboard-key:active { 
-                            transform: scale(.94);
-                            background-color: var(--neutral-500);
-                        }
+                        .keyboard > button:hover { background-color: var(--neutral-300); }
+                        .keyboard > button:active { transform: scale(.93); } 
+                        .keyboard > button:focus-visible { outline-color: var(--neutral-700); }
 
             .container > .main {
                 position: relative;
@@ -141,7 +162,7 @@
                 border-bottom-right-radius: 8px;
 
                 overflow-x: hidden;
-                overflow-y: scroll;
+                overflow-y: auto;
                 scrollbar-width: thin;
 
                 background-color: var(--white);
@@ -177,7 +198,7 @@
                         to   { left: -100%; }
                     }
                     .container-main-slide > .navbar {
-                        background-color: var(--neutral-200);;
+                        background-color: var(--neutral-200);
 
                         display: grid;
                         align-items: center;
@@ -203,9 +224,7 @@
                         display: block;
                         height: 1px;
                         width: 100%;
-                        background-color: var(--neutral-200);;
-
-                        /* transition: .15s height; */
+                        background-color: var(--neutral-200);
                     }
                     .container-main-slide > .item-space {
                         display: block;
@@ -222,7 +241,7 @@
                         overflow: hidden;
 
                         background-color: transparent;
-                        animation: .15s linear 0s 1 normal both paused shrink_item_list;
+                        animation: .15s ease 0s 1 normal both paused shrink_item_list;
                     }
                         @keyframes shrink_item_list {
                             from { height: 50px; opacity: 1; } 
@@ -265,7 +284,7 @@
                                 pointer-events: none;
                             }
                             .item-list-subheader {
-                                color: var(--neutral-900);;
+                                color: var(--neutral-900);
                                 font-size: 9px;
                                 font-weight: 400;
                                 overflow: hidden;
@@ -280,48 +299,63 @@
                         position: relative;
                         overflow: hidden;
 
+                        display: flex;
+                        flex-direction: column;
+                        align-items: stretch;
+                        justify-content: space-evenly;
+
                         background-color: transparent;
 
-                        animation-duration: .15s;
-                        animation-timing-function: linear;
+                        animation: .15s ease 0s 1 normal both paused;
+                        /* animation-duration: .15s;
+                        animation-timing-function: ease;
                         animation-delay: 0s;
                         animation-iteration-count: 1;
                         animation-direction: normal;
                         animation-fill-mode: both;
                         animation-play-state: paused;
-                        animation-name: stretch_item_input;
+                        animation-name: stretch_item_input; */
                     }
                         @keyframes stretch_item_input {
-                            from { padding:  0px; height:  50px; }
-                            to   { padding: 10px; height: 110px; }
+                            from { height:  50px; }
+                            to   { height: 120px; }
                         }
                         @keyframes stretch_item_inputs {
-                            from { padding:  0px; height:   0px; opacity: 0;}
-                            to   { padding: 10px; height: 110px; opacity: 1;}
+                            from { height:   0px; opacity: 0; }
+                            to   { height: 120px; opacity: 1; }
                         }
-                        @keyframes shrink_item_input {
-                            from { height: 110px; padding: 10px; opacity: 1; } 
-                            to   { height: 0px; opacity: 0; }
+                        @keyframes shrink_item_inputs {
+                            from { height: 120px; opacity: 1; } 
+                            to   { height:   0px; opacity: 0; }
                         }
                         .item-input > .item-input-block {
+                            margin: 0 10px;
+
                             display: grid;
                             grid-template-columns: 34px auto;
-                            grid-template-rows: 50px;
+                            grid-template-rows: 38px;
                         }
                             .item-input-box {
-                                border-width: 2px;
-                                border-style: solid;
-
-                                color: var(--black);
-                                padding: 0 10px 0 10px;
-                                height: 40px;
-                                border-radius: 8px;
-                                font-weight: 600;
-                                font-size: 18px;
-                                width: 100%;
-                                outline: none;
-
                                 background-color: var(--neutral-100);
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                
+                                border-bottom-width: 1px;
+                                border-top-width: 1px;
+                                border-style: solid;
+                                border-color: var(--neutral-200);
+                                color: var(--black);
+                                
+                                height: 50px;
+                                /* margin: 10px; */
+                                padding: 0 5px 0 5px;
+                                /* border-top-left-radius: 4px;
+                                border-top-right-radius: 4px; */
+                                font-weight: 600;
+                                font-size: 28px;
+
+                                outline: none;
                             }
         .simulate-content > .footer {
             transform: translate(79px, 7px);
@@ -333,3 +367,17 @@
             background-color: var(--neutral-200);
             border: 1px solid var(--neutral-400);
         }
+
+
+/*
+<div style="
+    text-align: center;
+    background-color: var(--orange-100);
+    border-radius: 5px;
+    font-size: 10px;
+    margin: 2px 8px;
+    padding: 3px;
+    font-weight: 600;
+    color: var(--red-base);
+">valor deve ser maior que 1.98</div>
+*/

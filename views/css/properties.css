@@ -1,0 +1,298 @@
+/*// PROPERTIES CSS //////////////////////////////////////////////////////////*/
+.main-app-properties {
+    background-color: #ffffff;
+    border-left: 1px solid var(--neutral-300);
+
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+
+    z-index: 3;
+}
+    .main-app-properties-content {
+        padding: 8px 0;
+        display: none;
+        border-bottom: 1px solid var(--neutral-200);
+    }
+        .properties-single-column {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 32px;
+
+            padding-left: 8px;
+            padding-right: 8px;
+            position: relative;
+
+            font-size: 11px;
+            color: var(--black);
+        }
+            .content-weight { font-weight: 600; }
+            .content-grow { flex: 1 1 0; }
+            .content-28px { flex: 0 0 28px; }
+            .content-start3-span24 { grid-column: 3 / span 24; }
+
+            .properties-single-column > .content-help  { 
+                color: var(--neutral-700);
+                cursor: pointer;
+            }
+                .properties-single-column > .content-help:hover { color: var(--neutral-base); }
+
+        .properties-multiple-column {
+            display: grid;
+            grid-template-columns: repeat(28, 8px);
+            grid-template-rows: 32px;
+            align-content: center;
+            align-items: center;
+        
+            overflow: hidden;
+            color: var(--black);
+
+            font-size: 11px;
+
+            transition: .15s height linear;
+        }
+            .properties-multiple-column > .content-container {
+                border: 1px solid var(--neutral-400);
+                border-radius: 4px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                align-content: center;
+                overflow: hidden;
+                color: var(--neutral-base);
+            }
+                .properties-multiple-column > .content-container:hover { border-color: var(--neutral-700); }
+                .properties-multiple-column > .content-container:focus-within { 
+                    border-color: var(--blue-base); 
+                    color: var(--blue-base); 
+                }
+                    .content-select {
+                        background-image: url(../img/arrow-down.svg);
+                        background-color: transparent;
+                        background-repeat: no-repeat;
+                        background-position: right 6px center;
+
+                        font-size: 11px;
+                        padding: 0 18px 0 0;
+                        cursor: pointer;
+                        outline: none;
+                        appearance: none;
+
+                        height: 100%;
+                        width: 100%;
+                        text-overflow: ellipsis;
+                    }
+
+            .properties-multiple-column > .content-option {
+                border: 1px solid transparent;
+                border-radius: 4px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                align-content: center;
+                overflow: hidden;
+                color: var(--black);
+            }
+
+
+
+
+
+
+
+
+
+    .main-app-properties-row {
+        display: grid;
+        grid-template-columns: repeat(28, 8px);
+        align-content: center;
+        align-items: center;
+
+        height: 32px;
+
+        overflow: hidden;
+        font-size: 11px;
+        color: var(--black);
+
+        transition: .15s height linear;
+    }
+        .main-app-properties-row textarea {
+            grid-column-start: 2;
+            grid-column-end: span 26;
+
+            grid-row-start: 1;
+            grid-row-end: 3;
+
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: 2px 5px;
+
+            width: 208px;
+            height: 48px;
+            resize: none;
+            
+            scrollbar-width: thin;
+
+            font-size: 11px;
+            font-weight: 300;
+            color: var(--black);
+        }
+        .main-app-properties-row select { font-size: 12px; }
+        .main-app-properties-row input { font-size: 11px; }
+
+        .main-app-properties-row select,
+        .main-app-properties-row input[type=text],
+        .main-app-properties-row input[type=number] {
+            border: 1px solid var(--neutral-400);
+            border-radius: 4px;
+            height: 24px;
+            padding: 2px 5px;
+        }
+            .main-app-properties-row input[type=number] { padding: 2px 3px; }
+            .main-app-properties-row input[type=number]:invalid { border: 2px solid var(--red-base); }
+
+            /* .main-app-properties-row input[type=text].number { text-align: center; } */
+
+        .main-app-properties-row input[type=checkbox], 
+        .main-app-properties-row input[type=radio] {
+            margin: auto;
+            padding: 0;
+            cursor: pointer;
+        }
+            .main-app-properties-row input[type=checkbox] + label,
+            .main-app-properties-row input[type=radio] + label {
+                font-weight: 400;
+                align-self: center;
+
+                text-align: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                cursor: pointer;
+            }
+            /*.main-app-properties-row input[type=checkbox]:checked + label,
+            .main-app-properties-row input[type=radio]:checked + label { font-weight: 600; } */
+
+        .main-app-properties-row input[type=button] {
+            background-color: var(--neutral-100);
+            border: 1px solid var(--neutral-200);
+            color: var(--black);
+            cursor: pointer;
+            outline: none;
+            border-radius: 4px;
+            height: 24px;
+        }
+            .main-app-properties-row input[type=button]:hover { 
+                background-color: var(--neutral-200);
+                border: 1px solid var(--neutral-300);
+                /* font-weight: 600; */
+            }
+            .main-app-properties-row input[type=button]:active { 
+                background-color: var(--neutral-300);
+                border: 1px solid var(--neutral-400);
+                transform: scale(0.96);
+            }
+            /* .main-app-properties-row input[type=button]:disabled { 
+                 background-color: var(--neutral-100);
+                 border: 1px solid var(--neutral-200);
+                 cursor: default;
+                 color: var(--neutral-900);
+             } */
+ 
+        .main-app-properties-row.header {
+            grid-template-rows: 32px;
+            /* margin-bottom: 5px; */
+            /* background-color: var(--neutral-100); */
+        }
+
+        .main-app-properties-row > .delete-button {
+            background-color: var(--red-100);
+            border: 1px solid var(--red-200);
+            color: var(--red-base);
+            cursor: pointer;
+            outline: none;
+            border-radius: 4px;
+            height: 28px;
+            grid-column: 7 / span 16;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 9px;
+        }
+            .main-app-properties-row > .delete-button:hover {
+                background-color: var(--red-200);
+                border: 1px solid var(--red-300);
+            }
+            .main-app-properties-row > .delete-button:active {
+                background-color: var(--red-300);
+                border: 1px solid var(--red-400);
+            }
+
+        .main-app-properties-label {
+            align-self: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+            .main-app-properties-label.status {
+                grid-column: 2 / span 26;
+                color: var(--main-blue-selected); 
+                /* text-align: center; */
+            }
+            .main-app-properties-label.bold { font-weight: 600; }
+            .main-app-properties-label.header { grid-column: 2 / span 23; }
+            
+            .main-app-properties-label.sub-header {
+                display: flex;
+                align-items: center;
+
+                grid-column: 2 / span 26;
+                line-height: 23px;
+                background-color: var(--neutral-100);
+                border-radius: 4px;
+            }
+            .main-app-properties-label.row { grid-column: 2 / span 26; }
+            
+            .main-app-properties-label.help { 
+                grid-column: 26 / span 2; 
+                color: var(--neutral-700);
+                cursor: pointer;
+            }
+                .main-app-properties-label.help:hover { color: var(--neutral-base); }
+
+        .main-app-properties-color {
+            width: 22px;
+            height: 22px;
+
+            line-height: 23px;
+            color: #ffffff;
+
+            border-radius: 50%;
+            opacity: 0.8;
+
+            margin: 0 1px !important;
+
+            transition: .15s opacity linear,
+                        .15s border-radius linear;
+
+            cursor: pointer;
+        }
+            .main-app-properties-color:hover { opacity: 1; }
+            .main-app-properties-color.selected { 
+                opacity: 1;
+                border-radius: 4px;
+            }
+
+        .main-app-properties-type-icon {
+            grid-column: 3 / span 2;
+            font-size: 13px;
+            color: var(--neutral-base);
+        }
+        .main-app-properties-checkbox-label { padding-left: 8px; }

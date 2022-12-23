@@ -596,7 +596,10 @@ export default function Macro(__properties) {
         const simulateDiv = addElement(mainBuilderToolbar, 'div', 'holder');
         const simulateBtn = addElement(simulateDiv, 'div', 'button', _I18N_.simulate);
         // simulateBtn.addEventListener('click', function(evnt) { simulate.start(); }, { capture: false });
-        simulateBtn.addEventListener('click', () => simulate.start(), { capture: false });
+        simulateBtn.addEventListener('click', () => {
+            const serialize = Context.serialize();
+            simulate.start(serialize);
+         }, { capture: false });
 
 
         mainAppWrapper = addElement(mainBuilder, 'div', 'main-app-wrapper');

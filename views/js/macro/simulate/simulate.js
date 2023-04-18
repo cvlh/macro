@@ -70,7 +70,8 @@ export default function Simulate() {
         switch (keyboardType) {
             case _KEY_TYPE_.NUMPAD:
             case _KEY_TYPE_.QWERTY:
-                DOMElement.keyboard.style.height = '131px'; 
+                // DOMElement.keyboard.style.height = '131px';
+                DOMElement.keyboard.style.height = '138px';
                 break;
             
             case _KEY_TYPE_.CONTROL:

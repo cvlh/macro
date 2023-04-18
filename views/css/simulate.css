@@ -102,8 +102,8 @@
                     align-items: center;
                     justify-content: center;
 
-                    border-left: 1px solid var(--neutral-200);
-                    border-right: 1px solid var(--neutral-200);
+                    border-left: 1px solid var(--neutral-300);
+                    border-right: 1px solid var(--neutral-300);
                 }
                     .controls-buttons > button {
                         flex: 1 1 0;
@@ -131,43 +131,59 @@
                         .controls-buttons > button.clear { background-color: var(--orange-900); }
                         .controls-buttons > button.clear:hover { background-color: var(--orange-base); }
 
-                        .controls-buttons > button:active { 
-                            border-radius: 2px;
-                            transform: scale(.97); 
-                        } 
+                        .controls-buttons > button:active { transform: scale(.97); } 
                         .controls-buttons > button:focus-visible { outline-color: var(--white); }
 
-                .controls > .keyboard {
+                 /* // .KEYBOARD WEB /////////////////////////////////////////*/
+                .simulate-content > .container > .controls > .keyboard {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     
-                    background-color: var(--neutral-100);
+                    background-color: var(--neutral-300);
 
-                    border-left: 1px solid rgb(0 0 0 / 3%);
-                    border-right: 1px solid rgb(0 0 0 / 3%);
-                    border-bottom: 1px solid rgb(0 0 0 / 3%);
+                    border-left: 1px solid var(--neutral-300);
+                    border-right: 1px solid var(--neutral-300);
+                    border-bottom: 1px solid var(--neutral-300);
 
                     border-bottom-left-radius: 8px;
                     border-bottom-right-radius: 8px;
+
+                    gap: 1px;
+                }
+
+                /* // .KEYBOARD MOBILE ///////////////////////////////////////*/
+                .controls > .keyboard {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    background-color: var(--neutral-200);
+                    gap: 1px;
                 }
                     /* .controls > .keyboard.numpad { visibility: visible; }
                     .controls > .keyboard.control { visibility: hidden; } */
 
                     .keyboard > button {
-                        background-color: transparent;
+                        background-color: var(--neutral-100);
                         font-size: 12px;
                         text-align: center;
                         border-radius: 2px;
                         font-weight: 600;
                         color: var(--black);
                         cursor: pointer;
-                        line-height: 25px;
+                        line-height: 26px;
+                        /* border: 1px solid var(--neutral-300); */
                     }
+                        .simulate-content .keyboard > button:nth-child(10) { border-bottom-left-radius: 7px; }
+                        .simulate-content .keyboard > button:nth-child(12) { border-bottom-right-radius: 7px; }
+
                         .keyboard > button:hover { background-color: var(--neutral-300); }
-                        .keyboard > button:active { transform: scale(.93); } 
+                        .keyboard > button:active { 
+                            /* transform: scale(.93); */
+                            filter: brightness(0.94);
+                        } 
                         .keyboard > button:focus-visible { outline-color: var(--neutral-700); }
 
-            .container > .main {
+            /* // .MAIN WEB //////////////////////////////////////////////////*/
+            .simulate-content > .container > .main {
                 flex-grow: 1;
                 position: relative;
 
@@ -180,11 +196,18 @@
 
                 overflow-x: hidden;
                 overflow-y: hidden;
-                /* overflow-y: auto;
-                scrollbar-width: thin; */
 
                 background-color: var(--white);
-                /* color: var(--black */
+            }
+            /* // .MAIN MOBILE ///////////////////////////////////////////////*/
+            .container > .main {
+                flex-grow: 1;
+                position: relative;
+
+                overflow-x: hidden;
+                overflow-y: hidden;
+
+                background-color: var(--white);
             }
                 .container > .main.with-keyboard {
                     border-bottom: none;
@@ -223,7 +246,8 @@
                         to   { left: -100%; opacity: 0.6;}
                     }
                     .container-main-slide > .navbar {
-                        flex: 0 0 25px;
+                        flex-shrink: 0;
+                        flex-grow: 0;
 
                         background-color: var(--neutral-200);
 
@@ -231,7 +255,7 @@
                         align-items: center;
                         grid-template-columns: 24px auto;
                         grid-auto-rows: 25px;
-                        
+
                         font-size: 11px;
                         font-weight: 600;
                         z-index: 2;

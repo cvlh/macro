@@ -1,8 +1,11 @@
 'use strict';
 import Simulate from './simulate.js';
-            
+
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 let simulateDiv = document.getElementById('simulate');
-simulateDiv.style.height = '100vh';
+simulateDiv.style.height = 'calc(var(--vh, 1vh) * 100)';
 simulateDiv.style.width = '100vw';
 
 let simulate = new Simulate();

@@ -109,6 +109,14 @@ export const _ORDER_ = {
     DOWN : 2
 };
 
+export const _KEY_TYPE_ = {
+    NONE:   0,
+
+    CONTROL: 1,
+    NUMPAD: 2,
+    QWERTY: 3, 
+} 
+
 export const _KEY_CODE_ = {
     BACKSPACE: { code: 8, key: '\uf55a' },
     ENTER: { code: 13, key: '\uf2f6' },

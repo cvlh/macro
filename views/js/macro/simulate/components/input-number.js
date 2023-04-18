@@ -1,6 +1,7 @@
 'use strict';
 
 import { _COLORS_, _FLEX_ALIGN_, _KEY_CODE_ } from '../../../utils/constants.js';
+import { _I18N_ } from '../../../i18n/pt-br.js';
 import { addElement } from '../../../utils/functions.js';
 
 export default function InputNumber(__append, __properties) {
@@ -40,12 +41,17 @@ export default function InputNumber(__append, __properties) {
                 text += ',';
 
             text += element;
-        });
+        } );
 
         const value = parseFloat(text.replace(',', '.'));
-        console.log(value);
-        if (value === 0 || value < minimum || value > maximum) {
-            DOMElement.container.setAttribute('data-info', '* valor deve ser maior que 1.98');
+        // console.log(value);
+        if (value < minimum || value > maximum) {
+            if (value < minimum)
+                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_underflow + minimum);
+
+            if (value > maximum)
+                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_overflow + maximum);
+
             DOMElement.item.style.color = 'var(--neutral-700)';
         } else {
             DOMElement.container.removeAttribute('data-info');
@@ -60,10 +66,11 @@ export default function InputNumber(__append, __properties) {
         if (keyCode === _KEY_CODE_.BACKSPACE.code)
             inputArray.pop();
 
-        if (keyCode >= _KEY_CODE_.KEY0.code && keyCode <= _KEY_CODE_.KEY9.code) {
-            if (inputArray.length === maximumLength) {
+        if (keyCode >= _KEY_CODE_.KEY0.code && 
+            keyCode <= _KEY_CODE_.KEY9.code) {
+
+            if (inputArray.length === maximumLength)
                 return;
-            }
 
             inputArray.push(String.fromCharCode(keyCode));
         }
@@ -85,10 +92,11 @@ export default function InputNumber(__append, __properties) {
         // PROPERTIES
         DOMElement.container.style.color = __properties?.['color'] ?? _COLORS_.BLACK;
         DOMElement.container.style.justifyContent = __properties?.['align'] ?? _FLEX_ALIGN_.LEFT;
+        DOMElement.item.textContent = __properties?.['default'] ?? '';
 
         decimal   = __properties?.['decimal'] ?? false;
-        precision = __properties?.['precision'] ?? 2;
-        
+        precision = decimal ? (__properties?.['precision'] ?? 2) : 0;
+
         maximum = __properties?.['maximum'] ?? 999999;
         minimum = __properties?.['minimum'] ?? 0;
 

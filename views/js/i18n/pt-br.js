@@ -85,5 +85,12 @@ export const _I18N_ = {
     none: 'Limpar',
 
     delete_item: 'Remover',
-    simulate: 'Simular'
+    simulate: 'Simular',
+
+    simulate_filed_underflow: '* valor deve ser maior que ',
+    simulate_filed_overflow: '* valor deve ser menor que ',
+
+    keyboard_back: 'Voltar',
+    keyboard_clear: 'Limpar',
+    keyboard_confirm: 'OK'
 }

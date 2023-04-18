@@ -1,6 +1,7 @@
 'use strict';
 
-import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_ } from '../../utils/constants.js';
+import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_} from '../../utils/constants.js';
+import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
@@ -33,12 +34,9 @@ export default function Simulate() {
     _create_keyboard = () => {
         const controls_buttons = addElement(DOMElement.keyboard, 'div', 'controls-buttons');
 
-        const back = addElement(controls_buttons, 'button', 'back', 'Voltar');
-        // back.style.backgroundColor = 'var(--yellow-base)';
-        
-        const confirm = addElement(controls_buttons, 'button', 'confirm', 'Confirmar');
-        // confirm.style.backgroundColor = 'var(--blue-base)';
-        
+        const back = addElement(controls_buttons, 'button', 'back', _I18N_.keyboard_back);
+
+        const confirm = addElement(controls_buttons, 'button', 'confirm', _I18N_.keyboard_confirm);
         confirm.addEventListener('click', _confirm_keyboard, { capture: false });
 
         const keyboard = addElement(DOMElement.keyboard, 'div', 'keyboard');
@@ -65,9 +63,19 @@ export default function Simulate() {
         DOMElement.main.classList.remove('with-keyboard');
         DOMElement.keyboard.style.removeProperty('height'); 
     },
-    _show_keyboard = () => {
+    _show_keyboard = (keyboardType = _KEY_TYPE_.NUMPAD) => {
         DOMElement.main.classList.add('with-keyboard');
-        DOMElement.keyboard.style.height = '131px'; 
+
+        switch (keyboardType) {
+            case _KEY_TYPE_.NUMPAD:
+            case _KEY_TYPE_.QWERTY:
+                DOMElement.keyboard.style.height = '131px'; 
+                break;
+            
+            case _KEY_TYPE_.CONTROL:
+                DOMElement.keyboard.style.height = '30px'; 
+                break;
+        }
     },
     _confirm_keyboard = () => {
         const last = structInputs['last'],
@@ -77,12 +85,53 @@ export default function Simulate() {
             if (last < list.length) {
                 list[last].style.animationPlayState = 'running';
 
-                if (last > 0) {
+                if (last > 0)
                     list[last - 1].style.animationName = 'shrink_item_inputs';
-                    list[last - 1].addEventListener('animationend', (evnt) => evnt.target.style.display = 'none', { capture: false, once: true });
-                }
+                
+                switch (macro[list[last]['_props_'][0]].type.type) {
+                    case _TYPES_.NUMBER:
+                        _show_keyboard(_KEY_TYPE_.NUMPAD);
+                        break;
+                        
+                    case _TYPES_.PHOTO:
+                        _show_keyboard(_KEY_TYPE_.NONE);
 
-                _show_keyboard();
+                        list[last].addEventListener('animationend', function() {
+                            const video = addElement(this, 'video', 'item-drawing');
+                            video.width = this.offsetWidth;
+                            video.height = this.offsetHeight;
+
+                            const canvas = addElement(this, 'canvas', 'item-drawing');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+
+                            navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+                                console.log(mediaStream);
+                                video.srcObject = mediaStream;
+                                video.play();
+                            }).catch(function (err) {
+                                console.log('Não há permissões para acessar a webcam')
+                            });
+
+                        }, { once: true, capture: false });
+                        break;
+
+                    case _TYPES_.SIGNATURE:
+                        _show_keyboard(_KEY_TYPE_.CONTROL);
+
+                        list[last].addEventListener('animationend', function() {
+                            const canvas = addElement(this, 'canvas', 'item-drawing');
+                            canvas.width = this.offsetWidth;
+                            canvas.height = this.offsetHeight;
+                            canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
+                            canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+                        }, { once: true, capture: false });
+                        break;
+
+                    default:
+                        _hide_keyboard();
+                }
+                
                 structInputs['last'] += 1;
             } else {
                 const [id, color] = list[last - 1]['_props_'];
@@ -90,6 +139,48 @@ export default function Simulate() {
             }
         }
     },
+    
+    ////////////////////////////////////////////////////////////////////////////
+    _drawing_start = function (evnt) {
+        const position = this.getBoundingClientRect();
+        this['_drawing_'] = {
+            x: evnt.clientX - position.x,
+            y: evnt.clientY - position.y,
+        }
+        this.addEventListener('mousemove', _drawing, { capture: false });
+        this.addEventListener('touchmove', _drawing, { capture: false });
+
+        this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
+        this.addEventListener('touchend', _drawing_end, { once: true, capture: false });
+    },
+    _drawing = function (evnt) {
+        if (evnt.type === 'touchmove') {
+            
+        }
+        const ctx = this.getContext('2d');
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'black';
+        ctx.lineCap = 'round';
+        ctx.moveTo(this['_drawing_']['x'], this['_drawing_']['y']);
+
+        this['_drawing_']['x'] += evnt.movementX;
+        this['_drawing_']['y'] += evnt.movementY;
+
+        ctx.lineTo(this['_drawing_']['x'], this['_drawing_']['y']);
+        ctx.stroke();
+    },
+    _drawing_end = function () {
+        delete this['_drawing_'];
+
+        this.removeEventListener('mousemove', _drawing, { capture: false });
+        this.removeEventListener('touchmove', _drawing, { capture: false });
+
+        this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
+        this.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+    },
+    ////////////////////////////////////////////////////////////////////////////
 
     _wildcard = (id) => {
         let wildcard = '';
@@ -238,30 +329,37 @@ export default function Simulate() {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              current_parent = target.parentElement;
+              current_parent = target.parentElement,
+              main_parent = current_parent.parentElement;
 
+        current_parent.style.overflowY = 'hidden';
+        
         if (target.classList.contains('input-type')) {
             const [id, color] = target['_props_'];
+
+            while (target['_props_'].length)
+                target['_props_'].pop();
             delete target['_props_'];
             
             target.className = 'item-input-block';
             target.removeChild(target.lastChild);
             
-            const content = addElement(current_parent, 'div', 'item-input');
-            current_parent.replaceChild(content, target);
+            const content = addElement(main_parent, 'div', 'item-input');
+            main_parent.replaceChild(content, target);
             content.appendChild(target);
 
             content.style.animationName = 'stretch_item_input';
             content.style.animationPlayState = 'running';
 
-            // const listItems = current_parent.querySelectorAll('.item-list, .item-divider');
-            const listItems = current_parent.querySelectorAll('.item-list');
+            // const listItems = main_parent.querySelectorAll('.item-list, .item-divider');
+            const listItems = main_parent.querySelectorAll('.item-list');
             for (const listItem of listItems)
                 listItem.style.animationPlayState = 'running';
             
-            const dividers = current_parent.querySelectorAll('.item-divider');
+            const dividers = main_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
-                divider.style.height = '0px';
+                divider.style.flexBasis = '0';
+                // divider.style.height = '0px';
             
             const input = new InputNumber(content, { color, ...macro[id]['type'] });
 
@@ -271,7 +369,7 @@ export default function Simulate() {
             _show_keyboard();
         } else if (target.classList.contains('item-list')) {
             const [id, color] = target['_props_'];
-            _execute(id, color, current_parent);
+            _execute(id, color, main_parent);
         }
     },
     _create_list_item = (id, color, input = false) => {
@@ -299,8 +397,7 @@ export default function Simulate() {
     },
     _create_view =  (ids, color = null) => {
         let navbar, shortcut, type,
-            item, block, content, input,
-            // counter,
+            item, block, content,
             divider = true;
 
         const slide = addElement(DOMElement.main, 'div', 'container-main-slide');
@@ -326,6 +423,7 @@ export default function Simulate() {
         //if (all_inputs)
             structInputs = { last: 0, list: [] };
 
+        const wrapper = addElement(slide, 'div', 'itens-wrapper');
         for (const id of ids) {
             shortcut = macro[id];
 
@@ -336,8 +434,10 @@ export default function Simulate() {
             if (all_inputs) {
                 switch(type) {
                     case _TYPES_.TEXT:
+                        break;
+
                     case _TYPES_.NUMBER:
-                        item = addElement(slide, 'div', 'item-input');
+                        item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
 
                         block = addElement(item, 'div', 'item-input-block'); 
@@ -355,17 +455,19 @@ export default function Simulate() {
                         const input = new InputNumber(item, { color, ...macro[id]['type'] });
 
                         item['_props_'] = [id, color, input];
-
                         structInputs['list'].push(item);
                         break;
     
                     case _TYPES_.DATE:
                         break;
     
-                    case _TYPES_.PHOTO:
-                        break;
-    
                     case _TYPES_.SIGNATURE:
+                    case _TYPES_.PHOTO:
+                        item = addElement(wrapper, 'div', 'item-input');
+                        item.style.animationName = 'stretch_item_inputs';
+
+                        item['_props_'] = [id, color];
+                        structInputs['list'].push(item);
                         break;
     
                     case _TYPES_.SCAN:
@@ -375,12 +477,11 @@ export default function Simulate() {
                 divider = false;
             } else {
                 item = _create_list_item(id, color, type !== _TYPES_.LIST);
+                wrapper.appendChild(item);
             }
 
-            slide.appendChild(item);
-
             if (divider)
-                addElement(slide, 'div', 'item-divider');
+                addElement(wrapper, 'div', 'item-divider');
 
             divider = true;
         }

@@ -89,7 +89,7 @@ export default function Type (__context) {
                 case _TYPES_.PHOTO:
                 case _TYPES_.SIGNATURE:
                 case _TYPES_.SCAN:
-                    rowOptional.style.display = 'grid';
+                    // rowOptional.style.display = 'grid';
                     break;
             }
         }

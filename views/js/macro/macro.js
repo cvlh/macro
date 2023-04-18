@@ -669,7 +669,7 @@ export default function Macro(__properties) {
         properties = new Properties(Context);
         mainProperties.appendChild(properties.getFragment());
 
-        simulate = new Simulate(Context);
+        simulate = new Simulate();
         simulateDiv.appendChild(simulate.getFragment());
 
         // if (props.hasOwnProperty('transform')) {

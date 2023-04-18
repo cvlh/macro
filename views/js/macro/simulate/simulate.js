@@ -15,9 +15,10 @@ export default function Simulate() {
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const
         DOMElement = {
-            popup:    null,
-            main:     null,
-            keyboard: null
+            popup:            null,
+                container:    null,
+                    main:     null,
+                    keyboard: null
         };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
@@ -333,7 +334,7 @@ export default function Simulate() {
               main_parent = current_parent.parentElement;
 
         current_parent.style.overflowY = 'hidden';
-        
+
         if (target.classList.contains('input-type')) {
             const [id, color] = target['_props_'];
 
@@ -345,18 +346,17 @@ export default function Simulate() {
             target.removeChild(target.lastChild);
             
             const content = addElement(main_parent, 'div', 'item-input');
-            main_parent.replaceChild(content, target);
+            current_parent.replaceChild(content, target);
             content.appendChild(target);
 
             content.style.animationName = 'stretch_item_input';
             content.style.animationPlayState = 'running';
 
-            // const listItems = main_parent.querySelectorAll('.item-list, .item-divider');
-            const listItems = main_parent.querySelectorAll('.item-list');
+            const listItems = current_parent.querySelectorAll('.item-list');
             for (const listItem of listItems)
                 listItem.style.animationPlayState = 'running';
             
-            const dividers = main_parent.querySelectorAll('.item-divider');
+            const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
                 divider.style.flexBasis = '0';
                 // divider.style.height = '0px';
@@ -561,7 +561,7 @@ export default function Simulate() {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.getFragment = function() { return fragment; };
+    this.getFragment = function(popup = true) { return popup ? fragment : DOMElement.container; };
     this.start = function(serialize) {
         while (DOMElement.main.hasChildNodes())
             DOMElement.main.removeChild(DOMElement.main.firstChild);
@@ -618,9 +618,12 @@ export default function Simulate() {
         const simulateContent = addElement(DOMElement.popup, 'div', 'simulate-content');
         addElement(simulateContent, 'div', 'header');
 
-        const simulateContainer = addElement(simulateContent, 'div', 'container');
-        DOMElement.main = addElement(simulateContainer, 'div', 'main');
-        DOMElement.keyboard = addElement(simulateContainer, 'div', 'controls');
+        // const simulateContainer = addElement(simulateContent, 'div', 'container');
+        // DOMElement.main = addElement(simulateContainer, 'div', 'main');
+        // DOMElement.keyboard = addElement(simulateContainer, 'div', 'controls');
+        DOMElement.container = addElement(simulateContent, 'div', 'container');
+        DOMElement.main = addElement(DOMElement.container, 'div', 'main');
+        DOMElement.keyboard = addElement(DOMElement.container, 'div', 'controls');
         _create_keyboard();
 
         addElement(simulateContent, 'div', 'footer');

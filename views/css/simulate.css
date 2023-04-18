@@ -77,6 +77,8 @@
             grid-template-rows: auto min-content;
             overflow: hidden;
 
+            height: 100%;
+            
             margin: 0 8px;
             border-radius: 8px;
         }
@@ -166,6 +168,7 @@
                         .keyboard > button:focus-visible { outline-color: var(--neutral-700); }
 
             .container > .main {
+                flex-grow: 1;
                 position: relative;
 
                 border: 1px solid var(--neutral-300);
@@ -217,7 +220,7 @@
                     }
                     @keyframes main_slide_hide {
                         from { left: 0; } 
-                        to   { left: -100%; opacity: 0;}
+                        to   { left: -100%; opacity: 0.6;}
                     }
                     .container-main-slide > .navbar {
                         flex: 0 0 25px;
@@ -245,7 +248,7 @@
                         
                     .container-main-slide > .item-space { 
                         flex: 0 0 4px; 
-                        box-shadow: 0px 0px 8px 4px var(--neutral-600);
+                        box-shadow: 0px 0px 7px 3px var(--neutral-500);
                         z-index: 1;
                     }
 

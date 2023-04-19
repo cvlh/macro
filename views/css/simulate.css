@@ -95,6 +95,7 @@
                     outline-style: dashed;
                 }
 
+                /* // .CONTROLS-BUTTONS MOBILE ///////////////////////////////*/
                 .controls > .controls-buttons {
                     display: flex;
                     flex-direction: row;
@@ -102,12 +103,14 @@
                     align-items: center;
                     justify-content: center;
 
-                    border-left: 1px solid var(--neutral-300);
-                    border-right: 1px solid var(--neutral-300);
-
                     box-shadow: 0px 0px 6px 2px var(--neutral-500);
                     z-index: 1;
                 }
+                /* // .CONTROLS-BUTTONS WEB //////////////////////////////////*/
+                /* .simulate-content > .container > .controls > .controls-buttons {
+                    border-left: 1px solid var(--neutral-300);
+                    border-right: 1px solid var(--neutral-300);
+                } */
                     .controls-buttons > button {
                         flex: 1 1 0;
                         font-size: 11px;
@@ -120,24 +123,21 @@
                         color: var(--white);
                     }
 
-                        .controls-buttons > button.confirm {
-                            /* background-image: url(../img/done.svg);
-                            background-repeat: no-repeat;
-                            background-position: center; */
-                            background-color: var(--blue-base); 
-                        }
-                        .controls-buttons > button.confirm:hover { background-color: var(--blue-1100); }
+                        .controls-buttons > button.confirm { background-color: var(--blue-base);  }
+                        /* .controls-buttons > button.confirm:hover { background-color: var(--blue-1100); } */
 
                         .controls-buttons > button.back { background-color: var(--yellow-base); }
-                        .controls-buttons > button.back:hover { background-color: var(--yellow-1100); }
+                        /* .controls-buttons > button.back:hover { background-color: var(--yellow-1100); } */
 
                         .controls-buttons > button.clear { background-color: var(--orange-900); }
-                        .controls-buttons > button.clear:hover { background-color: var(--orange-base); }
+                        /* .controls-buttons > button.clear:hover { background-color: var(--orange-base); } */
 
-                        .controls-buttons > button:active { transform: scale(.97); } 
+                        .controls-buttons > button:hover { filter: brightness(0.95); }
+                        .controls-buttons > button:active { filter: brightness(0.90); }
+                        /* .controls-buttons > button:active { transform: scale(.97); }  */
                         .controls-buttons > button:focus-visible { outline-color: var(--white); }
 
-                 /* // .KEYBOARD WEB /////////////////////////////////////////*/
+                /* // .KEYBOARD WEB //////////////////////////////////////////*/
                 .simulate-content > .container > .controls > .keyboard {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);

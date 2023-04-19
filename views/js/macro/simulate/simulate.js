@@ -146,7 +146,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
                                 canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
                             } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-                                canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+                                canvas.addEventListener('touchstart', _drawing_start, { passive: true, once: true, capture: false });
                             }
                         }, { once: true, capture: false });
                         break;
@@ -188,10 +188,12 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
         } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
             this.addEventListener('touchmove', _drawing, { capture: false });
-            this.addEventListener('touchend', _drawing_end, { once: true, capture: false });
+            this.addEventListener('touchend', _drawing_end, { passive:true, once: true, capture: false });
         }
     },
     _drawing = function (evnt) {
+        evnt.preventDefault();
+
         const rect = this.getBoundingClientRect();
         const ctx = this.getContext('2d');
 
@@ -212,7 +214,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
         } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
             this.removeEventListener('touchmove', _drawing, { capture: false });
-            this.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+            this.addEventListener('touchstart', _drawing_start, { passive: true, once: true, capture: false });
         }
     },
 

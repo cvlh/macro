@@ -133,20 +133,20 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             ctx.font = '11px VP-FONT';
                             ctx.textBaseline = 'middle';
                             ctx.fillStyle = list[last]['_props_'][1];
-                            ctx.fillText(label, (canvas.width / 2) - (size.width / 2), canvas.height - 20, canvas.width);
+                            ctx.fillText(label, (canvas.width / 2) - (size.width / 2), canvas.height - 15, canvas.width);
 
                             ctx.beginPath();
                             ctx.lineWidth = 1;
                             ctx.strokeStyle = list[last]['_props_'][1];;
                             ctx.lineCap = 'round';
-                            ctx.moveTo(15, canvas.height - 30);
-                            ctx.lineTo(canvas.width - 15, canvas.height - 30);
+                            ctx.moveTo(15, canvas.height - 26);
+                            ctx.lineTo(canvas.width - 15, canvas.height - 26);
                             ctx.stroke();
 
                             if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
                                 canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
                             } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-                                canvas.addEventListener('touchstart', _drawing_start, { passive: true, once: true, capture: false });
+                                canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
                             }
                         }, { once: true, capture: false });
                         break;
@@ -187,7 +187,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             this.addEventListener('mousemove', _drawing, { capture: false });
             this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
         } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-            this.addEventListener('touchmove', _drawing, { passive: true, capture: false });
+            this.addEventListener('touchmove', _drawing, { capture: false });
             this.addEventListener('touchend', _drawing_end, { once: true, capture: false });
         }
     },
@@ -211,8 +211,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             this.removeEventListener('mousemove', _drawing, { capture: false });
             this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
         } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-            this.removeEventListener('touchmove', _drawing, { passive: true, capture: false });
-            this.addEventListener('touchstart', _drawing_start, { passive: true, once: true, capture: false });
+            this.removeEventListener('touchmove', _drawing, { capture: false });
+            this.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
         }
     },
 

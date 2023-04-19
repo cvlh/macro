@@ -1,5 +1,7 @@
 'use strict';
+
 import { _RUN_ENVIRONMENT_ } from '../../utils/constants.js';
+import { addElement } from '../../utils/functions.js';
 import Simulate from './simulate.js';
 
 let vh = window.innerHeight * 0.01;

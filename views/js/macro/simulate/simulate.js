@@ -125,8 +125,12 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;
-                            canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
-                            canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+
+                            if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+                                canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
+                            } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+                                canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+                            }
                         }, { once: true, capture: false });
                         break;
 
@@ -149,15 +153,25 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             x: evnt.clientX - position.x,
             y: evnt.clientY - position.y,
         }
-        this.addEventListener('mousemove', _drawing, { capture: false });
-        this.addEventListener('touchmove', _drawing, { capture: false });
 
-        this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
-        this.addEventListener('touchend', _drawing_end, { once: true, capture: false });
+        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+            this.addEventListener('mousemove', _drawing, { capture: false });
+            this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
+        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+            this.addEventListener('touchmove', _drawing, { capture: false });
+            this.addEventListener('touchend', _drawing_end, { once: true, capture: false });
+        }
     },
     _drawing = function (evnt) {
-        if (evnt.type === 'touchmove') {
-            
+        let deltaX = 0, deltaY = 0;
+        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+            deltaX = evnt.movementX;
+            deltaY = evnt.movementY;
+        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+            if (evnt.type === 'touchmove' && evnt.touches.length > 0) {
+                deltaX = evnt.touches[0].clientX - this.offsetLeft;
+                deltaY = evnt.touches[0].clientY - this.offsetTop;
+            }
         }
         const ctx = this.getContext('2d');
 
@@ -167,8 +181,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
         ctx.lineCap = 'round';
         ctx.moveTo(this['_drawing_']['x'], this['_drawing_']['y']);
 
-        this['_drawing_']['x'] += evnt.movementX;
-        this['_drawing_']['y'] += evnt.movementY;
+        this['_drawing_']['x'] += deltaX;
+        this['_drawing_']['y'] += deltaY;
 
         ctx.lineTo(this['_drawing_']['x'], this['_drawing_']['y']);
         ctx.stroke();
@@ -176,11 +190,13 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
     _drawing_end = function () {
         delete this['_drawing_'];
 
-        this.removeEventListener('mousemove', _drawing, { capture: false });
-        this.removeEventListener('touchmove', _drawing, { capture: false });
-
-        this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
-        this.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+            this.removeEventListener('mousemove', _drawing, { capture: false });
+            this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
+        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+            this.removeEventListener('touchmove', _drawing, { capture: false });
+            this.addEventListener('touchstart', _drawing_start, { once: true, capture: false });
+        }
     },
     ////////////////////////////////////////////////////////////////////////////
 
@@ -607,7 +623,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
         queueViews[0].style.left = '0';
 
-        DOMElement.popup.style.display = 'block';
+        if (runEnvironment === _RUN_ENVIRONMENT_.WEB)
+            DOMElement.popup.style.display = 'block';
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

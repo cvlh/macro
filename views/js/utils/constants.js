@@ -141,3 +141,8 @@ export const _FLEX_ALIGN_ = {
     CENTER : 'center',
     LEFT   : 'flex-end'
 };
+
+export const _RUN_ENVIRONMENT_ = {
+    WEB:    0,
+    MOBILE: 1
+}

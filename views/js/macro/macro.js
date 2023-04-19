@@ -1,6 +1,6 @@
 'use strict';
 
-import { _DRAG_, _MOV_, _ZOOM_, _ICON_CHAR_ } from '../utils/constants.js';
+import { _DRAG_, _MOV_, _ZOOM_, _ICON_CHAR_, _RUN_ENVIRONMENT_ } from '../utils/constants.js';
 import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
@@ -669,7 +669,7 @@ export default function Macro(__properties) {
         properties = new Properties(Context);
         mainProperties.appendChild(properties.getFragment());
 
-        simulate = new Simulate();
+        simulate = new Simulate(_RUN_ENVIRONMENT_.WEB);
         simulateDiv.appendChild(simulate.getFragment());
 
         // if (props.hasOwnProperty('transform')) {

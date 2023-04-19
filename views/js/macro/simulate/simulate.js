@@ -1,13 +1,13 @@
 'use strict';
 
-import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_} from '../../utils/constants.js';
+import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_, _RUN_ENVIRONMENT_} from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-export default function Simulate() {
+export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
     if (!new.target) 
         throw new Error('Simulate() must be called with new');
@@ -22,8 +22,9 @@ export default function Simulate() {
         };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let fragment, 
-        
+    let runEnvironment = __run_env,
+        fragment,
+
         macro,
         stackExecute, stackVisibility,
         queueViews,
@@ -70,7 +71,6 @@ export default function Simulate() {
         switch (keyboardType) {
             case _KEY_TYPE_.NUMPAD:
             case _KEY_TYPE_.QWERTY:
-                // DOMElement.keyboard.style.height = '131px';
                 DOMElement.keyboard.style.height = '138px';
                 break;
             
@@ -562,7 +562,7 @@ export default function Simulate() {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.getFragment = function(popup = true) { return popup ? fragment : DOMElement.container; };
+    this.getFragment = function() { return fragment; };
     this.start = function(serialize) {
         while (DOMElement.main.hasChildNodes())
             DOMElement.main.removeChild(DOMElement.main.firstChild);
@@ -614,20 +614,21 @@ export default function Simulate() {
     (function() {
         fragment = document.createDocumentFragment();
 
-        DOMElement.popup = addElement(fragment, 'div', 'simulate-app');
-        
-        const simulateContent = addElement(DOMElement.popup, 'div', 'simulate-content');
-        addElement(simulateContent, 'div', 'header');
+        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+            DOMElement.popup = addElement(fragment, 'div', 'simulate-app');
+            
+            const simulateContent = addElement(DOMElement.popup, 'div', 'simulate-content');
+            addElement(simulateContent, 'div', 'header');
+            DOMElement.container = addElement(simulateContent, 'div', 'container');
+            addElement(simulateContent, 'div', 'footer');
+        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+            DOMElement.container = addElement(fragment, 'div', 'container');
+        }
 
-        // const simulateContainer = addElement(simulateContent, 'div', 'container');
-        // DOMElement.main = addElement(simulateContainer, 'div', 'main');
-        // DOMElement.keyboard = addElement(simulateContainer, 'div', 'controls');
-        DOMElement.container = addElement(simulateContent, 'div', 'container');
         DOMElement.main = addElement(DOMElement.container, 'div', 'main');
         DOMElement.keyboard = addElement(DOMElement.container, 'div', 'controls');
-        _create_keyboard();
 
-        addElement(simulateContent, 'div', 'footer');
+        _create_keyboard();
 
         DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();

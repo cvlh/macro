@@ -12,6 +12,10 @@
 
     box-sizing: content-box;
     display: none;
+
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
 }
     .simulate-app:before {
         content: "";
@@ -34,6 +38,10 @@
         
         width: 208px;
         height: 410px;
+    }
+    .simulate-mobile-content {
+        height: calc(var(--vh, 1vh) * 100);
+        width:  calc(var(--vw, 1vh) * 100);
     }
         .simulate-content > .header {
             transform: translate(81px, 9px);
@@ -81,6 +89,11 @@
 
             margin: 0 8px;
             border-radius: 8px;
+        }
+        .simulate-mobile-content > .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
             .container > .controls {
                 display: flex;
@@ -137,7 +150,6 @@
                         /* .controls-buttons > button:active { transform: scale(.97); }  */
                         .controls-buttons > button:focus-visible { outline-color: var(--white); }
 
-                /* // .KEYBOARD WEB //////////////////////////////////////////*/
                 .simulate-content > .container > .controls > .keyboard {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -153,9 +165,7 @@
 
                     gap: 1px;
                 }
-
-                /* // .KEYBOARD MOBILE ///////////////////////////////////////*/
-                .controls > .keyboard {
+                .simulate-mobile-content > .container > .controls > .keyboard {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     background-color: var(--neutral-200);
@@ -185,7 +195,6 @@
                         .keyboard > button:active { filter: brightness(0.95); } 
                         .keyboard > button:focus-visible { outline-color: var(--neutral-700); }
 
-            /* // .MAIN WEB //////////////////////////////////////////////////*/
             .simulate-content > .container > .main {
                 flex-grow: 1;
                 position: relative;
@@ -202,8 +211,7 @@
 
                 background-color: var(--white);
             }
-            /* // .MAIN MOBILE ///////////////////////////////////////////////*/
-            .container > .main {
+            .simulate-mobile-content > .container > .main {
                 flex-grow: 1;
                 position: relative;
 
@@ -231,7 +239,7 @@
 
                     overflow: hidden;
 
-                    animation-duration: .15s;
+                    animation-duration: .2s;
                     animation-timing-function: linear;
                     animation-delay: 0s;
                     animation-iteration-count: 1;
@@ -312,7 +320,7 @@
                             overflow: hidden;
 
                             background-color: transparent;
-                            animation: .15s ease 0s 1 normal both paused shrink_item_list;
+                            animation: .2s ease 0s 1 normal both paused shrink_item_list;
                         }
                             @keyframes shrink_item_list {
                                 from { flex-basis: 50px; opacity: 1; } 
@@ -386,7 +394,7 @@
                             background-color: transparent;
                             /* background-color: var(--neutral-100); */
 
-                            animation: .15s ease 0s 1 normal both paused;
+                            animation: .2s ease 0s 1 normal both paused;
                             /* animation-duration: .15s;
                             animation-timing-function: ease;
                             animation-delay: 0s;

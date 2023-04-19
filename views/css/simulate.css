@@ -473,7 +473,7 @@
                                         color: var(--red-base);
                                     }
                             .item-input > .item-drawing {
-                                background-color: var(--neutral-100);
+                                /* background-color: var(--neutral-100); */
                                 position: absolute;
                                 top: 0;
                                 left: 0;

@@ -132,11 +132,17 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
                             ctx.font = '11px VP-FONT';
                             ctx.textBaseline = 'middle';
+                            ctx.textAlign = 'left';
                             ctx.fillStyle = list[last]['_props_'][1];
-                            ctx.fillText(label, (canvas.width / 2) - (size.width / 2), canvas.height - 15, canvas.width);
+
+                            let startOffset = 5;
+                            if (size.width < canvas.width)
+                                startOffset = (canvas.width / 2) - (size.width / 2);
+                            
+                            ctx.fillText(label, startOffset, canvas.height - 15, canvas.width - 10);
 
                             ctx.beginPath();
-                            ctx.lineWidth = 1;
+                            ctx.lineWidth = 2;
                             ctx.strokeStyle = list[last]['_props_'][1];;
                             ctx.lineCap = 'round';
                             ctx.moveTo(15, canvas.height - 26);

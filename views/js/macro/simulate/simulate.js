@@ -126,6 +126,23 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;
 
+                            const ctx = canvas.getContext('2d');
+                            const label = macro[list[last]['_props_'][0]].text;
+                            const size = ctx.measureText(label);
+
+                            ctx.font = '11px VP-FONT';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle = list[last]['_props_'][1];
+                            ctx.fillText(label, (canvas.width / 2) - (size.width / 2), canvas.height - 20, canvas.width);
+
+                            ctx.beginPath();
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = list[last]['_props_'][1];;
+                            ctx.lineCap = 'round';
+                            ctx.moveTo(15, canvas.height - 30);
+                            ctx.lineTo(canvas.width - 15, canvas.height - 30);
+                            ctx.stroke();
+
                             if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
                                 canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
                             } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
@@ -163,7 +180,6 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
         return [ deltaX, deltaY ];
     },
     _drawing_start = function (evnt) {
-        
         const rect = this.getBoundingClientRect();
         this['_drawing_'] = _draw_position(evnt, rect);
 
@@ -199,8 +215,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             this.addEventListener('touchstart', _drawing_start, { passive: true, once: true, capture: false });
         }
     },
-    ////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////
     _wildcard = (id) => {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;

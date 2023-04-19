@@ -208,7 +208,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
         ctx.lineTo(this['_drawing_'][0], this['_drawing_'][1]);
         ctx.stroke();
     },
-    _drawing_end = function () {
+    _drawing_end = function (evnt) {
         evnt.preventDefault();
 
         delete this['_drawing_'];

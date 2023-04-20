@@ -136,18 +136,13 @@
                         color: var(--white);
                     }
 
-                        .controls-buttons > button.confirm { background-color: var(--blue-base);  }
-                        /* .controls-buttons > button.confirm:hover { background-color: var(--blue-1100); } */
+                        .controls-buttons > button.confirm { background-color: var(--blue-base);   }
+                        .controls-buttons > button.back    { background-color: var(--yellow-base); }
+                        .controls-buttons > button.clear   { background-color: var(--orange-900);  }
 
-                        .controls-buttons > button.back { background-color: var(--yellow-base); }
-                        /* .controls-buttons > button.back:hover { background-color: var(--yellow-1100); } */
-
-                        .controls-buttons > button.clear { background-color: var(--orange-900); }
-                        /* .controls-buttons > button.clear:hover { background-color: var(--orange-base); } */
-
-                        .controls-buttons > button:hover { filter: brightness(0.95); }
+                        .controls-buttons > button:hover  { filter: brightness(0.95); }
                         .controls-buttons > button:active { filter: brightness(0.90); }
-                        /* .controls-buttons > button:active { transform: scale(.97); }  */
+                        
                         .controls-buttons > button:focus-visible { outline-color: var(--white); }
 
                 .simulate-content > .container > .controls > .keyboard {
@@ -473,7 +468,6 @@
                                         color: var(--red-base);
                                     }
                             .item-input > .item-drawing {
-                                /* background-color: var(--neutral-100); */
                                 position: absolute;
                                 top: 0;
                                 left: 0;

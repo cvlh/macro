@@ -103,16 +103,26 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
 
-                            const canvas = addElement(this, 'canvas', 'item-drawing');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
+                            // const canvas = addElement(this, 'canvas', 'item-drawing');
+                            // canvas.width = video.videoWidth;
+                            // canvas.height = video.videoHeight;
 
-                            navigator.mediaDevices.getUserMedia({ video: true }).then(function (mediaStream) {
+                            const constraints = { 
+                                audio: false,
+                                video: { 
+                                    width: this.offsetWidth, 
+                                    height: this.offsetHeight,
+                                    facingMode: 'user'
+                                } 
+                            };
+
+                            navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
                                 console.log(mediaStream);
                                 video.srcObject = mediaStream;
                                 video.play();
                             }).catch(function (err) {
-                                console.log('Não há permissões para acessar a webcam')
+                                addElement(video, 'div', 'simulate-app', `${err.name}: ${err.message}`);
+                                console.log(err)
                             });
 
                         }, { once: true, capture: false });

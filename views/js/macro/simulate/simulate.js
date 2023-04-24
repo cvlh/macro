@@ -1,6 +1,6 @@
 'use strict';
 
-import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_, _RUN_ENVIRONMENT_} from '../../utils/constants.js';
+import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
@@ -99,6 +99,12 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         _show_keyboard(_KEY_TYPE_.NONE);
 
                         list[last].addEventListener('animationend', function() {
+                            const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
+                            wait_icon.style.color = list[last]['_props_'][1];
+
+                            const wait_message = addElement(this, 'div', 'loading-resources-text', _I18N_.resource_loading);
+                            wait_message.style.color = list[last]['_props_'][1];
+
                             const video = addElement(this, 'video', 'item-drawing');
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
@@ -119,9 +125,18 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
                                 console.log(mediaStream);
                                 video.srcObject = mediaStream;
-                                video.play();
+                                video.onloadedmetadata = function(e) {
+                                    wait_icon.style.display = 'none';
+                                    wait_message.style.display = 'none';
+
+                                    video.play();
+                                };
                             }).catch(function (err) {
-                                addElement(video, 'div', 'simulate-app', `${err.name}: ${err.message}`);
+                                wait_icon.textContent = _ICON_CHAR_.ALERT;
+                                wait_icon.style.color = 'var(--red)';
+                                wait_message.textContent = `${err.name}: ${err.message}`;
+                                wait_message.style.color = 'var(--red)';
+                                
                                 console.log(err)
                             });
 
@@ -153,7 +168,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
                             ctx.beginPath();
                             ctx.lineWidth = 2;
-                            ctx.strokeStyle = list[last]['_props_'][1];;
+                            ctx.strokeStyle = list[last]['_props_'][1];
                             ctx.lineCap = 'round';
                             ctx.moveTo(15, canvas.height - 26);
                             ctx.lineTo(canvas.width - 15, canvas.height - 26);

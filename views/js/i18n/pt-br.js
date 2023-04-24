@@ -92,5 +92,7 @@ export const _I18N_ = {
 
     keyboard_back: 'Voltar',
     keyboard_clear: 'Limpar',
-    keyboard_confirm: 'OK'
+    keyboard_confirm: 'OK',
+    
+    resource_loading: 'Carregando ...'
 }

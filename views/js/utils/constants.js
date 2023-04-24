@@ -99,7 +99,9 @@ export const _ICON_CHAR_ = {
     ZOOM_OUT:  'o',
     ZOOM:      'z',
     VISIBLE:   '[',
-    HIDDEN:    ']'
+    HIDDEN:    ']',
+    CAMERA:    '4',
+    ALERT:     'a'
 };
 
 export const _ORDER_ = {

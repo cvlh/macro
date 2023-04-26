@@ -105,6 +105,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const wait_message = addElement(this, 'div', 'loading-resources-text', _I18N_.resource_loading);
                             wait_message.style.color = list[last]['_props_'][1];
 
+                            const take_picture = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
+
                             const video = addElement(this, 'video', 'item-drawing');
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
@@ -113,32 +115,35 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             // canvas.width = video.videoWidth;
                             // canvas.height = video.videoHeight;
 
-                            const constraints = { 
-                                audio: false,
-                                video: { 
-                                    width: this.offsetWidth, 
-                                    height: this.offsetHeight,
-                                    facingMode: 'user'
-                                } 
-                            };
-
-                            navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
-                                console.log(mediaStream);
-                                video.srcObject = mediaStream;
-                                video.onloadedmetadata = function(e) {
-                                    wait_icon.style.display = 'none';
-                                    wait_message.style.display = 'none';
-
-                                    video.play();
+                            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+                                const constraints = { 
+                                    audio: false,
+                                    video: { 
+                                        width: this.offsetWidth, 
+                                        height: this.offsetHeight,
+                                        facingMode: 'user'
+                                    } 
                                 };
-                            }).catch(function (err) {
+                                navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
+                                    video.srcObject = mediaStream;
+                                    video.onloadedmetadata = function() {
+                                        wait_icon.style.display = 'none';
+                                        wait_message.style.display = 'none';
+
+                                        video.play();
+                                        take_picture.style.display = 'block';
+                                    };
+                                }).catch(function (err) {
+                                    wait_icon.textContent = _ICON_CHAR_.ALERT;
+                                    wait_icon.style.color = 'var(--red)';
+
+                                    wait_message.textContent = `${err.name}: ${err.message}`;
+                                    wait_message.style.color = 'var(--red)';
+                                });
+                            } else {
                                 wait_icon.textContent = _ICON_CHAR_.ALERT;
                                 wait_icon.style.color = 'var(--red)';
-                                wait_message.textContent = `${err.name}: ${err.message}`;
-                                wait_message.style.color = 'var(--red)';
-                                
-                                console.log(err)
-                            });
+                            }
 
                         }, { once: true, capture: false });
                         break;
@@ -294,6 +299,10 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             for (const id of visibility_fields['visible'])
                 currentVisibleIDs.add(id);
         }
+        console.log(currentVisibleIDs);
+        
+        localStorage.setItem('visibility', JSON.stringify(currentVisibleIDs));
+        localStorage.setItem('stack', JSON.stringify(stackVisibility));
     },
     _additional_visibility = (visibility_fields) => {
         if (visibility_fields.hasOwnProperty('visible')) {

@@ -23,7 +23,7 @@ const simulate = new Simulate(_RUN_ENVIRONMENT_.MOBILE);
 
 simulateDiv.appendChild(simulate.getFragment());
 
-fetch('../../../macro_simple.json')
+fetch('../macro_simple.json')
     .then(function(response) {
         if(response.ok) {
             response.json().then(data => { simulate.start(data); });

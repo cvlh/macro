@@ -128,6 +128,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             video.height = this.offsetHeight;
                             video.setAttribute('muted', '');
                             video.setAttribute('autoplay', '');
+                            video.setAttribute('playsinline', '');
 
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;

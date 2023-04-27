@@ -126,7 +126,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const video = addElement(this, 'video', 'item-drawing');
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
-                            
+                            video.setAttribute('muted', true);
+
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;

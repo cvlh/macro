@@ -77,6 +77,10 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             case _KEY_TYPE_.CONTROL:
                 DOMElement.keyboard.style.height = '30px'; 
                 break;
+
+            // case _KEY_TYPE_.NONE:
+            //     DOMElement.keyboard.style.removeProperty('height'); 
+                break;
         }
     },
     _confirm_keyboard = () => {
@@ -96,7 +100,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         break;
                         
                     case _TYPES_.PHOTO:
-                        _show_keyboard(_KEY_TYPE_.NONE);
+                        _hide_keyboard();
 
                         list[last].addEventListener('animationend', function() {
                             const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
@@ -105,15 +109,16 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const wait_message = addElement(this, 'div', 'loading-resources-text', _I18N_.resource_loading);
                             wait_message.style.color = list[last]['_props_'][1];
 
-                            const take_picture = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
-
                             const video = addElement(this, 'video', 'item-drawing');
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
+                            
+                            const canvas = addElement(this, 'canvas', 'item-drawing');
+                            canvas.width = this.offsetWidth;
+                            canvas.height = this.offsetHeight;
+                            canvas.style.visibility = 'hidden';
 
-                            // const canvas = addElement(this, 'canvas', 'item-drawing');
-                            // canvas.width = video.videoWidth;
-                            // canvas.height = video.videoHeight;
+                            const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
 
                             if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
                                 const constraints = { 
@@ -125,13 +130,31 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                     } 
                                 };
                                 navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
+                                    const video_track = mediaStream.getVideoTracks()[0];
                                     video.srcObject = mediaStream;
                                     video.onloadedmetadata = function() {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
 
                                         video.play();
-                                        take_picture.style.display = 'block';
+
+                                        take_picture_btn.style.visibility = 'visible';
+                                        take_picture_btn.addEventListener('click', function() {
+                                            this.style.visibility = 'hidden';
+
+                                            canvas.style.visibility = 'visible';
+                                            const ctx = canvas.getContext('2d');
+                                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                            const image_data_url = canvas.toDataURL('image/jpeg');
+                                            // console.log(image_data_url);
+
+                                            video.style.visibility = 'hidden';
+                                            video_track.stop();
+
+                                            mediaStream.removeTrack(video_track);
+
+                                            _show_keyboard(_KEY_TYPE_.CONTROL);
+                                        }, { once: true, capture: false });
                                     };
                                 }).catch(function (err) {
                                     wait_icon.textContent = _ICON_CHAR_.ALERT;
@@ -299,10 +322,10 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             for (const id of visibility_fields['visible'])
                 currentVisibleIDs.add(id);
         }
-        console.log(currentVisibleIDs);
-        
-        localStorage.setItem('visibility', JSON.stringify(currentVisibleIDs));
-        localStorage.setItem('stack', JSON.stringify(stackVisibility));
+
+        // console.log(currentVisibleIDs);
+        // localStorage.setItem('visibility', JSON.stringify(currentVisibleIDs));
+        // localStorage.setItem('stack', JSON.stringify(stackVisibility));
     },
     _additional_visibility = (visibility_fields) => {
         if (visibility_fields.hasOwnProperty('visible')) {

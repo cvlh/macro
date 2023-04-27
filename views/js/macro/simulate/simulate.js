@@ -103,15 +103,20 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         _hide_keyboard();
 
                         list[last].addEventListener('animationend', function() {
-                            const constraints = { 
-                                audio: false,
-                                video: { 
-                                    width: this.offsetWidth,
-                                    height: this.offsetHeight,
+                            // const constraints = { 
+                            //     audio: false,
+                            //     video: { 
+                            //         width: this.offsetWidth,
+                            //         height: this.offsetHeight,
+                            //         facingMode: 'user'
+                            //     } 
+                            // };
+                            const constraints = {
+                                video: {
+                                    aspectRatio: this.offsetWidth / this.offsetHeight,
                                     facingMode: 'user'
-                                } 
-                            };
-
+                                },
+                              }
                             const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
                             wait_icon.style.color = list[last]['_props_'][1];
 

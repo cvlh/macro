@@ -112,6 +112,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             //     } 
                             // };
                             const constraints = {
+                                audio: false,
                                 video: { 
                                     aspectRatio: 0.5,
                                     facingMode: 'user'

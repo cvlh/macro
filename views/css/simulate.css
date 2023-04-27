@@ -42,6 +42,8 @@
     .simulate-mobile-content {
         height: calc(var(--vh, 1vh) * 100);
         width:  calc(var(--vw, 1vh) * 100);
+
+        overflow: hidden;
     }
         .simulate-content > .header {
             transform: translate(81px, 9px);
@@ -94,6 +96,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
             .container > .controls {
                 display: flex;

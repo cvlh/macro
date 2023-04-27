@@ -107,7 +107,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                 audio: false,
                                 video: { 
                                     width: this.offsetWidth, 
-                                    height: this.offsetHeight,
+                                    // height: this.offsetHeight,
                                     facingMode: 'user'
                                 } 
                             };

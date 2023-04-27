@@ -113,7 +113,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             // };
                             const constraints = {
                                 video: { 
-                                    aspectRatio: 0.6,
+                                    aspectRatio: 0.5,
                                     facingMode: 'user'
                                 }
                             };
@@ -130,7 +130,6 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;
-                            canvas.style.visibility = 'hidden';
 
                             const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
 
@@ -142,6 +141,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
 
+                                        video.style.visibility = 'visible';
                                         video.play();
 
                                         take_picture_btn.style.visibility = 'visible';

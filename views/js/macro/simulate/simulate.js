@@ -127,6 +127,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             video.width = this.offsetWidth;
                             video.height = this.offsetHeight;
                             video.setAttribute('muted', '');
+                            video.setAttribute('autoplay', '');
 
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
@@ -144,7 +145,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
 
-                                        video.play();
+                                        // video.play();
 
                                         take_picture_btn.style.visibility = 'visible';
                                         take_picture_btn.addEventListener('click', function() {

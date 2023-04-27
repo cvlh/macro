@@ -124,8 +124,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                 const constraints = { 
                                     audio: false,
                                     video: { 
-                                        width: this.offsetWidth, 
-                                        height: this.offsetHeight,
+                                        width: video.offsetWidth, 
+                                        height: video.offsetHeight,
                                         facingMode: 'user'
                                     } 
                                 };

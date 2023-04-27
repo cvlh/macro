@@ -103,21 +103,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         _hide_keyboard();
 
                         list[last].addEventListener('animationend', function() {
-                            // const constraints = { 
-                            //     audio: false,
-                            //     video: { 
-                            //         width: this.offsetWidth,
-                            //         height: this.offsetHeight,
-                            //         facingMode: 'user'
-                            //     } 
-                            // };
-                            const constraints = {
-                                audio: false,
-                                video: {
-                                    aspectRatio: 0.6,
-                                    facingMode: 'user'
-                                }
-                            };
+                            
                             const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
                             wait_icon.style.color = list[last]['_props_'][1];
 
@@ -134,18 +120,26 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;
-                            canvas.style.visibility = 'visible';
+                            canvas.style.visibility = 'hidden';
 
                             const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
 
                             if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                                navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
+                                navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user', aspectRatio: { min: 0.6, max: 1 } } }).then(function (mediaStream) {
                                     const video_track = mediaStream.getVideoTracks()[0];
                                     video.srcObject = mediaStream;
 
                                     video.onloadedmetadata = function() {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
+
+                                        const settings = video_track.getSettings();
+                                        if (settings.hasOwnProperty('width') && settings.hasOwnProperty('height')) {
+                                            const aspectratio = settings['width'] / this.getAttribute('width');
+
+                                            canvas.setAttribute('width', settings['width'] / aspectratio);
+                                            canvas.setAttribute('height', settings['height'] / aspectratio);
+                                        }
 
                                         take_picture_btn.style.visibility = 'visible';
                                         take_picture_btn.addEventListener('click', function() {

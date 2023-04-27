@@ -113,7 +113,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             // };
                             const constraints = {
                                 audio: false,
-                                video: { 
+                                video: {
+                                    aspectRatio: 0.6,
                                     facingMode: 'user'
                                 }
                             };
@@ -145,8 +146,6 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                     video.onloadedmetadata = function() {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
-
-                                        // video.play();
 
                                         take_picture_btn.style.visibility = 'visible';
                                         take_picture_btn.addEventListener('click', function() {

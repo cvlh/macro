@@ -130,6 +130,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const canvas = addElement(this, 'canvas', 'item-drawing');
                             canvas.width = this.offsetWidth;
                             canvas.height = this.offsetHeight;
+                            canvas.style.visibility = 'visible';
 
                             const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
 
@@ -137,11 +138,11 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                                 navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
                                     const video_track = mediaStream.getVideoTracks()[0];
                                     video.srcObject = mediaStream;
+
                                     video.onloadedmetadata = function() {
                                         wait_icon.style.display = 'none';
                                         wait_message.style.display = 'none';
 
-                                        video.style.visibility = 'visible';
                                         video.play();
 
                                         take_picture_btn.style.visibility = 'visible';

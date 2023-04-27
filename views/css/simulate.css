@@ -334,11 +334,12 @@
                             .item-list:active { background-color: var(--neutral-200); }
 
                             .item-list-icon {
-                                display: flex;
+                                margin: auto;
+                                /* display: flex;
                                 flex-direction: column;
                                 justify-content: center;
                                 align-items: center;
-                                font-size: 15px;
+                                font-size: 15px; */
                                 /* border-radius: 2px; */
                                 pointer-events: none;
                             }
@@ -381,7 +382,10 @@
                             position: relative;
                             overflow: hidden;
 
-                            flex: 0;
+                            flex-grow: 0;
+                            flex-shrink: 1;
+                            flex-basis: 0;
+
                             gap: 8px;
 
                             display: flex;
@@ -432,10 +436,14 @@
 
                                 display: grid;
                                 grid-template-columns: 34px auto;
-                                grid-template-rows: 34px;
+                                /* grid-template-rows: 34px; */
                                 gap: 4px
                             }
                                 .item-input-box {
+                                    flex-grow: 0;
+                                    flex-shrink: 1;
+                                    flex-basis: 50px;
+                                    
                                     position: relative;
                                     background-color: var(--neutral-100);
                                     /* background-color: var(--white); */

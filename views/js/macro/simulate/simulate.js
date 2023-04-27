@@ -112,11 +112,11 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             //     } 
                             // };
                             const constraints = {
-                                video: {
-                                    aspectRatio: this.offsetWidth / this.offsetHeight,
+                                video: { 
+                                    aspectRatio: 0.6,
                                     facingMode: 'user'
-                                },
-                              }
+                                }
+                            };
                             const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
                             wait_icon.style.color = list[last]['_props_'][1];
 

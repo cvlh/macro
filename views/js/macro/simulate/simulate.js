@@ -103,6 +103,15 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         _hide_keyboard();
 
                         list[last].addEventListener('animationend', function() {
+                            const constraints = { 
+                                audio: false,
+                                video: { 
+                                    width: this.offsetWidth, 
+                                    height: this.offsetHeight,
+                                    facingMode: 'user'
+                                } 
+                            };
+
                             const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
                             wait_icon.style.color = list[last]['_props_'][1];
 
@@ -121,14 +130,6 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                             const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
 
                             if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                                const constraints = { 
-                                    audio: false,
-                                    video: { 
-                                        width: video.offsetWidth, 
-                                        height: video.offsetHeight,
-                                        facingMode: 'user'
-                                    } 
-                                };
                                 navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
                                     const video_track = mediaStream.getVideoTracks()[0];
                                     video.srcObject = mediaStream;

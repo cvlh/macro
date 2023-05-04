@@ -6,6 +6,7 @@ import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
 import InputSignature from './components/input-signature.js';
+import Keyboard from './keyboard.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
@@ -19,17 +20,17 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             popup: null,
                 container:    null,
                     main:     null,
-                    keyboard: null,
-                        btn_back:    null,
-                        btn_clear:   null,
-                        btn_confirm: null
+                    // keyboard: null,
+                    //     btn_back:    null,
+                    //     btn_clear:   null,
+                    //     btn_confirm: null
         };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let // runEnvironment = __run_env,
         fragment,
 
-        macro,
+        macro, keyboard,
         stackExecute, stackVisibility,
         queueViews,
         structInputs, // { last: 0, list: [] }
@@ -37,164 +38,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         lastRootExecuted,
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _create_keyboard = () => {
-        const controls_buttons = addElement(DOMElement.keyboard, 'div', 'controls-buttons');
-
-        DOMElement.btn_back = addElement(controls_buttons, 'button', 'back', _I18N_.keyboard_back);
-        DOMElement.btn_back.addEventListener('click', _back_keyboard, { capture: false });
-
-        DOMElement.btn_clear = addElement(controls_buttons, 'button', 'clear', _I18N_.keyboard_clear);
-        DOMElement.btn_clear.addEventListener('click', _clear_keyboard, { capture: false });
-
-        DOMElement.btn_confirm = addElement(controls_buttons, 'button', 'confirm', _I18N_.keyboard_confirm);
-        DOMElement.btn_confirm.addEventListener('click', _confirm_keyboard, { capture: false });
-
-        const keyboard = addElement(DOMElement.keyboard, 'div', 'keyboard');
-        [_KEY_CODE_.KEY1, _KEY_CODE_.KEY2, _KEY_CODE_.KEY3, _KEY_CODE_.KEY4, 
-         _KEY_CODE_.KEY5, _KEY_CODE_.KEY6, _KEY_CODE_.KEY7, _KEY_CODE_.KEY8, 
-         _KEY_CODE_.KEY9, _KEY_CODE_.COMMA, _KEY_CODE_.KEY0, _KEY_CODE_.BACKSPACE].forEach( ({code, key} = element) => {
-            const button = addElement(keyboard, 'button', 'font-awesome', key);
-            button.setAttribute('_key', code);
-        });
-
-        keyboard.addEventListener('click', evnt => {
-            const last = structInputs['last'],
-                  list = structInputs['list'],
-                //   target = evnt.target,
-                  code = evnt.target.getAttribute('_key'), // target['_code_'],
-                  input = list[last - 1]['_props_'][2];
-                  
-            if (input.add(code)) {
-                DOMElement.btn_confirm.removeAttribute('disabled');
-            } else {
-                DOMElement.btn_confirm.setAttribute('disabled', '');
-            }
-            
-        }, { capture: false });
-
-    },
-    _back_keyboard = () => {
-
-    },
-    _clear_keyboard = () => {
-        const last = structInputs['last'] - 1,
-              list = structInputs['list'];
-
-        switch (macro[list[last]['_props_'][0]].type.type) {
-            case _TYPES_.NUMBER:
-            case _TYPES_.SIGNATURE:
-                list[last]['_props_'][2].clear();
-                break;
-        }
-    },
-    _confirm_keyboard = () => {
-        const last = structInputs['last'],
-              list = structInputs['list'];
-
-        if (list.length) {
-            if (last < list.length) {
-                list[last].style.animationPlayState = 'running';
-
-                if (last > 0)
-                    list[last - 1].style.animationName = 'shrink_item_inputs';
-                
-                const shortcut = macro[list[last]['_props_'][0]];
-                switch (shortcut['type']['type']) {
-                    case _TYPES_.NUMBER:
-                        this.keyboard(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                        break;
-                    
-                    case _TYPES_.SIGNATURE:
-                        this.keyboard(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                        break;
-
-                    case _TYPES_.PHOTO:
-                        this.keyboard();
-
-                        list[last].addEventListener('animationend', function() {
-                            
-                            const wait_icon = addElement(this, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
-                            wait_icon.style.color = list[last]['_props_'][1];
-
-                            const wait_message = addElement(this, 'div', 'loading-resources-text', _I18N_.resource_loading);
-                            wait_message.style.color = list[last]['_props_'][1];
-
-                            const video = addElement(this, 'video', 'item-drawing');
-                            video.width = this.offsetWidth;
-                            video.height = this.offsetHeight;
-                            video.setAttribute('muted', '');
-                            video.setAttribute('autoplay', '');
-                            video.setAttribute('playsinline', '');
-
-                            const canvas = addElement(this, 'canvas', 'item-drawing');
-                            canvas.width = this.offsetWidth;
-                            canvas.height = this.offsetHeight;
-                            canvas.style.visibility = 'hidden';
-
-                            const take_picture_btn = addElement(this, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
-
-                            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                                navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user', aspectRatio: { min: 0.6, max: 1 } } }).then(function (mediaStream) {
-                                    const video_track = mediaStream.getVideoTracks()[0];
-                                    video.srcObject = mediaStream;
-
-                                    video.onloadedmetadata = function() {
-                                        wait_icon.style.display = 'none';
-                                        wait_message.style.display = 'none';
-
-                                        const settings = video_track.getSettings();
-                                        if (settings.hasOwnProperty('width') && settings.hasOwnProperty('height')) {
-                                            const aspectratio = settings['width'] / this.getAttribute('width');
-
-                                            canvas.setAttribute('width', settings['width'] / aspectratio);
-                                            canvas.setAttribute('height', settings['height'] / aspectratio);
-                                        }
-
-                                        take_picture_btn.style.visibility = 'visible';
-                                        take_picture_btn.addEventListener('click', function() {
-                                            this.style.visibility = 'hidden';
-
-                                            canvas.style.visibility = 'visible';
-                                            const ctx = canvas.getContext('2d');
-                                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                                            const image_data_url = canvas.toDataURL('image/jpeg');
-                                            // console.log(image_data_url);
-
-                                            video.style.visibility = 'hidden';
-                                            video_track.stop();
-
-                                            mediaStream.removeTrack(video_track);
-
-                                            // _keyboard(_KEYBOARD_FLAGS_.CONTROL);
-                                        }, { once: true, capture: false });
-                                    };
-                                }).catch(function (err) {
-                                    wait_icon.textContent = _ICON_CHAR_.ALERT;
-                                    wait_icon.style.color = 'var(--red)';
-
-                                    wait_message.textContent = `${err.name}: ${err.message}`;
-                                    wait_message.style.color = 'var(--red)';
-                                });
-                            } else {
-                                wait_icon.textContent = _ICON_CHAR_.ALERT;
-                                wait_icon.style.color = 'var(--red)';
-                            }
-
-                        }, { once: true, capture: false });
-                        break;
-
-                    default:
-                        this.keyboard(_KEYBOARD_FLAGS_.NONE);
-                }
-                
-                structInputs['last'] += 1;
-            } else {
-                const [id, color] = list[last - 1]['_props_'];
-                _execute(id, color, queueViews[queueViews.length - 1]);
-            }
-        }
-    },
-    
     _wildcard = (id) => {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
@@ -340,7 +183,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         DOMElement.main.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
-        _confirm_keyboard();
+        // _confirm_keyboard();
     },
     _receive_events = (evnt) => {
         evnt.stopPropagation();
@@ -350,10 +193,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
               main_parent = current_parent.parentElement;
 
         current_parent.style.overflowY = 'hidden';
-
-        const [id, color] = target['_props_'];
-
         if (target.classList.contains('input-type')) {
+            const [id, color] = target['_props_'];
+
             while (target['_props_'].length)
                 target['_props_'].pop();
             delete target['_props_'];
@@ -388,12 +230,12 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     content.appendChild(target);
                     
                     new_input = new InputNumber(content, { color, ...shortcut['type'] });                    
-                    this.keyboard(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
                     
                 case _TYPES_.SIGNATURE:
-                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'callback': this.controls } );
-                    this.keyboard(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'keyboard': keyboard.controls } );
+                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
                 case _TYPES_.PHOTO:
@@ -407,6 +249,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             content.style.animationPlayState = 'running';
 
         } else if (target.classList.contains('item-list')) {
+            const [id, color] = target['_props_'];
             _execute(id, color, main_parent);
         }
     },
@@ -441,7 +284,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const slide = addElement(DOMElement.main, 'div', 'container-main-slide');
         const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
-        this.keyboard();
+        keyboard.update();
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -470,6 +313,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 color = shortcut['color'];
 
             if (all_inputs) {
+                let new_input = null;
+
                 switch(type) {
                     case _TYPES_.TEXT:
                         break;
@@ -490,23 +335,17 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['id']);
 
-                        const input = new InputNumber(item, { color, ...shortcut['type'] });
-
-                        item['_props_'] = [id, color, input];
-                        structInputs['list'].push(item);
-                        break;
-    
-                    case _TYPES_.DATE:
+                        new_input = new InputNumber(item, { color, ...shortcut['type'] });
                         break;
     
                     case _TYPES_.SIGNATURE:
                         item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
 
-                        const signature = new InputSignature(item, { 'env': __run_environment, 'color': color, 'text': shortcut['text'] } );
+                        new_input = new InputSignature(item, { 'env': __run_environment, 'color': color, 'text': shortcut['text'], 'keyboard': keyboard.controls } );
+                        break;
 
-                        item['_props_'] = [id, color, signature];
-                        structInputs['list'].push(item);
+                    case _TYPES_.DATE:
                         break;
 
                     case _TYPES_.PHOTO:
@@ -515,6 +354,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     case _TYPES_.SCAN:
                         break;
                 }
+
+                item['_props_'] = [id, color, new_input];
+                structInputs['list'].push(item);
 
                 divider = false;
             } else {
@@ -651,67 +493,67 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         if (__run_environment === _RUN_ENVIRONMENT_.WEB)
             DOMElement.popup.style.display = 'block';
     };
-    this.keyboard = (keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
-        if (keyboard_flags === _KEYBOARD_FLAGS_.NONE) {
-            DOMElement.main.classList.remove('with-keyboard');
-            DOMElement.keyboard.style.removeProperty('height'); 
+    // this.keyboard = (keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
+    //     if (keyboard_flags === _KEYBOARD_FLAGS_.NONE) {
+    //         DOMElement.main.classList.remove('with-keyboard');
+    //         DOMElement.keyboard.style.removeProperty('height'); 
 
-            return;
-        }
+    //         return;
+    //     }
 
-        let height = 0;
-        DOMElement.main.classList.add('with-keyboard');
+    //     let height = 0;
+    //     DOMElement.main.classList.add('with-keyboard');
 
-        DOMElement.btn_back.style.display = 'none';
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
-            DOMElement.btn_back.style.display = 'block';
+    //     DOMElement.btn_back.style.display = 'none';
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
+    //         DOMElement.btn_back.style.display = 'block';
             
-            DOMElement.btn_back.setAttribute('disabled', '');
-            if (structInputs['last'] === 0 && structInputs['list'].length > 1)
-                DOMElement.btn_back.removeAttribute('disabled');                
-        }
+    //         DOMElement.btn_back.setAttribute('disabled', '');
+    //         if (structInputs['last'] === 0 && structInputs['list'].length > 1)
+    //             DOMElement.btn_back.removeAttribute('disabled');                
+    //     }
 
-        DOMElement.btn_clear.style.display = 'none';
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR)
-            DOMElement.btn_clear.style.display = 'block';
+    //     DOMElement.btn_clear.style.display = 'none';
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR)
+    //         DOMElement.btn_clear.style.display = 'block';
 
-        DOMElement.btn_confirm.style.display = 'none';
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
-            DOMElement.btn_confirm.style.display = 'block';
+    //     DOMElement.btn_confirm.style.display = 'none';
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
+    //         DOMElement.btn_confirm.style.display = 'block';
         
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK |
-            keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR |
-            keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
-            height += 30; 
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK |
+    //         keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR |
+    //         keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
+    //         height += 30; 
 
-        if (keyboard_flags & _KEYBOARD_FLAGS_.TYPE_NUMPAD | 
-            keyboard_flags & _KEYBOARD_FLAGS_.TYPE_QWERTY)
-            height += 108; 
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.TYPE_NUMPAD | 
+    //         keyboard_flags & _KEYBOARD_FLAGS_.TYPE_QWERTY)
+    //         height += 108; 
         
-        DOMElement.keyboard.style.height = height + 'px';
-    };
-    this.controls = (enable = true, keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK) {
-            if (enable)
-                DOMElement.btn_confirm.removeAttribute('disabled');
-            else
-                DOMElement.btn_confirm.setAttribute('disabled', '');
-        } 
+    //     DOMElement.keyboard.style.height = height + 'px';
+    // };
+    // this.controls = (enable = true, keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK) {
+    //         if (enable)
+    //             DOMElement.btn_confirm.removeAttribute('disabled');
+    //         else
+    //             DOMElement.btn_confirm.setAttribute('disabled', '');
+    //     } 
 
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
-            if (enable)
-                DOMElement.btn_back.removeAttribute('disabled');
-            else
-                DOMElement.btn_back.setAttribute('disabled', '');
-        }
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
+    //         if (enable)
+    //             DOMElement.btn_back.removeAttribute('disabled');
+    //         else
+    //             DOMElement.btn_back.setAttribute('disabled', '');
+    //     }
 
-        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR) {
-            if (enable)
-                DOMElement.btn_clear.removeAttribute('disabled');
-            else
-                DOMElement.btn_clear.setAttribute('disabled', '');
-        }
-    };
+    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR) {
+    //         if (enable)
+    //             DOMElement.btn_clear.removeAttribute('disabled');
+    //         else
+    //             DOMElement.btn_clear.setAttribute('disabled', '');
+    //     }
+    // };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
@@ -730,9 +572,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         }
 
         DOMElement.main = addElement(DOMElement.container, 'div', 'main');
-        DOMElement.keyboard = addElement(DOMElement.container, 'div', 'controls');
-
-        _create_keyboard();
+        keyboard = new Keyboard(DOMElement.container);
 
         DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();

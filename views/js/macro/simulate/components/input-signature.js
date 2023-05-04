@@ -9,21 +9,17 @@ export default function InputSignature(__append, __properties) {
         throw new Error('Simulate() must be called with new');
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const DOMElement = {
-        canvas: null
-    },
+    const DOMElement = { canvas: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _signature = (parent) => {
         DOMElement.canvas = addElement(parent, 'canvas', 'item-drawing');
 
         const canvas = DOMElement.canvas;
-
         canvas.width = parent.offsetWidth;
         canvas.height = parent.offsetHeight;
 
         const ctx = canvas.getContext('2d');
-
         ctx.font = '11px VP-FONT';
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'left';
@@ -78,7 +74,7 @@ export default function InputSignature(__append, __properties) {
     _drawing_start = function (evnt) {
         evnt.preventDefault();
 
-        __properties.callback(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
 
         const rect = this.getBoundingClientRect();
         this['_drawing_'] = _draw_position(evnt, rect);
@@ -123,13 +119,12 @@ export default function InputSignature(__append, __properties) {
         ctx.clearRect(0, 0, DOMElement.canvas.width, DOMElement.canvas.height);
 
         _draw_info(ctx);
-
-        __properties.callback(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
     }
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        __properties.callback(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
         __append.addEventListener('animationend', function() {
             _signature(this);
         }, { once: true, capture: false });

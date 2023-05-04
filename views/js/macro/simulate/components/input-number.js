@@ -22,7 +22,7 @@ export default function InputNumber(__append, __properties) {
         inputArray = [],
     
     render = () => {
-        let text = '';
+        let result = true, text = '';
 
         if (decimal) {
             const diff = (precision + 1) - inputArray.length;
@@ -34,6 +34,9 @@ export default function InputNumber(__append, __properties) {
             if (diff < 0 && inputArray[0] === '0')
                 inputArray.shift();
         }
+
+        if (inputArray.length > maximumLength)
+            inputArray.pop();
         
         const diff = inputArray.length - precision;
         inputArray.forEach( (element, index) => {
@@ -44,7 +47,6 @@ export default function InputNumber(__append, __properties) {
         } );
 
         const value = parseFloat(text.replace(',', '.'));
-        // console.log(value);
         if (value < minimum || value > maximum) {
             if (value < minimum)
                 DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_underflow + minimum);
@@ -53,28 +55,44 @@ export default function InputNumber(__append, __properties) {
                 DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_overflow + maximum);
 
             DOMElement.item.style.color = 'var(--neutral-700)';
+
+            result = false;
         } else {
             DOMElement.container.removeAttribute('data-info');
             DOMElement.item.style.removeProperty('color');
         }
 
         DOMElement.item.textContent = text;
+        return result;
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.add = function(keyCode) {
-        if (keyCode === _KEY_CODE_.BACKSPACE.code)
+    this.add = (keyCode) => {
+        if (keyCode == _KEY_CODE_.BACKSPACE.code)
             inputArray.pop();
 
         if (keyCode >= _KEY_CODE_.KEY0.code && 
             keyCode <= _KEY_CODE_.KEY9.code) {
 
-            if (inputArray.length === maximumLength)
-                return;
+            if (!decimal && inputArray.length === 1 && inputArray[0] == _KEY_CODE_.KEY0.key) {
+                if (keyCode == _KEY_CODE_.KEY0.code)
+                    return;
 
-            inputArray.push(String.fromCharCode(keyCode));
+                inputArray[0] = String.fromCharCode(keyCode)
+            } else {          
+                inputArray.push(String.fromCharCode(keyCode));
+            }
         }
 
+        return render();
+    };
+    this.clear = () => {
+        // if (__properties.hasOwnProperty('default')) 
+        //     inputArray = [__properties['default']];
+        // else
+            inputArray = [];
+
+        DOMElement.item.textContent = __properties?.['default'] ?? ''; 
         render();
     };
 
@@ -92,6 +110,8 @@ export default function InputNumber(__append, __properties) {
         // PROPERTIES
         DOMElement.container.style.color = __properties?.['color'] ?? _COLORS_.BLACK;
         DOMElement.container.style.justifyContent = __properties?.['align'] ?? _FLEX_ALIGN_.LEFT;
+        // if (__properties.hasOwnProperty('default')) 
+        //     inputArray.push(__properties['default']);
         DOMElement.item.textContent = __properties?.['default'] ?? '';
 
         decimal   = __properties?.['decimal'] ?? false;

@@ -123,7 +123,7 @@
                     align-items: center;
                     justify-content: center;
 
-                    box-shadow: 0px 0px 6px 2px var(--neutral-500);
+                    /* box-shadow: 0px 0px 6px 2px var(--neutral-500); */
                     z-index: 1;
                 }
                 /* // .CONTROLS-BUTTONS WEB //////////////////////////////////*/
@@ -133,7 +133,7 @@
                 } */
                     .controls-buttons > button {
                         flex: 1 1 0;
-                        font-size: 11px;
+                        font-size: 10px;
                         text-align: center;
                         line-height: 30px;
                         text-transform: uppercase;
@@ -141,16 +141,25 @@
 
                         cursor: pointer;
                         color: var(--white);
+
+                        transition: 0.15s background-color linear;
                     }
 
                         .controls-buttons > button.confirm { background-color: var(--blue-base);   }
                         .controls-buttons > button.back    { background-color: var(--yellow-base); }
-                        .controls-buttons > button.clear   { background-color: var(--orange-900);  }
+                        .controls-buttons > button.clear   { background-color: var(--red-base);  }
 
-                        .controls-buttons > button:hover  { filter: brightness(0.95); }
-                        .controls-buttons > button:active { filter: brightness(0.90); }
-
+                        .controls-buttons > button:hover:not([disabled])  { filter: brightness(0.95); }
+                        @media (hover: none) { .controls-buttons > button:hover { filter: none; } }
+                        .controls-buttons > button:active:not([disabled]) { filter: brightness(0.90); }
                         .controls-buttons > button:focus-visible { outline-color: var(--white); }
+
+                        .controls-buttons > button:disabled {
+                            background-color: var(--neutral-300);
+                            color: var(--neutral-700);
+                            pointer-events: none;
+                            cursor: default;
+                        }
 
                 .simulate-content > .container > .controls > .keyboard {
                     display: grid;

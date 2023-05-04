@@ -111,18 +111,32 @@ export const _ORDER_ = {
     DOWN : 2
 };
 
-export const _KEY_TYPE_ = {
-    NONE:   0,
+export const _KEYBOARD_FLAGS_ = {
+    NONE:    0,
 
-    CONTROL: 1,
-    NUMPAD: 2,
-    QWERTY: 3, 
+    TYPE_NUMPAD:    0x0001,
+    TYPE_QWERTY:    0x0002,
+ // TYPE_RFU:       0x0004,
+
+    BTN_OK:         0x0008,
+    BTN_BACK:       0x0010,
+    BTN_CLEAR:      0x0020,
+ // RFU:            0x0040,
+ // RFU:            0x0080,
+ // RFU:            0x0100,
+ // RFU:            0x0200,
+ // RFU:            0x0400,
+ // RFU:            0x0800,
+ // RFU:            0x1000,
+ // RFU:            0x2000,
+ // RFU:            0x4000,
+ // RFU:            0x8000
 } 
 
 export const _KEY_CODE_ = {
-    BACKSPACE: { code: 8, key: '\uf55a' },
-    ENTER: { code: 13, key: '\uf2f6' },
-    ESC: { code: 27, key: '0' },
+    BACKSPACE: { code:  8, key: '\uf55a' },
+    ENTER:     { code: 13, key: '\uf2f6' },
+    ESC:       { code: 27, key: '0' },
 
     KEY0: { code: 48, key: '0' },
     KEY1: { code: 49, key: '1' },

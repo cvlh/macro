@@ -8,9 +8,9 @@
 			"height": 3072
 		},
 		"transform": {
-			"scale": 0.3640418623018529,
-			"left": 217.8102264404297,
-			"top": 2.6206531524658203,
+			"scale": 0.3658643468750016,
+			"left": 216.2897096633911,
+			"top": 1.8504790425300597,
 			"index": 223
 		}
 	},
@@ -36,7 +36,8 @@
 								"344c3cf5-86bb-4617-b8b2-aeb266e68bc8",
 								"de30e8db-5124-45a2-942c-6e7e4091b03c",
 								"026c96a2-1238-4220-bca1-8fd8b56e4b96",
-								"d1efa290-4892-41d4-a89f-70272d358d9e"
+								"d1efa290-4892-41d4-a89f-70272d358d9e",
+								"2192a09a-32f5-4637-b31b-268dadb10da3"
 							],
 							"hidden": []
 						},
@@ -45,7 +46,7 @@
 					"expanded": true,
 					"tail": {
 						"x": 594.899812619278,
-						"y": 268.88400517246043
+						"y": 285.88403001573926
 					},
 					"description": "",
 					"icon": "",
@@ -66,11 +67,11 @@
 								"type": {
 									"type": 2,
 									"align": "flex-end",
-									"decimal": false,
-									"precision": 0,
-									"maximum": 99998,
-									"minimum": 1,
-									"default": 0,
+									"decimal": true,
+									"precision": 2,
+									"maximum": 1.99,
+									"minimum": 0.05,
+									"default": 0.01,
 									"optional": false
 								},
 								"order": 1,
@@ -151,6 +152,29 @@
 									"type": 4
 								},
 								"order": 4,
+								"visibility": {
+									"fields": {
+										"visible": [],
+										"hidden": []
+									},
+									"flags": 1
+								},
+								"expanded": true,
+								"tail": {
+									"x": 0,
+									"y": 0
+								}
+							}
+						},
+						{
+							"properties": {
+								"uuid": "2192a09a-32f5-4637-b31b-268dadb10da3",
+								"id": "1.5",
+								"text": "CLAUDIO",
+								"type": {
+									"type": 0
+								},
+								"order": 5,
 								"visibility": {
 									"fields": {
 										"visible": [],

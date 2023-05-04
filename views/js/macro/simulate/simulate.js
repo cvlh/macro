@@ -1,13 +1,14 @@
 'use strict';
 
-import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEY_TYPE_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
+import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
+import InputSignature from './components/input-signature.js';
 
 ////////////////////////////////////////////////////////////////////////////////
-export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
+export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
     if (!new.target) 
         throw new Error('Simulate() must be called with new');
@@ -15,14 +16,17 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const
         DOMElement = {
-            popup:            null,
+            popup: null,
                 container:    null,
                     main:     null,
-                    keyboard: null
+                    keyboard: null,
+                        btn_back:    null,
+                        btn_clear:   null,
+                        btn_confirm: null
         };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let runEnvironment = __run_env,
+    let // runEnvironment = __run_env,
         fragment,
 
         macro,
@@ -36,50 +40,50 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
     _create_keyboard = () => {
         const controls_buttons = addElement(DOMElement.keyboard, 'div', 'controls-buttons');
 
-        const back = addElement(controls_buttons, 'button', 'back', _I18N_.keyboard_back);
+        DOMElement.btn_back = addElement(controls_buttons, 'button', 'back', _I18N_.keyboard_back);
+        DOMElement.btn_back.addEventListener('click', _back_keyboard, { capture: false });
 
-        const confirm = addElement(controls_buttons, 'button', 'confirm', _I18N_.keyboard_confirm);
-        confirm.addEventListener('click', _confirm_keyboard, { capture: false });
+        DOMElement.btn_clear = addElement(controls_buttons, 'button', 'clear', _I18N_.keyboard_clear);
+        DOMElement.btn_clear.addEventListener('click', _clear_keyboard, { capture: false });
+
+        DOMElement.btn_confirm = addElement(controls_buttons, 'button', 'confirm', _I18N_.keyboard_confirm);
+        DOMElement.btn_confirm.addEventListener('click', _confirm_keyboard, { capture: false });
 
         const keyboard = addElement(DOMElement.keyboard, 'div', 'keyboard');
-
         [_KEY_CODE_.KEY1, _KEY_CODE_.KEY2, _KEY_CODE_.KEY3, _KEY_CODE_.KEY4, 
          _KEY_CODE_.KEY5, _KEY_CODE_.KEY6, _KEY_CODE_.KEY7, _KEY_CODE_.KEY8, 
          _KEY_CODE_.KEY9, _KEY_CODE_.COMMA, _KEY_CODE_.KEY0, _KEY_CODE_.BACKSPACE].forEach( ({code, key} = element) => {
             const button = addElement(keyboard, 'button', 'font-awesome', key);
-            button['_code_'] = code;
+            button.setAttribute('_key', code);
         });
 
         keyboard.addEventListener('click', evnt => {
             const last = structInputs['last'],
                   list = structInputs['list'],
-                  target = evnt.target,
-                  code = target['_code_'],
+                //   target = evnt.target,
+                  code = evnt.target.getAttribute('_key'), // target['_code_'],
                   input = list[last - 1]['_props_'][2];
                   
-            input.add(code);
+            if (input.add(code)) {
+                DOMElement.btn_confirm.removeAttribute('disabled');
+            } else {
+                DOMElement.btn_confirm.setAttribute('disabled', '');
+            }
+            
         }, { capture: false });
 
     },
-    _hide_keyboard = () => {
-        DOMElement.main.classList.remove('with-keyboard');
-        DOMElement.keyboard.style.removeProperty('height'); 
+    _back_keyboard = () => {
+
     },
-    _show_keyboard = (keyboardType = _KEY_TYPE_.NUMPAD) => {
-        DOMElement.main.classList.add('with-keyboard');
+    _clear_keyboard = () => {
+        const last = structInputs['last'] - 1,
+              list = structInputs['list'];
 
-        switch (keyboardType) {
-            case _KEY_TYPE_.NUMPAD:
-            case _KEY_TYPE_.QWERTY:
-                DOMElement.keyboard.style.height = '138px';
-                break;
-            
-            case _KEY_TYPE_.CONTROL:
-                DOMElement.keyboard.style.height = '30px'; 
-                break;
-
-            // case _KEY_TYPE_.NONE:
-            //     DOMElement.keyboard.style.removeProperty('height'); 
+        switch (macro[list[last]['_props_'][0]].type.type) {
+            case _TYPES_.NUMBER:
+            case _TYPES_.SIGNATURE:
+                list[last]['_props_'][2].clear();
                 break;
         }
     },
@@ -94,13 +98,18 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                 if (last > 0)
                     list[last - 1].style.animationName = 'shrink_item_inputs';
                 
-                switch (macro[list[last]['_props_'][0]].type.type) {
+                const shortcut = macro[list[last]['_props_'][0]];
+                switch (shortcut['type']['type']) {
                     case _TYPES_.NUMBER:
-                        _show_keyboard(_KEY_TYPE_.NUMPAD);
+                        this.keyboard(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                         break;
-                        
+                    
+                    case _TYPES_.SIGNATURE:
+                        this.keyboard(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                        break;
+
                     case _TYPES_.PHOTO:
-                        _hide_keyboard();
+                        this.keyboard();
 
                         list[last].addEventListener('animationend', function() {
                             
@@ -156,7 +165,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
                                             mediaStream.removeTrack(video_track);
 
-                                            _show_keyboard(_KEY_TYPE_.CONTROL);
+                                            // _keyboard(_KEYBOARD_FLAGS_.CONTROL);
                                         }, { once: true, capture: false });
                                     };
                                 }).catch(function (err) {
@@ -174,47 +183,8 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         }, { once: true, capture: false });
                         break;
 
-                    case _TYPES_.SIGNATURE:
-                        _show_keyboard(_KEY_TYPE_.CONTROL);
-
-                        list[last].addEventListener('animationend', function() {
-                            const canvas = addElement(this, 'canvas', 'item-drawing');
-                            canvas.width = this.offsetWidth;
-                            canvas.height = this.offsetHeight;
-
-                            const ctx = canvas.getContext('2d');
-                            const label = macro[list[last]['_props_'][0]].text;
-                            const size = ctx.measureText(label);
-
-                            ctx.font = '11px VP-FONT';
-                            ctx.textBaseline = 'middle';
-                            ctx.textAlign = 'left';
-                            ctx.fillStyle = list[last]['_props_'][1];
-
-                            let startOffset = 5;
-                            if (size.width < canvas.width)
-                                startOffset = (canvas.width / 2) - (size.width / 2);
-                            
-                            ctx.fillText(label, startOffset, canvas.height - 15, canvas.width - 10);
-
-                            ctx.beginPath();
-                            ctx.lineWidth = 2;
-                            ctx.strokeStyle = list[last]['_props_'][1];
-                            ctx.lineCap = 'round';
-                            ctx.moveTo(15, canvas.height - 26);
-                            ctx.lineTo(canvas.width - 15, canvas.height - 26);
-                            ctx.stroke();
-
-                            if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
-                                canvas.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
-                            } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-                                canvas.addEventListener('touchstart', _drawing_start, { once: true, capture: true });
-                            }
-                        }, { once: true, capture: false });
-                        break;
-
                     default:
-                        _hide_keyboard();
+                        this.keyboard(_KEYBOARD_FLAGS_.NONE);
                 }
                 
                 structInputs['last'] += 1;
@@ -225,66 +195,6 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
         }
     },
     
-    // DRAW CANVAS - SIGNATURE /////////////////////////////////////////////////
-    _draw_position = (evnt, rect) => {
-        let deltaX = 0, deltaY = 0;
-
-        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
-            deltaX = evnt.clientX - rect.x;
-            deltaY = evnt.clientY - rect.y;
-        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-            if ((evnt.type === 'touchstart' || evnt.type === 'touchmove') && evnt.touches.length > 0) {
-                deltaX = evnt.touches[0].clientX - rect.x;
-                deltaY = evnt.touches[0].clientY - rect.y;
-            }
-        }
-
-        return [ deltaX, deltaY ];
-    },
-    _drawing_start = function (evnt) {
-        evnt.preventDefault();
-
-        const rect = this.getBoundingClientRect();
-        this['_drawing_'] = _draw_position(evnt, rect);
-
-        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
-            this.addEventListener('mousemove', _drawing, { capture: false });
-            this.addEventListener('mouseup', _drawing_end, { once: true, capture: false });
-        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-            this.addEventListener('touchmove', _drawing, { capture: true });
-            this.addEventListener('touchend', _drawing_end, { once: true, capture: true });
-        }
-    },
-    _drawing = function (evnt) {
-        evnt.preventDefault();
-
-        const rect = this.getBoundingClientRect();
-        const ctx = this.getContext('2d');
-
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'black';
-        ctx.lineCap = 'round';
-        ctx.moveTo(this['_drawing_'][0], this['_drawing_'][1]);
-        this['_drawing_'] = _draw_position(evnt, rect);
-        ctx.lineTo(this['_drawing_'][0], this['_drawing_'][1]);
-        ctx.stroke();
-    },
-    _drawing_end = function (evnt) {
-        evnt.preventDefault();
-
-        delete this['_drawing_'];
-
-        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
-            this.removeEventListener('mousemove', _drawing, { capture: false });
-            this.addEventListener('mousedown', _drawing_start, { once: true, capture: false });
-        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
-            this.removeEventListener('touchmove', _drawing, { capture: true });
-            this.addEventListener('touchstart', _drawing_start, { once: true, capture: true });
-        }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////
     _wildcard = (id) => {
         let wildcard = '';
         const size = macro[id]['level'].length - 1;
@@ -441,22 +351,20 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
         current_parent.style.overflowY = 'hidden';
 
-        if (target.classList.contains('input-type')) {
-            const [id, color] = target['_props_'];
+        const [id, color] = target['_props_'];
 
+        if (target.classList.contains('input-type')) {
             while (target['_props_'].length)
                 target['_props_'].pop();
             delete target['_props_'];
-            
-            target.className = 'item-input-block';
-            target.removeChild(target.lastChild);
-            
+
+            // target.className = 'item-input-block';
+            // target.removeChild(target.lastChild);
+
             const content = addElement(main_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
-            content.appendChild(target);
-
-            content.style.animationName = 'stretch_item_input';
-            content.style.animationPlayState = 'running';
+            // current_parent.replaceChild(content, target);
+            // content.appendChild(target);
 
             const listItems = current_parent.querySelectorAll('.item-list');
             for (const listItem of listItems)
@@ -465,16 +373,40 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
             const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
                 divider.style.flexBasis = '0';
-                // divider.style.height = '0px';
-            
-            const input = new InputNumber(content, { color, ...macro[id]['type'] });
 
-            content['_props_'] = [id, color, input];
-            structInputs = { last: 1, list: [content] };
+            let new_input = null;
             
-            _show_keyboard();
+            const shortcut = macro[id];
+            const type = shortcut['type']['type'];
+            switch(type) {
+                case _TYPES_.TEXT:
+                    break;
+
+                case _TYPES_.NUMBER:
+                    target.className = 'item-input-block';
+                    target.removeChild(target.lastChild);
+                    content.appendChild(target);
+                    
+                    new_input = new InputNumber(content, { color, ...shortcut['type'] });                    
+                    this.keyboard(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
+                    
+                case _TYPES_.SIGNATURE:
+                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'callback': this.keyboard } );
+                    this.keyboard(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
+
+                case _TYPES_.PHOTO:
+                    break;
+            }
+
+            content['_props_'] = [id, color, new_input];
+            structInputs = { last: 1, list: [content] };
+
+            content.style.animationName = 'stretch_item_inputs';
+            content.style.animationPlayState = 'running';
+
         } else if (target.classList.contains('item-list')) {
-            const [id, color] = target['_props_'];
             _execute(id, color, main_parent);
         }
     },
@@ -509,7 +441,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
         const slide = addElement(DOMElement.main, 'div', 'container-main-slide');
         const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
-        _hide_keyboard();
+        this.keyboard();
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -558,7 +490,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['id']);
 
-                        const input = new InputNumber(item, { color, ...macro[id]['type'] });
+                        const input = new InputNumber(item, { color, ...shortcut['type'] });
 
                         item['_props_'] = [id, color, input];
                         structInputs['list'].push(item);
@@ -568,14 +500,18 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
                         break;
     
                     case _TYPES_.SIGNATURE:
-                    case _TYPES_.PHOTO:
                         item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
 
-                        item['_props_'] = [id, color];
+                        const signature = new InputSignature(item, { 'env': __run_environment, 'color': color, 'text': shortcut['text'] } );
+
+                        item['_props_'] = [id, color, signature];
                         structInputs['list'].push(item);
                         break;
-    
+
+                    case _TYPES_.PHOTO:
+                        break;
+
                     case _TYPES_.SCAN:
                         break;
                 }
@@ -667,7 +603,7 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.getFragment = function() { return fragment; };
+    this.getFragment = () => { return fragment; };
     this.start = function(serialize) {
         while (DOMElement.main.hasChildNodes())
             DOMElement.main.removeChild(DOMElement.main.firstChild);
@@ -712,22 +648,62 @@ export default function Simulate(__run_env = _RUN_ENVIRONMENT_.WEB) {
 
         queueViews[0].style.left = '0';
 
-        if (runEnvironment === _RUN_ENVIRONMENT_.WEB)
+        if (__run_environment === _RUN_ENVIRONMENT_.WEB)
             DOMElement.popup.style.display = 'block';
+    };
+    this.keyboard = (keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
+        if (keyboard_flags === _KEYBOARD_FLAGS_.NONE) {
+            DOMElement.main.classList.remove('with-keyboard');
+            DOMElement.keyboard.style.removeProperty('height'); 
+
+            return;
+        }
+
+        let height = 0;
+        DOMElement.main.classList.add('with-keyboard');
+
+        DOMElement.btn_back.style.display = 'none';
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
+            DOMElement.btn_back.style.display = 'block';
+            
+            DOMElement.btn_back.setAttribute('disabled', '');
+            if (structInputs['last'] === 0 && structInputs['list'].length > 1)
+                DOMElement.btn_back.removeAttribute('disabled');                
+        }
+
+        DOMElement.btn_clear.style.display = 'none';
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR)
+            DOMElement.btn_clear.style.display = 'block';
+
+        DOMElement.btn_confirm.style.display = 'none';
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
+            DOMElement.btn_confirm.style.display = 'block';
+        
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK |
+            keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR |
+            keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
+            height += 30; 
+
+        if (keyboard_flags & _KEYBOARD_FLAGS_.TYPE_NUMPAD | 
+            keyboard_flags & _KEYBOARD_FLAGS_.TYPE_QWERTY)
+            height += 108; 
+        
+        DOMElement.keyboard.style.height = height + 'px';
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
         fragment = document.createDocumentFragment();
 
-        if (runEnvironment === _RUN_ENVIRONMENT_.WEB) {
+        if (__run_environment === _RUN_ENVIRONMENT_.WEB) {
             DOMElement.popup = addElement(fragment, 'div', 'simulate-app');
             
             const simulateContent = addElement(DOMElement.popup, 'div', 'simulate-content');
             addElement(simulateContent, 'div', 'header');
             DOMElement.container = addElement(simulateContent, 'div', 'container');
             addElement(simulateContent, 'div', 'footer');
-        } else if (runEnvironment === _RUN_ENVIRONMENT_.MOBILE) {
+
+        } else if (__run_environment === _RUN_ENVIRONMENT_.MOBILE) {
             DOMElement.container = addElement(fragment, 'div', 'container');
         }
 

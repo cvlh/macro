@@ -1,7 +1,6 @@
 'use strict';
 
-import { _COLORS_, _KEY_CODE_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
-import { _I18N_ } from '../../i18n/pt-br.js';
+import { _COLORS_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
@@ -15,20 +14,15 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         throw new Error('Simulate() must be called with new');
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const
+    const 
         DOMElement = {
-            popup: null,
-                container:    null,
-                    main:     null,
-                    // keyboard: null,
-                    //     btn_back:    null,
-                    //     btn_clear:   null,
-                    //     btn_confirm: null
+            popup:     null,
+            container: null,
+            main:      null
         };
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let // runEnvironment = __run_env,
-        fragment,
+    let fragment,
 
         macro, keyboard,
         stackExecute, stackVisibility,
@@ -373,8 +367,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         queueViews.push(slide);
         return slide;
     },
-    _order_ids = visibilityarray => {
-        return visibilityarray
+    _order_ids = (visibility) => {
+        return visibility
             .map(id => id.replace(/\d+/g, level => +level + 1000000))
             .sort()
             .map(id => id.replace(/\d+/g, level => +level - 1000000));
@@ -493,67 +487,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         if (__run_environment === _RUN_ENVIRONMENT_.WEB)
             DOMElement.popup.style.display = 'block';
     };
-    // this.keyboard = (keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
-    //     if (keyboard_flags === _KEYBOARD_FLAGS_.NONE) {
-    //         DOMElement.main.classList.remove('with-keyboard');
-    //         DOMElement.keyboard.style.removeProperty('height'); 
-
-    //         return;
-    //     }
-
-    //     let height = 0;
-    //     DOMElement.main.classList.add('with-keyboard');
-
-    //     DOMElement.btn_back.style.display = 'none';
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
-    //         DOMElement.btn_back.style.display = 'block';
-            
-    //         DOMElement.btn_back.setAttribute('disabled', '');
-    //         if (structInputs['last'] === 0 && structInputs['list'].length > 1)
-    //             DOMElement.btn_back.removeAttribute('disabled');                
-    //     }
-
-    //     DOMElement.btn_clear.style.display = 'none';
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR)
-    //         DOMElement.btn_clear.style.display = 'block';
-
-    //     DOMElement.btn_confirm.style.display = 'none';
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
-    //         DOMElement.btn_confirm.style.display = 'block';
-        
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK |
-    //         keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR |
-    //         keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK)
-    //         height += 30; 
-
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.TYPE_NUMPAD | 
-    //         keyboard_flags & _KEYBOARD_FLAGS_.TYPE_QWERTY)
-    //         height += 108; 
-        
-    //     DOMElement.keyboard.style.height = height + 'px';
-    // };
-    // this.controls = (enable = true, keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK) {
-    //         if (enable)
-    //             DOMElement.btn_confirm.removeAttribute('disabled');
-    //         else
-    //             DOMElement.btn_confirm.setAttribute('disabled', '');
-    //     } 
-
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
-    //         if (enable)
-    //             DOMElement.btn_back.removeAttribute('disabled');
-    //         else
-    //             DOMElement.btn_back.setAttribute('disabled', '');
-    //     }
-
-    //     if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR) {
-    //         if (enable)
-    //             DOMElement.btn_clear.removeAttribute('disabled');
-    //         else
-    //             DOMElement.btn_clear.setAttribute('disabled', '');
-    //     }
-    // };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {

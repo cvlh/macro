@@ -392,7 +392,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     break;
                     
                 case _TYPES_.SIGNATURE:
-                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'callback': this.keyboard } );
+                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'callback': this.controls } );
                     this.keyboard(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
@@ -689,6 +689,28 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             height += 108; 
         
         DOMElement.keyboard.style.height = height + 'px';
+    };
+    this.controls = (enable = true, keyboard_flags = _KEYBOARD_FLAGS_.NONE) => {
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_OK) {
+            if (enable)
+                DOMElement.btn_confirm.removeAttribute('disabled');
+            else
+                DOMElement.btn_confirm.setAttribute('disabled', '');
+        } 
+
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_BACK) {
+            if (enable)
+                DOMElement.btn_back.removeAttribute('disabled');
+            else
+                DOMElement.btn_back.setAttribute('disabled', '');
+        }
+
+        if (keyboard_flags & _KEYBOARD_FLAGS_.BTN_CLEAR) {
+            if (enable)
+                DOMElement.btn_clear.removeAttribute('disabled');
+            else
+                DOMElement.btn_clear.setAttribute('disabled', '');
+        }
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

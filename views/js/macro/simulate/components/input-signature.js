@@ -1,6 +1,6 @@
 'use strict';
 
-import { _RUN_ENVIRONMENT_ } from '../../../utils/constants.js';
+import { _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_ } from '../../../utils/constants.js';
 import { addElement } from '../../../utils/functions.js';
 
 export default function InputSignature(__append, __properties) {
@@ -14,13 +14,13 @@ export default function InputSignature(__append, __properties) {
     },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _signature = (context) => {
-        DOMElement.canvas = addElement(context, 'canvas', 'item-drawing');
+    _signature = (parent) => {
+        DOMElement.canvas = addElement(parent, 'canvas', 'item-drawing');
 
         const canvas = DOMElement.canvas;
 
-        canvas.width = context.offsetWidth;
-        canvas.height = context.offsetHeight;
+        canvas.width = parent.offsetWidth;
+        canvas.height = parent.offsetHeight;
 
         const ctx = canvas.getContext('2d');
 
@@ -78,6 +78,8 @@ export default function InputSignature(__append, __properties) {
     _drawing_start = function (evnt) {
         evnt.preventDefault();
 
+        __properties.callback(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+
         const rect = this.getBoundingClientRect();
         this['_drawing_'] = _draw_position(evnt, rect);
 
@@ -122,11 +124,12 @@ export default function InputSignature(__append, __properties) {
 
         _draw_info(ctx);
 
-        __properties.callback();
+        __properties.callback(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
     }
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
+        __properties.callback(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
         __append.addEventListener('animationend', function() {
             _signature(this);
         }, { once: true, capture: false });

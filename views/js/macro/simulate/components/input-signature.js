@@ -6,10 +6,13 @@ import { addElement } from '../../../utils/functions.js';
 export default function InputSignature(__append, __properties) {
 
     if (!new.target) 
-        throw new Error('Simulate() must be called with new');
+        throw new Error('InputSignature() must be called with new');
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
-    const DOMElement = { canvas: null },
+    const 
+        DOMElement = { canvas: null },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _signature = (parent) => {

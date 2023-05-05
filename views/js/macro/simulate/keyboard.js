@@ -4,10 +4,12 @@ import { _KEY_CODE_, _KEYBOARD_FLAGS_ } from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
-export default function Keyboard(__append) {
+export default function Keyboard(__append, __states, __execute) {
 
     if (!new.target) 
-        throw new Error('Simulate() must be called with new');
+        throw new Error('Keyboard() must be called with new');
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const DOMElement = {
@@ -18,55 +20,47 @@ export default function Keyboard(__append) {
             btn_confirm: null
     },
 
-    // VARIABLES ///////////////////////////////////////////////////////////////
-
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _back_keyboard = () => {
+    _back = () => {
 
     },
-    _clear_keyboard = () => {
-        const last = structInputs['last'] - 1,
-              list = structInputs['list'];
-
-        switch (macro[list[last]['_props_'][0]].type.type) {
-            case _TYPES_.NUMBER:
-            case _TYPES_.SIGNATURE:
-                list[last]['_props_'][2].clear();
-                break;
-        }
+    _clear = () => {
+        const current_input = __states.get_input();
+        if (current_input)
+            current_input.clear();
     },
-    _confirm_keyboard = () => {
-        const last = structInputs['last'],
-              list = structInputs['list'];
+    _confirm = () => {
+        const current_input = __states.getElement();
+        const previous_input = __states.getPrevElement();
 
-        if (list.length) {
-            if (last < list.length) {
-                list[last].style.animationPlayState = 'running';
+        if (current_input && __states.hasMore()) {
+            current_input.style.animationPlayState = 'running';
 
-                if (last > 0)
-                    list[last - 1].style.animationName = 'shrink_item_inputs';
+            if (previous_input)
+                previous_input.style.animationName = 'shrink_item_inputs';
+
+            const shortcut = macro[list[last]['_props_'][0]];
+            switch (shortcut['type']['type']) {
+                case _TYPES_.NUMBER:
+                    this.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
                 
-                const shortcut = macro[list[last]['_props_'][0]];
-                switch (shortcut['type']['type']) {
-                    case _TYPES_.NUMBER:
-                        this.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                        break;
-                    
-                    case _TYPES_.SIGNATURE:
-                        this.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                        break;
+                case _TYPES_.SIGNATURE:
+                    this.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
 
-                    case _TYPES_.PHOTO:
-                        break;
+                case _TYPES_.PHOTO:
+                    break;
 
-                    default:
-                        this.update(_KEYBOARD_FLAGS_.NONE);
-                }
-                
-                structInputs['last'] += 1;
-            } else {
-                const [id, color] = list[last - 1]['_props_'];
-                _execute(id, color, queueViews[queueViews.length - 1]);
+                default:
+                    this.update(_KEYBOARD_FLAGS_.NONE);
+            }
+            
+            __states.incCurrent();
+        } else {
+            if (previous_input) {
+                const [id, color] = previous_input['_props_'];
+                __execute(id, color);
             }
         }
     };
@@ -90,8 +84,8 @@ export default function Keyboard(__append) {
             DOMElement.btn_back.style.display = 'block';
             
             DOMElement.btn_back.setAttribute('disabled', '');
-            // if (structInputs['last'] === 0 && structInputs['list'].length > 1)
-            //     DOMElement.btn_back.removeAttribute('disabled');                
+            if (__states.isFirst())
+                DOMElement.btn_back.removeAttribute('disabled');             
         }
 
         DOMElement.btn_clear.style.display = 'none';
@@ -143,13 +137,13 @@ export default function Keyboard(__append) {
         const controls_buttons = addElement(DOMElement.keyboard, 'div', 'controls-buttons');
 
         DOMElement.btn_back = addElement(controls_buttons, 'button', 'back', _I18N_.keyboard_back);
-        DOMElement.btn_back.addEventListener('click', _back_keyboard, { capture: false });
+        DOMElement.btn_back.addEventListener('click', _back, { capture: false });
 
         DOMElement.btn_clear = addElement(controls_buttons, 'button', 'clear', _I18N_.keyboard_clear);
-        DOMElement.btn_clear.addEventListener('click', _clear_keyboard, { capture: false });
+        DOMElement.btn_clear.addEventListener('click', _clear, { capture: false });
 
         DOMElement.btn_confirm = addElement(controls_buttons, 'button', 'confirm', _I18N_.keyboard_confirm);
-        DOMElement.btn_confirm.addEventListener('click', _confirm_keyboard, { capture: false });
+        DOMElement.btn_confirm.addEventListener('click', _confirm, { capture: false });
 
         const keyboard = addElement(DOMElement.keyboard, 'div', 'keyboard');
         [_KEY_CODE_.KEY1, _KEY_CODE_.KEY2, _KEY_CODE_.KEY3, _KEY_CODE_.KEY4, 
@@ -160,17 +154,18 @@ export default function Keyboard(__append) {
         });
 
         keyboard.addEventListener('click', evnt => {
-            const last = structInputs['last'],
-                  list = structInputs['list'],
-                //   target = evnt.target,
-                  code = evnt.target.getAttribute('_key'), // target['_code_'],
-                  input = list[last - 1]['_props_'][2];
+            const current_input = __states.getPrevInput(),
+                  target = evnt.target,
+                  code = evnt.target.getAttribute('_key');
+
+            // const last = structInputs['last'],
+            //       list = structInputs['list'],
+            //     //   target = evnt.target,
+            //       code = evnt.target.getAttribute('_key'), // target['_code_'],
+            //       input = list[last - 1]['_props_'][2];
                   
-            if (input.add(code)) {
-                DOMElement.btn_confirm.removeAttribute('disabled');
-            } else {
-                DOMElement.btn_confirm.setAttribute('disabled', '');
-            }
+            if (current_input)
+                current_input.add(code);
             
         }, { capture: false });
     })();

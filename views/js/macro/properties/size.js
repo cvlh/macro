@@ -5,15 +5,15 @@ import { _I18N_ } from '../../i18n/pt-br.js';
 import { _ICON_CHAR_ } from '../../utils/constants.js';
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-export default function Size (ctx) {
-
-    // CONSTANTS ///////////////////////////////////////////////////////////////
-    const parent = ctx;
+export default function Size (__context) {
 
     // VARIABLES ///////////////////////////////////////////////////////////////
     let content, 
-        rowSizeLabel, rowSize, height, width,
-    
+        rowSizeLabel, rowSize, height, width;
+
+    // CONSTANTS ///////////////////////////////////////////////////////////////
+    const
+
     // PRIVATE /////////////////////////////////////////////////////////////////
     _set = function(properties) {        
         if (properties.hasOwnProperty('height')) 
@@ -25,7 +25,7 @@ export default function Size (ctx) {
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.visible = function() {
-        const objectSize = parent.getMacro().getSelectedObject().getProps('size');
+        const objectSize = __context.getMacro().getSelectedObject().getProps('size');
 
         if (objectSize !== null) {
             _set(objectSize);
@@ -40,7 +40,7 @@ export default function Size (ctx) {
     (function() {
         let label;
         
-        content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');
+        content = addElement(__context.getFragment(), 'div', 'main-app-properties-content');
 
         // SIZE
         rowSizeLabel = addElement(content, 'div', 'main-app-properties-row header');

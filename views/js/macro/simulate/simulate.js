@@ -5,6 +5,7 @@ import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
 import InputSignature from './components/input-signature.js';
+import InputState from './components/input-state.js';
 import Keyboard from './keyboard.js';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -13,23 +14,22 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     if (!new.target) 
         throw new Error('Simulate() must be called with new');
 
+    // VARIABLES ///////////////////////////////////////////////////////////////
+    let fragment,
+
+        macro, keyboard, inputListState,
+        stackExecute, stackVisibility,
+        queueViews,
+        currentVisibleIDs = new Set(), 
+        lastRootExecuted;
+
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const 
         DOMElement = {
             popup:     null,
             container: null,
             main:      null
-        };
-
-    // VARIABLES ///////////////////////////////////////////////////////////////
-    let fragment,
-
-        macro, keyboard,
-        stackExecute, stackVisibility,
-        queueViews,
-        structInputs, // { last: 0, list: [] }
-        currentVisibleIDs = new Set(), 
-        lastRootExecuted,
+        },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
     _wildcard = (id) => {
@@ -179,6 +179,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         // _confirm_keyboard();
     },
+    _keyboard_execute = (id, color) => { _execute(id, color, queueViews[queueViews.length - 1]); },
     _receive_events = (evnt) => {
         evnt.stopPropagation();
 
@@ -237,7 +238,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             }
 
             content['_props_'] = [id, color, new_input];
-            structInputs = { last: 1, list: [content] };
+
+            inputListState.push(content);
+            inputListState.setCurrent(1);
 
             content.style.animationName = 'stretch_item_inputs';
             content.style.animationPlayState = 'running';
@@ -295,8 +298,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             content.style.backgroundColor = color;
         }
 
-        //if (all_inputs)
-            structInputs = { last: 0, list: [] };
+        inputListState.clear();
 
         const wrapper = addElement(slide, 'div', 'itens-wrapper');
         for (const id of ids) {
@@ -350,7 +352,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 }
 
                 item['_props_'] = [id, color, new_input];
-                structInputs['list'].push(item);
+                inputListState.push(item);
 
                 divider = false;
             } else {
@@ -465,7 +467,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         stackVisibility = [];
         queueViews = [];
         stackExecute = [];
-        // structInputs = {};
         lastRootExecuted = null;
 
         const visiblesIDs = _filter_ids(currentVisibleIDs, 1);
@@ -505,7 +506,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         }
 
         DOMElement.main = addElement(DOMElement.container, 'div', 'main');
-        keyboard = new Keyboard(DOMElement.container);
+
+        inputListState = new InputState();
+        keyboard = new Keyboard(DOMElement.container, inputListState, _keyboard_execute);
 
         DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();

@@ -7,20 +7,21 @@ import { addElement } from '../../../utils/functions.js';
 export default function InputNumber(__append, __properties) {
     
     if (!new.target) 
-        throw new Error('Simulate() must be called with new');
+        throw new Error('InputNumber() must be called with new');
+
+    // VARIABLES ///////////////////////////////////////////////////////////////
+    let decimal, precision,
+        maximum, maximumLength, minimum, minimumLength,
+        optional,
+        inputArray = [];
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const
         DOMElement = {
             container: null,
             item:      null
-        };
+        },
 
-    let decimal, precision,
-        maximum, maximumLength, minimum, minimumLength,
-        optional,
-        inputArray = [],
-    
     render = () => {
         let result = true, text = '';
 

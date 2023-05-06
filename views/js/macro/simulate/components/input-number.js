@@ -1,6 +1,6 @@
 'use strict';
 
-import { _COLORS_, _FLEX_ALIGN_, _KEY_CODE_ } from '../../../utils/constants.js';
+import { _COLORS_, _FLEX_ALIGN_, _KEYBOARD_FLAGS_, _KEY_CODE_ } from '../../../utils/constants.js';
 import { _I18N_ } from '../../../i18n/pt-br.js';
 import { addElement } from '../../../utils/functions.js';
 
@@ -22,8 +22,8 @@ export default function InputNumber(__append, __properties) {
             item:      null
         },
 
-    render = () => {
-        let result = true, text = '';
+    _render = () => {
+        let text = '';
 
         if (decimal) {
             const diff = (precision + 1) - inputArray.length;
@@ -57,14 +57,21 @@ export default function InputNumber(__append, __properties) {
 
             DOMElement.item.style.color = 'var(--neutral-700)';
 
-            result = false;
+            __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
         } else {
             DOMElement.container.removeAttribute('data-info');
             DOMElement.item.style.removeProperty('color');
+
+            __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
         }
 
         DOMElement.item.textContent = text;
-        return result;
+    },
+    _clear = () => {
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+
+        inputArray = [];
+        DOMElement.item.textContent = __properties?.['default'] ?? ''; 
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
@@ -85,17 +92,9 @@ export default function InputNumber(__append, __properties) {
             }
         }
 
-        return render();
+        _render();
     };
-    this.clear = () => {
-        // if (__properties.hasOwnProperty('default')) 
-        //     inputArray = [__properties['default']];
-        // else
-            inputArray = [];
-
-        DOMElement.item.textContent = __properties?.['default'] ?? ''; 
-        render();
-    };
+    this.clear = () => _clear();
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
@@ -111,9 +110,10 @@ export default function InputNumber(__append, __properties) {
         // PROPERTIES
         DOMElement.container.style.color = __properties?.['color'] ?? _COLORS_.BLACK;
         DOMElement.container.style.justifyContent = __properties?.['align'] ?? _FLEX_ALIGN_.LEFT;
+
         // if (__properties.hasOwnProperty('default')) 
         //     inputArray.push(__properties['default']);
-        DOMElement.item.textContent = __properties?.['default'] ?? '';
+        // DOMElement.item.textContent = __properties?.['default'] ?? '';
 
         decimal   = __properties?.['decimal'] ?? false;
         precision = decimal ? (__properties?.['precision'] ?? 2) : 0;
@@ -129,6 +129,9 @@ export default function InputNumber(__append, __properties) {
             minimumLength--;
         }
 
-        render();
+        optional = __properties?.['optional'] ?? false;
+
+        // render();
+        _clear();
     })();
 }

@@ -4,7 +4,7 @@ import { _KEY_CODE_, _KEYBOARD_FLAGS_ } from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
-export default function Keyboard(__append, __states, __execute) {
+export default function Keyboard(__append, __states, __confirm) {
 
     if (!new.target) 
         throw new Error('Keyboard() must be called with new');
@@ -25,45 +25,11 @@ export default function Keyboard(__append, __states, __execute) {
 
     },
     _clear = () => {
-        const current_input = __states.get_input();
+        const current_input = __states.getPrevInput();
         if (current_input)
             current_input.clear();
     },
-    _confirm = () => {
-        const current_input = __states.getElement();
-        const previous_input = __states.getPrevElement();
-
-        if (current_input && __states.hasMore()) {
-            current_input.style.animationPlayState = 'running';
-
-            if (previous_input)
-                previous_input.style.animationName = 'shrink_item_inputs';
-
-            const shortcut = macro[list[last]['_props_'][0]];
-            switch (shortcut['type']['type']) {
-                case _TYPES_.NUMBER:
-                    this.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    break;
-                
-                case _TYPES_.SIGNATURE:
-                    this.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    break;
-
-                case _TYPES_.PHOTO:
-                    break;
-
-                default:
-                    this.update(_KEYBOARD_FLAGS_.NONE);
-            }
-            
-            __states.incCurrent();
-        } else {
-            if (previous_input) {
-                const [id, color] = previous_input['_props_'];
-                __execute(id, color);
-            }
-        }
-    };
+    _confirm = () => { __confirm(); };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
     this.update = (flags = _KEYBOARD_FLAGS_.NONE) => {
@@ -84,7 +50,7 @@ export default function Keyboard(__append, __states, __execute) {
             DOMElement.btn_back.style.display = 'block';
             
             DOMElement.btn_back.setAttribute('disabled', '');
-            if (__states.isFirst())
+            if (!__states.isFirst())
                 DOMElement.btn_back.removeAttribute('disabled');             
         }
 
@@ -157,16 +123,10 @@ export default function Keyboard(__append, __states, __execute) {
             const current_input = __states.getPrevInput(),
                   target = evnt.target,
                   code = evnt.target.getAttribute('_key');
-
-            // const last = structInputs['last'],
-            //       list = structInputs['list'],
-            //     //   target = evnt.target,
-            //       code = evnt.target.getAttribute('_key'), // target['_code_'],
-            //       input = list[last - 1]['_props_'][2];
                   
             if (current_input)
                 current_input.add(code);
-            
+    
         }, { capture: false });
     })();
 }

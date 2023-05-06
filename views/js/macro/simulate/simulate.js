@@ -111,8 +111,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     },
     _clear_stack_view = () => {
         while (queueViews.length > 1) {
-            let view = queueViews.shift();
+            inputListState.clear();
 
+            let view = queueViews.shift();
             DOMElement.main.removeChild(view);
         }
     },
@@ -177,9 +178,46 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         DOMElement.main.scrollTo({top: 0, left: 0, behavior: 'smooth'});
 
-        // _confirm_keyboard();
+        _dispatch();
     },
-    _keyboard_execute = (id, color) => { _execute(id, color, queueViews[queueViews.length - 1]); },
+    _dispatch = () => { 
+        const current_input = inputListState.getElement();
+        const previous_input = inputListState.getPrevElement();
+
+        if (current_input && inputListState.hasMore()) {
+            current_input.style.animationPlayState = 'running';
+
+            if (previous_input)
+                previous_input.style.animationName = 'shrink_item_inputs';
+
+            const props = macro[current_input['_props_'][0]];
+            switch (props['type']['type']) {
+                case _TYPES_.NUMBER:
+                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
+                
+                case _TYPES_.SIGNATURE:
+                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    break;
+
+                case _TYPES_.PHOTO:
+                    break;
+
+                default:
+                    keyboard.update(_KEYBOARD_FLAGS_.NONE);
+            }
+            
+            inputListState.incCurrent();
+        } else {
+            if (previous_input) {
+                const [id, color] = previous_input['_props_'];
+                _execute(id, color, queueViews[queueViews.length - 1]); 
+            }
+        }
+    },
+    _rewind = () => {
+
+    },
     _receive_events = (evnt) => {
         evnt.stopPropagation();
 
@@ -195,13 +233,10 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 target['_props_'].pop();
             delete target['_props_'];
 
-            // target.className = 'item-input-block';
-            // target.removeChild(target.lastChild);
+            delete target['_input_'];
 
             const content = addElement(main_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
-            // current_parent.replaceChild(content, target);
-            // content.appendChild(target);
 
             const listItems = current_parent.querySelectorAll('.item-list');
             for (const listItem of listItems)
@@ -211,8 +246,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             for (const divider of dividers)
                 divider.style.flexBasis = '0';
 
-            let new_input = null;
-            
             const shortcut = macro[id];
             const type = shortcut['type']['type'];
             switch(type) {
@@ -223,21 +256,26 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     target.className = 'item-input-block';
                     target.removeChild(target.lastChild);
                     content.appendChild(target);
-                    
-                    new_input = new InputNumber(content, { color, ...shortcut['type'] });                    
-                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
                     
                 case _TYPES_.SIGNATURE:
-                    new_input = new InputSignature(content, { 'env': __run_environment, 'text': shortcut['text'], 'color': color, 'keyboard': keyboard.controls } );
-                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
                 case _TYPES_.PHOTO:
                     break;
             }
 
-            content['_props_'] = [id, color, new_input];
+            const params = {
+                'env': __run_environment, 
+                'color': color, 
+                'text': shortcut['text'],
+                ...shortcut['type'],
+                'keyboard': keyboard.controls
+            };
+
+            // const new_input = _create_input(content, params);
+            content['_props_'] = [id, color];
+            content['_input_'] = _create_input(content, params);
 
             inputListState.push(content);
             inputListState.setCurrent(1);
@@ -246,8 +284,10 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             content.style.animationPlayState = 'running';
 
         } else if (target.classList.contains('item-list')) {
-            const [id, color] = target['_props_'];
-            _execute(id, color, main_parent);
+            keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
+            target.style.backgroundColor = 'var(--purple-100)';
+            // const [id, color] = target['_props_'];
+            // _execute(id, color, main_parent);
         }
     },
     _create_list_item = (id, color, input = false) => {
@@ -272,6 +312,32 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             addElement(item, 'div', 'icon item-list-icon small', data['type']['type']);
 
         return item_fragment;
+    },
+    _create_input = (append, params) => {
+        switch(params['type']) {
+            case _TYPES_.TEXT:
+                break;
+
+            case _TYPES_.NUMBER:
+                // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                return new InputNumber(append, params);
+
+            case _TYPES_.SIGNATURE:
+                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                return new InputSignature(append, params);
+
+            case _TYPES_.DATE:
+                return null;
+
+            case _TYPES_.PHOTO:
+                return null;
+
+            case _TYPES_.SCAN:
+                return null;
+
+            default:
+                return null;
+        }
     },
     _create_view =  (ids, color = null) => {
         let navbar, shortcut, type,
@@ -309,8 +375,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 color = shortcut['color'];
 
             if (all_inputs) {
-                let new_input = null;
-
                 switch(type) {
                     case _TYPES_.TEXT:
                         break;
@@ -330,28 +394,37 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                         content = addElement(block, 'div', 'item-list-block');
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['id']);
-
-                        new_input = new InputNumber(item, { color, ...shortcut['type'] });
                         break;
     
                     case _TYPES_.SIGNATURE:
                         item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
-
-                        new_input = new InputSignature(item, { 'env': __run_environment, 'color': color, 'text': shortcut['text'], 'keyboard': keyboard.controls } );
                         break;
 
                     case _TYPES_.DATE:
                         break;
 
                     case _TYPES_.PHOTO:
+                        item = addElement(wrapper, 'div', 'item-input');
                         break;
 
                     case _TYPES_.SCAN:
                         break;
                 }
 
-                item['_props_'] = [id, color, new_input];
+                const params = {
+                    'env': __run_environment, 
+                    'color': color, 
+                    'text': shortcut['text'],
+                    ...shortcut['type'],
+                    'keyboard': keyboard.controls
+                };
+                // const new_input = _create_input(item, params);
+                // item['_props_'] = [id, color, new_input];
+
+                item['_props_'] = [id, color];
+                item['_input_'] = _create_input(item, params);
+
                 inputListState.push(item);
 
                 divider = false;
@@ -508,7 +581,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         DOMElement.main = addElement(DOMElement.container, 'div', 'main');
 
         inputListState = new InputState();
-        keyboard = new Keyboard(DOMElement.container, inputListState, _keyboard_execute);
+        keyboard = new Keyboard(DOMElement.container, inputListState, _dispatch);
 
         DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();

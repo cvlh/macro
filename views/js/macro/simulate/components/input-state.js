@@ -19,12 +19,12 @@ export default function InputState() {
 
     this.getInput = () => {
         if (current < list.length)
-            return list[current]['_props_'][2];
+            return list[current]['_input_'];
         return null;
     };
     this.getPrevInput = () => {
         if (current > 0)
-            return list[current - 1]['_props_'][2];
+            return list[current - 1]['_input_'];
         return null;
     };
 
@@ -42,9 +42,12 @@ export default function InputState() {
     this.clear = () => {
         current = 0;
 
-        while (list.length)
-            list.pop();
+        while (list.length) {
+            const item = list.pop();
 
+            delete item['_props_'];
+            delete item['_input_'];
+        }
         list = [];
     };
 

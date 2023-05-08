@@ -4,6 +4,7 @@ import { _COLORS_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
+import InputPhoto from './components/input-photo.js';
 import InputSignature from './components/input-signature.js';
 import InputState from './components/input-state.js';
 import Keyboard from './keyboard.js';
@@ -214,6 +215,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     break;
 
                 case _TYPES_.PHOTO:
+                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
                 default:
@@ -362,7 +364,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 return null;
 
             case _TYPES_.PHOTO:
-                return null;
+                keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                return new InputPhoto(append, params);
 
             case _TYPES_.SCAN:
                 return null;
@@ -429,15 +432,12 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                         break;
     
                     case _TYPES_.SIGNATURE:
+                    case _TYPES_.PHOTO:
                         item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
                         break;
 
                     case _TYPES_.DATE:
-                        break;
-
-                    case _TYPES_.PHOTO:
-                        item = addElement(wrapper, 'div', 'item-input');
                         break;
 
                     case _TYPES_.SCAN:

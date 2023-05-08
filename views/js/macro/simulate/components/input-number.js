@@ -57,7 +57,7 @@ export default function InputNumber(__append, __properties) {
 
             DOMElement.item.style.color = 'var(--neutral-700)';
 
-            __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+            __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK);
         } else {
             DOMElement.container.removeAttribute('data-info');
             DOMElement.item.style.removeProperty('color');

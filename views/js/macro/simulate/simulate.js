@@ -21,6 +21,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         stackExecute, stackVisibility,
         queueViews,
         currentVisibleIDs = new Set(), 
+        currentSelectedItem,
         lastRootExecuted;
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
@@ -181,6 +182,18 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         _dispatch();
     },
     _dispatch = () => { 
+        if (currentSelectedItem !== null) {
+            const [id, color] = currentSelectedItem['_props_'],
+                current_parent = currentSelectedItem.parentElement,
+                main_parent = current_parent.parentElement;
+
+            current_parent.style.overflowY = 'hidden';
+            currentSelectedItem = null;
+            
+            _execute(id, color, main_parent); 
+            return;
+        }
+
         const current_input = inputListState.getElement();
         const previous_input = inputListState.getPrevElement();
 
@@ -225,7 +238,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
               current_parent = target.parentElement,
               main_parent = current_parent.parentElement;
 
-        current_parent.style.overflowY = 'hidden';
+        // current_parent.style.overflowY = 'hidden';
         if (target.classList.contains('input-type')) {
             const [id, color] = target['_props_'];
 
@@ -284,8 +297,27 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             content.style.animationPlayState = 'running';
 
         } else if (target.classList.contains('item-list')) {
+            let is_current_select = false;
+
+            if (target.classList.contains('selected-item'))
+                is_current_select = true;
+
+            if (currentSelectedItem !== null) {
+                keyboard.update(_KEYBOARD_FLAGS_.NONE);
+                // currentSelectedItem.style.removeProperty('background-color');
+                currentSelectedItem.classList.remove('selected-item');
+                currentSelectedItem = null;
+
+                if (is_current_select)
+                    return;
+            } 
+
             keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
-            target.style.backgroundColor = 'var(--purple-100)';
+            // target.style.backgroundColor = 'var(--purple-100)';
+            target.classList.add('selected-item');
+
+            currentSelectedItem = target;
+
             // const [id, color] = target['_props_'];
             // _execute(id, color, main_parent);
         }
@@ -319,11 +351,11 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 break;
 
             case _TYPES_.NUMBER:
-                // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputNumber(append, params);
 
             case _TYPES_.SIGNATURE:
-                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputSignature(append, params);
 
             case _TYPES_.DATE:
@@ -540,6 +572,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         stackVisibility = [];
         queueViews = [];
         stackExecute = [];
+        currentSelectedItem = null;
         lastRootExecuted = null;
 
         const visiblesIDs = _filter_ids(currentVisibleIDs, 1);

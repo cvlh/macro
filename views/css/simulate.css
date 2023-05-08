@@ -334,6 +334,7 @@
                             background-color: transparent;
                             animation: .2s ease 0s 1 normal both paused shrink_item_list;
                         }
+                            .itens-wrapper > .item-list.selected-item { background-color: var(--neutral-300); }
                             @keyframes shrink_item_list {
                                 from { flex-basis: 50px; opacity: 1; } 
                                 to   { flex-basis:  0px; opacity: 0; }

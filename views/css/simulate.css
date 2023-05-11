@@ -339,6 +339,10 @@
                                 from { flex-basis: 50px; opacity: 1; } 
                                 to   { flex-basis:  0px; opacity: 0; }
                             }
+                            @keyframes stretch_item_list {
+                                from { flex-basis:  0px; opacity: 0; }
+                                to   { flex-basis: 50px; opacity: 1; } 
+                            }
                             /* @keyframes shrink_item_list {
                                 from { height: 50px; opacity: 1; } 
                                 to   { height:  0px; opacity: 0; }
@@ -450,7 +454,7 @@
                                 margin: 0 10px;
 
                                 display: grid;
-                                grid-template-columns: 34px auto;
+                                grid-template-columns: 34px auto 34px;
                                 /* grid-template-rows: 34px; */
                                 gap: 4px
                             }

@@ -37,6 +37,7 @@ export const _ZOOM_ = {
 //     NEUTRAL: root_style.getPropertyValue('--neutral-base'),
 //     GRAY:    root_style.getPropertyValue('--gray-base')
 // };
+
 export const _COLORS_ = {
     RED:    '#ff0000',
     PURPLE: '#a200f2',

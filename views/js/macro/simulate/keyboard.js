@@ -4,7 +4,7 @@ import { _KEY_CODE_, _KEYBOARD_FLAGS_ } from '../../utils/constants.js';
 import { _I18N_ } from '../../i18n/pt-br.js';
 import { addElement } from '../../utils/functions.js';
 
-export default function Keyboard(__append, __states, __confirm) {
+export default function Keyboard(__append, __states, __confirm, __back) {
 
     if (!new.target) 
         throw new Error('Keyboard() must be called with new');
@@ -21,9 +21,7 @@ export default function Keyboard(__append, __states, __confirm) {
     },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _back = () => {
-
-    },
+    _back = () => { __back(); },
     _clear = () => {
         const current_input = __states.getPrevInput();
         if (current_input)
@@ -49,9 +47,9 @@ export default function Keyboard(__append, __states, __confirm) {
         if (flags & _KEYBOARD_FLAGS_.BTN_BACK) {
             DOMElement.btn_back.style.display = 'block';
             
-            DOMElement.btn_back.setAttribute('disabled', '');
-            if (!__states.isFirst())
-                DOMElement.btn_back.removeAttribute('disabled');             
+            // DOMElement.btn_back.setAttribute('disabled', '');
+            // if (!__states.isFirst())
+            //     DOMElement.btn_back.removeAttribute('disabled');             
         }
 
         DOMElement.btn_clear.style.display = 'none';

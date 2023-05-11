@@ -22,6 +22,24 @@ export default function InputNumber(__append, __properties) {
             item:      null
         },
 
+    _check = (value) => {
+        if (value < minimum || value > maximum) {
+            if (value < minimum)
+                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_underflow + minimum);
+
+            if (value > maximum)
+                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_overflow + maximum);
+
+            DOMElement.item.style.color = 'var(--neutral-700)';
+
+            __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK);
+        } else {
+            DOMElement.container.removeAttribute('data-info');
+            DOMElement.item.style.removeProperty('color');
+
+            __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        }
+    },
     _render = () => {
         let text = '';
 
@@ -48,30 +66,21 @@ export default function InputNumber(__append, __properties) {
         } );
 
         const value = parseFloat(text.replace(',', '.'));
-        if (value < minimum || value > maximum) {
-            if (value < minimum)
-                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_underflow + minimum);
-
-            if (value > maximum)
-                DOMElement.container.setAttribute('data-info', _I18N_.simulate_filed_overflow + maximum);
-
-            DOMElement.item.style.color = 'var(--neutral-700)';
-
-            __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK);
-        } else {
-            DOMElement.container.removeAttribute('data-info');
-            DOMElement.item.style.removeProperty('color');
-
-            __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
-        }
+        _check(value);
 
         DOMElement.item.textContent = text;
     },
     _clear = () => {
-        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK);
 
         inputArray = [];
-        DOMElement.item.textContent = __properties?.['default'] ?? ''; 
+        if (__properties.hasOwnProperty('default')) {
+            let text = __properties['default'].toString().replace('.', ',');
+            DOMElement.item.textContent = text;
+
+            const value = parseFloat(__properties['default']);
+            _check(value);
+        }
     };
 
     // PUBLIC  /////////////////////////////////////////////////////////////////

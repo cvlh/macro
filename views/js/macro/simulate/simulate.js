@@ -207,19 +207,19 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             const props = macro[current_input['_props_'][0]];
             switch (props['type']['type']) {
                 case _TYPES_.NUMBER:
-                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
                 
                 case _TYPES_.SIGNATURE:
-                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
                 case _TYPES_.PHOTO:
-                    keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
 
-                default:
-                    keyboard.update(_KEYBOARD_FLAGS_.NONE);
+                // default:
+                    // keyboard.update(_KEYBOARD_FLAGS_.NONE);
             }
             
             inputListState.incCurrent();
@@ -231,6 +231,41 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         }
     },
     _rewind = () => {
+        const current_input = inputListState.getPrevElement(),
+              current_parent = current_input.parentElement
+
+        const input_field = current_input.querySelector('.item-input-box');
+        current_input.removeChild(input_field);
+
+        delete current_input['_input_'];
+
+        const listItems = current_parent.querySelectorAll('.item-list');
+
+        const input_block = current_parent.querySelector('.item-input-block');
+        input_block.className = 'item-list input-type';
+        input_block.style.removeProperty('animation-name');
+        input_block.style.removeProperty('animation-play-state');
+
+        input_block['_props_'] = [];
+        while (current_input['_props_'].length)
+            input_block['_props_'].unshift(current_input['_props_'].pop());
+
+        delete current_input['_props_'];
+
+        current_parent.replaceChild(input_block, current_input);
+        // input_block.style.animationPlayState = 'running';
+
+        for (const listItem of listItems)
+            listItem.style.animationName = 'stretch_item_list';
+
+        const dividers = current_parent.querySelectorAll('.item-divider');
+        for (const divider of dividers)
+            divider.style.flexBasis = '1px';
+
+        inputListState.clear();
+        keyboard.update(_KEYBOARD_FLAGS_.NONE);
+    },
+    _clear = () => {
 
     },
     _receive_events = (evnt) => {
@@ -240,23 +275,24 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
               current_parent = target.parentElement,
               main_parent = current_parent.parentElement;
 
-        // current_parent.style.overflowY = 'hidden';
         if (target.classList.contains('input-type')) {
+            current_parent.style.overflowY = 'hidden';
+
             const [id, color] = target['_props_'];
 
             while (target['_props_'].length)
                 target['_props_'].pop();
             delete target['_props_'];
 
-            delete target['_input_'];
-
             const content = addElement(main_parent, 'div', 'item-input');
             current_parent.replaceChild(content, target);
 
             const listItems = current_parent.querySelectorAll('.item-list');
-            for (const listItem of listItems)
+            for (const listItem of listItems) {
+                listItem.style.removeProperty('animation-name');
                 listItem.style.animationPlayState = 'running';
-            
+            }
+
             const dividers = current_parent.querySelectorAll('.item-divider');
             for (const divider of dividers)
                 divider.style.flexBasis = '0';
@@ -268,15 +304,16 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     break;
 
                 case _TYPES_.NUMBER:
+                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+
                     target.className = 'item-input-block';
-                    target.removeChild(target.lastChild);
+                    // target.removeChild(target.lastChild);
                     content.appendChild(target);
                     break;
                     
                 case _TYPES_.SIGNATURE:
-                    break;
-
                 case _TYPES_.PHOTO:
+                    keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
             }
 
@@ -288,7 +325,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 'keyboard': keyboard.controls
             };
 
-            // const new_input = _create_input(content, params);
             content['_props_'] = [id, color];
             content['_input_'] = _create_input(content, params);
 
@@ -306,7 +342,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
             if (currentSelectedItem !== null) {
                 keyboard.update(_KEYBOARD_FLAGS_.NONE);
-                // currentSelectedItem.style.removeProperty('background-color');
                 currentSelectedItem.classList.remove('selected-item');
                 currentSelectedItem = null;
 
@@ -315,13 +350,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             } 
 
             keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
-            // target.style.backgroundColor = 'var(--purple-100)';
             target.classList.add('selected-item');
-
             currentSelectedItem = target;
-
-            // const [id, color] = target['_props_'];
-            // _execute(id, color, main_parent);
         }
     },
     _create_list_item = (id, color, input = false) => {
@@ -353,18 +383,18 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 break;
 
             case _TYPES_.NUMBER:
-                keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputNumber(append, params);
 
             case _TYPES_.SIGNATURE:
-                keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputSignature(append, params);
 
             case _TYPES_.DATE:
                 return null;
 
             case _TYPES_.PHOTO:
-                keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputPhoto(append, params);
 
             case _TYPES_.SCAN:
@@ -382,7 +412,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const slide = addElement(DOMElement.main, 'div', 'container-main-slide');
         const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
-        keyboard.update();
+        keyboard.update(_KEYBOARD_FLAGS_.NONE);
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -614,7 +644,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         DOMElement.main = addElement(DOMElement.container, 'div', 'main');
 
         inputListState = new InputState();
-        keyboard = new Keyboard(DOMElement.container, inputListState, _dispatch);
+        keyboard = new Keyboard(DOMElement.container, inputListState, _dispatch, _rewind);
 
         DOMElement.main.addEventListener('click', _receive_events, { capture: false });
     })();

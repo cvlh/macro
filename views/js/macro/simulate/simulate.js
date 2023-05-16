@@ -207,7 +207,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             const props = macro[current_input['_props_'][0]];
             switch (props['type']['type']) {
                 case _TYPES_.NUMBER:
-                    // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
                 
                 case _TYPES_.SIGNATURE:
@@ -234,27 +234,12 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const current_input = inputListState.getPrevElement(),
               current_parent = current_input.parentElement
 
+        const [id, color] = current_input['_props_'];
+
         const input_field = current_input.querySelector('.item-input-box');
         current_input.removeChild(input_field);
 
-        delete current_input['_input_'];
-
         const listItems = current_parent.querySelectorAll('.item-list');
-
-        const input_block = current_parent.querySelector('.item-input-block');
-        input_block.className = 'item-list input-type';
-        input_block.style.removeProperty('animation-name');
-        input_block.style.removeProperty('animation-play-state');
-
-        input_block['_props_'] = [];
-        while (current_input['_props_'].length)
-            input_block['_props_'].unshift(current_input['_props_'].pop());
-
-        delete current_input['_props_'];
-
-        current_parent.replaceChild(input_block, current_input);
-        // input_block.style.animationPlayState = 'running';
-
         for (const listItem of listItems)
             listItem.style.animationName = 'stretch_item_list';
 
@@ -262,8 +247,17 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         for (const divider of dividers)
             divider.style.flexBasis = '1px';
 
+        current_input.style.animationName = 'rewind_item_inputs';
+        current_input.addEventListener('animationend', function() {
+            this.className = 'item-list';
+            this.style.removeProperty('animation-name');
+            this.style.removeProperty('animation-play-state');
+        }, { once: true, capture: false });
+
         inputListState.clear();
         keyboard.update(_KEYBOARD_FLAGS_.NONE);
+
+        current_input['_props_'] = [id, color];
     },
     _clear = () => {
 
@@ -272,20 +266,32 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         evnt.stopPropagation();
 
         const target = evnt.target,
-              current_parent = target.parentElement,
-              main_parent = current_parent.parentElement;
+              current_parent = target.parentElement;
 
-        if (target.classList.contains('input-type')) {
+        if (!target.classList.contains('item-list'))
+            return;
+
+        const attribute = target.getAttribute('data-input') === 'true' ? true : false;
+        if (attribute) {
             current_parent.style.overflowY = 'hidden';
 
             const [id, color] = target['_props_'];
+            const shortcut = macro[id];
 
-            while (target['_props_'].length)
-                target['_props_'].pop();
-            delete target['_props_'];
+            const params = {
+                'env': __run_environment, 
+                'color': color, 
+                'text': shortcut['text'],
+                ...shortcut['type'],
+                'keyboard': keyboard.controls
+            };
+            target['_input_'] = _create_input(target, params);
 
-            const content = addElement(main_parent, 'div', 'item-input');
-            current_parent.replaceChild(content, target);
+            target.style.removeProperty('animation-name');
+            // target.style.removeProperty('animation-play-state');
+
+            target.className = 'item-input';
+            target.style.animationPlayState = 'running';
 
             const listItems = current_parent.querySelectorAll('.item-list');
             for (const listItem of listItems) {
@@ -297,7 +303,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             for (const divider of dividers)
                 divider.style.flexBasis = '0';
 
-            const shortcut = macro[id];
             const type = shortcut['type']['type'];
             switch(type) {
                 case _TYPES_.TEXT:
@@ -305,43 +310,29 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
                 case _TYPES_.NUMBER:
                     keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-
-                    target.className = 'item-input-block';
-                    // target.removeChild(target.lastChild);
-                    content.appendChild(target);
                     break;
                     
                 case _TYPES_.SIGNATURE:
                 case _TYPES_.PHOTO:
                     keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                    target.firstChild.style.visibility = 'hidden';
                     break;
             }
 
-            const params = {
-                'env': __run_environment, 
-                'color': color, 
-                'text': shortcut['text'],
-                ...shortcut['type'],
-                'keyboard': keyboard.controls
-            };
-
-            content['_props_'] = [id, color];
-            content['_input_'] = _create_input(content, params);
-
-            inputListState.push(content);
+            inputListState.push(target);
             inputListState.setCurrent(1);
 
-            content.style.animationName = 'stretch_item_inputs';
-            content.style.animationPlayState = 'running';
-
-        } else if (target.classList.contains('item-list')) {
+        } else {
             let is_current_select = false;
 
             if (target.classList.contains('selected-item'))
                 is_current_select = true;
 
             if (currentSelectedItem !== null) {
+
                 keyboard.update(_KEYBOARD_FLAGS_.NONE);
+                keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_OK);
+
                 currentSelectedItem.classList.remove('selected-item');
                 currentSelectedItem = null;
 
@@ -349,27 +340,34 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     return;
             } 
 
-            keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
             target.classList.add('selected-item');
             currentSelectedItem = target;
+
+            keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
+            keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_OK);
         }
     },
     _create_list_item = (id, color, input = false) => {
         const item_fragment = document.createDocumentFragment();
         const data = macro[id];
 
-        const item = addElement(item_fragment, 'div', 'item-list'); 
-        item.style.color = color;
-        item['_props_'] = [id, color]; 
+        const wrapper = addElement(item_fragment, 'div', 'item-list');
+        wrapper.style.color = color;
+        wrapper.setAttribute('data-input', input);
+        wrapper['_props_'] = [id, color]; 
 
-        if (input) 
-            item.classList.add('input-type');
+        let item;
+        if (input) {
+            item = addElement(wrapper, 'div', 'item-input-type'); 
+        } else {
+            item = wrapper;
+            item.style.gridTemplateColumns = '34px auto';
+        }
 
         addElement(item, 'div', 'font-awesome item-list-icon', data['icon']);
 
         const content = addElement(item, 'div', 'item-list-block');
         addElement(content, 'div', 'item-list-header', data['text']);
-
         addElement(content, 'div', 'item-list-subheader', data['id']);
 
         if (input) 
@@ -413,6 +411,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const all_inputs = ids.every( element => macro[element]['type']['type'] !== _TYPES_.LIST );
 
         keyboard.update(_KEYBOARD_FLAGS_.NONE);
+        inputListState.clear();
 
         for (const id of stackExecute) {
             shortcut = macro[id];
@@ -428,8 +427,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             content = addElement(slide, 'div', 'item-space');
             content.style.backgroundColor = color;
         }
-
-        inputListState.clear();
 
         const wrapper = addElement(slide, 'div', 'itens-wrapper');
         for (const id of ids) {
@@ -448,17 +445,19 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                         item = addElement(wrapper, 'div', 'item-input');
                         item.style.animationName = 'stretch_item_inputs';
 
-                        block = addElement(item, 'div', 'item-input-block'); 
+                        block = addElement(item, 'div', 'item-input-type'); 
                         block.style.color = color;
                 
-                        if (!shortcut.hasOwnProperty('icon'))
-                            block.style.gridTemplateColumns = 'auto';
-                        else
+                        // if (!shortcut.hasOwnProperty('icon'))
+                        //     block.style.gridTemplateColumns = 'auto';
+                        // else
                             addElement(block, 'div', 'font-awesome item-list-icon', shortcut['icon']);
                         
                         content = addElement(block, 'div', 'item-list-block');
                         addElement(content, 'div', 'item-list-header', shortcut['text']);
                         addElement(content, 'div', 'item-list-subheader', shortcut['id']);
+
+                        addElement(block, 'div', 'icon item-list-icon small', shortcut['type']['type']);
                         break;
     
                     case _TYPES_.SIGNATURE:
@@ -481,8 +480,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     ...shortcut['type'],
                     'keyboard': keyboard.controls
                 };
-                // const new_input = _create_input(item, params);
-                // item['_props_'] = [id, color, new_input];
 
                 item['_props_'] = [id, color];
                 item['_input_'] = _create_input(item, params);

@@ -119,7 +119,7 @@ export default function Keyboard(__append, __states, __confirm, __back) {
 
         keyboard.addEventListener('click', evnt => {
             const current_input = __states.getPrevInput(),
-                  target = evnt.target,
+                //   target = evnt.target,
                   code = evnt.target.getAttribute('_key');
                   
             if (current_input)

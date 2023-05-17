@@ -232,12 +232,32 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     },
     _rewind = () => {
         const current_input = inputListState.getPrevElement(),
-              current_parent = current_input.parentElement
+              current_parent = current_input.parentElement;
 
         const [id, color] = current_input['_props_'];
+        const shortcut = macro[id];
 
-        const input_field = current_input.querySelector('.item-input-box');
-        current_input.removeChild(input_field);
+        current_parent.style.removeProperty('overflow-y');
+        
+        const type = shortcut['type']['type'];
+        switch(type) {
+            case _TYPES_.TEXT:
+                break;
+
+            case _TYPES_.NUMBER:
+                const input_field = current_input.querySelector('.item-input-box');
+                current_input.removeChild(input_field);
+                break;
+                
+            case _TYPES_.SIGNATURE:
+            case _TYPES_.PHOTO:
+                const input_text = current_input.querySelector('.item-input-type');
+                input_text.style.removeProperty('visibility');
+
+                const input_drawing = current_input.querySelector('.item-drawing');
+                current_input.removeChild(input_drawing);
+                break;
+        }
 
         const listItems = current_parent.querySelectorAll('.item-list');
         for (const listItem of listItems)
@@ -287,13 +307,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             };
             target['_input_'] = _create_input(target, params);
 
-            target.style.removeProperty('animation-name');
-            // target.style.removeProperty('animation-play-state');
-
             target.className = 'item-input';
-            target.style.animationPlayState = 'running';
 
-            const listItems = current_parent.querySelectorAll('.item-list');
+            const listItems = current_parent.querySelectorAll('.item-list, .item-input');
             for (const listItem of listItems) {
                 listItem.style.removeProperty('animation-name');
                 listItem.style.animationPlayState = 'running';

@@ -1,6 +1,6 @@
 'use strict';
 
-import { _COLORS_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_} from '../../utils/constants.js';
+import { _COLORS_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_ } from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
 import InputNumber from './components/input-number.js'
@@ -238,7 +238,10 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const shortcut = macro[id];
 
         current_parent.style.removeProperty('overflow-y');
-        
+
+        const input_text = current_input.querySelector('.item-input-type');
+        input_text.style.removeProperty('visibility');
+
         const type = shortcut['type']['type'];
         switch(type) {
             case _TYPES_.TEXT:
@@ -250,12 +253,13 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 break;
                 
             case _TYPES_.SIGNATURE:
-            case _TYPES_.PHOTO:
-                const input_text = current_input.querySelector('.item-input-type');
-                input_text.style.removeProperty('visibility');
-
                 const input_drawing = current_input.querySelector('.item-drawing');
                 current_input.removeChild(input_drawing);
+                break;
+
+            case _TYPES_.PHOTO:
+                const input_photo = current_input['_input_'];
+                input_photo.rewind();
                 break;
         }
 
@@ -285,18 +289,39 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     _receive_events = (evnt) => {
         evnt.stopPropagation();
 
-        const target = evnt.target,
-              current_parent = target.parentElement;
-
+        const target = evnt.target;
         if (!target.classList.contains('item-list'))
             return;
 
-        const attribute = target.getAttribute('data-input') === 'true' ? true : false;
-        if (attribute) {
-            current_parent.style.overflowY = 'hidden';
+        const [id, color] = target['_props_'];
+        const shortcut = macro[id];
+        
+        const type = shortcut['type']['type'];
+        if (type === _TYPES_.LIST) {
+            let is_current_select = false;
 
-            const [id, color] = target['_props_'];
-            const shortcut = macro[id];
+            if (target.classList.contains('selected-item'))
+                is_current_select = true;
+
+            if (currentSelectedItem !== null) {
+                keyboard.update(_KEYBOARD_FLAGS_.NONE);
+                keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_OK);
+
+                currentSelectedItem.classList.remove('selected-item');
+                currentSelectedItem = null;
+
+                if (is_current_select)
+                    return;
+            } 
+
+            target.classList.add('selected-item');
+            currentSelectedItem = target;
+
+            keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
+            keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_OK);
+        } else {
+            const current_parent = target.parentElement;
+            current_parent.style.overflowY = 'hidden';
 
             const params = {
                 'env': __run_environment, 
@@ -306,7 +331,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 'keyboard': keyboard.controls
             };
             target['_input_'] = _create_input(target, params);
-
             target.className = 'item-input';
 
             const listItems = current_parent.querySelectorAll('.item-list, .item-input');
@@ -327,9 +351,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 case _TYPES_.NUMBER:
                     keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     break;
-                    
-                case _TYPES_.SIGNATURE:
+                
                 case _TYPES_.PHOTO:
+                case _TYPES_.SIGNATURE:
                     keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                     target.firstChild.style.visibility = 'hidden';
                     break;
@@ -337,30 +361,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
             inputListState.push(target);
             inputListState.setCurrent(1);
-
-        } else {
-            let is_current_select = false;
-
-            if (target.classList.contains('selected-item'))
-                is_current_select = true;
-
-            if (currentSelectedItem !== null) {
-
-                keyboard.update(_KEYBOARD_FLAGS_.NONE);
-                keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_OK);
-
-                currentSelectedItem.classList.remove('selected-item');
-                currentSelectedItem = null;
-
-                if (is_current_select)
-                    return;
-            } 
-
-            target.classList.add('selected-item');
-            currentSelectedItem = target;
-
-            keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
-            keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_OK);
         }
     },
     _create_list_item = (id, color, input = false) => {
@@ -369,7 +369,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         const wrapper = addElement(item_fragment, 'div', 'item-list');
         wrapper.style.color = color;
-        wrapper.setAttribute('data-input', input);
+        // wrapper.setAttribute('data-input', input);
         wrapper['_props_'] = [id, color]; 
 
         let item;
@@ -397,18 +397,15 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 break;
 
             case _TYPES_.NUMBER:
-                // keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputNumber(append, params);
 
             case _TYPES_.SIGNATURE:
-                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputSignature(append, params);
 
             case _TYPES_.DATE:
                 return null;
 
             case _TYPES_.PHOTO:
-                // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
                 return new InputPhoto(append, params);
 
             case _TYPES_.SCAN:

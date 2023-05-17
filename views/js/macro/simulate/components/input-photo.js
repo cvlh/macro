@@ -10,100 +10,136 @@ export default function InputPhoto(__append, __properties) {
         throw new Error('InputSignature() must be called with new');
 
     // VARIABLES ///////////////////////////////////////////////////////////////
+    let media_stream;
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const 
         DOMElement = { 
             video: null,
             canvas: null,
-            take_btn: null
+
+            take_btn: null,
+
+            wait_icon: null,
+            wait_message: null
         },
 
-    _photo = (parent) => {
-        const wait_icon = addElement(parent, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
-        wait_icon.style.color = __properties['color'];
+    _create = (parent) => {
+        DOMElement.wait_icon = addElement(parent, 'div', 'loading-resources-icon icon', _ICON_CHAR_.CAMERA);
+        DOMElement.wait_icon.style.color = __properties['color'];
 
-        const wait_message = addElement(parent, 'div', 'loading-resources-text', _I18N_.resource_loading);
-        wait_message.style.color = __properties['color'];
+        DOMElement.wait_message = addElement(parent, 'div', 'loading-resources-text', _I18N_.resource_loading);
+        DOMElement.wait_message.style.color = __properties['color'];
 
         DOMElement.video = addElement(parent, 'video', 'item-drawing');
-        const video = DOMElement.video;
-
-        video.width = parent.offsetWidth;
-        video.height = parent.offsetHeight;
-        video.setAttribute('muted', '');
-        video.setAttribute('autoplay', '');
-        video.setAttribute('playsinline', '');
-
+        DOMElement.video.setAttribute('width', parent.offsetWidth);
+        DOMElement.video.setAttribute('height', parent.offsetHeight);
+        DOMElement.video.setAttribute('muted', '');
+        DOMElement.video.setAttribute('autoplay', '');
+        DOMElement.video.setAttribute('playsinline', '');
+        
         DOMElement.canvas = addElement(parent, 'canvas', 'item-drawing');
-
-        const canvas = DOMElement.canvas;
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
-        canvas.style.visibility = 'hidden';
-
+        DOMElement.canvas.width = parent.offsetWidth;
+        DOMElement.canvas.height = parent.offsetHeight;
+        
         DOMElement.take_btn = addElement(parent, 'div', 'take-picture icon', _ICON_CHAR_.CAMERA);
-        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-            navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user', aspectRatio: { min: 0.6, max: 1 } } }).then(function (mediaStream) {
-                const video_track = mediaStream.getVideoTracks()[0];
-                video.srcObject = mediaStream;
 
-                video.onloadedmetadata = function() {
-                    wait_icon.style.display = 'none';
-                    wait_message.style.display = 'none';
+        _photo();
+    },
+    _stop = () => {
+        if (media_stream !== null) {
+            const video_track = media_stream.getVideoTracks()[0];
+            video_track.stop();
+
+            media_stream.removeTrack(video_track);
+            media_stream = null;
+        }
+    },
+    _take = () => {
+        DOMElement.take_btn.style.visibility = 'hidden';
+        DOMElement.video.style.visibility = 'hidden';
+        DOMElement.canvas.style.removeProperty('visibility');
+
+        __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+
+        const ctx = DOMElement.canvas.getContext('2d');
+        ctx.drawImage(DOMElement.video, 0, 0, DOMElement.canvas.width, DOMElement.canvas.height);
+
+        const image_data_url = DOMElement.canvas.toDataURL('image/jpeg');
+        // console.log(image_data_url);
+
+        _stop();
+    },
+    _photo = () => {
+        DOMElement.video.style.visibility = 'hidden';
+        DOMElement.canvas.style.visibility = 'hidden';
+        DOMElement.take_btn.style.visibility = 'hidden';
+
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+
+            navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user', aspectRatio: { min: 0.6, max: 1 } } }).then(function (mediaStream) {
+                media_stream = mediaStream;
+
+                const video_track = mediaStream.getVideoTracks()[0];
+                DOMElement.video.srcObject = mediaStream;
+
+                DOMElement.video.onloadedmetadata = function() {
+                    DOMElement.wait_icon.style.visibility = 'hidden';
+                    DOMElement.wait_message.style.visibility = 'hidden';
+
+                    DOMElement.take_btn.addEventListener('click', _take, { once: true, capture: false });
+
+                    __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_BACK);
 
                     const settings = video_track.getSettings();
                     if (settings.hasOwnProperty('width') && settings.hasOwnProperty('height')) {
                         const aspectratio = settings['width'] / this.getAttribute('width');
 
-                        canvas.setAttribute('width', settings['width'] / aspectratio);
-                        canvas.setAttribute('height', settings['height'] / aspectratio);
+                        DOMElement.canvas.setAttribute('width', settings['width'] / aspectratio);
+                        DOMElement.canvas.setAttribute('height', settings['height'] / aspectratio);
                     }
 
-                    DOMElement.take_btn.style.visibility = 'visible';
-                    DOMElement.take_btn.addEventListener('click', function() {
-                        this.style.visibility = 'hidden';
-                        __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+                    DOMElement.video.style.removeProperty('visibility');
+                    DOMElement.take_btn.style.removeProperty('visibility');
+                }
 
-                        canvas.style.visibility = 'visible';
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        const image_data_url = canvas.toDataURL('image/jpeg');
-                        // console.log(image_data_url);
-
-                        video.style.visibility = 'hidden';
-                        video_track.stop();
-
-                        mediaStream.removeTrack(video_track);
-
-                        // _keyboard(_KEYBOARD_FLAGS_.CONTROL);
-                    }, { once: true, capture: false });
-                };
             }).catch(function (err) {
-                wait_icon.textContent = _ICON_CHAR_.ALERT;
-                wait_icon.style.color = 'var(--red)';
+                DOMElement.wait_icon.textContent = _ICON_CHAR_.ALERT;
+                DOMElement.wait_icon.style.color = 'var(--red)';
 
-                wait_message.textContent = `${err.name}: ${err.message}`;
-                wait_message.style.color = 'var(--red)';
+                DOMElement.wait_message.textContent = `${err.name}: ${err.message}`;
+                DOMElement.wait_message.style.color = 'var(--red)';
+
+                __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_BACK);
             });
+
         } else {
-            wait_icon.textContent = _ICON_CHAR_.ALERT;
-            wait_icon.style.color = 'var(--red)';
+            DOMElement.wait_icon.textContent = _ICON_CHAR_.ALERT;
+            DOMElement.wait_icon.style.color = 'var(--red)';
+
+            __properties.keyboard(true, _KEYBOARD_FLAGS_.BTN_BACK);
         }
     };
 
     // PUBLIC //////////////////////////////////////////////////////////////////
     this.clear = () => {
-        DOMElement.take_btn.style.visibility = 'visible';
-        DOMElement.canvas.style.visibility = 'hidden';
-        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
-    }
+        _photo();
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK );
+    };
+    this.rewind = () => {
+        _stop();
+
+        for (const element in DOMElement)
+            __append.removeChild(DOMElement[element]);
+    };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function() {
-        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_OK | _KEYBOARD_FLAGS_.BTN_CLEAR);
+        media_stream = null;
+
+        __properties.keyboard(false, _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK );
         __append.addEventListener('animationend', function() {
-            _photo(this);
+            _create(this);
         }, { once: true, capture: false });
     })();
 }

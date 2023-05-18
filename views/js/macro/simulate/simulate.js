@@ -206,23 +206,29 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 previous_input.style.animationName = 'shrink_item_inputs';
 
             const props = macro[current_input['_props_'][0]];
-            switch (props['type']['type']) {
-                case _TYPES_.NUMBER:
-                    keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    break;
-                
-                case _TYPES_.SIGNATURE:
-                    // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    break;
-
-                case _TYPES_.PHOTO:
-                    // keyboard.update(_KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    break;
-
-                // default:
-                    // keyboard.update(_KEYBOARD_FLAGS_.NONE);
-            }
             inputListState.increment();
+            _update_keyboard(props['type']['type']);
+
+            // switch (props['type']['type']) {
+            //     case _TYPES_.NUMBER:
+            //         keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+            //         break;
+                
+            //     case _TYPES_.SIGNATURE:
+            //     case _TYPES_.PHOTO:
+            //         keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+            //         break;
+
+            //     // default:
+            //         // keyboard.update(_KEYBOARD_FLAGS_.NONE);
+            // }
+
+            // if (inputListState.position() === 0)
+            //     keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_BACK);
+            // else
+            //     keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_BACK);
+
+            
 
         } else {
             if (previous_input) {
@@ -240,6 +246,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
             current_input.style.animationName = 'shrink_item_inputs';
             previous_input.style.animationName = 'stretch_item_inputs';
+
+            const props = macro[previous_input['_props_'][0]];
+            _update_keyboard(props['type']['type']);
 
             return;
         }
@@ -296,6 +305,28 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         current_input['_props_'] = [id, color];
     },
+    _update_keyboard = (type) => {
+        switch (type) {
+            case _TYPES_.NUMBER:
+                keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                break;
+            
+            case _TYPES_.SIGNATURE:
+            case _TYPES_.PHOTO:
+                keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+                break;
+
+            // default:
+                // keyboard.update(_KEYBOARD_FLAGS_.NONE);
+        }
+
+        if (inputListState.position() === 1) {
+            keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
+            keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_BACK);
+        } else {
+            keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_BACK);
+        }
+    },
     _clear = () => {
 
     },
@@ -333,6 +364,12 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             keyboard.update(_KEYBOARD_FLAGS_.BTN_OK);
             keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_OK);
         } else {
+            if (currentSelectedItem !== null) {
+                currentSelectedItem.classList.remove('selected-item');
+                currentSelectedItem = null;
+                keyboard.update(_KEYBOARD_FLAGS_.NONE);
+            }
+
             const current_parent = target.parentElement;
             current_parent.style.overflowY = 'hidden';
 

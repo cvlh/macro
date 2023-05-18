@@ -23,9 +23,10 @@ export default function Keyboard(__append, __states, __confirm, __back) {
     // PRIVATE /////////////////////////////////////////////////////////////////
     _back = () => { __back(); },
     _clear = () => {
-        const current_input = __states.getPrevInput();
+        // const current_input = __states.getPrevInput();
+        const current_input = __states.getPrevElement();
         if (current_input)
-            current_input.clear();
+            current_input['_input_'].clear();
     },
     _confirm = () => { __confirm(); };
 
@@ -118,12 +119,13 @@ export default function Keyboard(__append, __states, __confirm, __back) {
         });
 
         keyboard.addEventListener('click', evnt => {
-            const current_input = __states.getPrevInput(),
-                //   target = evnt.target,
+            const current_input = __states.getPrevElement(),
                   code = evnt.target.getAttribute('_key');
+            // const current_input = __states.getPrevInput(),
+                //   target = evnt.target,
                   
             if (current_input)
-                current_input.add(code);
+                current_input['_input_'].add(code);
     
         }, { capture: false });
     })();

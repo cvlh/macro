@@ -15,9 +15,9 @@ export default function InputState() {
 
     this.push = input => list.push(input);
 
-    // this.setCurrent = value => current = value;
     this.increment = () => current++;
     this.decrement = () => current--;
+    this.position = () => current;
 
     // this.getInput = () => {
     //     if (current < list.length)

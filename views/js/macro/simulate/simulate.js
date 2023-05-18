@@ -154,7 +154,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     _execute(lastRootExecuted, color, current_slide);
                 } else if (lastRootExecuted !== visiblesIDs[0]) {
                     const visibility_flags = macro[id]['visibility']['flags'];
-                    color = macro[visiblesIDs[0]]['color'];
+
+                    const color_idx = macro[visiblesIDs[0]]['color'];
+                    const color = _COLORS_[color_idx];
 
                     if (visibility_flags & _VISIBILITY_.RESTORE && !(visibility_flags & _VISIBILITY_.FRESH) && !(visibility_flags & _VISIBILITY_.EXTRA)) {
                         lastRootExecuted = visiblesIDs[0];

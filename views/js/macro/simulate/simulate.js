@@ -182,7 +182,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
         _dispatch();
     },
-    _dispatch = () => { 
+    _dispatch = () => {
         if (currentSelectedItem !== null) {
             const [id, color] = currentSelectedItem['_props_'],
                 current_parent = currentSelectedItem.parentElement,
@@ -199,6 +199,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         const previous_input = inputListState.getPrevElement();
 
         if (current_input && inputListState.hasMore()) {
+            current_input.style.removeProperty('animation-name');
             current_input.style.animationPlayState = 'running';
 
             if (previous_input)
@@ -221,8 +222,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 // default:
                     // keyboard.update(_KEYBOARD_FLAGS_.NONE);
             }
-            
-            inputListState.incCurrent();
+            inputListState.increment();
+
         } else {
             if (previous_input) {
                 const [id, color] = previous_input['_props_'];
@@ -231,7 +232,19 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         }
     },
     _rewind = () => {
-        const current_input = inputListState.getPrevElement(),
+        if (inputListState.size() > 1) {
+            inputListState.decrement();
+
+            const current_input = inputListState.getElement();
+            const previous_input = inputListState.getPrevElement();
+
+            current_input.style.animationName = 'shrink_item_inputs';
+            previous_input.style.animationName = 'stretch_item_inputs';
+
+            return;
+        }
+
+        const current_input = inputListState.getElement(),
               current_parent = current_input.parentElement;
 
         const [id, color] = current_input['_props_'];
@@ -359,8 +372,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     break;
             }
 
+            inputListState.clear();
             inputListState.push(target);
-            inputListState.setCurrent(1);
         }
     },
     _create_list_item = (id, color, input = false) => {

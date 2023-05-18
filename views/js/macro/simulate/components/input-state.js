@@ -9,19 +9,21 @@ export default function InputState() {
     let current, list;
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    this.isFirst = () => current === 0 && list.length > 1;
+    // this.isFirst = () => current === 0 && list.length > 1;
     this.hasMore = () => current < list.length;
+    this.size = () => list.length;
 
     this.push = input => list.push(input);
 
-    this.setCurrent = value => current = value;
-    this.incCurrent = () => current++;
+    // this.setCurrent = value => current = value;
+    this.increment = () => current++;
+    this.decrement = () => current--;
 
-    this.getInput = () => {
-        if (current < list.length)
-            return list[current]['_input_'];
-        return null;
-    };
+    // this.getInput = () => {
+    //     if (current < list.length)
+    //         return list[current]['_input_'];
+    //     return null;
+    // };
     this.getPrevInput = () => {
         if (current > 0)
             return list[current - 1]['_input_'];
@@ -40,14 +42,16 @@ export default function InputState() {
     };
 
     this.clear = () => {
-        current = 0;
-
         while (list.length) {
             const item = list.pop();
 
             delete item['_props_'];
             delete item['_input_'];
+
+            console.log(item);
         }
+
+        current = 0;
         list = [];
     };
 

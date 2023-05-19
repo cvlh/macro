@@ -223,17 +223,16 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     },
     _rewind = () => {
         if (inputListState.size() > 1) {
-            // inputListState.decrement();
-
             const current_input = inputListState.getElement();
             const previous_input = inputListState.getPrevElement();
 
             current_input.style.animationName = 'shrink_item_inputs';
             previous_input.style.animationName = 'stretch_item_inputs';
 
+            inputListState.decrement();
+
             const props = macro[previous_input['_props_'][0]];
             _update_keyboard(props['type']['type']);
-
             return;
         }
 

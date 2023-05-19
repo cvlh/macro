@@ -3,10 +3,12 @@
 import { _COLORS_, _TYPES_, _VISIBILITY_, _KEYBOARD_FLAGS_, _RUN_ENVIRONMENT_, _ICON_CHAR_ } from '../../utils/constants.js';
 import { addElement } from '../../utils/functions.js';
 
+import InputDate from './components/input-date.js';
 import InputNumber from './components/input-number.js'
 import InputPhoto from './components/input-photo.js';
 import InputSignature from './components/input-signature.js';
 import InputState from './components/input-state.js';
+
 import Keyboard from './keyboard.js';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +199,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
             return;
         }
 
+        inputListState.increment();
+
         const current_input = inputListState.getElement();
         const previous_input = inputListState.getPrevElement();
 
@@ -208,29 +212,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 previous_input.style.animationName = 'shrink_item_inputs';
 
             const props = macro[current_input['_props_'][0]];
-            inputListState.increment();
             _update_keyboard(props['type']['type']);
-
-            // switch (props['type']['type']) {
-            //     case _TYPES_.NUMBER:
-            //         keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-            //         break;
-                
-            //     case _TYPES_.SIGNATURE:
-            //     case _TYPES_.PHOTO:
-            //         keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-            //         break;
-
-            //     // default:
-            //         // keyboard.update(_KEYBOARD_FLAGS_.NONE);
-            // }
-
-            // if (inputListState.position() === 0)
-            //     keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_BACK);
-            // else
-            //     keyboard.controls(true, _KEYBOARD_FLAGS_.BTN_BACK);
-
-            
 
         } else {
             if (previous_input) {
@@ -241,7 +223,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
     },
     _rewind = () => {
         if (inputListState.size() > 1) {
-            inputListState.decrement();
+            // inputListState.decrement();
 
             const current_input = inputListState.getElement();
             const previous_input = inputListState.getPrevElement();
@@ -413,6 +395,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
             inputListState.clear();
             inputListState.push(target);
+            inputListState.increment();
         }
     },
     _create_list_item = (id, color, input = false) => {
@@ -455,7 +438,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 return new InputSignature(append, params);
 
             case _TYPES_.DATE:
-                return null;
+                return new InputDate(append, params);
 
             case _TYPES_.PHOTO:
                 return new InputPhoto(append, params);

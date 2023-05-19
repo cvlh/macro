@@ -45,13 +45,8 @@ export default function Keyboard(__append, __states, __confirm, __back) {
         main.classList.add('with-keyboard');
 
         DOMElement.btn_back.style.display = 'none';
-        if (flags & _KEYBOARD_FLAGS_.BTN_BACK) {
+        if (flags & _KEYBOARD_FLAGS_.BTN_BACK)
             DOMElement.btn_back.style.display = 'block';
-            
-            // DOMElement.btn_back.setAttribute('disabled', '');
-            // if (!__states.isFirst())
-            //     DOMElement.btn_back.removeAttribute('disabled');             
-        }
 
         DOMElement.btn_clear.style.display = 'none';
         if (flags & _KEYBOARD_FLAGS_.BTN_CLEAR)
@@ -78,7 +73,7 @@ export default function Keyboard(__append, __states, __confirm, __back) {
                 DOMElement.btn_confirm.removeAttribute('disabled');
             else
                 DOMElement.btn_confirm.setAttribute('disabled', '');
-        } 
+        }
 
         if (flags & _KEYBOARD_FLAGS_.BTN_BACK) {
             if (enable)
@@ -119,10 +114,8 @@ export default function Keyboard(__append, __states, __confirm, __back) {
         });
 
         keyboard.addEventListener('click', evnt => {
-            const current_input = __states.getPrevElement(),
+            const current_input = __states.getElement(),
                   code = evnt.target.getAttribute('_key');
-            // const current_input = __states.getPrevInput(),
-                //   target = evnt.target,
                   
             if (current_input)
                 current_input['_input_'].add(code);

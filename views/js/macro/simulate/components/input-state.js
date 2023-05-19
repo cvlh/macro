@@ -51,13 +51,13 @@ export default function InputState() {
             console.log(item);
         }
 
-        current = 0;
+        current = -1;
         list = [];
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     (function init ()  {
-        current = 0;
+        current = -1;
         list = [];
     })();
 }

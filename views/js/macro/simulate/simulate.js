@@ -304,7 +304,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 // keyboard.update(_KEYBOARD_FLAGS_.NONE);
         }
 
-        if (inputListState.position() === 1) {
+        if (inputListState.position() === 0) {
             keyboard.update(_KEYBOARD_FLAGS_.TYPE_NUMPAD | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
             keyboard.controls(false, _KEYBOARD_FLAGS_.BTN_BACK);
         } else {

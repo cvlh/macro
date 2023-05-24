@@ -470,19 +470,31 @@
                                 font-weight: 600;
                                 text-transform: uppercase;
                                 
-                                padding: 0 2px;
-                                background-color: var(--neutral-300);
+                                padding: 0 4px;
+                                background-color: var(--neutral-200);
                             }
-                                .item-input > .calendar > .header > div {
+
+                                .item-input > .calendar > .header > div,
+                                .item-input > .calendar > .footer > div {
                                     width: 100%;
                                     line-height: 25px;
                                     text-align: center;
                                     cursor: pointer;
                                     border-radius: 3px;
+
+                                    font-size: 11px;
                                 }
-                                    .item-input > .calendar > .header > div:hover { background-color: var(--neutral-400); }
-                                    @media (hover: none) { .item-input > .calendar > .header > div:hover { background-color: transparent; } }
-                                    .item-input > .calendar > .header > div:active { background-color: var(--neutral-600); }
+                                /* .item-input > .calendar > .header > span,
+                                .item-input > .calendar > .footer > span { color: var(--neutral-base); } */
+
+                                    .item-input > .calendar > .header > div:hover,
+                                    .item-input > .calendar > .footer > div:hover { background-color: var(--neutral-400); }
+                                    @media (hover: none) {
+                                        .item-input > .calendar > .header > div:hover,
+                                        .item-input > .calendar > .footer > div:hover { background-color: transparent; } 
+                                    }
+                                    .item-input > .calendar > .header > div:active,
+                                    .item-input > .calendar > .footer > div:active { background-color: var(--neutral-600); }
 
                             .item-input > .calendar .week-header {
                                 display: grid;
@@ -533,18 +545,18 @@
                                     }
                             .item-input > .calendar > .footer {
                                 display: grid;
-                                grid-template-columns: 1fr;
+                                grid-template-columns: 1fr 2fr;
                                 grid-template-rows: 34px;
                                 align-items: center;
                                 justify-items: center;
 
-                                font-size: 11px;
+                                font-size: 10px;
                                 font-weight: 600;
                                 text-transform: uppercase;
                                 
-                                padding: 0 2px;
+                                padding: 0 4px;
                                 background-color: var(--neutral-200);
-                                color: var(--neutral-900);
+                                /* color: var(--neutral-900); */
                             }
 
         .simulate-content > .footer {

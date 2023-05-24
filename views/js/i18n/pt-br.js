@@ -96,6 +96,8 @@ export const _I18N_ = {
     
     resource_loading: 'Carregando ...',
 
+    calendar_today: 'Hoje',
+    calendar_selected_date: 'Data Selecionada',
     short_days_of_week: [
         'Dom',  // 0
         'Seg',  // 1
@@ -105,7 +107,6 @@ export const _I18N_ = {
         'Sex',  // 5
         'Sab',  // 6
     ],
-
     month_names: [
         'Janeiro',   // 0
         'Fevereiro', // 1

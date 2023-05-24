@@ -245,7 +245,8 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
         current_parent.style.removeProperty('overflow-y');
 
         const input_text = current_input.querySelector('.item-input-type');
-        input_text.style.removeProperty('visibility');
+        input_text.style.removeProperty('display');
+        // input_text.style.removeProperty('visibility');
 
         const type = shortcut['type']['type'];
         switch(type) {
@@ -388,7 +389,12 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                 case _TYPES_.PHOTO:
                 case _TYPES_.SIGNATURE:
                     keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_CLEAR | _KEYBOARD_FLAGS_.BTN_OK);
-                    target.firstChild.style.visibility = 'hidden';
+                    target.firstChild.style.display = 'none';
+                    break;
+
+                case _TYPES_.DATE:
+                    keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_OK);
+                    target.firstChild.style.display = 'none';
                     break;
             }
 

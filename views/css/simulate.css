@@ -456,6 +456,97 @@
                                 top: 0;
                                 left: 0;
                             }
+
+                            /* CALENDAR //////////////////////////////////////*/
+                            .item-input > .calendar > .header {
+                                display: grid;
+                                grid-template-columns: 1fr 3fr 2fr 1fr;
+                                grid-template-rows: 34px;
+                                gap: 2px;
+                                align-items: center;
+                                justify-items: center;
+
+                                font-size: 10px;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                
+                                padding: 0 2px;
+                                background-color: var(--neutral-300);
+                            }
+                                .item-input > .calendar > .header > div {
+                                    width: 100%;
+                                    line-height: 25px;
+                                    text-align: center;
+                                    cursor: pointer;
+                                    border-radius: 3px;
+                                }
+                                    .item-input > .calendar > .header > div:hover { background-color: var(--neutral-400); }
+                                    @media (hover: none) { .item-input > .calendar > .header > div:hover { background-color: transparent; } }
+                                    .item-input > .calendar > .header > div:active { background-color: var(--neutral-600); }
+
+                            .item-input > .calendar .week-header {
+                                display: grid;
+                                grid-template-columns: repeat(7, 1fr);
+                                grid-template-rows: 24px;
+                                align-items: center;
+                                justify-items: center;
+
+                                font-size: 8px;
+                                font-weight: 600;
+                                text-transform: uppercase;
+
+                                background-color: var(--neutral-100);
+                                color: var(--neutral-900);
+                            }
+
+                            .item-input > .calendar > .week {
+                                display: grid;
+                                grid-template-columns: repeat(7, 1fr);
+                                grid-template-rows: 26px;
+                                align-items: center;
+                                justify-items: center;
+
+                                font-size: 12px;
+                                font-weight: 600;
+                            }
+                                .item-input > .calendar > .week > div {
+                                    width: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                }
+                                .item-input > .calendar > .week > div > span {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+
+                                    width: 26px;
+                                    height: 26px;
+                                    border-radius: 50%;
+
+                                    cursor: pointer;
+                                }
+                                    .item-input > .calendar > .week > div > span.selected { 
+                                        border-width: 2px;
+                                        border-style: solid;
+                                    }
+                            .item-input > .calendar > .footer {
+                                display: grid;
+                                grid-template-columns: 1fr;
+                                grid-template-rows: 34px;
+                                align-items: center;
+                                justify-items: center;
+
+                                font-size: 11px;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                
+                                padding: 0 2px;
+                                background-color: var(--neutral-200);
+                                color: var(--neutral-900);
+                            }
+
         .simulate-content > .footer {
             transform: translate(79px, 7px);
 

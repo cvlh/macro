@@ -38,17 +38,28 @@ export const _ZOOM_ = {
 //     GRAY:    root_style.getPropertyValue('--gray-base')
 // };
 
+// export const _COLORS_ = {
+//     RED:    '#ff0000', // 'red'
+//     PURPLE: '#a200f2', // 'blueviolet'
+//     // PURPLE: '#aa00ff',
+//     BLUE:   '#304ffe', // 'blue'
+//     TEAL:   '#008080', // 'teal'
+//     GREEN:  '#43a047', // 'green'
+//     ORANGE: '#ff6f00', // 'darkorange'
+//     // ORANGE: '#ff6d00',
+//     BROWN:  '#795548', // 'saddlebrown'
+//     BLACK:  '#000000'  // 'black'
+// };
+
 export const _COLORS_ = {
-    RED:    '#ff0000',
-    PURPLE: '#a200f2',
-    // PURPLE: '#aa00ff',
-    BLUE:   '#304ffe',
-    TEAL:   '#008080',
-    GREEN:  '#43a047',
-    ORANGE: '#ff6f00',
-    // ORANGE: '#ff6d00',
-    BROWN:  '#795548',
-    BLACK:  '#000000'
+    RED:    'red',          // 'red'
+    PURPLE: 'blueviolet',   // 'blueviolet'
+    BLUE:   'blue',         // 'blue'
+    TEAL:   'teal',         // 'teal'
+    GREEN:  'green',        // 'green'
+    ORANGE: 'darkorange',   // 'darkorange'
+    BROWN:  'saddlebrown',  // 'saddlebrown'
+    BLACK:  'black'         // 'black'
 };
 
 export const _TYPES_ = {

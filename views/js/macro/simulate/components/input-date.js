@@ -17,23 +17,29 @@ export default function InputDate(__append, __properties) {
         DOMElement = {
             calendar: null,
 
+            header: null,
             btn_month: null,
             txt_year: null,
 
-            rows: new Array(6),
+            days: null,
+            month: null,
             footer: null
         },
 
     _pad = (number) => number < 10 ? '0' + number : number,
     _date = (date) => _pad(date.getDate()) + '/' + _pad((date.getMonth() + 1)) + '/' + _pad(date.getFullYear()),
 
-    _render = () => {        
+    _render = () => {      
+        DOMElement.header.style.removeProperty('visibility');
+        DOMElement.days.style.removeProperty('visibility');
+        DOMElement.month.style.removeProperty('visibility');
+
         currentMonth = currentDate.getMonth();
         currentYear = currentDate.getFullYear();
 
-        const days_in_month = new Date(currentYear, currentMonth + 1, 0).getDate();
         const first_day = new Date(currentYear, currentMonth, 1).getDay();
-        const total_rows = Math.ceil((first_day + days_in_month) / 7);
+        // const days_in_month = new Date(currentYear, currentMonth + 1, 0).getDate();
+        // const total_rows = Math.ceil((first_day + days_in_month) / 7);
 
         DOMElement.btn_month.textContent = _I18N_.month_names[currentMonth];
         DOMElement.txt_year.textContent = currentYear;
@@ -41,8 +47,9 @@ export default function InputDate(__append, __properties) {
         let iterate_date = new Date(currentYear, currentMonth, 1);
         iterate_date.setDate(iterate_date.getDate() - first_day);
 
-        for (let row = 0; row < DOMElement.rows.length; row++) {
-            const current_row = DOMElement.rows[row];
+        let child = DOMElement.days.firstChild;
+        for (let row = 0; row < 6; row++) {
+            // const current_row = DOMElement.days[row];
 
             // current_row.style.removeProperty('display');
             // if ((row + 1) > total_rows) {
@@ -50,7 +57,6 @@ export default function InputDate(__append, __properties) {
             //     break;
             // }
 
-            let child = current_row.firstChild;
             for (var weekDay = 0; weekDay < 7; weekDay++) {
                 const text = child.firstChild;
                 
@@ -84,10 +90,19 @@ export default function InputDate(__append, __properties) {
 
         DOMElement.footer.textContent = _date(selectedDate);
     },
-    _selected = (evnt) => {
+    _month = (evnt) => {
+        if (evnt.target.hasOwnProperty('_date_')) {
+            const month = evnt.target['_date_'];
+            currentDate.setMonth(month);
+
+            _render();
+        }
+    },
+    _day = (evnt) => {
         if (evnt.target.hasOwnProperty('_date_')) {
             selectedDate = new Date(evnt.target['_date_']);
             currentDate = new Date(selectedDate);
+
             _render();
         }
     };
@@ -120,9 +135,12 @@ export default function InputDate(__append, __properties) {
         }, { capture: false });
 
         DOMElement.btn_month = addElement(header, 'div');
-        DOMElement.btn_month.addEventListener('click', () => {
-            DOMElement.rows.forEach( (element) => element.style.visibility = 'hidden' );
+        DOMElement.btn_month.addEventListener('click', () => { 
+            DOMElement.header.style.visibility = 'hidden';
+            DOMElement.days.style.visibility = 'hidden';
+            DOMElement.month.style.visibility = 'visible';
         }, { capture: false });
+
         DOMElement.txt_year = addElement(header, 'span');
 
         const btn_next = addElement(header, 'div', 'font-awesome', '\uf054');
@@ -131,22 +149,30 @@ export default function InputDate(__append, __properties) {
             _render();
         }, { capture: false });
 
-        // ROWS ////////////////////////////////////////////////////////////////
-        const headerRow = addElement(DOMElement.calendar, 'div', 'week-header');
-        for (const day of _I18N_.short_days_of_week)
-            addElement(headerRow, 'div', '', day);
+        // MONTHS //////////////////////////////////////////////////////////////
+        DOMElement.month = addElement(DOMElement.calendar, 'div', 'month'); 
+        for (let row = 0; row < 4; row++) {
+            for (let month = 0; month < 3; month++) {
+                const index = (row * 3) + month;
+                const cell = addElement(DOMElement.month, 'div', '', _I18N_.month_names[index]);
+                cell['_date_'] = index;
+            }
+        }
+        DOMElement.month.addEventListener('click', _month, { capture: false });
 
-        for (let row = 0; row < DOMElement.rows.length; row++) {
-            DOMElement.rows[row] = addElement(DOMElement.calendar, 'div', 'week');
-            for (let weekDay = 0; weekDay < 7; weekDay++) {
-                const cell = addElement(DOMElement.rows[row], 'div');
-                if (weekDay === 0 || weekDay === 6)
-                    cell.style.backgroundColor = 'var(--neutral-100)';
-                
+        // ROWS ////////////////////////////////////////////////////////////////
+        DOMElement.header = addElement(DOMElement.calendar, 'div', 'week-header');
+        for (const day of _I18N_.short_days_of_week)
+            addElement(DOMElement.header, 'div', '', day);
+
+        DOMElement.days = addElement(DOMElement.calendar, 'div', 'week');
+        for (let row = 0; row < 6; row++) {
+            for (let day = 0; day < 7; day++) {
+                const cell = addElement(DOMElement.days, 'div');
                 addElement(cell, 'span');
             }
         }
-        DOMElement.rows.forEach( (element) => element.addEventListener('click', _selected, { capture: false }) );
+        DOMElement.days.addEventListener('click', _day, { capture: false });
 
         // FOOTER //////////////////////////////////////////////////////////////
         const footer = addElement(DOMElement.calendar, 'div', 'footer');

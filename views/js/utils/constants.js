@@ -38,29 +38,27 @@ export const _ZOOM_ = {
 //     GRAY:    root_style.getPropertyValue('--gray-base')
 // };
 
-// export const _COLORS_ = {
-//     RED:    '#ff0000', // 'red'
-//     PURPLE: '#a200f2', // 'blueviolet'
-//     // PURPLE: '#aa00ff',
-//     BLUE:   '#304ffe', // 'blue'
-//     TEAL:   '#008080', // 'teal'
-//     GREEN:  '#43a047', // 'green'
-//     ORANGE: '#ff6f00', // 'darkorange'
-//     // ORANGE: '#ff6d00',
-//     BROWN:  '#795548', // 'saddlebrown'
-//     BLACK:  '#000000'  // 'black'
-// };
-
 export const _COLORS_ = {
-    RED:    'red',          // 'red'
-    PURPLE: 'blueviolet',   // 'blueviolet'
-    BLUE:   'blue',         // 'blue'
-    TEAL:   'teal',         // 'teal'
-    GREEN:  'green',        // 'green'
-    ORANGE: 'darkorange',   // 'darkorange'
-    BROWN:  'saddlebrown',  // 'saddlebrown'
-    BLACK:  'black'         // 'black'
+    RED:    '#ff0000', // 'red'
+    PURPLE: '#a200f2', // 'blueviolet'
+    BLUE:   '#304ffe', // 'blue'
+    TEAL:   '#008080', // 'teal'
+    GREEN:  '#43a047', // 'green'
+    ORANGE: '#ff6f00', // 'darkorange'
+    BROWN:  '#795548', // 'saddlebrown'
+    BLACK:  '#000000'  // 'black'
 };
+
+// export const _COLORS_ = {
+//     RED:    'red',          // 'red'
+//     PURPLE: 'blueviolet',   // 'blueviolet'
+//     BLUE:   'blue',         // 'blue'
+//     TEAL:   'teal',         // 'teal'
+//     GREEN:  'green',        // 'green'
+//     ORANGE: 'darkorange',   // 'darkorange'
+//     BROWN:  'saddlebrown',  // 'saddlebrown'
+//     BLACK:  'black'         // 'black'
+// };
 
 export const _TYPES_ = {
     LIST:      0,
@@ -69,7 +67,8 @@ export const _TYPES_ = {
     DATE:      3,
     PHOTO:     4,
     SIGNATURE: 5,
-    SCAN:      6
+    SCAN:      6,
+    TIME:      7
 };
 
 export const _STATUS_ = {

@@ -8,6 +8,7 @@ import InputNumber from './components/input-number.js'
 import InputPhoto from './components/input-photo.js';
 import InputSignature from './components/input-signature.js';
 import InputState from './components/input-state.js';
+import InputTime from './components/input-time.js';
 
 import Keyboard from './keyboard.js';
 
@@ -392,6 +393,7 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
                     target.firstChild.style.display = 'none';
                     break;
 
+                case _TYPES_.TIME:
                 case _TYPES_.DATE:
                     keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_OK);
                     target.firstChild.style.display = 'none';
@@ -444,6 +446,9 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
             case _TYPES_.DATE:
                 return new InputDate(append, params);
+
+            case _TYPES_.TIME:
+                return new InputTime(append, params);
 
             case _TYPES_.PHOTO:
                 return new InputPhoto(append, params);

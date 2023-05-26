@@ -16,7 +16,8 @@ export const _I18N_ = {
         DATE:      'Data',
         PHOTO:     'Fotografia',
         SIGNATURE: 'Assinatura',
-        SCAN:      'Leitor'
+        SCAN:      'Leitor',
+        TIME:      'Hora'
     },
     field_optional: 'Preenchimento opcional',
 

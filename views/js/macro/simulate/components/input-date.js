@@ -71,7 +71,7 @@ export default function InputDate(__append, __properties) {
                 if (iterate_date.getFullYear() === today.getFullYear() &&
                     iterate_date.getMonth() === today.getMonth() &&
                     iterate_date.getDate() === today.getDate()) {
-                    text.style.backgroundColor = 'var(--neutral-300)';
+                    text.style.backgroundColor = 'var(--neutral-400)';
                 }
 
                 text.classList.remove('selected');
@@ -135,7 +135,12 @@ export default function InputDate(__append, __properties) {
         }, { capture: false });
 
         DOMElement.btn_month = addElement(header, 'div');
-        DOMElement.btn_month.addEventListener('click', () => { 
+        DOMElement.btn_month.addEventListener('click', () => {
+            if (DOMElement.days.style.visibility !== '') {
+                _render();
+                return;
+            }
+
             DOMElement.header.style.visibility = 'hidden';
             DOMElement.days.style.visibility = 'hidden';
             DOMElement.month.style.visibility = 'visible';

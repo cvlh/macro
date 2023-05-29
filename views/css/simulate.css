@@ -695,8 +695,12 @@
             bottom: 0;
         }
 
-    .picker-item { color: var(--neutral-700); }
-    .picker-picked { font-size: 16px; }
+    .picker-list { 
+        position: relative;
+        margin: -22px 0;
+    }
+        .picker-item { color: var(--neutral-700); }
+        .picker-picked { font-size: 16px; }
 
 
         .simulate-content > .footer {

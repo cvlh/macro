@@ -605,65 +605,31 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+    background-color: white;
+    border-top: 1px solid var(--neutral-300);
+    border-bottom: 1px solid var(--neutral-300);
+
+    position: relative;
 }
+    .picker-mask { 
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+
+        height: 28px;
+        width: 100%;
+
+        border-top: 1px solid var(--neutral-200);
+        border-bottom: 1px solid var(--neutral-200);
+        
+        background-color: var(--neutral-100);
+    }
+
     .picker-cell {
         position: relative;
         flex: 1 1 0;
     }
     .picker-cell + .picker-cell { border-left: 1px solid var(--neutral-300); }
-
-    .picker-cell::before,
-    .picker-cell::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        z-index: 3;
-    }
-        .picker-cell::before {
-            background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-            bottom: 50%;
-            top: 0;
-        }
-        .picker-cell::after {
-            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-            bottom: 0;
-            top: 50%;
-        }
-
-    .picker-control {
-        cursor: pointer;
-        height: 26px;
-        position: relative;
-        z-index: 4;
-    }
-        .picker-control::before {
-            content: '';
-
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            
-            height: 8px;
-            width: 8px;
-
-            border-width: 0;
-            border-style: solid;
-            border-color: var(--neutral-800);
-
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
-        .picker-control:hover::before { border-color: var(--blue-base); }
-        .picker-control-prev::before {
-            border-right-width: 2px;
-            border-top-width: 2px;
-            margin-top: 2px;
-        }
-        .picker-control-next::before {
-            border-bottom-width: 2px;
-            border-left-width: 2px;
-            margin-bottom: 2px;
-        }
 
     .picker-body {
         overflow: hidden;
@@ -682,8 +648,8 @@
             position: absolute;
             left: 0;
             right: 0;
-            height: 32px;
-            
+            height: 50%;
+
             z-index: 1;
         }
         .picker-body::before {
@@ -699,19 +665,9 @@
         position: relative;
         margin: -24px 0;
     }
-        .picker-item { color: var(--neutral-700); }
-        .picker-picked { font-size: 19px; }
-        .picker-mask { 
-            position: absolute;
-            top: 50%;
-            transform: translate(0, -50%);
+        .picker-item { color: var(--neutral-800); }
+        .picker-picked { font-size: 20px; }
 
-            height: 28px;
-            width: 100%;
-            border-top: 1px solid var(--neutral-200);
-            border-bottom: 1px solid var(--neutral-200);
-            background-color: var(--neutral-100);
-        }
 
 
         .simulate-content > .footer {

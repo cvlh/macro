@@ -673,7 +673,7 @@
         font-weight: 600;
 
         text-align: center;
-        line-height: 22px;
+        line-height: 24px;
     }
         .picker-body::before,
         .picker-body::after {
@@ -697,10 +697,21 @@
 
     .picker-list { 
         position: relative;
-        margin: -22px 0;
+        margin: -24px 0;
     }
         .picker-item { color: var(--neutral-700); }
-        .picker-picked { font-size: 16px; }
+        .picker-picked { font-size: 19px; }
+        .picker-mask { 
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+
+            height: 28px;
+            width: 100%;
+            border-top: 1px solid var(--neutral-200);
+            border-bottom: 1px solid var(--neutral-200);
+            background-color: var(--neutral-100);
+        }
 
 
         .simulate-content > .footer {

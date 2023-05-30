@@ -56,18 +56,21 @@ export default function InputTime(__append, __properties) {
                 const end_y = evnt.changedTouches ? evnt.changedTouches[0].pageY : evnt.pageY;
                 let move_y = moveY + (end_y - startY);
 
+                let highlight = list.querySelector('.picker-picked');
                 let up = move_y > 0 ? false : true;
+                
                 const mov = Math.abs(move_y);
-                if (mov > itemHeight) {
-                    let highlight = list.querySelector('.picker-picked');
+                if (mov > itemHeight * 0.8) {
+
+                    highlight.nextSibling.style.removeProperty('font-size');
+                    highlight.previousSibling.style.removeProperty('font-size');
+                    highlight.style.removeProperty('font-size');
+
+                    const sibling = up ? highlight.nextSibling : highlight.previousSibling;
                     const first = list.firstElementChild;
                     if (up) {
                         const removed_child = list.removeChild(first);
                         list.appendChild(removed_child);
-
-                        highlight.className  = 'picker-item';
-                        highlight = highlight.nextSibling;
-                        highlight.className  = 'picker-picked';
 
                         move_y += itemHeight;
                     } else {
@@ -75,19 +78,23 @@ export default function InputTime(__append, __properties) {
                         const removed_child = list.removeChild(last);
                         list.insertBefore(removed_child, first);
 
-                        highlight.className  = 'picker-item';
-                        highlight = highlight.previousSibling;
-                        highlight.className  = 'picker-picked';
-
                         move_y -= itemHeight;
                     }
+                    highlight.className  = 'picker-item';
+                    sibling.className  = 'picker-picked';
+
+                } else {
+                    const offset = 6 - ((itemHeight - mov) / itemHeight) * 6;
+
+                    highlight.style.fontSize = (19 - offset) + 'px';
+                    let sibling = up ? highlight.nextSibling : highlight.previousSibling;
+                    sibling.style.fontSize = (13 + offset) + 'px';
                 }
 
                 startY = end_y;
                 moveY = move_y ;
 
                 list.style.top = `${moveY}px`;
-
             }
 
         }, { capture: false });
@@ -98,32 +105,41 @@ export default function InputTime(__append, __properties) {
             if (list) {
                 list.style.transition = '0.15s top ease';
                 list.style.top = '0px';
+
+                for (const child of list.children)
+                    child.style.removeProperty('font-size');
             }
         }, { capture: false });
 
         const hour_control_prev = addElement(hour, 'div', 'picker-control picker-control-prev');
         const hour_body = addElement(hour, 'div', 'picker-body');
+        addElement(hour_body, 'div', 'picker-mask');
         const hour_list = addElement(hour_body, 'div', 'picker-list');
         addElement(hour_list, 'div', 'picker-item', '05');
         addElement(hour_list, 'div', 'picker-item', '06');
         addElement(hour_list, 'div', 'picker-item', '07');
-        addElement(hour_list, 'div', 'picker-picked', '08');
-        addElement(hour_list, 'div', 'picker-item', '09');
+        addElement(hour_list, 'div', 'picker-item', '08');
+        addElement(hour_list, 'div', 'picker-picked', '09');
         addElement(hour_list, 'div', 'picker-item', '10');
         addElement(hour_list, 'div', 'picker-item', '11');
+        addElement(hour_list, 'div', 'picker-item', '12');
+        addElement(hour_list, 'div', 'picker-item', '00');
         const hour_control_next = addElement(hour, 'div', 'picker-control picker-control-next');
 
         const minute = addElement(DOMElement.timepicker, 'div', 'picker-cell');
         const minute_control_prev = addElement(minute, 'div', 'picker-control picker-control-prev');
         const minute_body = addElement(minute, 'div', 'picker-body');
+        addElement(minute_body, 'div', 'picker-mask');
         const minute_list = addElement(minute_body, 'div', 'picker-list');
         addElement(minute_list, 'div', 'picker-item', '05');
         addElement(minute_list, 'div', 'picker-item', '06');
         addElement(minute_list, 'div', 'picker-item', '07');
-        addElement(minute_list, 'div', 'picker-picked', '08');
-        addElement(minute_list, 'div', 'picker-item', '09');
+        addElement(minute_list, 'div', 'picker-item', '08');
+        addElement(minute_list, 'div', 'picker-picked', '09');
         addElement(minute_list, 'div', 'picker-item', '10');
         addElement(minute_list, 'div', 'picker-item', '11');
+        addElement(minute_list, 'div', 'picker-item', '12');
+        addElement(minute_list, 'div', 'picker-item', '00');
         const minute_control_next = addElement(minute, 'div', 'picker-control picker-control-next');
 
         // DOMElement.timepicker.innerHTML = "\

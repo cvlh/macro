@@ -85,6 +85,7 @@ export default function InputSignature(__append, __properties) {
         if (__properties['env'] === _RUN_ENVIRONMENT_.WEB) {
             this.addEventListener('pointermove', _drawing, { capture: false });
             this.addEventListener('pointerup', _drawing_end, { once: true, capture: false });
+            this.addEventListener('pointerout', _drawing_end, { once: true, capture: false });
         } else if (__properties['env'] === _RUN_ENVIRONMENT_.MOBILE) {
             this.addEventListener('touchmove', _drawing, { capture: true });
             this.addEventListener('touchend', _drawing_end, { once: true, capture: true });
@@ -108,7 +109,10 @@ export default function InputSignature(__append, __properties) {
         delete this['_drawing_'];
 
         if (__properties['env'] === _RUN_ENVIRONMENT_.WEB) {
+            this.removeEventListener('pointerup', _drawing_end, { once: true, capture: false });
+            this.removeEventListener('pointerout', _drawing_end, { once: true, capture: false });
             this.removeEventListener('pointermove', _drawing, { capture: false });
+            
             this.addEventListener('pointerdown', _drawing_start, { once: true, capture: false });
         } else if (__properties['env'] === _RUN_ENVIRONMENT_.MOBILE) {
             this.removeEventListener('touchmove', _drawing, { capture: true });

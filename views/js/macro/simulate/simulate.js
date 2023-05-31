@@ -399,7 +399,6 @@ export default function Simulate(__run_environment = _RUN_ENVIRONMENT_.WEB) {
 
                 case _TYPES_.DATE:
                     keyboard.update(_KEYBOARD_FLAGS_.BTN_BACK | _KEYBOARD_FLAGS_.BTN_OK);
-                    target.firstChild.style.display = 'none';
                     break;
             }
 

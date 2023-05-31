@@ -23,8 +23,7 @@ export default function Keyboard(__append, __states, __confirm, __back) {
     // PRIVATE /////////////////////////////////////////////////////////////////
     _back = () => { __back(); },
     _clear = () => {
-        // const current_input = __states.getPrevInput();
-        const current_input = __states.getPrevElement();
+        const current_input = __states.getElement();
         if (current_input)
             current_input['_input_'].clear();
     },

@@ -9,7 +9,6 @@ export default function InputState() {
     let current, list;
 
     // PUBLIC  /////////////////////////////////////////////////////////////////
-    // this.isFirst = () => current === 0 && list.length > 1;
     this.hasMore = () => current < list.length;
     this.size = () => list.length;
 
@@ -18,17 +17,6 @@ export default function InputState() {
     this.increment = () => current++;
     this.decrement = () => current--;
     this.position = () => current;
-
-    // this.getInput = () => {
-    //     if (current < list.length)
-    //         return list[current]['_input_'];
-    //     return null;
-    // };
-    this.getPrevInput = () => {
-        if (current > 0)
-            return list[current - 1]['_input_'];
-        return null;
-    };
 
     this.getElement = () => {
         if (current < list.length)
@@ -48,7 +36,7 @@ export default function InputState() {
             delete item['_props_'];
             delete item['_input_'];
 
-            console.log(item);
+            // console.log(item);
         }
 
         current = -1;

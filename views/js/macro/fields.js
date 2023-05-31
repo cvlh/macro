@@ -921,6 +921,7 @@ export default function Field(__context, __append, __properties) {
         DOMElement.description.setAttribute('type', 'text');
         DOMElement.description.setAttribute('maxlength', '64');
         DOMElement.description.setAttribute('value', props.text);
+        DOMElement.description.setAttribute('name', props.uuid);
         DOMElement.description.setAttribute('tabindex', props.tab);
         
         DOMElement.description.addEventListener('keyup', _keypress, { capture: false });

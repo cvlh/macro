@@ -22,7 +22,7 @@ export default function InputTime(__append, __properties) {
         _time = (date) => _pad(date.getDate()) + '/' + _pad((date.getMonth() + 1)) + '/' + _pad(date.getFullYear()),
 
         _start = (evnt) => {
-            evnt.preventDefault();
+            // evnt.preventDefault();
 
             const target = evnt.target;
             const list = target.querySelector('.picker-list');
@@ -136,46 +136,50 @@ export default function InputTime(__append, __properties) {
         DOMElement.timepicker = addElement(__append, 'div', 'picker');
         addElement(DOMElement.timepicker, 'div', 'picker-mask');
         
-        const hours = addElement(DOMElement.timepicker, 'div', 'picker-cell');
-        const hours_body = addElement(hours, 'div', 'picker-body');
+        // const hours = addElement(DOMElement.timepicker, 'div', 'picker-cell');
+        const hours_body = addElement(DOMElement.timepicker, 'div', 'picker-body');
         const hours_list = addElement(hours_body, 'div', 'picker-list');
         for (let hour = 0; hour < 9; hour++) {
             const current = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + (hour - 4), now.getMinutes(), now.getSeconds());
             const element_class = current.getHours() === current_hour ? 'picker-picked' : 'picker-item';
             
             const element = addElement(hours_list, 'div', element_class, _pad(current.getHours()));
+            // element.style.transform = `rotateX(${Math.abs(hour-4)*15}deg)`
+            // element.style.margin = `-${Math.abs(hour-4)*2}px`
             element['_date_'] = current;
         }
 
-        const minutes = addElement(DOMElement.timepicker, 'div', 'picker-cell');
-        const minutes_body = addElement(minutes, 'div', 'picker-body');
+        // const minutes = addElement(DOMElement.timepicker, 'div', 'picker-cell');
+        const minutes_body = addElement(DOMElement.timepicker, 'div', 'picker-body');
         const minutes_list = addElement(minutes_body, 'div', 'picker-list');
         for (let minute = 0; minute < 9; minute++) {
             const current = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + (minute - 4), now.getSeconds());
             const element_class = current.getMinutes() === current_minute ? 'picker-picked' : 'picker-item';
             
             const element = addElement(minutes_list, 'div', element_class, _pad(current.getMinutes()));
+            // element.style.transform = `rotateX(${Math.abs((minute-4))*15}deg)`
             element['_date_'] = current;
         }
 
-        const seconds = addElement(DOMElement.timepicker, 'div', 'picker-cell');
-        const seconds_body = addElement(seconds, 'div', 'picker-body');
+        // const seconds = addElement(DOMElement.timepicker, 'div', 'picker-cell');
+        const seconds_body = addElement(DOMElement.timepicker, 'div', 'picker-body');
         const seconds_list = addElement(seconds_body, 'div', 'picker-list');
         for (let second = 0; second < 9; second++) {
             const current = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds() + (second - 4));
             const element_class = current.getSeconds() === current_seconds ? 'picker-picked' : 'picker-item';
             
             const element = addElement(seconds_list, 'div', element_class, _pad(current.getSeconds()));
+            // element.style.transform = `rotateX(${Math.abs((second-4))*15}deg)`
             element['_date_'] = current;
         }
 
         itemHeight = seconds_list.firstElementChild.offsetHeight;
 
-        const cells = DOMElement.timepicker.querySelectorAll('.picker-cell');
+        const cells = DOMElement.timepicker.querySelectorAll('.picker-body');
         if (__properties['env'] === _RUN_ENVIRONMENT_.WEB) {
-            cells.forEach(element =>  element.addEventListener('pointerdown', _start, { once: true, capture: false }));
+            cells.forEach(element =>  element.addEventListener('pointerdown', _start, { once: true, capture: true }));
         } else if (__properties['env'] === _RUN_ENVIRONMENT_.MOBILE) {
-            cells.forEach(element =>  element.addEventListener('touchstart', _start, { once: true, capture: false }));
+            cells.forEach(element =>  element.addEventListener('touchstart', _start, { once: true, capture: true }));
         }
 
     })();

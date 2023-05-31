@@ -625,22 +625,25 @@
         background-color: var(--neutral-100);
     }
 
-    .picker-cell {
-        position: relative;
-        flex: 1 1 0;
-    }
-    .picker-cell + .picker-cell { border-left: 1px solid var(--neutral-300); }
-
     .picker-body {
         overflow: hidden;
-        position: relative;
 
         font-size: 13px;
         font-weight: 600;
 
         text-align: center;
         line-height: 24px;
+
+        position: relative;
+        flex: 1 1 0;
     }
+        .picker-body + .picker-body { 
+            border-image-source: linear-gradient(0deg, var(--white), var(--neutral-400) 50%, var(--white));
+            border-image-slice: 1;
+            border-left-width: 1px;
+            border-style: solid;
+        }
+
         .picker-body::before,
         .picker-body::after {
             content: '';
@@ -665,6 +668,14 @@
         position: relative;
         margin: -24px 0;
     }
+    /* .picker-item:nth-child(1),
+    .picker-item:nth-child(9) {
+        transform: rotateX(30deg);
+    }
+    .picker-item:nth-child(2),
+    .picker-item:nth-child(8) {
+        transform: rotateX(15deg);
+    } */
         .picker-item { color: var(--neutral-800); }
         .picker-picked { font-size: 20px; }
 

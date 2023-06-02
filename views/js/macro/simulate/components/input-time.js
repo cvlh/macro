@@ -10,7 +10,7 @@ export default function InputTime(__append, __properties) {
         throw new Error('InputTime() must be called with new');
 
     // VARIABLES ///////////////////////////////////////////////////////////////
-    let startY, moveY, itemHeight;
+    let itemHeight;
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
     const
@@ -28,8 +28,10 @@ export default function InputTime(__append, __properties) {
             const list = target.firstElementChild;
             list.style.removeProperty('transition');
             
-            startY = evnt.changedTouches ? evnt.changedTouches[0].pageY : evnt.pageY;
-            moveY = 0;
+            target['_props_'] = {
+                'last': evnt.changedTouches ? evnt.changedTouches[0].pageY : evnt.pageY,
+                'move': 0
+            }
 
             if (__properties['env'] === _RUN_ENVIRONMENT_.WEB) {
                 target.addEventListener('pointermove', _spin, { capture: false });
@@ -45,10 +47,11 @@ export default function InputTime(__append, __properties) {
             evnt.preventDefault();
 
             const { target } = evnt;
+            const props = target['_props_'];
             const list = target.firstElementChild;
 
             const end_y = evnt.changedTouches ? evnt.changedTouches[0].pageY : evnt.pageY;
-            let move_y = moveY + (end_y - startY);
+            let move_y = props['move'] + (end_y - props['last']);
 
             const highlight = list.querySelector('.picker-picked');
             const up = move_y > 0 ? false : true;
@@ -90,15 +93,15 @@ export default function InputTime(__append, __properties) {
                 sibling.style.fontSize = (13 + offset) + 'px';
             }
 
-            startY = end_y;
-            moveY = move_y ;
+            props['last'] = end_y;
+            props['move'] = move_y;
 
-            list.style.top = moveY + 'px';
+            list.style.top = move_y + 'px';
         },
         _stop = (evnt) => {
             evnt.preventDefault();
 
-            const { target, type } = evnt;
+            const { target } = evnt;
 
             const list = target.firstElementChild;
             list.style.transition = '0.15s top ease';
@@ -106,6 +109,8 @@ export default function InputTime(__append, __properties) {
 
             for (const child of list.children)
                 child.removeAttribute('style');
+
+            delete target['_props_']
 
             if (__properties['env'] === _RUN_ENVIRONMENT_.WEB) {
                 target.removeEventListener('pointerup', _stop, { once: true, capture: false });

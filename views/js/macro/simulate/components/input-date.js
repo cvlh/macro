@@ -63,7 +63,7 @@ export default function InputDate(__append, __properties) {
                 text.style.removeProperty('color');
                 text.style.removeProperty('font-size');
                 if (iterate_date.getMonth() !== currentMonth) {
-                    text.style.color = 'var(--neutral-700)';
+                    text.style.color = 'var(--neutral-600)';
                     text.style.fontSize = '9px';
                 }
 

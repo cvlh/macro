@@ -526,7 +526,7 @@
                                 align-items: center;
                                 justify-items: center;
 
-                                font-size: 12px;
+                                font-size: 13px;
                                 font-weight: 600;
                             }
                                 .item-input > .calendar > .week > div {
@@ -551,7 +551,7 @@
                                     transition: .15s border-width ease;
                                 }
                                     .item-input > .calendar > .week > div > span.selected { 
-                                        border-width: 3px;
+                                        border-width: 2px;
                                         border-style: solid;
                                     }
                             .item-input > .calendar > .month {
@@ -603,74 +603,72 @@
                                 border-bottom: 1px solid var(--neutral-400);
                             }
                             /* TIME PICKER ///////////////////////////////////*/
-.picker {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    background-color: white;
-    border-top: 1px solid var(--neutral-300);
-    border-bottom: 1px solid var(--neutral-300);
+                            .picker {
+                                display: flex;
+                                flex-wrap: nowrap;
+                                flex-direction: row;
+                                background-color: white;
+                                border-top: 1px solid var(--neutral-300);
+                                border-bottom: 1px solid var(--neutral-300);
 
-    position: relative;
-}
-    .picker-mask { 
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
+                                position: relative;
+                            }
+                            .picker > .picker-mask { 
+                                position: absolute;
+                                top: 50%;
+                                transform: translate(0, -50%);
 
-        height: 28px;
-        width: 100%;
+                                height: 28px;
+                                width: 100%;
 
-        border-top: 1px solid var(--neutral-200);
-        border-bottom: 1px solid var(--neutral-200);
-        
-        background-color: var(--neutral-100);
-    }
-    .picker-body {
-        overflow: hidden;
+                                border-top: 1px solid var(--neutral-200);
+                                border-bottom: 1px solid var(--neutral-200);
+                                
+                                background-color: var(--neutral-100);
+                            }
+                            .picker > .picker-body {
+                                overflow: hidden;
 
-        font-size: 13px;
-        font-weight: 600;
+                                font-size: 13px;
+                                font-weight: 600;
 
-        text-align: center;
-        line-height: 24px;
+                                text-align: center;
+                                line-height: 24px;
 
-        position: relative;
-        flex: 1 1 0;
-    }
-        .picker-body::before,
-        .picker-body::after {
-            content: '';
-            
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 50%;
+                                position: relative;
+                                flex: 1 1 0;
+                            }
+                                .picker > .picker-body::before,
+                                .picker > .picker-body::after {
+                                    content: '';
+                                    
+                                    position: absolute;
+                                    left: 0;
+                                    right: 0;
+                                    height: 50%;
 
-            z-index: 1;
-        }
-        .picker-body::before {
-            background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-            top: 0;
-        }
-        .picker-body::after {
-            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-            bottom: 0;
-        }
-        .picker-body + .picker-body { 
-            border-image-source: linear-gradient(0deg, var(--white), var(--neutral-400) 50%, var(--white));
-            border-image-slice: 1;
-            border-left-width: 1px;
-            border-style: solid;
-        }
-    .picker-list { 
-        position: relative;
-        margin: -24px 0;
-    }
-        .picker-item { color: var(--neutral-800); }
-        .picker-picked { font-size: 20px; }
-
-
+                                    z-index: 1;
+                                }
+                                .picker > .picker-body::before {
+                                    background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+                                    top: 0;
+                                }
+                                .picker > .picker-body::after {
+                                    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+                                    bottom: 0;
+                                }
+                                .picker > .picker-body + .picker-body { 
+                                    border-image-source: linear-gradient(0deg, var(--white), var(--neutral-400) 50%, var(--white));
+                                    border-image-slice: 1;
+                                    border-left-width: 1px;
+                                    border-style: solid;
+                                }
+                                    .picker > .picker-body > .picker-list { 
+                                        position: relative;
+                                        margin: -24px 0;
+                                    }
+                                    .picker > .picker-body > .picker-list > .picker-item { color: var(--neutral-800); }
+                                    .picker > .picker-body > .picker-list > .picker-picked { font-size: 20px; }
 
         .simulate-content > .footer {
             transform: translate(79px, 7px);
@@ -718,15 +716,3 @@
             70% { transform: scale(1); opacity: 0.9;}
             100% { transform: scale(0.90); }
         }
-/*
-<div style="
-    text-align: center;
-    background-color: var(--orange-100);
-    border-radius: 5px;
-    font-size: 10px;
-    margin: 2px 8px;
-    padding: 3px;
-    font-weight: 600;
-    color: var(--red-base);
-">valor deve ser maior que 1.98</div>
-*/

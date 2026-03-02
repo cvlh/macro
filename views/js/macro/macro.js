@@ -7,6 +7,7 @@ import { _I18N_ } from './../i18n/pt-br.js';
 import Card from './cards.js';
 import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
+import createViewport from './viewport.js';
 import VisibilityTool from './tools/visibility.js';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,8 +36,7 @@ export default function Macro(__properties) {
         visibilityTool = null,
 
         currentZoomText,
-
-        position = { offsetLeft: 0, offsetTop: 0 },
+        viewport,
 
         props = { 
             size: { width: 4096, height: 3072 },
@@ -91,7 +91,7 @@ export default function Macro(__properties) {
                             field.toggleVisibility();
                         } else {
                             const rect = field.getRect();
-                            _center(rect);
+                            viewport.centerRect(rect);
                             field.setFocus();
                         }
                         break;
@@ -119,112 +119,19 @@ export default function Macro(__properties) {
               targetClass = target.classList;
 
         if (evnt.type === 'click') {
-            if (targetClass.contains('zoom-in'))         _zoom(0.1);
-            else if (targetClass.contains('zoom-out'))   _zoom(-0.1);
-            else if (targetClass.contains('zoom-reset')) _pan();
-            else if (targetClass.contains('zoom-fit'))   _fit();
+            if (targetClass.contains('zoom-in'))         viewport.zoomBy(0.1);
+            else if (targetClass.contains('zoom-out'))   viewport.zoomBy(-0.1);
+            else if (targetClass.contains('zoom-reset')) viewport.panReset();
+            else if (targetClass.contains('zoom-fit'))   viewport.fit();
         }
 
         _zoom_label();
     },
-    _pan = function() {
-        const builderRect = mainBuilder.getBoundingClientRect();
-
-        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
-              builderTopCenter = builderRect.top + (builderRect.height / 2);
-
-        const DELTA = 1 - props.transform.scale;
-
-        const builderLeftCenterScale = builderLeftCenter * DELTA,
-              builderTopCenterScale = builderTopCenter * DELTA;
-        
-        props.transform.left = (props.transform.left-builderLeftCenterScale) / props.transform.scale;
-        props.transform.top = (props.transform.top-builderTopCenterScale) / props.transform.scale;
-        props.transform.scale = 1;
-
-        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
-    },
-    _fit = function() {
-        const builderRect = mainBuilder.getBoundingClientRect(),
-              wrapperRect = mainAppWrapper.getBoundingClientRect();
-  
-        const builderLeftCenter = builderRect.width / 2,
-              builderTopCenter = builderRect.height / 2;
-
-        const wrapperLeftCenter = (wrapperRect.width / props.transform.scale) / 2,
-              wrapperTopCenter = (wrapperRect.height / props.transform.scale) / 2;
-
-        const widthFactor = wrapperRect.width / builderRect.width,
-              heightFactor = wrapperRect.height / builderRect.height;
-
-        let scale = props.transform.scale / (widthFactor > heightFactor ? widthFactor : heightFactor);
-
-        if (scale > _ZOOM_.MAX) {
-            scale = _ZOOM_.MAX; 
-        } else if (scale < _ZOOM_.MIN) {
-            scale = _ZOOM_.MIN;
-        }
-
-        props.transform.scale = scale;
-        props.transform.left = builderRect.left + builderLeftCenter - (wrapperLeftCenter * props.transform.scale);
-        props.transform.top = builderRect.top + builderTopCenter - (wrapperTopCenter * props.transform.scale);
-
-        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
-        //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
-    },
-    _zoom = function(zoom) {
-        const builderRect = mainBuilder.getBoundingClientRect(),
-              wrapperRect = mainAppWrapper.getBoundingClientRect();
-
-        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
-              builderTopCenter = builderRect.top + (builderRect.height / 2);
-
-        const DELTA = zoom;
-
-        let scale = props.transform.scale * (1 + DELTA);
-        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN)
-            return;
-        
-        props.transform.scale = scale;
-        props.transform.left += (wrapperRect.left - builderLeftCenter) * DELTA;
-        props.transform.top +=  (wrapperRect.top - builderTopCenter) * DELTA;
-        
-        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
-        
-        //if (scale < 1) mainAppSVG.style.borderWidth = parseInt(1/scale) + 'px';
-    },
-    _center = function(rect) {
-        const builderRect = mainBuilder.getBoundingClientRect();
-
-        const builderLeftCenter = builderRect.left + (builderRect.width / 2),
-              builderTopCenter = builderRect.top + (builderRect.height / 2);
-
-        const rectLeftCenter = rect.left + (rect.width / 2),
-              rectTopCenter = rect.top + (rect.height / 2);
-
-        const left = (props.transform.left - rectLeftCenter) + builderLeftCenter,
-              top  = (props.transform.top - rectTopCenter) + builderTopCenter;
-        
-        props.transform.left = left;
-        props.transform.top = top;
-        //props.transform.scale = 1;
-
-        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
-    },
     _wheel_zoom = function(evnt) {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
 
-        const scale = props.transform.scale * (1 + delta);
-        if (scale > _ZOOM_.MAX || scale < _ZOOM_.MIN)
+        if (!viewport.wheelZoomAt(evnt.clientX, evnt.clientY, delta))
             return;
-        
-        const rect = mainAppWrapper.getBoundingClientRect();
-
-        props.transform.scale = scale;
-        props.transform.left += (rect.left - evnt.clientX) * delta;
-        props.transform.top +=  (rect.top - evnt.clientY) * delta;
-
-        mainAppWrapper.style.transform = 'translate(' +props.transform.left+ 'px, ' +props.transform.top+ 'px) scale(' +props.transform.scale+ ')';
 
         if (currentDrag != null)
             currentDrag.setPosition(evnt.clientX, evnt.clientY, props.transform, _MOV_.START);
@@ -235,16 +142,13 @@ export default function Macro(__properties) {
     _zoom_label = function() {
         const zoom_scale = (props.transform.scale * 100);
         currentZoomText.textContent = `${zoom_scale.toFixed(0)}%`;
-    };
+    }
 
     // INTERFACE  //////////////////////////////////////////////////////////////
     this.setPosition = function(left, top, transform, mov) {
         switch (mov) {
             case _MOV_.START:
-                const rect = mainAppWrapper.getBoundingClientRect();
-
-                position.offsetLeft = left - rect.left;
-                position.offsetTop = top - rect.top;
+                viewport.dragStart(left, top);
 
                 mainAppWrapper.style.cursor = 'grabbing';
                 break;
@@ -254,13 +158,7 @@ export default function Macro(__properties) {
                 break;
         }
 
-        // if (left > window.innerWidth || top > window.innerHeight) return;
-        // if (left < 0 || top < 0) return;
-
-        transform.left = left - position.offsetLeft,
-        transform.top = top - position.offsetTop;
-
-        mainAppWrapper.style.transform = 'translate(' +transform.left+ 'px, ' +transform.top+ 'px) scale(' +transform.scale+ ')';
+        viewport.dragMove(left, top);
     };
     this.getDragType = function() { return _DRAG_.AREA; };
     this.serialize = function() {
@@ -371,7 +269,7 @@ export default function Macro(__properties) {
         // if (currentSelectedObject.hasOwnProperty('getProps'))
             properties.refresh();
     };
-    this.setSelected = function(status) { 
+    this.setSelected = function(status) {
         isCurrentSelectObject = status;
 
         if (status) {
@@ -390,7 +288,7 @@ export default function Macro(__properties) {
         return null;
     };
 
-    this.initVisibility = function(fields_map) { 
+    this.initVisibility = function(fields_map) {
         rootCard.initVisibility(fields_map);
 
         Context.redraw();
@@ -456,7 +354,7 @@ export default function Macro(__properties) {
     this.getBuilderDiv = function () { return mainAppWrapper; }
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
-    this.dragStart = function(evnt, ctx) { 
+    this.dragStart = function(evnt, ctx) {
         evnt.stopPropagation();
         if (currentDrag !== null) return;
 
@@ -617,6 +515,13 @@ export default function Macro(__properties) {
         mainAppSVG.setAttribute('width',  props.size.width);
         mainAppSVG.setAttribute('height', props.size.height);
 
+        viewport = createViewport({
+            transform: props.transform,
+            limits: { min: _ZOOM_.MIN, max: _ZOOM_.MAX },
+            builderEl: mainBuilder,
+            wrapperEl: mainAppWrapper
+        });
+
         const widget_holder = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
         addElement(widget_holder, 'div', 'icon button zoom-in', _ICON_CHAR_.PLUS);
         addElement(widget_holder, 'div', 'icon button zoom-out', _ICON_CHAR_.EMPTY);
@@ -633,6 +538,7 @@ export default function Macro(__properties) {
         
         //mainTreeViewItems.addEventListener('resize', _receive_events, { capture: true });
         //window.addEventListener('resize', _resize, { capture: true });
+        //window.addEventListener('resize', _on_resize, { capture: false });
 
         mainAppWrapper.addEventListener('wheel', _wheel_zoom, { capture: false, passive: true });
         mainAppWrapper.addEventListener('mousedown', function (evnt) {

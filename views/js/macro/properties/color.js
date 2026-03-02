@@ -60,7 +60,7 @@ export default function Color (ctx) {
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
-    (function() {
+    (function init() {
         let row, color, count = 3;
 
         content = addElement(parent.getFragment(), 'div', 'main-app-properties-content');

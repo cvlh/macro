@@ -118,7 +118,7 @@ export default function Card(__context, __properties, __tab) {
 
     // INTERFACE ///////////////////////////////////////////////////////////////
     this.getDragType = function() { return _DRAG_.HEADER; };
-    this.hasConnection = function() { 
+    this.hasConnection = function() {
         if (RootField)
             return false;
         
@@ -223,7 +223,7 @@ export default function Card(__context, __properties, __tab) {
     };
     // this.serialize = function (fragment, properties = {tab: [], expand: true, color: null}) {
     this.serialize = function (fragment, properties) {
-        const response = { 
+        const response = {
             position: [ position.left, position.top ],
             fields: [],
             properties : {
@@ -261,11 +261,11 @@ export default function Card(__context, __properties, __tab) {
         for (const field of FieldsMap.values())
             field.setBorderColor(light, index, color);
     };
-    this.swap = function(position, order) { 
+    this.swap = function(position, order) {
         //FieldsMap.swap(position, order); 
         _order();
     };
-    this.setSelected = function(status) { 
+    this.setSelected = function(status) {
         if (status) {
             isCurrentSelectObject = true;
             DOMElement.card.classList.add('selected');
@@ -337,7 +337,7 @@ export default function Card(__context, __properties, __tab) {
         for (const field of FieldsMap.values())
             field.setVisibilityMode();
     };
-    this.addToVisibility = function(field, status) {        
+    this.addToVisibility = function(field, status) {
         props['visibility']['fields'][status].set(field.getProps('uuid'), field);
         _updateVisibilityCounter();
     };

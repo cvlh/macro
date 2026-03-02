@@ -34,9 +34,8 @@ export default function Properties(ctx) {
     this.refresh = function() {
         const size = propertiesArray.length;
 
-        for (var counter = 0; counter < size; counter++) {
+        for (var counter = 0; counter < size; counter++) 
             propertiesArray[counter].visible();
-        }
     };
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////

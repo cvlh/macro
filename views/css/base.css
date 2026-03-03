@@ -73,7 +73,7 @@ body { overflow: hidden; }
 
     display: grid; 
 
-    grid-template-columns: 240px 5px auto 233px;
+    grid-template-columns: 240px 5px 220px auto 233px;
     grid-template-rows: 100vh;
     /*border: 3px solid #00ff00;*/
 }
@@ -309,6 +309,63 @@ body { overflow: hidden; }
             pointer-events: none;
             display: none;
         }
+
+/*// BLOCKS SIDEBAR //////////////////////////////////////////////////////////*/
+.main-app-blocks {
+    border-left: 1px solid var(--neutral-300);
+    border-right: 1px solid var(--neutral-300);
+    background-color: var(--white);
+    overflow-y: auto;
+    color: var(--black);
+}
+    .main-app-blocks-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        padding: 12px;
+        border-bottom: 1px solid var(--neutral-300);
+        background-color: var(--neutral-100);
+    }
+    .main-app-blocks-items {
+        padding: 12px;
+        display: grid;
+        gap: 12px;
+    }
+        .main-app-blocks-group-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--neutral-700);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .main-app-blocks-group-items {
+            display: grid;
+            gap: 6px;
+        }
+            .main-app-block-button {
+                width: 100%;
+                padding: 8px 10px;
+                text-align: left;
+                font-size: 12px;
+                line-height: 16px;
+                color: var(--neutral-900);
+                border: 1px solid var(--neutral-300);
+                border-radius: 4px;
+                background-color: var(--white);
+                cursor: grab;
+            }
+                .main-app-block-button:hover {
+                    background-color: var(--neutral-100);
+                    border-color: var(--neutral-500);
+                }
+                .main-app-block-button:active {
+                    cursor: grabbing;
+                    background-color: var(--neutral-200);
+                }
 
 /*// CARDS CSS ///////////////////////////////////////////////////////////////*/
 .app-cards {

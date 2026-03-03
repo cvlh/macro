@@ -1,20 +1,19 @@
 'use strict';
 
-export default function createViewport({ transform, limits, builderEl, wrapperEl }) {
-    const state = transform;
-    const { min: minScale, max: maxScale } = limits;
+import { _MOV_, _ZOOM_ } from "../utils/constants.js";
 
-    const dragOffset = { left: 0, top: 0 };
-    let cachedBuilderRect = null;
+export default function createViewport({ builderElement, wrapperElement }) {
+    const state = { scale: 1, left: 0, top: 0 };
+    const offset = { left: 0, top: 0 };
 
-    const clampScale = (scale) => Math.max(minScale, Math.min(maxScale, scale));
+    const clampScale = (scale) => Math.max(_ZOOM_.MIN, Math.min(_ZOOM_.MAX, scale));
 
-    const getBuilderRect = () => builderEl.getBoundingClientRect();
-    const getWrapperRect = () => wrapperEl.getBoundingClientRect();
+    const getBuilderRect = () => builderElement.getBoundingClientRect();
+    const getWrapperRect = () => wrapperElement.getBoundingClientRect();
 
-    const apply = () => wrapperEl.style.transform = `translate(${state.left}px, ${state.top}px) scale(${state.scale})`;
+    const apply = () => wrapperElement.style.transform = `translate(${state.left}px, ${state.top}px) scale(${state.scale})`;
 
-    const zoomBy = (delta) => {
+    const zoom = delta => {
         const builderRect = getBuilderRect();
         const wrapperRect = getWrapperRect();
 
@@ -31,8 +30,7 @@ export default function createViewport({ transform, limits, builderEl, wrapperEl
         apply();
         return true;
     };
-
-    const wheelZoomAt = (clientX, clientY, delta) => {
+    const wheel = (clientX, clientY, delta) => {
         const { left, top } = getWrapperRect();
 
         const scale = clampScale(state.scale * (1 + delta));
@@ -45,8 +43,7 @@ export default function createViewport({ transform, limits, builderEl, wrapperEl
         apply();
         return true;
     };
-
-    const panReset = () => {
+    const pan = () => {
         const builderRect = getBuilderRect();
 
         const builderLeftCenter = builderRect.left + (builderRect.width / 2);
@@ -59,7 +56,6 @@ export default function createViewport({ transform, limits, builderEl, wrapperEl
 
         apply();
     };
-
     const fit = () => {
         const builderRect = getBuilderRect();
         const wrapperRect = getWrapperRect();
@@ -77,8 +73,7 @@ export default function createViewport({ transform, limits, builderEl, wrapperEl
 
         apply();
     };
-
-    const centerRect = (targetRect) => {
+    const center = (targetRect) => {
         const builderRect = getBuilderRect();
 
         const builderLeftCenter = builderRect.left + (builderRect.width / 2);
@@ -91,27 +86,27 @@ export default function createViewport({ transform, limits, builderEl, wrapperEl
 
         apply();
     };
+    const drag = (clientX, clientY, type) => {
+        if (type === _MOV_.START) {
+            const rect = getWrapperRect();
+            offset.left = clientX - rect.left;
+            offset.top = clientY - rect.top;
 
-    const dragStart = (clientX, clientY) => {
-        const rect = getWrapperRect();
-        dragOffset.left = clientX - rect.left;
-        dragOffset.top = clientY - rect.top;
-    };
-
-    const dragMove = (clientX, clientY) => {
-        state.left = clientX - dragOffset.left;
-        state.top = clientY - dragOffset.top;
+            return;
+        }
+    
+        state.left = clientX - offset.left;
+        state.top = clientY - offset.top;
         apply();
     };
 
-
     return {
-        zoomBy,
-        wheelZoomAt,
-        panReset,
+        state,
+        zoom,
+        wheel,
+        pan,
         fit,
-        centerRect,
-        dragStart,
-        dragMove
+        center,
+        drag
     };
 }

@@ -5,6 +5,7 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
+import createLibrary from './library.js';
 import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
 import createViewport from './viewport.js';
@@ -20,7 +21,7 @@ export default function Macro(__properties) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let mainApp,
         mainTreeView, mainTreeViewItems,
-        mainBlocksSidebar,
+        library,
         mainBuilder, mainAppWrapper, mainAppSVG, 
             mainBuilderToolbar,
 
@@ -45,7 +46,7 @@ export default function Macro(__properties) {
         },
 
     // PRIVATE /////////////////////////////////////////////////////////////////
-    _receive_events = (evnt) => {
+    _receive_events = evnt => {
         evnt.stopPropagation();
 
         const target = evnt.target,
@@ -115,7 +116,7 @@ export default function Macro(__properties) {
             }
         }
     },
-    _control_events = (evnt) => {
+    _control_events = evnt => {
         evnt.stopPropagation();
 
         const target = evnt.target,
@@ -130,7 +131,7 @@ export default function Macro(__properties) {
 
         _zoom_label();
     },
-    _wheel_zoom = (evnt) => {
+    _wheel_zoom = evnt => {
         const delta = (evnt.wheelDelta ? evnt.wheelDelta / 120 : - evnt.deltaY / 3) * 0.05;
 
         if (!viewport.wheel(evnt.clientX, evnt.clientY, delta))
@@ -145,7 +146,7 @@ export default function Macro(__properties) {
     _zoom_label = () => {
         const zoom_scale = (viewport.state.scale * 100);
         currentZoomText.textContent = `${zoom_scale.toFixed(0)}%`;
-    }
+    };
 
     // INTERFACE  //////////////////////////////////////////////////////////////
     this.setPosition = (left, top, _, action) => {
@@ -156,7 +157,7 @@ export default function Macro(__properties) {
 
         viewport.drag(left, top, action);
     };
-    this.getDragType = () => { return _DRAG_.AREA; };
+    this.getDragType = () => _DRAG_.AREA;
     this.serialize = () => {
 
         // REMOVE EVNTS
@@ -254,7 +255,7 @@ export default function Macro(__properties) {
 
         Context.serialize();
     };
-    this.showProperties = (object) => {
+    this.showProperties = object => {
         if (visibilityMode)
             return;
         
@@ -267,7 +268,7 @@ export default function Macro(__properties) {
         // if (currentSelectedObject.hasOwnProperty('getProps'))
             properties.refresh();
     };
-    this.setSelected = (status) => {
+    this.setSelected = status => {
         isCurrentSelectObject = status;
 
         if (status) 
@@ -288,10 +289,9 @@ export default function Macro(__properties) {
 
     this.initVisibility = (fields_map) => {
         rootCard.initVisibility(fields_map);
-
         Context.redraw();
     };
-    this.getVisibilityMode = () => { return visibilityMode; };
+    this.getVisibilityMode = () => visibilityMode;
     this.setVisibilityMode = () => {
         const visibility = currentSelectedObject.getProps('visibility');
 
@@ -343,13 +343,13 @@ export default function Macro(__properties) {
         }
     };
 
-    this.removeFromCardsMap = (uuid) => { return CardsMap.delete(uuid); };
-    this.getFromCardsMap = (uuid) => { return CardsMap.get(uuid); };
+    this.removeFromCardsMap = uuid => CardsMap.delete(uuid);
+    this.getFromCardsMap = uuid => CardsMap.get(uuid);
 
-    this.getSelectedArrow  = () => { return selectedArrow; }
-    this.getVisibilityTool = () => { return visibilityTool; }
-    this.getSelectedObject = () => { return currentSelectedObject; }
-    this.getBuilderDiv = () => { return mainAppWrapper; }
+    this.getSelectedArrow  = () => selectedArrow;
+    this.getVisibilityTool = () => visibilityTool;
+    this.getSelectedObject = () => currentSelectedObject;
+    this.getBuilderDiv = () => mainAppWrapper;
 
     // DRAG LISTENER ///////////////////////////////////////////////////////////
     this.dragStart = (evnt, ctx) => {
@@ -373,6 +373,10 @@ export default function Macro(__properties) {
 
             case _DRAG_.LINE:
                 break;
+
+            case _DRAG_.BLOCK:
+                library.onDragStart(evnt, currentDrag);
+                break;
         }
 
         currentDrag.setPosition(evnt.clientX, evnt.clientY, viewport.state, _MOV_.START);
@@ -380,7 +384,7 @@ export default function Macro(__properties) {
         document.addEventListener('mousemove', Context.drag,    { capture: true });
         document.addEventListener('mouseup',   Context.dragEnd, { capture: true });
     };
-    this.drag = (evnt) => {
+    this.drag = evnt => {
         evnt.stopPropagation();
 
         const transform = viewport.state;
@@ -406,9 +410,13 @@ export default function Macro(__properties) {
                 }
                 currentDrag.check(target, connection);
                 break;
+
+            case _DRAG_.BLOCK:
+                library.onDragMove(evnt, currentDrag);
+                break;
         }
     };
-    this.dragEnd = (evnt) => {
+    this.dragEnd = evnt => {
         evnt.stopPropagation();
 
         const transform = viewport.state;
@@ -461,6 +469,10 @@ export default function Macro(__properties) {
             case _DRAG_.LINE:
                 currentDrag.setDragType(_DRAG_.OUTPUT);
                 break;
+
+            case _DRAG_.BLOCK:
+                library.onDragEnd(evnt, currentDrag);
+                break;
         }
 
         document.removeEventListener('mousemove', Context.drag, { capture: true });
@@ -480,29 +492,26 @@ export default function Macro(__properties) {
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
         const colResize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
 
-        mainBlocksSidebar = addElement(mainApp, 'div', 'main-app-blocks');
+        library = createLibrary({
+            onRequestDrag: (evnt, blockDragContext) => Context.dragStart(evnt, blockDragContext),
+            resolveOwnerCard: (container) => {
+                const ownerRef = container['_CARD_'];
+                if (ownerRef === undefined)
+                    return null;
+
+                const ownerCard = ownerRef.deref();
+                if (ownerCard === undefined)
+                    return null;
+
+                return ownerCard;
+            }
+        });
+        library.mount(mainApp);
+
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
         const mainProperties = addElement(mainApp, 'div', 'main-app-properties');
 
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
-        const blocksHeader = addElement(mainBlocksSidebar, 'div', 'main-app-blocks-header', 'Logic blocks');
-        const blocksContainer = addElement(mainBlocksSidebar, 'div', 'main-app-blocks-items');
-
-        const staticBlockGroups = [
-            {
-                name: 'Logic',
-                blocks: ['Condition', 'Set variable', 'Redirect', 'Script', 'Webhook']
-            }
-        ];
-
-        for (const group of staticBlockGroups) {
-            const groupDiv = addElement(blocksContainer, 'div', 'main-app-blocks-group');
-            addElement(groupDiv, 'div', 'main-app-blocks-group-title', group.name);
-
-            const groupItems = addElement(groupDiv, 'div', 'main-app-blocks-group-items');
-            for (const blockName of group.blocks)
-                addElement(groupItems, 'button', 'main-app-block-button', blockName);
-        }
         
         mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
         const serializeBtn = addElement(mainBuilderToolbar, 'div', 'icon', _ICON_CHAR_.OUTPUT);
@@ -563,27 +572,29 @@ export default function Macro(__properties) {
 
         mainAppWrapper.addEventListener('wheel', _wheel_zoom, { capture: false, passive: true });
         mainAppWrapper.addEventListener('mousedown', (evnt) => {
-            if (evnt.button === 0) {
-                if (currentDrag !== null) {
-                    if (currentDrag.getDragType() !== _DRAG_.HEADER) 
-                        Context.dragEnd(evnt);
-                    return;
-                }
+            if (evnt.button !== 0)
+                return;
 
-                if (evnt.target.classList.contains('main-app-wrapper')) {
-                    Context.dragStart(evnt, Context);
+            if (currentDrag !== null) {
+                if (currentDrag.getDragType() !== _DRAG_.HEADER) 
+                    Context.dragEnd(evnt);
+                
+                return;
+            }
 
-                } else if (evnt.target.classList.contains('moveable')) {
-                    evnt.preventDefault();
+            if (evnt.target.classList.contains('main-app-wrapper')) {
+                Context.dragStart(evnt, Context);
+            } else if (evnt.target.classList.contains('moveable')) {
+                evnt.preventDefault();
 
-                    const field = evnt.target['_OWNER_'].deref();
-                    if (field !== undefined) {
-                        field.setDragType(_DRAG_.LINE);
-                        Context.dragStart(evnt, field);
-                    }
+                const field = evnt.target['_OWNER_'].deref();
+                if (field !== undefined) {
+                    field.setDragType(_DRAG_.LINE);
+                    Context.dragStart(evnt, field);
                 }
             }
         }, { capture: false });
+
         mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: false });
         
         // mainAppWrapper.addEventListener('click', (evnt) => console.log(`${evnt.clientX} - ${evnt.clientY}`), { capture: false });

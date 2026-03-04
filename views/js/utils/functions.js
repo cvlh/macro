@@ -17,15 +17,32 @@ Array.prototype.swap = function (position, order) {
     }
     return this;
 }
-export function addElement (parent, type, className = null, content = null) {
-    let new_element;
+// export function addElement (parent, type, className = null, content = null) {
+//     let new_element;
 
-    new_element = parent.appendChild(document.createElement(type));
-    if (className !== null) new_element.className = className;
-    if (content !== null) new_element.appendChild(document.createTextNode(content));
+//     new_element = parent.appendChild(document.createElement(type));
+//     if (className !== null) new_element.className = className;
+//     if (content !== null) new_element.appendChild(document.createTextNode(content));
 
-    return new_element;
+//     return new_element;
+// }
+
+export const addElement = (parent, type, stylesheet = null, content = null) => {
+    const newElement = parent.appendChild(document.createElement(type));
+
+    if (stylesheet !== null) {
+        if (typeof stylesheet === "string") 
+            newElement.className = stylesheet;
+        else if (typeof stylesheet === "object") 
+            Object.assign(newElement.style, stylesheet);
+    }
+    
+    if (content !== null) 
+        newElement.appendChild(document.createTextNode(content));
+
+    return newElement;
 }
+
 export function UUIDv4() {
     let uuid_format = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx',
         millisecond = new Date().getTime();

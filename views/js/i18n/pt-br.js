@@ -121,5 +121,29 @@ export const _I18N_ = {
         'Outubro',   // 9
         'Novembro',  // 10
         'Dezembro'   // 11
-    ]
+    ],
+
+    logic_blocks: 'Lógica', 
+    logic_blocks_condition: 'Condição',
+    logic_blocks_set_variable: 'Definir variável',
+    logic_blocks_redirect: 'Redirecionar',
+    logic_blocks_webhook: 'Webhook',
+    logic_blocks_jump: 'Pular',
+
+    input_blocks: 'Entrada',
+    input_blocks_text: 'Texto',     
+    input_blocks_number: 'Número',   
+    input_blocks_password: 'Senha', 
+    input_blocks_currency: 'Moeda', 
+    input_blocks_email: 'Email',    
+    input_blocks_url: 'URL',      
+    input_blocks_date: 'Data',     
+    input_blocks_time: 'Hora',     
+    input_blocks_phone: 'Telefone',    
+    input_blocks_button: 'Botão',   
+    input_blocks_file: 'Arquivo',     
+    input_blocks_payment: 'Pagamento',  
+    input_blocks_photo: 'Foto',    
+    input_blocks_signature: 'Assinatura',
+    input_blocks_scan: 'Leitor',     
 }

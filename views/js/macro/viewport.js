@@ -21,7 +21,8 @@ export default function createViewport({ builderElement, wrapperElement }) {
         const builderTopCenter = builderRect.top + (builderRect.height / 2);
 
         const scale = clampScale(state.scale * (1 + delta));
-        if (scale === state.scale) return false;
+        if (scale === state.scale)
+            return false;
 
         state.scale = scale;
         state.left += (wrapperRect.left - builderLeftCenter) * delta;

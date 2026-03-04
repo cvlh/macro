@@ -23,21 +23,19 @@
     }
 
         .library-item {
-            min-height: 64px;
+            min-height: 34px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 8px;
-            border: 1px solid var(--neutral-400);
+            gap: 8px;
+            padding: 0 8px;
+            border: 1px solid var(--neutral-500);
             border-radius: 8px;
             background-color: var(--white);
             color: var(--black);
             cursor: grab;
             user-select: none;
-            transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease,
-                        background-color 0.16s ease, color 0.16s ease, opacity 0.16s ease;
+            transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease, opacity 0.16s ease;
         }
 
             .library-item:hover {

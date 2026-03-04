@@ -73,7 +73,12 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         sourceElement = null,
         previewCard = null;
 
-    const pointer = { x: 0, y: 0, validDrop: false };
+    const pointer = { x: 0, y: 0, offsetX: 0, offsetY: 0, validDrop: false };
+
+    const getGhostTranslate = () => ({
+        left: pointer.x - pointer.offsetX,
+        top: pointer.y - pointer.offsetY
+    });
 
     const clearGhostTimeout = () => {
         if (ghostTimeout !== 0) {
@@ -121,7 +126,8 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
 
         ghost.style.transition = `opacity ${GHOST_TRANSITION_MS}ms ease, transform ${GHOST_TRANSITION_MS}ms ease`;
         ghost.style.opacity = '0';
-        ghost.style.transform = `translate(${pointer.x}px, ${pointer.y}px) scale(0.95)`;
+        const translate = getGhostTranslate();
+        ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) scale(0.95)`;
 
         ghostTimeout = window.setTimeout(removeGhost, GHOST_TRANSITION_MS + 20);
     };
@@ -133,7 +139,8 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         ghostRaf = requestAnimationFrame(() => {
             ghostRaf = 0;
             if (ghost !== null) {
-                ghost.style.transform = `translate(${pointer.x}px, ${pointer.y}px) scale(1.005)`;
+                const translate = getGhostTranslate();
+                ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) scale(1.005)`;
                 ghost.classList.toggle('drop-valid', pointer.validDrop);
                 ghost.classList.toggle('drop-invalid', !pointer.validDrop);
             }
@@ -146,17 +153,23 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         sourceElement = dragContext.getSourceElement();
         sourceElement.classList.add('dragging');
 
+        const sourceRect = sourceElement.getBoundingClientRect();
+        pointer.offsetX = pointerEvent.clientX - sourceRect.left;
+        pointer.offsetY = pointerEvent.clientY - sourceRect.top;
+
         ghost = sourceElement.cloneNode(true);
         ghost.classList.add('library-item-ghost');
         ghost.setAttribute('aria-hidden', 'true');
         ghost.style.position = 'fixed';
         ghost.style.left = '0px';
         ghost.style.top = '0px';
+        ghost.style.width = `${sourceRect.width}px`;
+        ghost.style.height = `${sourceRect.height}px`;
         ghost.style.zIndex = GHOST_Z_INDEX;
         ghost.style.pointerEvents = 'none';
         ghost.style.willChange = 'transform';
         ghost.style.opacity = '0.9';
-        ghost.style.transform = `translate(${pointerEvent.clientX}px, ${pointerEvent.clientY}px) scale(1.005)`;
+        ghost.style.transform = `translate(${sourceRect.left}px, ${sourceRect.top}px) scale(1.005)`;
 
         document.body.appendChild(ghost);
     };

@@ -169,27 +169,27 @@ export default function Card(__context, __properties, __tab) {
         if (libraryInsertPreview.spacer === null) {
             libraryInsertPreview.spacer = document.createElement('div');
             libraryInsertPreview.spacer.className = 'app-cards-content-item-insert-space';
-            libraryInsertPreview.spacer.style.height = '12px';
-            libraryInsertPreview.spacer.style.margin = '3px 5px';
+            libraryInsertPreview.spacer.style.height = '34px';
+            // libraryInsertPreview.spacer.style.margin = '3px 5px';
             libraryInsertPreview.spacer.style.borderRadius = '4px';
             libraryInsertPreview.spacer.style.border = '1px dashed var(--blue-700)';
             libraryInsertPreview.spacer.style.backgroundColor = 'var(--blue-100)';
             libraryInsertPreview.spacer.style.position = 'relative';
             libraryInsertPreview.spacer.style.overflow = 'hidden';
 
-            const fill = document.createElement('div');
-            fill.className = 'app-cards-content-item-insert-space-fill';
-            fill.style.position = 'absolute';
-            fill.style.left = '0';
-            fill.style.top = '0';
-            fill.style.width = '100%';
-            fill.style.height = '100%';
-            fill.style.backgroundColor = 'var(--blue-500)';
-            fill.style.opacity = '0.25';
-            fill.style.transformOrigin = 'left center';
-            fill.style.transform = 'scaleX(0)';
-            fill.style.pointerEvents = 'none';
-            libraryInsertPreview.spacer.appendChild(fill);
+            // const fill = document.createElement('div');
+            // fill.className = 'app-cards-content-item-insert-space-fill';
+            // fill.style.position = 'absolute';
+            // fill.style.left = '0';
+            // fill.style.top = '0';
+            // fill.style.width = '100%';
+            // fill.style.height = '100%';
+            // fill.style.backgroundColor = 'var(--blue-500)';
+            // fill.style.opacity = '0.25';
+            // fill.style.transformOrigin = 'left center';
+            // fill.style.transform = 'scaleX(0)';
+            // fill.style.pointerEvents = 'none';
+            // libraryInsertPreview.spacer.appendChild(fill);
         }
 
         const cardItems = [...DOMElement.items.querySelectorAll(':scope > .app-cards-content-item')];

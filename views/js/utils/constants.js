@@ -12,30 +12,6 @@ export const _DRAG_ = {
     BLOCK  : 4
 };
 
-export const _LIBRARY_DEFINITIONS_ = [
-    { id: 'condition',    label: _I18N_.logic_blocks_condition,    icon: _ICON_CHAR_.ARROW, group: 'Logic' },
-    { id: 'set-variable', label: _I18N_.logic_blocks_set_variable, icon: _ICON_CHAR_.ARROW, group: 'Logic' },
-    { id: 'redirect',     label: _I18N_.logic_blocks_redirect,     icon: _ICON_CHAR_.ARROW, group: 'Logic' },
-    { id: 'webhook',      label: _I18N_.logic_blocks_webhook,      icon: _ICON_CHAR_.ARROW, group: 'Logic' },
-    { id: 'jump',         label: _I18N_.logic_blocks_jump,         icon: _ICON_CHAR_.ARROW, group: 'Logic' },
-
-    { id: 'text',      label: _I18N_.input_blocks_text,      icon: _ICON_CHAR_.TEXT,      group: 'Input' },
-    { id: 'number',    label: _I18N_.input_blocks_number,    icon: _ICON_CHAR_.NUMBER,    group: 'Input' },
-    { id: 'password',  label: _I18N_.input_blocks_password,  icon: _ICON_CHAR_.PASSWORD,  group: 'Input' },
-    { id: 'currency',  label: _I18N_.input_blocks_currency,  icon: _ICON_CHAR_.CURRENCY,  group: 'Input' },
-    { id: 'email',     label: _I18N_.input_blocks_email,     icon: _ICON_CHAR_.EMAIL,     group: 'Input' },
-    { id: 'url',       label: _I18N_.input_blocks_url,       icon: _ICON_CHAR_.URL,       group: 'Input' },
-    { id: 'date',      label: _I18N_.input_blocks_date,      icon: _ICON_CHAR_.DATE,      group: 'Input' },
-    { id: 'time',      label: _I18N_.input_blocks_time,      icon: _ICON_CHAR_.TIME,      group: 'Input' },
-    { id: 'phone',     label: _I18N_.input_blocks_phone,     icon: _ICON_CHAR_.PHONE,     group: 'Input' },
-    { id: 'button',    label: _I18N_.input_blocks_button,    icon: _ICON_CHAR_.BUTTON,    group: 'Input' },
-    { id: 'file',      label: _I18N_.input_blocks_file,      icon: _ICON_CHAR_.FILE,      group: 'Input' },
-    { id: 'payment',   label: _I18N_.input_blocks_payment,   icon: _ICON_CHAR_.PAYMENT,   group: 'Input' },
-    { id: 'photo',     label: _I18N_.input_blocks_photo,     icon: _ICON_CHAR_.PHOTO,     group: 'Input' },
-    { id: 'signature', label: _I18N_.input_blocks_signature, icon: _ICON_CHAR_.SIGNATURE, group: 'Input' },
-    { id: 'scan',      label: _I18N_.input_blocks_scan,      icon: _ICON_CHAR_.SCAN,      group: 'Input' }
-];
-
 export const _MOV_ = {
     START: 0,
     MOV:   1,
@@ -200,3 +176,27 @@ export const _RUN_ENVIRONMENT_ = {
     WEB:    0,
     MOBILE: 1
 }
+
+export const _LIBRARY_DEFINITIONS_ = [
+    { id: 'condition',    label: _I18N_.logic_blocks_condition,    icon: _ICON_CHAR_.ARROW, group: 'Logic' },
+    { id: 'set-variable', label: _I18N_.logic_blocks_set_variable, icon: _ICON_CHAR_.ARROW, group: 'Logic' },
+    { id: 'redirect',     label: _I18N_.logic_blocks_redirect,     icon: _ICON_CHAR_.ARROW, group: 'Logic' },
+    { id: 'webhook',      label: _I18N_.logic_blocks_webhook,      icon: _ICON_CHAR_.ARROW, group: 'Logic' },
+    { id: 'jump',         label: _I18N_.logic_blocks_jump,         icon: _ICON_CHAR_.ARROW, group: 'Logic' },
+
+    { id: 'text',      label: _I18N_.input_blocks_text,      icon: _ICON_CHAR_.TEXT,      group: 'Input' },
+    { id: 'number',    label: _I18N_.input_blocks_number,    icon: _ICON_CHAR_.NUMBER,    group: 'Input' },
+    { id: 'password',  label: _I18N_.input_blocks_password,  icon: _ICON_CHAR_.PASSWORD,  group: 'Input' },
+    { id: 'currency',  label: _I18N_.input_blocks_currency,  icon: _ICON_CHAR_.CURRENCY,  group: 'Input' },
+    { id: 'email',     label: _I18N_.input_blocks_email,     icon: _ICON_CHAR_.EMAIL,     group: 'Input' },
+    { id: 'url',       label: _I18N_.input_blocks_url,       icon: _ICON_CHAR_.URL,       group: 'Input' },
+    { id: 'date',      label: _I18N_.input_blocks_date,      icon: _ICON_CHAR_.DATE,      group: 'Input' },
+    { id: 'time',      label: _I18N_.input_blocks_time,      icon: _ICON_CHAR_.TIME,      group: 'Input' },
+    { id: 'phone',     label: _I18N_.input_blocks_phone,     icon: _ICON_CHAR_.PHONE,     group: 'Input' },
+    { id: 'button',    label: _I18N_.input_blocks_button,    icon: _ICON_CHAR_.BUTTON,    group: 'Input' },
+    { id: 'file',      label: _I18N_.input_blocks_file,      icon: _ICON_CHAR_.FILE,      group: 'Input' },
+    { id: 'payment',   label: _I18N_.input_blocks_payment,   icon: _ICON_CHAR_.PAYMENT,   group: 'Input' },
+    { id: 'photo',     label: _I18N_.input_blocks_photo,     icon: _ICON_CHAR_.PHOTO,     group: 'Input' },
+    { id: 'signature', label: _I18N_.input_blocks_signature, icon: _ICON_CHAR_.SIGNATURE, group: 'Input' },
+    { id: 'scan',      label: _I18N_.input_blocks_scan,      icon: _ICON_CHAR_.SCAN,      group: 'Input' }
+];

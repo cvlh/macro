@@ -5,7 +5,6 @@ import { addElement } from '../utils/functions.js';
 import { _I18N_ } from './../i18n/pt-br.js';
 
 import Card from './cards.js';
-import createLibrary from './library.js';
 import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
 import createViewport from './viewport.js';
@@ -492,22 +491,6 @@ export default function Macro(__properties) {
         mainTreeView = addElement(mainApp, 'div', 'main-app-treeview');
         const colResize = addElement(mainApp, 'div', 'main-app-treeview-col-resize');
 
-        library = createLibrary({
-            onRequestDrag: (evnt, blockDragContext) => Context.dragStart(evnt, blockDragContext),
-            resolveOwnerCard: (container) => {
-                const ownerRef = container['_CARD_'];
-                if (ownerRef === undefined)
-                    return null;
-
-                const ownerCard = ownerRef.deref();
-                if (ownerCard === undefined)
-                    return null;
-
-                return ownerCard;
-            }
-        });
-        library.mount(mainApp);
-
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
         const mainProperties = addElement(mainApp, 'div', 'main-app-properties');
 
@@ -596,29 +579,11 @@ export default function Macro(__properties) {
         }, { capture: false });
 
         mainAppWrapper.addEventListener('dblclick', _receive_events, { capture: false });
-        
-        // mainAppWrapper.addEventListener('click', (evnt) => console.log(`${evnt.clientX} - ${evnt.clientY}`), { capture: false });
-
-        //mainAppWrapper.addEventListener('touchstart', (evnt) => console.log(evnt) , false);
-        //mainAppWrapper.addEventListener('touchmove', (evnt) => console.log(evnt) , false);
-        //mainAppWrapper.addEventListener('touchcancel', (evnt) => console.log(evnt) , false);
-        //mainAppWrapper.addEventListener('touchend', (evnt) => console.log(evnt) , false);
 
         properties = new Properties(Context);
         mainProperties.appendChild(properties.getFragment());
 
         simulate = new Simulate(_RUN_ENVIRONMENT_.WEB);
         simulateDiv.appendChild(simulate.getFragment());
-
-        // Context.setPosition(viewport.state.left, viewport.state.top, viewport.state, _MOV_.END);
-
-        // const builderRect = mainBuilder.getBoundingClientRect();
-  
-        // const builderLeftCenter = builderRect.width / 2,
-        //       builderTopCenter = builderRect.height / 2;
-
-        // let builderCenterDiv = addElement(mainBuilder, 'div', 'crosshair');
-        // builderCenterDiv.style.left = builderLeftCenter + 'px';
-        // builderCenterDiv.style.top = builderTopCenter + 'px';
     })();
 }

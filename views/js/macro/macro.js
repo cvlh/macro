@@ -9,6 +9,7 @@ import Properties from './properties.js';
 import Simulate from './simulate/simulate.js';
 import createViewport from './viewport.js';
 import VisibilityTool from './tools/visibility.js';
+import createLibrarySidebar from './library.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 export default function Macro(__properties) {
@@ -374,7 +375,8 @@ export default function Macro(__properties) {
                 break;
 
             case _DRAG_.BLOCK:
-                library.onDragStart(evnt, currentDrag);
+                if (library !== null)
+                    library.onDragStart(evnt, currentDrag);
                 break;
         }
 
@@ -411,7 +413,8 @@ export default function Macro(__properties) {
                 break;
 
             case _DRAG_.BLOCK:
-                library.onDragMove(evnt, currentDrag);
+                if (library !== null)
+                    library.onDragMove(evnt, currentDrag);
                 break;
         }
     };
@@ -470,7 +473,8 @@ export default function Macro(__properties) {
                 break;
 
             case _DRAG_.BLOCK:
-                library.onDragEnd(evnt, currentDrag);
+                if (library !== null)
+                    library.onDragEnd(evnt, currentDrag);
                 break;
         }
 
@@ -494,6 +498,7 @@ export default function Macro(__properties) {
         mainBuilder = addElement(mainApp, 'div', 'main-app-builder');
         const mainProperties = addElement(mainApp, 'div', 'main-app-properties');
 
+        const mainLibrary = addElement(mainTreeView, 'div', 'main-app-library-root');
         mainTreeViewItems = addElement(mainTreeView, 'div', 'main-app-treeview-items');
         
         mainBuilderToolbar = addElement(mainBuilder, 'div', 'main-app-builder-toolbar');
@@ -534,6 +539,14 @@ export default function Macro(__properties) {
             builderElement: mainBuilder,
             wrapperElement: mainAppWrapper
         });
+
+        library = createLibrarySidebar({
+            mountTarget: mainLibrary,
+            startDrag: Context.dragStart,
+            macroContext: Context,
+            getViewportState: () => viewport.state
+        });
+        library.mount();
 
         const widget_holder = addElement(mainBuilder, 'div', 'main-app-builder-widget-holder');
         addElement(widget_holder, 'div', 'icon button zoom-in', _ICON_CHAR_.PLUS);

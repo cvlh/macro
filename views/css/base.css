@@ -73,7 +73,7 @@ body { overflow: hidden; }
 
     display: grid; 
 
-    grid-template-columns: 240px 5px 280px auto 233px;
+    grid-template-columns: 240px 5px auto 233px;
     grid-template-rows: 100vh;
     /*border: 3px solid #00ff00;*/
 }

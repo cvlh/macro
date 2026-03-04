@@ -29,17 +29,6 @@ const LIBRARY_COMPONENTS = Object.freeze([
     scanComponent
 ]);
 
-const LIBRARY_TYPE_MAP = Object.freeze({
-    text: _TYPES_.TEXT,
-    number: _TYPES_.NUMBER,
-    email: _TYPES_.TEXT,
-    date: _TYPES_.DATE,
-    time: _TYPES_.TIME,
-    photo: _TYPES_.PHOTO,
-    signature: _TYPES_.SIGNATURE,
-    scan: _TYPES_.SCAN
-});
-
 const COMPONENT_BY_ID = new Map(
     LIBRARY_COMPONENTS.map(component => [component.id, component])
 );
@@ -81,7 +70,8 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         ghost = null,
         ghostRaf = 0,
         ghostTimeout = 0,
-        sourceElement = null;
+        sourceElement = null,
+        previewCard = null;
 
     const pointer = { x: 0, y: 0, validDrop: false };
 
@@ -112,6 +102,13 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
             sourceElement.classList.remove('dragging');
             sourceElement = null;
         }
+    };
+
+    const clearCardInsertPreview = () => {
+        if (previewCard !== null && typeof previewCard.clearLibraryInsertPreview === 'function')
+            previewCard.clearLibraryInsertPreview();
+
+        previewCard = null;
     };
 
     const animateGhostOut = () => {
@@ -176,18 +173,42 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         return pointerTarget instanceof Element ? pointerTarget : evnt.target;
     };
 
-    const dropComponent = (dragContext, dropPosition) => {
-        const component = dragContext.getComponent();
-        const fieldType = LIBRARY_TYPE_MAP[component.id] ?? _TYPES_.LIST;
-        const card = macroContext.createCard([dropPosition.left, dropPosition.top]);
+    const resolveCardFromDropTarget = target => {
+        if (!target || !(target instanceof Element))
+            return null;
 
-        card.newField({
-            text: component.label,
-            type: { type: fieldType }
-        });
+        const itemsContainer = target.closest('.app-cards-content-items');
+        if (itemsContainer === null || !itemsContainer.hasOwnProperty('_UUID_'))
+            return null;
+
+        const card = macroContext.getFromCardsMap(itemsContainer['_UUID_']);
+        return card ?? null;
+    };
+
+    const dropComponent = (dragContext, dropPosition, dropTarget) => {
+        const component = dragContext.getComponent();
+        const targetCard = resolveCardFromDropTarget(dropTarget);
+        const card = targetCard ?? macroContext.createCard([dropPosition.left, dropPosition.top]);
+
+        if (typeof card.newFieldFromComponent === 'function')
+            card.newFieldFromComponent(component);
+        else
+            card.newField({ text: component.label, type: { type: _TYPES_.LIST } });
 
         component.onDrop(macroContext, dropPosition);
         macroContext.redraw(card);
+    };
+
+    const updateInsertPreview = (evnt, target) => {
+        const targetCard = resolveCardFromDropTarget(target);
+
+        if (previewCard !== null && previewCard !== targetCard && typeof previewCard.clearLibraryInsertPreview === 'function')
+            previewCard.clearLibraryInsertPreview();
+
+        if (targetCard !== null && typeof targetCard.previewLibraryInsert === 'function')
+            targetCard.previewLibraryInsert(evnt.clientY);
+
+        previewCard = targetCard;
     };
 
     const onLibraryMouseDown = evnt => {
@@ -219,15 +240,18 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         },
         onDragStart: (evnt, dragContext) => {
             createGhost(dragContext, evnt);
+            clearCardInsertPreview();
             pointer.x = evnt.clientX;
             pointer.y = evnt.clientY;
             pointer.validDrop = false;
             scheduleGhostRender();
         },
         onDragMove: (evnt, dragContext) => {
+            const target = getPointerTarget(evnt);
             pointer.x = evnt.clientX;
             pointer.y = evnt.clientY;
-            pointer.validDrop = isDropTargetValid(getPointerTarget(evnt));
+            pointer.validDrop = isDropTargetValid(target);
+            updateInsertPreview(evnt, target);
 
             scheduleGhostRender();
         },
@@ -243,12 +267,13 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
             if (validDrop) {
                 try {
                     const transform = getViewportState();
-                    dropComponent(dragContext, toDropPosition(evnt, transform));
+                    dropComponent(dragContext, toDropPosition(evnt, transform), target);
                 } catch (error) {
                     console.error('Library drop failed:', error);
                 }
             }
 
+            clearCardInsertPreview();
             animateGhostOut();
         }
     };

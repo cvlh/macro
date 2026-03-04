@@ -6,6 +6,17 @@ import { _I18N_ } from './../i18n/pt-br.js';
 
 import Field from './fields.js';
 
+const LIBRARY_FIELD_TYPE_MAP = Object.freeze({
+    text: _TYPES_.TEXT,
+    number: _TYPES_.NUMBER,
+    email: _TYPES_.TEXT,
+    date: _TYPES_.DATE,
+    time: _TYPES_.TIME,
+    photo: _TYPES_.PHOTO,
+    signature: _TYPES_.SIGNATURE,
+    scan: _TYPES_.SCAN
+});
+
 export default function Card(__context, __properties, __tab) {
 
     // CONSTANTS ///////////////////////////////////////////////////////////////
@@ -32,6 +43,7 @@ export default function Card(__context, __properties, __tab) {
     // VARIABLES ///////////////////////////////////////////////////////////////
     let isCurrentSelectObject = false,
         inputConnection = null,
+        libraryInsertPreview = { spacer: null, index: null },
 
         position = { left: 0, top: 0, offsetLeft: 0, offsetTop: 0 },
         props = {
@@ -88,6 +100,7 @@ export default function Card(__context, __properties, __tab) {
             delete DOMElement[element];
         }
 
+        _clearLibraryInsertPreview();
         MacroContext.removeFromCardsMap(props.uuid);
         MacroContext.serialize();
     },
@@ -114,6 +127,98 @@ export default function Card(__context, __properties, __tab) {
             DOMElement.visibility.style.removeProperty('visibility');
         
         DOMElement.visibility.textContent = visibilitySize;
+    },
+    _clearLibraryInsertPreview = function() {
+        if (libraryInsertPreview.spacer !== null) {
+            libraryInsertPreview.spacer.remove();
+            libraryInsertPreview.spacer = null;
+        }
+
+        libraryInsertPreview.index = null;
+    },
+    _syncFieldOrderByDom = function() {
+        const orderedEntries = [];
+        const cardItems = DOMElement.items.querySelectorAll(':scope > .app-cards-content-item');
+
+        for (const item of cardItems) {
+            const uuid = item['_UUID_'];
+            if (uuid !== undefined && FieldsMap.has(uuid))
+                orderedEntries.push([uuid, FieldsMap.get(uuid)]);
+        }
+
+        FieldsMap.clear();
+        for (const [uuid, field] of orderedEntries)
+            FieldsMap.set(uuid, field);
+    },
+    _resolveLibraryInsertIndex = function(clientY) {
+        const cardItems = [...DOMElement.items.querySelectorAll(':scope > .app-cards-content-item')];
+        if (cardItems.length === 0)
+            return 0;
+
+        for (let index = 0; index < cardItems.length; index++) {
+            const rect = cardItems[index].getBoundingClientRect();
+            if (clientY < (rect.top + rect.height / 2))
+                return index;
+        }
+
+        return cardItems.length;
+    },
+    _renderLibraryInsertPreview = function(index) {
+        const previousIndex = libraryInsertPreview.index;
+
+        if (libraryInsertPreview.spacer === null) {
+            libraryInsertPreview.spacer = document.createElement('div');
+            libraryInsertPreview.spacer.className = 'app-cards-content-item-insert-space';
+            libraryInsertPreview.spacer.style.height = '12px';
+            libraryInsertPreview.spacer.style.margin = '3px 5px';
+            libraryInsertPreview.spacer.style.borderRadius = '4px';
+            libraryInsertPreview.spacer.style.border = '1px dashed var(--blue-700)';
+            libraryInsertPreview.spacer.style.backgroundColor = 'var(--blue-100)';
+            libraryInsertPreview.spacer.style.position = 'relative';
+            libraryInsertPreview.spacer.style.overflow = 'hidden';
+
+            const fill = document.createElement('div');
+            fill.className = 'app-cards-content-item-insert-space-fill';
+            fill.style.position = 'absolute';
+            fill.style.left = '0';
+            fill.style.top = '0';
+            fill.style.width = '100%';
+            fill.style.height = '100%';
+            fill.style.backgroundColor = 'var(--blue-500)';
+            fill.style.opacity = '0.25';
+            fill.style.transformOrigin = 'left center';
+            fill.style.transform = 'scaleX(0)';
+            fill.style.pointerEvents = 'none';
+            libraryInsertPreview.spacer.appendChild(fill);
+        }
+
+        const cardItems = [...DOMElement.items.querySelectorAll(':scope > .app-cards-content-item')];
+        const beforeItem = index < cardItems.length ? cardItems[index] : null;
+
+        if (beforeItem !== null)
+            DOMElement.items.insertBefore(libraryInsertPreview.spacer, beforeItem);
+        else
+            DOMElement.items.appendChild(libraryInsertPreview.spacer);
+
+        libraryInsertPreview.index = index;
+
+        if (previousIndex !== index) {
+            const fill = libraryInsertPreview.spacer.firstElementChild;
+            if (fill !== null) {
+                fill.getAnimations().forEach(animation => animation.cancel());
+                fill.animate(
+                    [
+                        { transform: 'scaleX(0)', opacity: 0.2 },
+                        { transform: 'scaleX(1)', opacity: 0.38 }
+                    ],
+                    {
+                        duration: 140,
+                        easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+                        fill: 'forwards'
+                    }
+                );
+            }
+        }
     };
 
     // INTERFACE ///////////////////////////////////////////////////////////////
@@ -366,10 +471,49 @@ export default function Card(__context, __properties, __tab) {
 
         let new_field = new Field(Context, DOMElement.items, properties);
         FieldsMap.set(new_field.getProps('uuid'), new_field); 
+        new_field.getDiv()['_UUID_'] = new_field.getProps('uuid');
         _order();
         
         return new_field;
     };
+    this.newFieldFromComponent = function(component) {
+        if (component == null)
+            return null;
+
+        const componentType = component.defaultProps?.type ?? component.id;
+        const fieldType = LIBRARY_FIELD_TYPE_MAP[componentType] ?? _TYPES_.LIST;
+        const insertIndex = libraryInsertPreview.index;
+
+        const field = Context.newField({
+            text: component.label ?? '',
+            type: { type: fieldType }
+        });
+
+        const fieldDiv = field.getDiv();
+        if (Number.isInteger(insertIndex)) {
+            const cardItems = [...DOMElement.items.querySelectorAll(':scope > .app-cards-content-item')]
+                .filter(item => !item.isSameNode(fieldDiv));
+            const beforeItem = insertIndex < cardItems.length ? cardItems[insertIndex] : null;
+
+            if (beforeItem !== null)
+                DOMElement.items.insertBefore(fieldDiv, beforeItem);
+            else
+                DOMElement.items.appendChild(fieldDiv);
+
+            _syncFieldOrderByDom();
+            _order();
+        }
+
+        _clearLibraryInsertPreview();
+        return field;
+    };
+    this.previewLibraryInsert = function(clientY) {
+        const index = _resolveLibraryInsertIndex(clientY);
+        _renderLibraryInsertPreview(index);
+        return index;
+    };
+    this.clearLibraryInsertPreview = function() { _clearLibraryInsertPreview(); };
+    this.getLibraryInsertIndex = function() { return libraryInsertPreview.index; };
     this.removeFromFieldMap = function(uuid) {
         FieldsMap.delete(uuid);
         _order();
@@ -439,6 +583,7 @@ export default function Card(__context, __properties, __tab) {
 
             DOMElement.items = addElement(content, 'div', 'app-cards-content-items');
         }
+        DOMElement.items['_UUID_'] = props.uuid;
 
         MacroContext.getBuilderDiv().appendChild(fragment);
     })();

@@ -13,11 +13,6 @@ import photoComponent from './library/photo.js';
 import signatureComponent from './library/signature.js';
 import scanComponent from './library/scan.js';
 
-const WRAPPER_SELECTOR = '.main-app-wrapper';
-const WRAPPER_CLASS = 'main-app-wrapper';
-const GHOST_Z_INDEX = '9999';
-const GHOST_TRANSITION_MS = 120;
-
 const LIBRARY_COMPONENTS = Object.freeze([
     textComponent,
     numberComponent,
@@ -73,7 +68,13 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         sourceElement = null,
         previewCard = null;
 
-    const pointer = { x: 0, y: 0, offsetX: 0, offsetY: 0, validDrop: false };
+    const pointer = { 
+        x: 0, 
+        y: 0, 
+        offsetX: 0, 
+        offsetY: 0, 
+        validDrop: false 
+    };
 
     const getGhostTranslate = () => ({
         left: pointer.x - pointer.offsetX,
@@ -124,12 +125,12 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
 
         clearGhostRaf();
 
-        ghost.style.transition = `opacity ${GHOST_TRANSITION_MS}ms ease, transform ${GHOST_TRANSITION_MS}ms ease`;
+        ghost.style.transition = `opacity 120ms ease, transform 120ms ease`;
         ghost.style.opacity = '0';
         const translate = getGhostTranslate();
-        ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) scale(0.95)`;
+        ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) scale(0.90)`;
 
-        ghostTimeout = window.setTimeout(removeGhost, GHOST_TRANSITION_MS + 20);
+        ghostTimeout = window.setTimeout(removeGhost, 120 + 20);
     };
 
     const scheduleGhostRender = () => {
@@ -140,7 +141,7 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
             ghostRaf = 0;
             if (ghost !== null) {
                 const translate = getGhostTranslate();
-                ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) scale(1.005)`;
+                ghost.style.transform = `translate(${translate.left}px, ${translate.top}px) rotate(-2deg)`;
                 ghost.classList.toggle('drop-valid', pointer.validDrop);
                 ghost.classList.toggle('drop-invalid', !pointer.validDrop);
             }
@@ -151,25 +152,19 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         removeGhost();
 
         sourceElement = dragContext.getSourceElement();
-        sourceElement.classList.add('dragging');
-
+        ghost = sourceElement.cloneNode(true);
+        
         const sourceRect = sourceElement.getBoundingClientRect();
         pointer.offsetX = pointerEvent.clientX - sourceRect.left;
         pointer.offsetY = pointerEvent.clientY - sourceRect.top;
 
-        ghost = sourceElement.cloneNode(true);
+        sourceElement.classList.add('dragging');
+
         ghost.classList.add('library-item-ghost');
         ghost.setAttribute('aria-hidden', 'true');
-        ghost.style.position = 'fixed';
-        ghost.style.left = '0px';
-        ghost.style.top = '0px';
         ghost.style.width = `${sourceRect.width}px`;
         ghost.style.height = `${sourceRect.height}px`;
-        ghost.style.zIndex = GHOST_Z_INDEX;
-        ghost.style.pointerEvents = 'none';
-        ghost.style.willChange = 'transform';
-        ghost.style.opacity = '0.9';
-        ghost.style.transform = `translate(${sourceRect.left}px, ${sourceRect.top}px) scale(1.005)`;
+        ghost.style.transform = `translate(${sourceRect.left}px, ${sourceRect.top}px) rotate(-2deg)`;
 
         document.body.appendChild(ghost);
     };
@@ -178,7 +173,7 @@ const createLibrarySidebar = ({ mountTarget, startDrag, macroContext, getViewpor
         if (!target || !(target instanceof Element))
             return false;
 
-        return target.classList.contains(WRAPPER_CLASS) || target.closest(WRAPPER_SELECTOR) !== null;
+        return target.classList.contains('main-app-wrapper') || target.closest('.main-app-wrapper') !== null;
     };
 
     const getPointerTarget = evnt => {
